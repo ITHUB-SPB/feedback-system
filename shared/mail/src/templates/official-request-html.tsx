@@ -1,6 +1,6 @@
 import React from "react";
 
-import type { OfficialRequest } from "../../types";
+import type { OfficialRequest } from "../types";
 
 import {
   Body,

@@ -20,9 +20,6 @@ export const envSchema = v.object({
   ),
   SMTP_USER: v.pipe(v.string(), v.includes("@")),
   SMTP_PASSWORD: v.pipe(v.string(), v.minLength(3)),
-
-  REDIS_HOST: v.string(),
-  REDIS_PASSWORD: v.string(),
 });
 
 export const env = v.parse(envSchema, process.env);

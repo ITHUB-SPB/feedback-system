@@ -1,6 +1,7 @@
-import { Job, Worker, type Processor } from "bullmq";
-import { redisClient } from "../redis";
-import { logger } from "../logger";
+import { sendMail } from '@shared/mail';
+import { createLogger } from '@shared/logger';
+
+const logger = createLogger({ env: 'development' })
 
 const defaultEventHandlers = {
   completed: (job: Job) => {
@@ -16,7 +17,7 @@ const defaultEventHandlers = {
   },
 };
 
-export default function buildWorker(
+function buildWorker(
   jobName: string,
   handler: Processor,
   eventHandlers = defaultEventHandlers,
@@ -31,4 +32,12 @@ export default function buildWorker(
   worker.on("error", eventHandlers.error);
 
   return worker;
+}
+
+export default function (queueName: string) {
+  logger.info(`mail worker "${queueName}" started`);
+
+  return buildWorker(queueName, async (job) => {
+    await sendMail(job.data);
+  });
 }

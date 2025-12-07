@@ -1,0 +1,120 @@
+include:
+  - ./infrastructure/compose.postgres.yaml
+  - ./infrastructure/compose.pgadmin.yaml
+  - ./infrastructure/compose.minio.production.yaml
+  - ./infrastructure/compose.traefik.yaml
+  - ./infrastructure/compose.dozzle.yaml
+  - ./infrastructure/compose.authelia.yaml
+  - ./infrastructure/compose.crowdsec.yaml
+
+services:
+  feedback-server:
+    container_name: feedback-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile.platform
+      target: prod-server
+    command: "pnpm start" 
+    env_file:
+      - ./apps/server/.env
+    restart: unless-stopped
+    ports:
+      - 3001:3001
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      test:
+        [
+          "CMD-SHELL",
+          "wget --quiet --spider http://$$SERVER_HOST:$$SERVER_PORT/healthcheck",
+        ]
+    depends_on:
+      - postgres
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.server-external.rule=Host(`api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`) && (PathPrefix(`/docs`))"
+      - "traefik.http.routers.server-external.entrypoints=web-secure"
+      - "traefik.http.routers.server-external.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.server-external.middlewares=chain-authelia@file"
+      - "traefik.http.routers.server-external.service=server-external"
+
+      - "traefik.http.routers.server-internal.rule=Host(`api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
+      - "traefik.http.routers.server-internal.entrypoints=web-secure"
+      - "traefik.http.routers.server-internal.tls.certresolver=tlsresolver"
+      # - "traefik.http.routers.server-internal.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.server-internal.service=server-internal"
+
+      - "traefik.http.services.server-external.loadbalancer.server.port=3001"
+      - "traefik.http.services.server-internal.loadbalancer.server.port=3001"
+
+  feedback-admin:
+    container_name: feedback-admin
+    build:
+      context: .
+      dockerfile: ./Dockerfile.platform
+      args:
+        VITE_API_BASE_URL: https://api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
+      target: prod-admin
+    env_file:
+      - ./apps/admin/.env
+    restart: unless-stopped
+    ports:
+      - 5174:5174
+    command: --brotli --port 5174
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - feedback-server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.admin.rule=Host(`admin.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
+      - "traefik.http.routers.admin.entrypoints=web-secure"
+      - "traefik.http.routers.admin.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.admin.middlewares=chain-no-auth@file"
+      - "traefik.http.services.admin.loadbalancer.server.port=5174"
+
+  feedback-workers:
+    extends:
+      file: compose.platform.local.yaml
+      service: feedback-workers
+
+  feedback-web:
+    extends:
+      file: compose.platform.local.yaml
+      service: feedback-web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
+      - "traefik.http.routers.web.entrypoints=web-secure"
+      - "traefik.http.routers.web.tls.certresolver=tlsresolver"
+      - "traefik.http.routers.web.middlewares=chain-no-auth@file"
+      - "traefik.http.services.web.loadbalancer.server.port=5175"
+
+volumes:
+  letsencrypt:
+
+secrets:
+  authelia_jwt_secret:
+    file: ./infrastructure/secrets/authelia_jwt_secret
+  authelia_session_secret:
+    file: ./infrastructure/secrets/authelia_session_secret
+  authelia_storage_encryption_key:
+    file: ./infrastructure/secrets/authelia_storage_encryption_key
+  pgadmin_default_email:
+    file: ./infrastructure/secrets/pgadmin_default_email
+  pgadmin_default_password:
+    file: ./infrastructure/secrets/pgadmin_default_password
+  minio_access_key:
+    file: ./infrastructure/secrets/authelia_jwt_secret
+  minio_secret_key:
+    file: ./infrastructure/secrets/authelia_session_secret
+  walg_libsodium_key:
+    file: ./infrastructure/secrets/walg_libsodium_key
+  postgres_user:
+    file: ./infrastructure/secrets/postgres_user
+  postgres_password:
+    file: ./infrastructure/secrets/postgres_password

@@ -14,7 +14,7 @@
         "@shared/database": "workspace:*",
         "@shared/logger": "workspace:*",
         "@shared/minio": "workspace:*",
-        "@shared/queue": "workspace:*",
+        "@shared/mail": "workspace:*",
         "@shared/schema": "workspace:*",
         "hono": "catalog:",
         "valibot": "catalog:",

@@ -1,0 +1,89 @@
+# syntax=docker/dockerfile:1.20
+
+FROM node:24-alpine AS installer
+
+ENV NODE_ENV=production
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
+RUN corepack enable pnpm
+
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --parents ./apps/*/package.json ./shared/*/package.json ./
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --global serve
+
+COPY . ./
+
+# =========================================================================== #
+
+FROM installer AS dev-admin
+
+RUN pnpm -F admin deploy --legacy ./prod/admin
+
+WORKDIR /app/prod/admin
+
+CMD ["pnpm", "dev"]
+
+# =========================================================================== #
+
+FROM installer AS dev-server
+
+RUN pnpm -F server deploy --legacy ./prod/server
+
+WORKDIR /app/prod/server
+
+CMD ["pnpm", "dev"]
+
+# =========================================================================== #
+
+FROM installer AS build-admin
+
+RUN pnpm -F admin deploy --legacy ./prod/admin
+
+WORKDIR /app/prod/admin
+
+RUN pnpm build
+
+# =========================================================================== #
+
+FROM installer AS build-web
+
+RUN pnpm -F web deploy --legacy ./prod/web
+
+WORKDIR /app/prod/web
+
+RUN pnpm build
+
+# =========================================================================== #
+
+FROM installer AS deploy-server
+
+RUN pnpm -F server deploy --legacy ./prod/server
+
+# =========================================================================== #
+
+FROM devforth/spa-to-http:latest AS prod-admin
+
+COPY --from=build-admin /app/prod/admin/dist .
+
+# =========================================================================== #
+
+FROM installer AS prod-server
+
+WORKDIR /app
+COPY --from=deploy-server /app/prod/server ./
+COPY ./apps/server/.env ./
+
+# =========================================================================== #
+
+FROM node:24-alpine AS prod-web
+
+WORKDIR /app
+COPY --from=build-web /app/prod/web/dist ./

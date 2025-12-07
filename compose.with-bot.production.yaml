@@ -6,12 +6,12 @@ include:
   - ./infrastructure/compose.dozzle.yaml
   - ./infrastructure/compose.authelia.yaml
   - ./infrastructure/compose.crowdsec.yaml
-  - ./shared/queue/compose.production.yaml
+  - ./infrastructure/compose.redis.production.yaml
 
 services:
   server:
     extends:
-      file: compose.local.yaml
+      file: compose.with-bot.local.yaml
       service: server
     labels:
       - "traefik.enable=true"
@@ -33,7 +33,7 @@ services:
 
   admin:
     extends:
-      file: compose.local.yaml
+      file: compose.with-bot.local.yaml
       service: admin
     build:
       context: .
@@ -51,12 +51,12 @@ services:
 
   workers:
     extends:
-      file: compose.local.yaml
+      file: compose.with-bot.local.yaml
       service: workers
 
   bot:
     extends:
-      file: compose.local.yaml
+      file: compose.with-bot.local.yaml
       service: bot
     labels:
       - "traefik.enable=true"
@@ -68,7 +68,7 @@ services:
 
   web:
     extends:
-      file: compose.local.yaml
+      file: compose.with-bot.local.yaml
       service: web
     labels:
       - "traefik.enable=true"

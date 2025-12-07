@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
-import { env, type Env } from "../env";
-import { logger } from "../logger";
+import { env, type Env } from "./env";
+import { logger } from "./logger";
 
 interface ClientProps {
   env: Env;

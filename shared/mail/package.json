@@ -1,5 +1,5 @@
 {
-  "name": "@shared/queue",
+  "name": "@shared/mail",
   "private": true,
   "type": "module",
   "exports": {
@@ -15,9 +15,7 @@
     "@shared/logger": "workspace:*",
     "@react-email/components": "catalog:",
     "@react-email/preview-server": "catalog:",
-    "bullmq": "catalog:",
     "@dotenvx/dotenvx": "catalog:",
-    "ioredis": "catalog:",
     "nodemailer": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

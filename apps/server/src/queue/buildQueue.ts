@@ -1,6 +1,6 @@
-import { Queue } from "bullmq";
-import { redisClient } from "../redis";
-import { type JobType, type JobData } from "../types";
+// import { Queue } from "bullmq";
+
+import type { JobType, JobData } from "./types";
 
 const defaultJobOptions = {
   attempts: 50,
@@ -17,7 +17,7 @@ const defaultJobOptions = {
   },
 };
 
-export default <J extends JobType>(queueName: string) => {
+function buildQueue<J extends JobType>(queueName: string) {
   if (!redisClient) {
     throw new Error("Something wrong with Redis client");
   }
@@ -27,3 +27,11 @@ export default <J extends JobType>(queueName: string) => {
     defaultJobOptions,
   });
 };
+
+export const citizenApprovedEmailQueue =
+  buildQueue<JobType.Mail>("citizen-approved");
+
+export const citizenRejectedEmailQueue =
+  buildQueue<JobType.Mail>("citizen-rejected");
+
+export const officialEmailQueue = buildQueue<JobType.Mail>("official-request");

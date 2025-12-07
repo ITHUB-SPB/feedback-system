@@ -1,4 +1,4 @@
-import type { OfficialRequest } from "../../types";
+import type { OfficialRequest } from "../types";
 
 const officialRequestText = ({
   officialName,
