@@ -1,9 +1,7 @@
 import { serve } from "@hono/node-server";
-import { createLogger } from "@shared/logger";
 import { env } from "./env";
 import createApp from "./bootstrap";
-
-const logger = createLogger({ env: env.ENV });
+import logger from "./logger";
 
 const server = serve(
   {

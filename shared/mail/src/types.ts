@@ -7,12 +7,14 @@ export type OfficialRequest = {
   files: string[];
 };
 
-export type MailJobData = {
+export type MailCitizenJobData = {
   to: string;
   type: 'citizen-approved' | 'citizen-rejected';
   name: string;
   attachments?: string[];
-} | {
+}
+
+export type MailOfficialJobData = {
   to: string;
   type: 'official-request';
   officialName: string;
@@ -20,4 +22,6 @@ export type MailJobData = {
   categoryTopic: string | undefined;
   createdAt: string;
   files?: string[];
-};
+}
+
+export type MailJobData = MailCitizenJobData | MailOfficialJobData

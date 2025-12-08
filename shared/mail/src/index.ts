@@ -5,9 +5,9 @@ import * as emailTemplates from "./templates";
 import { env } from "./env";
 import { mailClient } from "./client";
 import { logger } from "./logger";
-import type { MailJobData, OfficialRequest } from "./types";
+import type { MailJobData, MailCitizenJobData, MailOfficialJobData, OfficialRequest } from "./types";
 
-export type { MailJobData, OfficialRequest };
+export type { MailJobData, OfficialRequest, MailCitizenJobData, MailOfficialJobData };
 
 async function buildMail(options: MailJobData) {
   if (options.type === "citizen-approved") {

@@ -17,7 +17,7 @@ export const envSchema = v.union([
   }),
   v.object({
     ENV: v.literal("development"),
-    SQLITE_DATABASE_URI: v.string(),
+    PGLITE_DATABASE_URI: v.string(),
   }),
 ]);
 

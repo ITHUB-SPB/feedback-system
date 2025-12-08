@@ -1,20 +1,22 @@
-import SqliteDatabase from "better-sqlite3";
+import { KyselyPGlite } from "kysely-pglite";
 import { Pool } from "pg";
 import {
   Kysely,
-  SqliteDialect,
   PostgresDialect,
   ParseJSONResultsPlugin,
 } from "kysely";
+
+import useLiteServer from "./liteServer";
 
 import { jsonObjectFrom } from "kysely/helpers/sqlite";
 import { env } from "./env";
 import type { Database } from "./interface";
 
-function getDialect() {
+async function getDialect() {
   if (env.ENV === "production" || env.ENV === "staging") {
     const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } =
       env;
+
     const POSTGRES_DATABASE_URI = `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}`;
 
     return new PostgresDialect({
@@ -25,16 +27,16 @@ function getDialect() {
     });
   }
 
-  return new SqliteDialect({
-    database: new SqliteDatabase(
-      env.ENV === "development" ? env.SQLITE_DATABASE_URI : "data.db",
-    ),
-  });
+  if (env.ENV === "development") {
+    return (await KyselyPGlite.create(env.PGLITE_DATABASE_URI)).dialect
+  }
+
+  throw new Error("Incorrect ENV value")
 }
 
 export const db = new Kysely<Database>({
-  dialect: getDialect(),
+  dialect: await getDialect(),
   plugins: [new ParseJSONResultsPlugin()],
 });
 
-export { type Database, jsonObjectFrom };
+export { type Database, jsonObjectFrom, env, useLiteServer };

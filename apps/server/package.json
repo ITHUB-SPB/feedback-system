@@ -9,20 +9,22 @@
         "start": "tsx src/index.ts"
     },
     "dependencies": {
-        "@shared/api": "workspace:*",
-        "@shared/auth": "workspace:*",
-        "@shared/database": "workspace:*",
-        "@shared/logger": "workspace:*",
-        "@shared/minio": "workspace:*",
-        "@shared/mail": "workspace:*",
-        "@shared/schema": "workspace:*",
-        "hono": "catalog:",
-        "valibot": "catalog:",
         "@dotenvx/dotenvx": "catalog:",
         "@hono/node-server": "catalog:",
         "@orpc/openapi": "catalog:",
         "@orpc/server": "catalog:",
-        "@scalar/hono-api-reference": "^0.9.22"
+        "@scalar/hono-api-reference": "^0.9.22",
+        "@shared/api": "workspace:*",
+        "@shared/auth": "workspace:*",
+        "@shared/database": "workspace:*",
+        "@shared/logger": "workspace:*",
+        "@shared/mail": "workspace:*",
+        "@shared/minio": "workspace:*",
+        "@shared/schema": "workspace:*",
+        "@sidequest/postgres-backend": "^1.13.0",
+        "hono": "catalog:",
+        "sidequest": "^1.13.0",
+        "valibot": "catalog:"
     },
     "devDependencies": {
         "@shared/typescript-config": "workspace:*",
