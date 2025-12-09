@@ -22,6 +22,8 @@
         "@shared/minio": "workspace:*",
         "@shared/schema": "workspace:*",
         "@sidequest/postgres-backend": "^1.13.0",
+        "@sidequest/sqlite-backend": "^1.13.0",
+        "better-sqlite3": "^12.5.0",
         "hono": "catalog:",
         "sidequest": "^1.13.0",
         "valibot": "catalog:"

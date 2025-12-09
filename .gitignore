@@ -7,7 +7,7 @@ node_modules
 
 infrastructure/secrets/*
 infrastructure/traefik/logs/*
-infrastructure/postgres/data
+
 infrastructure/authelia/*
 !infrastructure/authelia/configuration.yml
 !infrastructure/authelia/users.example.yml
@@ -16,6 +16,8 @@ infrastructure/postgres/data
 !infrastructure/postgres/data/pg_wal/*
 !infrastructure/postgres/data/pg_hba.conf
 !infrastructure/postgres/data/postgresql.conf
+
+shared/database/pglite
 
 __pycache__/
 *.py[cod]

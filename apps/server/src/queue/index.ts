@@ -39,6 +39,6 @@ export async function sendOfficialEmail({
 }
 
 
-await Sidequest.start(await getSidequestConfig())
+await Sidequest.start(getSidequestConfig())
 
 console.log("Sidequest started! Dashboard: http://localhost:8678");

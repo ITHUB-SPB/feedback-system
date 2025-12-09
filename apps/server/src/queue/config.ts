@@ -1,22 +1,16 @@
-import { env as databaseEnv, useLiteServer } from '@shared/database'
+import { env as databaseEnv } from '@shared/database'
 
-async function getSidequestBackendConfig() {
-  if (databaseEnv.ENV === "development") {
-    await useLiteServer().start()
-    return 'postgresql://postgres:postgres@localhost:5432/feedback'
-  }
-
-  return `postgresql://${databaseEnv.POSTGRES_USER}:${databaseEnv.POSTGRES_PASSWORD}@${databaseEnv.POSTGRES_HOST}:5432/${databaseEnv.POSTGRES_DB}`
-}
-
-export default async function getSidequestConfig() {
+export default function getSidequestConfig() {
   return {
-    backend: {
+    backend: databaseEnv.ENV === "development" ? {
+      driver: "@sidequest/sqlite-backend",
+      config: {}
+    } : {
       driver: "@sidequest/postgres-backend",
-      config: await getSidequestBackendConfig()
+      config: `postgresql://${databaseEnv.POSTGRES_USER}:${databaseEnv.POSTGRES_PASSWORD}@${databaseEnv.POSTGRES_HOST}:5432/${databaseEnv.POSTGRES_DB}`
     },
     queues: [{ name: 'mail.citizen' }, { name: 'mail.official' }],
-    jobsFilePath: './jobs',
+    jobsFilePath: './jobs.ts',
     manualJobResolution: true,
     dashboard: {
       enabled: true,

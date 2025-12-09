@@ -17,7 +17,7 @@
         "auth:migrate": "pnpm -F @shared/auth auth:migrate",
         "db:reset": "pnpm -F @shared/database db:reset",
         "db:seed": "pnpm -F @shared/database db:seed",
-        "db:check": "pnpm db:check",
+        "db:check": "pnpm -F @shared/database db:check",
         "db:migrate": "pnpm -F @shared/database db:migrate"
     },
     "devDependencies": {
