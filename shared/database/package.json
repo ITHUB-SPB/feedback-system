@@ -14,9 +14,7 @@
     "dependencies": {
         "@dotenvx/dotenvx": "catalog:",
         "@electric-sql/pglite": "^0.3.14",
-        "@electric-sql/pglite-socket": "^0.0.19",
         "@shared/schema": "workspace:*",
-        "better-sqlite3": "catalog:",
         "kysely": "catalog:",
         "kysely-pglite": "^0.6.1",
         "pg": "catalog:",
@@ -24,7 +22,6 @@
     },
     "devDependencies": {
         "@shared/typescript-config": "workspace:*",
-        "@types/better-sqlite3": "catalog:",
         "@types/node": "catalog:",
         "@types/pg": "catalog:",
         "tsx": "catalog:",

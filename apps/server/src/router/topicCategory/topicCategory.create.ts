@@ -3,22 +3,11 @@ import { protectedProcedure } from "@shared/api";
 const createTopicCategory = protectedProcedure.topicCategory.create.handler(
   async ({ context, input, errors }) => {
     try {
-      let topicCategoryId;
-
-      if (context.environment.ENV === "development") {
-        const { insertId } = await context.db
-          .insertInto("topic_category")
-          .values(input)
-          .executeTakeFirstOrThrow();
-        topicCategoryId = insertId;
-      } else {
-        const { id } = await context.db
-          .insertInto("topic_category")
-          .values(input)
-          .returning("id")
-          .executeTakeFirstOrThrow();
-        topicCategoryId = id;
-      }
+      const { id: topicCategoryId } = await context.db
+        .insertInto("topic_category")
+        .values(input)
+        .returning("id")
+        .executeTakeFirstOrThrow();
 
       return await context.db
         .selectFrom("topic_category")

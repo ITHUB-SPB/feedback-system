@@ -5,22 +5,11 @@ const createVotingVote =
   publicProcedure.votingVote.create.handler(
     async ({ context, input, errors }) => {
       try {
-        let unitId;
-
-        if (context.environment.ENV === "development") {
-          const { insertId } = await context.db
-            .insertInto("voting_vote")
-            .values(input)
-            .executeTakeFirstOrThrow();
-          unitId = insertId;
-        } else {
-          const { id } = await context.db
-            .insertInto("voting_vote")
-            .values(input)
-            .returning("id")
-            .executeTakeFirstOrThrow();
-          unitId = id;
-        }
+        const { id: unitId } = await context.db
+          .insertInto("voting_vote")
+          .values(input)
+          .returning("id")
+          .executeTakeFirstOrThrow();
 
         return await _baseSelect(context.db)
           .where("voting_vote.id", "=", Number(unitId))

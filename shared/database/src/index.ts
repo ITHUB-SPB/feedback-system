@@ -6,9 +6,6 @@ import {
   ParseJSONResultsPlugin,
 } from "kysely";
 
-import useLiteServer from "./liteServer";
-
-import { jsonObjectFrom } from "kysely/helpers/sqlite";
 import { env } from "./env";
 import type { Database } from "./interface";
 
@@ -39,4 +36,4 @@ export const db = new Kysely<Database>({
   plugins: [new ParseJSONResultsPlugin()],
 });
 
-export { type Database, jsonObjectFrom, env, useLiteServer };
+export { type Database, env };

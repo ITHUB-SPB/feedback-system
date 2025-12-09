@@ -5,21 +5,11 @@ const createOfficialResponsibility =
   protectedProcedure.officialResponsibility.create.handler(
     async ({ context, input, errors }) => {
       try {
-        let officialResponsibilityId;
-        if (context.environment.ENV === "development") {
-          const { insertId } = await context.db
-            .insertInto("official_responsibility")
-            .values(input)
-            .executeTakeFirstOrThrow();
-          officialResponsibilityId = insertId;
-        } else {
-          const { id } = await context.db
-            .insertInto("official_responsibility")
-            .values(input)
-            .returning("id")
-            .executeTakeFirstOrThrow();
-          officialResponsibilityId = id;
-        }
+        const { id: officialResponsibilityId } = await context.db
+          .insertInto("official_responsibility")
+          .values(input)
+          .returning("id")
+          .executeTakeFirstOrThrow();
 
         return await _baseSelect(context.db)
           .where(

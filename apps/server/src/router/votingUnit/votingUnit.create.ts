@@ -5,22 +5,11 @@ const createVotingRegion =
   protectedProcedure.votingUnit.create.handler(
     async ({ context, input, errors }) => {
       try {
-        let unitId;
-
-        if (context.environment.ENV === "development") {
-          const { insertId } = await context.db
-            .insertInto("voting_unit")
-            .values(input)
-            .executeTakeFirstOrThrow();
-          unitId = insertId;
-        } else {
-          const { id } = await context.db
-            .insertInto("voting_unit")
-            .values(input)
-            .returning("id")
-            .executeTakeFirstOrThrow();
-          unitId = id;
-        }
+        const { id: unitId } = await context.db
+          .insertInto("voting_unit")
+          .values(input)
+          .returning("id")
+          .executeTakeFirstOrThrow();
 
         return await _baseSelect(context.db)
           .where("voting_unit.id", "=", Number(unitId))

@@ -3,22 +3,11 @@ import { protectedProcedure } from "@shared/api";
 const createTopic = protectedProcedure.topic.create.handler(
   async ({ context, input, errors }) => {
     try {
-      let topicId;
-
-      if (context.environment.ENV === "development") {
-        const { insertId } = await context.db
-          .insertInto("topic")
-          .values(input)
-          .executeTakeFirstOrThrow();
-        topicId = insertId;
-      } else {
-        const { id } = await context.db
-          .insertInto("topic")
-          .values(input)
-          .returning("id")
-          .executeTakeFirstOrThrow();
-        topicId = id;
-      }
+      const { id: topicId } = await context.db
+        .insertInto("topic")
+        .values(input)
+        .returning("id")
+        .executeTakeFirstOrThrow();
 
       return await context.db
         .selectFrom("topic")

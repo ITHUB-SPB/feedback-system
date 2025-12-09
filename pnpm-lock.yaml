@@ -358,9 +358,6 @@ importers:
       '@electric-sql/pglite':
         specifier: ^0.3.14
         version: 0.3.14
-      '@electric-sql/pglite-socket':
-        specifier: ^0.0.19
-        version: 0.0.19(@electric-sql/pglite@0.3.14)
       '@shared/schema':
         specifier: workspace:*
         version: link:../schema
@@ -1063,12 +1060,6 @@ packages:
     engines: {bun: '>=1', deno: '>=2', node: '>=16'}
     peerDependencies:
       '@noble/ciphers': ^1.0.0
-
-  '@electric-sql/pglite-socket@0.0.19':
-    resolution: {integrity: sha512-9Uq0aXJyfeQMQCk9OiX3dfjdKCKurjGPkhHemDo+sA5QeYPuH48Bxfue4sfA+dBXZGe9cUCjwrnZ351E3wPPIA==}
-    hasBin: true
-    peerDependencies:
-      '@electric-sql/pglite': 0.3.14
 
   '@electric-sql/pglite@0.3.14':
     resolution: {integrity: sha512-3DB258dhqdsArOI1fIt7cb9RpUOgcDg5hXWVgVHAeqVQ/qxtFy605QKs4gx6mFq3jWsSPqDN8TgSEsqC3OfV9Q==}
@@ -8204,10 +8195,6 @@ snapshots:
   '@ecies/ciphers@0.2.4(@noble/ciphers@1.3.0)':
     dependencies:
       '@noble/ciphers': 1.3.0
-
-  '@electric-sql/pglite-socket@0.0.19(@electric-sql/pglite@0.3.14)':
-    dependencies:
-      '@electric-sql/pglite': 0.3.14
 
   '@electric-sql/pglite@0.3.14': {}
 

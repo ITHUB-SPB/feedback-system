@@ -11,21 +11,11 @@ const createTopicCategoryTopic =
           topic_id,
         };
 
-        let tctId;
-        if (context.environment.ENV === "development") {
-          const { insertId } = await context.db
-            .insertInto("topic_category_topic")
-            .values(tctValues)
-            .executeTakeFirstOrThrow();
-          tctId = insertId;
-        } else {
-          const { id } = await context.db
-            .insertInto("topic_category_topic")
-            .values(tctValues)
-            .returning("id")
-            .executeTakeFirstOrThrow();
-          tctId = id;
-        }
+        const { id: tctId } = await context.db
+          .insertInto("topic_category_topic")
+          .values(tctValues)
+          .returning("id")
+          .executeTakeFirstOrThrow();
 
         return await context.db
           .selectFrom("topic_category_topic")

@@ -7,7 +7,7 @@ async function checkConnection() {
 
 checkConnection()
   .then((meta) => {
-    const checkDatabase = env.ENV === "development" ? "sqlite" : "postgres";
+    const checkDatabase = env.ENV === "development" ? "pglite" : "postgres";
 
     console.log(`Connection for ${checkDatabase} OK`);
     console.log(meta.map(({ name }) => name).join(", "));

@@ -356,10 +356,11 @@ async function migratePostgres() {
     .createTable("voting_unit")
     .ifNotExists()
     .addColumn("id", "serial", (col) => col.primaryKey())
-    .addColumn("title", "text", (col) => col.notNull().unique())
+    .addColumn("title", "text", (col) => col.notNull())
     .addColumn("voting_region_id", "integer", (col) =>
-      col.notNull().references("voting_region.id").onDelete("set null"),
+      col.references("voting_region.id").onDelete("set null"),
     )
+    .addUniqueConstraint('voting_unit_title_region_pain_unique', ["title", "voting_region_id"])
     .execute();
 
   await db.schema

@@ -22,27 +22,14 @@ const createFeedback = publicProcedure.feedback.create.handler(
           .where("person_type.title", "=", "citizen")
           .executeTakeFirstOrThrow();
 
-        let personContactId;
-        if (context.environment.ENV === "development") {
-          const { insertId } = await transaction
-            .insertInto("person_contact")
-            .values({
-              email: input.body.email,
-              phone: input.body.phone ?? "",
-            })
-            .executeTakeFirstOrThrow();
-          personContactId = insertId;
-        } else {
-          const { id } = await transaction
-            .insertInto("person_contact")
-            .values({
-              email: input.body.email,
-              phone: input.body.phone ?? "",
-            })
-            .returning("id")
-            .executeTakeFirstOrThrow();
-          personContactId = id;
-        }
+        const { id: personContactId } = await transaction
+          .insertInto("person_contact")
+          .values({
+            email: input.body.email,
+            phone: input.body.phone ?? "",
+          })
+          .returning("id")
+          .executeTakeFirstOrThrow();
 
         if (personContactId === undefined) {
           throw new Error("Ошибка при создании нового контакта");
@@ -56,20 +43,12 @@ const createFeedback = publicProcedure.feedback.create.handler(
           contact_id: Number(personContactId),
         };
 
-        if (context.environment.ENV === "development") {
-          const { insertId } = await transaction
-            .insertInto("person")
-            .values(newPersonValues)
-            .executeTakeFirstOrThrow();
-          personId = Number(insertId);
-        } else {
-          const { id } = await transaction
-            .insertInto("person")
-            .values(newPersonValues)
-            .returning("id")
-            .executeTakeFirstOrThrow();
-          personId = Number(id);
-        }
+        const { id } = await transaction
+          .insertInto("person")
+          .values(newPersonValues)
+          .returning("id")
+          .executeTakeFirstOrThrow();
+        personId = Number(id);
       }
 
       const { id: pendingStatusId } = await transaction
@@ -87,22 +66,11 @@ const createFeedback = publicProcedure.feedback.create.handler(
         feedback_status_id: pendingStatusId,
       };
 
-      let feedbackId;
-
-      if (context.environment.ENV === "development") {
-        const { insertId } = await transaction
-          .insertInto("feedback")
-          .values(newFeedbackValues)
-          .executeTakeFirstOrThrow();
-        feedbackId = insertId;
-      } else {
-        const { id } = await transaction
-          .insertInto("feedback")
-          .values(newFeedbackValues)
-          .returning("id")
-          .executeTakeFirstOrThrow();
-        feedbackId = id;
-      }
+      const { id: feedbackId } = await transaction
+        .insertInto("feedback")
+        .values(newFeedbackValues)
+        .returning("id")
+        .executeTakeFirstOrThrow();
 
       if (feedbackId === undefined) {
         throw new Error("Ошибка при создании записи");
