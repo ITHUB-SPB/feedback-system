@@ -1,5 +1,5 @@
 import { protectedProcedure } from "@shared/api";
-import { sendCitizenEmail, sendOfficialEmail } from "@shared/queue";
+import { sendCitizenEmail, sendOfficialEmail } from "../../queue";
 import _baseSelect from "./_baseSelect";
 import _enrichSelect from "./_enrichSelect";
 

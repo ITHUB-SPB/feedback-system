@@ -77,11 +77,6 @@ services:
       - "traefik.http.routers.admin.middlewares=chain-no-auth@file"
       - "traefik.http.services.admin.loadbalancer.server.port=5174"
 
-  feedback-workers:
-    extends:
-      file: compose.platform.local.yaml
-      service: feedback-workers
-
   feedback-web:
     extends:
       file: compose.platform.local.yaml

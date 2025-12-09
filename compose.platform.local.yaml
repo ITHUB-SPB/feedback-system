@@ -29,19 +29,6 @@ services:
           "wget --quiet --spider http://$$SERVER_HOST:$$SERVER_PORT/healthcheck",
         ]
 
-  feedback-workers:
-    container_name: feedback-workers
-    build:
-      context: .
-      dockerfile: ./Dockerfile.platform
-      target: prod-server
-    command: "pnpm start:workers" 
-    env_file:
-      - ./apps/server/.env
-    restart: unless-stopped
-    depends_on:
-      - feedback-server
-
   feedback-admin:
     container_name: feedback-admin
     build:
@@ -80,9 +67,3 @@ secrets:
     file: ./infrastructure/secrets/authelia_jwt_secret
   minio_secret_key:
     file: ./infrastructure/secrets/authelia_session_secret
-  walg_libsodium_key:
-    file: ./infrastructure/secrets/walg_libsodium_key
-  postgres_user:
-    file: ./infrastructure/secrets/postgres_user
-  postgres_password:
-    file: ./infrastructure/secrets/postgres_password

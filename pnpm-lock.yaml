@@ -239,19 +239,16 @@ importers:
         version: link:../../shared/schema
       '@sidequest/postgres-backend':
         specifier: ^1.13.0
-        version: 1.13.0(better-sqlite3@12.5.0)
+        version: 1.13.0
       '@sidequest/sqlite-backend':
         specifier: ^1.13.0
         version: 1.13.0
-      better-sqlite3:
-        specifier: ^12.5.0
-        version: 12.5.0
       hono:
         specifier: 'catalog:'
         version: 4.9.7
       sidequest:
         specifier: ^1.13.0
-        version: 1.13.0(better-sqlite3@12.5.0)
+        version: 1.13.0
       valibot:
         specifier: 'catalog:'
         version: 1.1.0(typescript@5.9.2)
@@ -9836,7 +9833,35 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@sidequest/backend@1.13.0(better-sqlite3@12.5.0)(pg@8.16.3)':
+  '@sidequest/backend@1.13.0':
+    dependencies:
+      '@sidequest/core': 1.13.0
+      knex: 3.1.0(better-sqlite3@12.5.0)(pg@8.16.3)
+    transitivePeerDependencies:
+      - better-sqlite3
+      - mysql
+      - mysql2
+      - pg
+      - pg-native
+      - sqlite3
+      - supports-color
+      - tedious
+
+  '@sidequest/backend@1.13.0(better-sqlite3@12.5.0)':
+    dependencies:
+      '@sidequest/core': 1.13.0
+      knex: 3.1.0(better-sqlite3@12.5.0)(pg@8.16.3)
+    transitivePeerDependencies:
+      - better-sqlite3
+      - mysql
+      - mysql2
+      - pg
+      - pg-native
+      - sqlite3
+      - supports-color
+      - tedious
+
+  '@sidequest/backend@1.13.0(pg@8.16.3)':
     dependencies:
       '@sidequest/core': 1.13.0
       knex: 3.1.0(better-sqlite3@12.5.0)(pg@8.16.3)
@@ -9855,11 +9880,11 @@ snapshots:
       safe-stable-stringify: 2.5.0
       winston: 3.19.0
 
-  '@sidequest/dashboard@1.13.0(better-sqlite3@12.5.0)(sidequest@1.13.0(better-sqlite3@12.5.0))':
+  '@sidequest/dashboard@1.13.0(sidequest@1.13.0)':
     dependencies:
-      '@sidequest/backend': 1.13.0(better-sqlite3@12.5.0)(pg@8.16.3)
+      '@sidequest/backend': 1.13.0
       '@sidequest/core': 1.13.0
-      '@sidequest/engine': 1.13.0(better-sqlite3@12.5.0)(sidequest@1.13.0(better-sqlite3@12.5.0))
+      '@sidequest/engine': 1.13.0(sidequest@1.13.0)
       ejs: 3.1.10
       express: 5.2.1
       express-basic-auth: 1.2.1
@@ -9876,13 +9901,13 @@ snapshots:
       - supports-color
       - tedious
 
-  '@sidequest/engine@1.13.0(better-sqlite3@12.5.0)(sidequest@1.13.0(better-sqlite3@12.5.0))':
+  '@sidequest/engine@1.13.0(sidequest@1.13.0)':
     dependencies:
-      '@sidequest/backend': 1.13.0(better-sqlite3@12.5.0)(pg@8.16.3)
+      '@sidequest/backend': 1.13.0
       '@sidequest/core': 1.13.0
       node-cron: 4.2.1
       piscina: 5.1.4
-      sidequest: 1.13.0(better-sqlite3@12.5.0)
+      sidequest: 1.13.0
     transitivePeerDependencies:
       - better-sqlite3
       - mysql
@@ -9893,9 +9918,9 @@ snapshots:
       - supports-color
       - tedious
 
-  '@sidequest/postgres-backend@1.13.0(better-sqlite3@12.5.0)':
+  '@sidequest/postgres-backend@1.13.0':
     dependencies:
-      '@sidequest/backend': 1.13.0(better-sqlite3@12.5.0)(pg@8.16.3)
+      '@sidequest/backend': 1.13.0(pg@8.16.3)
       '@sidequest/core': 1.13.0
       knex: 3.1.0(better-sqlite3@12.5.0)(pg@8.16.3)
       pg: 8.16.3
@@ -9910,7 +9935,7 @@ snapshots:
 
   '@sidequest/sqlite-backend@1.13.0':
     dependencies:
-      '@sidequest/backend': 1.13.0(better-sqlite3@12.5.0)(pg@8.16.3)
+      '@sidequest/backend': 1.13.0(better-sqlite3@12.5.0)
       '@sidequest/core': 1.13.0
       better-sqlite3: 12.5.0
       knex: 3.1.0(better-sqlite3@12.5.0)(pg@8.16.3)
@@ -13974,12 +13999,12 @@ snapshots:
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
 
-  sidequest@1.13.0(better-sqlite3@12.5.0):
+  sidequest@1.13.0:
     dependencies:
-      '@sidequest/backend': 1.13.0(better-sqlite3@12.5.0)(pg@8.16.3)
+      '@sidequest/backend': 1.13.0
       '@sidequest/core': 1.13.0
-      '@sidequest/dashboard': 1.13.0(better-sqlite3@12.5.0)(sidequest@1.13.0(better-sqlite3@12.5.0))
-      '@sidequest/engine': 1.13.0(better-sqlite3@12.5.0)(sidequest@1.13.0(better-sqlite3@12.5.0))
+      '@sidequest/dashboard': 1.13.0(sidequest@1.13.0)
+      '@sidequest/engine': 1.13.0(sidequest@1.13.0)
     transitivePeerDependencies:
       - better-sqlite3
       - mysql

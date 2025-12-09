@@ -1,5 +1,4 @@
 include:
-  - ./infrastructure/compose.postgres.yaml
   - ./infrastructure/compose.minio.local.yaml
   - ./infrastructure/compose.redis.local.yaml
 
@@ -49,19 +48,6 @@ services:
     depends_on:
       - server
 
-  workers:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.platform
-      target: prod-server
-    command: "pnpm start:workers" 
-    env_file:
-      - ./apps/server/.env
-    container_name: workers
-    restart: unless-stopped
-    depends_on:
-      - postgres
-
   admin:
     build:
       context: .
@@ -101,9 +87,3 @@ secrets:
     file: ./infrastructure/secrets/authelia_jwt_secret
   minio_secret_key:
     file: ./infrastructure/secrets/authelia_session_secret
-  walg_libsodium_key:
-    file: ./infrastructure/secrets/walg_libsodium_key
-  postgres_user:
-    file: ./infrastructure/secrets/postgres_user
-  postgres_password:
-    file: ./infrastructure/secrets/postgres_password

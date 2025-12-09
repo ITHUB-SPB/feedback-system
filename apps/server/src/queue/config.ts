@@ -4,7 +4,6 @@ export default function getSidequestConfig() {
   return {
     backend: databaseEnv.ENV === "development" ? {
       driver: "@sidequest/sqlite-backend",
-      config: databaseEnv.PGLITE_DATABASE_URI
     } : {
       driver: "@sidequest/postgres-backend",
       config: `postgresql://${databaseEnv.POSTGRES_USER}:${databaseEnv.POSTGRES_PASSWORD}@${databaseEnv.POSTGRES_HOST}:5432/${databaseEnv.POSTGRES_DB}`
@@ -14,7 +13,6 @@ export default function getSidequestConfig() {
     manualJobResolution: true,
     dashboard: {
       enabled: true,
-      basePath: "/sidequest",
     }
   }
 }

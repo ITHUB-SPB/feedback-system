@@ -1,4 +1,5 @@
 node_modules
+
 .alchemy
 .env
 **/dist
@@ -17,19 +18,22 @@ infrastructure/postgres/data
 !infrastructure/postgres/data/pg_hba.conf
 !infrastructure/postgres/data/postgresql.conf
 
+infrastructure/traefik/logs/access.log
+
 shared/database/pglite
+
+*.sqlite
+*.sqlite3
+*.db
 
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-*.db
-*.sqlite3
 
 venv/
 
 .idea/
-.vscode/
 *.sublime-project
 *.sublime-workspace
 
@@ -37,4 +41,3 @@ venv/
 *.egg/
 dist/
 build/
-infrastructure/traefik/logs/access.log

@@ -49,11 +49,6 @@ services:
       - "traefik.http.routers.admin.middlewares=chain-no-auth@file"
       - "traefik.http.services.admin.loadbalancer.server.port=5174"
 
-  workers:
-    extends:
-      file: compose.with-bot.local.yaml
-      service: workers
-
   bot:
     extends:
       file: compose.with-bot.local.yaml

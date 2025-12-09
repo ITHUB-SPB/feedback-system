@@ -5,7 +5,6 @@
     "scripts": {
         "check-types": "tsc --noEmit",
         "dev": "tsx watch src/index.ts",
-        "start:workers": "tsx src/workers.ts",
         "start": "tsx src/index.ts"
     },
     "dependencies": {
@@ -23,7 +22,6 @@
         "@shared/schema": "workspace:*",
         "@sidequest/postgres-backend": "^1.13.0",
         "@sidequest/sqlite-backend": "^1.13.0",
-        "better-sqlite3": "^12.5.0",
         "hono": "catalog:",
         "sidequest": "^1.13.0",
         "valibot": "catalog:"
