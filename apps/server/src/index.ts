@@ -13,7 +13,7 @@ const server = serve(
 Hono
 - internal server url: http://localhost:3001
 - external server url: ${env.PUBLIC_SERVER_URL}
-- api reference: ${env.PUBLIC_SERVER_URL}/api
+- api reference: ${env.PUBLIC_SERVER_URL}/docs
 - api reference (auth): ${env.PUBLIC_SERVER_URL}/api/auth/reference
     `);
   },

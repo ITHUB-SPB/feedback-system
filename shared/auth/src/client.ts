@@ -1,3 +1,4 @@
+import { admin } from "better-auth/plugins";
 import { createAuthClient as createBetterAuthClient } from "better-auth/react";
 
 export interface AuthClientOptions {
@@ -11,4 +12,7 @@ export const createAuthClient = ({
 }: AuthClientOptions) =>
   createBetterAuthClient({
     baseURL: `${apiBaseUrl}${apiBasePath}/auth`,
+    plugins: [
+      admin(),
+    ]
   });
