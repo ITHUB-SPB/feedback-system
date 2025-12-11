@@ -1,11 +1,11 @@
 include:
-  - ./infrastructure/compose.postgres.yaml
-  - ./infrastructure/compose.pgadmin.yaml
+  - ./infrastructure/compose.postgres.production.yaml
+  - ./infrastructure/compose.pgadmin.production.yaml
   - ./infrastructure/compose.minio.production.yaml
   - ./infrastructure/compose.traefik.yaml
   - ./infrastructure/compose.dozzle.yaml
   - ./infrastructure/compose.authelia.yaml
-  - ./infrastructure/compose.crowdsec.yaml
+  - ./infrastructure/compose.crowdsec.production.yaml
 
 services:
   feedback-server:
