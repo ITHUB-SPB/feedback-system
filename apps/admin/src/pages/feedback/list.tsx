@@ -1,4 +1,5 @@
-import { useMany } from "@refinedev/core";
+
+import { CanAccess, useMany, useCan } from "@refinedev/core";
 import {
   useTable,
   ShowButton,
@@ -49,6 +50,11 @@ const ListFeedback = () => {
       pageSize: 48,
     },
     defaultValue: getDefaultFilter("feedback_status_id", filters, "eq"),
+  });
+
+  const { data: accessData } = useCan({
+    resource: "feedback",
+    action: "show",
   });
 
   const getStatusColor = (status: string) => {
@@ -173,15 +179,19 @@ const ListFeedback = () => {
           defaultSortOrder={getDefaultSortOrder("created_at", sorters)}
           render={(value) => new Date(value).toLocaleDateString("ru-RU")}
         />
-        <Table.Column
-          title="Действия"
-          minWidth={120}
-          render={(_, record) => (
-            <Space>
-              <ShowButton hideText size="small" recordItemId={record.id} />
-            </Space>
-          )}
-        />
+
+        {accessData?.can &&
+          <Table.Column
+            title="Действия"
+            minWidth={120}
+            render={(_, record) => (
+              <Space>
+                <ShowButton hideText size="small" recordItemId={record.id} />
+              </Space>
+            )}
+          />
+        }
+
       </Table>
     </List>
   );

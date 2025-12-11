@@ -3,7 +3,7 @@ import AntdApp from "antd/es/app";
 import ConfigProvider from "antd/es/config-provider";
 import { useTranslation } from "react-i18next";
 
-import { Refine } from "@refinedev/core";
+import { CanAccess, Refine } from "@refinedev/core";
 import routerProvider from "@refinedev/react-router";
 import { useNotificationProvider } from "@refinedev/antd";
 
@@ -11,6 +11,7 @@ import "./i18n";
 
 import { dataProvider } from "./providers/data-provider";
 import { authProvider } from "./providers/auth-provider";
+import { accessControlProvider } from "./providers/access-control-provider";
 
 import "antd/dist/reset.css";
 import AppRoutes from "./routes";
@@ -49,6 +50,7 @@ function App() {
             dataProvider={dataProvider}
             authProvider={authProvider}
             routerProvider={routerProvider}
+            accessControlProvider={accessControlProvider}
             notificationProvider={useNotificationProvider}
             i18nProvider={i18nProvider}
             resources={[
@@ -100,7 +102,7 @@ function App() {
                 name: "voting_votes",
                 list: "/voting_votes",
                 meta: {
-                  parent: "Голосование",
+                  // parent: "Голосование",
                   label: "Результаты",
                 }
               },
@@ -108,7 +110,7 @@ function App() {
                 name: "voting_units",
                 list: "/voting_units",
                 meta: {
-                  parent: "Голосование",
+                  // parent: "Голосование",
                   label: "Участники",
                 }
               },
@@ -121,7 +123,9 @@ function App() {
               }
             ]}
           >
-            <AppRoutes />
+            <CanAccess>
+              <AppRoutes />
+            </CanAccess>
           </Refine>
         </AntdApp>
       </ConfigProvider>
