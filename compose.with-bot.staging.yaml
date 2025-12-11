@@ -1,0 +1,89 @@
+include:
+  - ./infrastructure/compose.minio.local.yaml
+  - ./infrastructure/compose.redis.local.yaml
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.platform
+      target: prod-server
+    command: "pnpm start" 
+    env_file:
+      - ./apps/server/.env
+    container_name: server
+    restart: unless-stopped
+    ports:
+      - 3001:3001
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      test:
+        [
+          "CMD-SHELL",
+          "wget --quiet --spider http://$$SERVER_HOST:$$SERVER_PORT/healthcheck",
+        ]
+    depends_on:
+      - postgres
+
+  bot:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.bot
+      target: prod-bot
+    container_name: bot
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./apps/bot
+          target: /app
+          ignore:
+            - .venv/
+        - action: rebuild
+          path: ./uv.lock
+    depends_on:
+      - server
+
+  admin:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.platform
+      args:
+        VITE_API_BASE_URL: http://localhost:3001
+      target: prod-admin
+    env_file:
+      - ./apps/admin/.env
+    container_name: admin
+    restart: unless-stopped
+    ports:
+      - 5174:5174
+    command: --brotli --port 5174
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - server
+
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.platform
+      target: prod-web
+    ports:
+      - 5175:5175
+    command: "pnpm dlx serve -p 5175"
+    container_name: web
+    restart: unless-stopped
+    depends_on:
+      - server
+
+secrets:
+  minio_access_key:
+    file: ./infrastructure/secrets/authelia_jwt_secret
+  minio_secret_key:
+    file: ./infrastructure/secrets/authelia_session_secret
