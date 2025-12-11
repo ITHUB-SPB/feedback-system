@@ -1,4 +1,4 @@
-import { useShow, useUpdate, useList } from "@refinedev/core";
+import { useShow, useUpdate, useList, useCan } from "@refinedev/core";
 import { TextField, Show, ListButton } from "@refinedev/antd";
 
 import Tag from "antd/es/tag";
@@ -30,6 +30,11 @@ const ShowFeedback = () => {
       pageSize: 48,
     },
   });
+
+    const { data: accessData } = useCan({
+      resource: "feedback",
+      action: "show",
+    });
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {

@@ -48,7 +48,7 @@ export default function AppRoutes() {
           </Authenticated>
         }
       >
-        <Route index element={<NavigateToResource resource="projects" />} />
+        <Route index element={<NavigateToResource resource="feedback" />} />
         <Route path="/projects">
           <Route index element={<ListProjects />} />
           <Route path=":id" element={<ShowProject />} />
