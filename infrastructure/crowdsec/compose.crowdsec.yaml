@@ -17,6 +17,6 @@ services:
       COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/base-http-scenarios crowdsecurity/whitelist-good-actors crowdsecurity/iptables crowdsecurity/linux crowdsecurity/sshd crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules crowdsecurity/appsec-crs"
     volumes:
       - /var/log:/var/log:ro
-      - ./traefik/logs:/var/log/traefik:ro
-      - ./crowdsec/data:/var/lib/crowdsec/data
-      - ./crowdsec/config:/etc/crowdsec
+      - ../traefik/logs:/var/log/traefik:ro
+      - ./data:/var/lib/crowdsec/data
+      - ./config:/etc/crowdsec

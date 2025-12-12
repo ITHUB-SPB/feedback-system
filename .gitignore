@@ -1,17 +1,20 @@
 node_modules
 
-.alchemy
-.env
 **/dist
 **/.cache
 .DS_Store
+
+.env
+.env.production
+
+.env.keys
 
 infrastructure/secrets/*
 infrastructure/traefik/logs/*
 
 infrastructure/authelia/*
-!infrastructure/authelia/configuration.yml
-!infrastructure/authelia/users.example.yml
+!infrastructure/authelia/config
+!infrastructure/authelia/compose.authelia.yaml
 
 infrastructure/postgres/data
 !infrastructure/postgres/data/pg_wal/*

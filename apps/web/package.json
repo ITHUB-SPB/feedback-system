@@ -3,10 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "dotenvx run -f .env.development -- vite",
+    "staging": "dotenvx run -f .env.staging -- vite",
     "build": "vite build"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "catalog:",
     "@shared/api": "workspace:*"
   },
   "devDependencies": {

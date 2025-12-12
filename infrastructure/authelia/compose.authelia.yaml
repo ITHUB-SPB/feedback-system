@@ -5,19 +5,15 @@ services:
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
-    # depends_on:
-    #  redis:
-    #    condition: service_healthy
-    # ports:
-    #   - "$AUTHELIA_PORT:9091"
+    ports:
+      - "9091:9091"
     volumes:
-      - ./authelia:/config
+      - ./config:/config
     environment:
       - TZ="Europe/Moscow"
       - AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE=/run/secrets/authelia_jwt_secret
       - AUTHELIA_SESSION_SECRET_FILE=/run/secrets/authelia_session_secret
       - AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE=/run/secrets/authelia_storage_encryption_key
-      # - AUTHELIA_SESSION_REDIS_PASSWORD_FILE=/run/secrets/authelia_session_redis_password
     secrets:
       - authelia_jwt_secret
       - authelia_storage_encryption_key

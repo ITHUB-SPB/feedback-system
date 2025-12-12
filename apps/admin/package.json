@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 5174",
+    "dev": "dotenvx run -f .env.development -- vite --port 5174",
+    "staging": "dotenvx run -f .env.staging -- vite --port 5174",
     "build": "vite build"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@dotenvx/dotenvx": "catalog:",
     "@refinedev/antd": "catalog:",
     "@refinedev/cli": "catalog:",
     "@refinedev/core": "catalog:",

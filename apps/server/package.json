@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "check-types": "tsc --noEmit",
-        "dev": "tsx watch src/index.ts",
+        "dev": "dotenvx run -f .env.development -- tsx watch src/index.ts",
+        "staging": "dotenvx run -f .env.staging -- tsx watch src/index.ts",
         "start": "tsx src/index.ts"
     },
     "dependencies": {

@@ -1,6 +1,8 @@
 include:
-  - ./infrastructure/compose.minio.local.yaml
+  - ./infrastructure/compose.minio.staging.yaml
   - ./infrastructure/compose.traefik.yaml
+  - ./infrastructure/compose.postgres.production.yaml
+  - ./infrastructure/compose.pgadmin.production.yaml
 
 services:
   feedback-server:
@@ -8,7 +10,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.platform
-      target: dev-server
+      target: staging-server
     image: feedback-server:latest
     develop:
       watch:
@@ -16,7 +18,7 @@ services:
           path: ./apps/server/src
           target: /app/prod/server
     env_file:
-      - ./apps/server/.env
+      - ./apps/server/.env.staging
     restart: unless-stopped
     ports:
       - 3001:3001
@@ -52,11 +54,12 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.platform
-      args:
-        VITE_API_BASE_URL: http://localhost:3001
-      target: dev-admin
-    env_file:
-      - ./apps/admin/.env
+      # args:
+      #   VITE_API_BASE_URL: http://localhost:3001
+      target: staging-admin
+    # env_file:
+    #   - ./apps/admin/.env.staging
+    image: feedback-admin:latest
     develop:
       watch:
         - action: sync
@@ -75,18 +78,25 @@ services:
       - "traefik.http.services.admin.loadbalancer.server.port=5174"
 
 
-  # web:
-  #   container_name: feedback-web
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile.platform
-  #     target: prod-web
-  #   ports:
-  #     - 5175:5175
-  #   command: "pnpm dlx serve -p 5175"
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - feedback-server
+  feedback-web:
+    container_name: feedback-web
+    build:
+      context: .
+      dockerfile: ./Dockerfile.platform
+      # args:
+      #   VITE_API_BASE_URL: http://localhost:3001
+      target: staging-web
+    image: feedback-web:latest
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/web/src
+          target: /app/prod/web/src
+    ports:
+      - 5175:5175
+    restart: unless-stopped
+    depends_on:
+      - feedback-server
 
 secrets:
   minio_access_key:

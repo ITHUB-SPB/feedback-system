@@ -2,5 +2,5 @@ import { createAPIClient } from "@shared/api/client";
 
 export const apiClient = createAPIClient({
   apiPath: "/api",
-  serverUrl: "https://api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/",
+  serverUrl: import.meta.env.VITE_API_BASE_URL!
 });
