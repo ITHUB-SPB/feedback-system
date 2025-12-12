@@ -1,15 +1,16 @@
 import { betterAuth } from "better-auth"
-import { admin as adminPlugin } from "better-auth/plugins"
-import { ac, superAdmin } from "./permissionControl"
+import { ac, superAdmin, moderator, official, citizen } from "./permissionControl"
 
 export const auth = betterAuth({
-  plugins: [
-    adminPlugin({
-      ac,
-      roles: {
-        superAdmin,
-      }
-    }),
-  ],
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: true,
+        input: false,
+        role: "string",
+      },
+    }
+  }
 });
 
