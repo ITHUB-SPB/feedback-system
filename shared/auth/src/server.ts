@@ -1,5 +1,7 @@
 import { type BetterAuthOptions, betterAuth } from "better-auth";
-import { openAPI } from "better-auth/plugins";
+import { admin as adminPlugin, openAPI } from "better-auth/plugins"
+import { ac, roles } from "./permissionControl"
+
 import { db } from "@shared/database";
 
 export interface AuthOptions {
@@ -15,7 +17,13 @@ export type AuthInstance = ReturnType<typeof createAuth>;
 export const getBaseOptions = (databaseInstance: typeof db) =>
   ({
     database: { db: databaseInstance },
-    plugins: [openAPI({ disableDefaultReference: true })],
+    plugins: [
+      openAPI({ disableDefaultReference: true }),
+      adminPlugin({
+        ac,
+        roles
+      }),
+    ],
   }) satisfies BetterAuthOptions;
 
 export const createAuth = ({
@@ -36,10 +44,21 @@ export const createAuth = ({
         maxAge: 15 * 60,
       },
     },
+    user: {
+      additionalFields: {
+        role: {
+          type: "string",
+          required: true,
+          input: true
+        }
+      }
+    },
     emailAndPassword: {
       enabled: true,
       autoSignIn: true,
       requireEmailVerification: false,
     },
+
   });
 };
+
