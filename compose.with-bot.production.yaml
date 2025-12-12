@@ -1,12 +1,11 @@
 include:
   - ./infrastructure/authelia/compose.authelia.yaml
   - ./infrastructure/crowdsec/compose.crowdsec.yaml
-  - ./infrastructure/compose.postgres.production.yaml
-  - ./infrastructure/compose.pgadmin.production.yaml
+  - ./infrastructure/dozzle/compose.dozzle.yaml
+  - ./infrastructure/traefik/compose.traefik.production.yaml
+  - ./infrastructure/postgres/compose.postgres.production.yaml
   - ./infrastructure/compose.minio.production.yaml
   - ./infrastructure/compose.redis.production.yaml
-  - ./infrastructure/compose.traefik.yaml
-  - ./infrastructure/compose.dozzle.yaml
 
 services:
   server:

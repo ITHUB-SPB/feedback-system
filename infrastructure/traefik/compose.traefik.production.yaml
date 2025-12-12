@@ -47,8 +47,8 @@ services:
       - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik/rules:/rules"
-      - ./traefik/logs:/var/log/traefik
+      - "./rules:/rules"
+      - "./logs:/var/log/traefik"
       - "letsencrypt:/letsencrypt"
     labels:
       - "traefik.enable=true"
