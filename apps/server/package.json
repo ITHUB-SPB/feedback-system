@@ -19,11 +19,11 @@
         "@shared/database": "workspace:*",
         "@shared/logger": "workspace:*",
         "@shared/mail": "workspace:*",
-        "@shared/minio": "workspace:*",
         "@shared/schema": "workspace:*",
         "@sidequest/postgres-backend": "^1.13.0",
         "@sidequest/sqlite-backend": "^1.13.0",
         "hono": "catalog:",
+        "minio": "catalog:",
         "sidequest": "^1.13.0",
         "valibot": "catalog:"
     },
@@ -33,5 +33,5 @@
         "tsx": "catalog:",
         "typescript": "catalog:"
     },
-    "packageManager": "pnpm@10.4.1"
+    "packageManager": "pnpm@10.25.0"
 }

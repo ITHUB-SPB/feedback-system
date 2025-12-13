@@ -31,5 +31,5 @@
         "@shared/typescript-config": "workspace:*",
         "typescript": "catalog:"
     },
-    "packageManager": "pnpm@10.4.1"
+    "packageManager": "pnpm@10.25.0"
 }

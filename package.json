@@ -23,7 +23,7 @@
         "@biomejs/biome": "catalog:",
         "oxlint": "catalog:"
     },
-    "packageManager": "pnpm@10.4.1",
+    "packageManager": "pnpm@10.25.0",
     "engines": {
         "node": ">=22.10.0"
     },

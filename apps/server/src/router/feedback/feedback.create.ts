@@ -1,5 +1,5 @@
 import { publicProcedure } from "@shared/api";
-import { upload } from "@shared/minio";
+import upload from '../../s3'
 
 const createFeedback = publicProcedure.feedback.create.handler(
   async ({ context, input, errors }) => {

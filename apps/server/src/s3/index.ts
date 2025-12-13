@@ -19,7 +19,7 @@ export default async function upload(file: File, bucketName: string, env: Env) {
       Buffer.from(fileBuffer),
       file.size,
       {
-        
+
       }
     );
 
