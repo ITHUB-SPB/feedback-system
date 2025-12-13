@@ -5,9 +5,9 @@ export const statement = {
   ...defaultStatements,
   administrativeUnit: ["list", "read", "update", "create", "delete"],
   administrativeUnitType: ["list"],
-  feedBack: ["create", "update", "read", "list"],
-  feedBackStatus: ["list"],
-  feedBackType: ["list"],
+  feedback: ["create", "update", "read", "list"],
+  feedbackStatus: ["list"],
+  feedbackType: ["list"],
   officialResponsibility: ["list", "create", "update", "delete"],
   person: ["list", "read", "update", "create", "delete"],
   topic: ["list", "create"],
@@ -17,37 +17,18 @@ export const statement = {
   votingVote: ["list", "read", "create", "delete"],
   project: ["create", "update", "delete", "read", "list"], 
   // какие есть права доступа для контрактов
-
 } as const;
 
 export const ac = createAccessControl(statement);
 
-export const superAdmin = ac.newRole({
-  administrativeUnit: ["list", "read", "update", "create", "delete"],
-  administrativeUnitType: ["list"],
-  feedBack: ["create", "update", "read", "list"],
-  feedBackStatus: ["list"],
-  feedBackType: ["list"],
-  officialResponsibility: ["list", "create", "update", "delete"],
-  person: ["list", "read", "update", "create", "delete"],
-  topic: ["list", "create"],
-  topicCategory: ["list", "create"],
-  votingRegion: ["list", "read", "update", "create", "delete"],
-  votingUnit: ["list", "read", "update", "create", "delete"],
-  votingVote: ["list", "read", "create", "delete"],
-  project: ["create", "update", "delete", "read", "list"],
-
-  ...adminAc.statements,
-});
-
 export const roles = {
-  admin: ac.newRole({
+  superadmin: ac.newRole({
     ...adminAc.statements,
     administrativeUnit: ["list", "read", "update", "create", "delete"],
     administrativeUnitType: ["list"],
-    feedBack: ["create", "update", "read", "list"],
-    feedBackStatus: ["list"],
-    feedBackType: ["list"],
+    feedback: ["create", "update", "read", "list"],
+    feedbackStatus: ["list"],
+    feedbackType: ["list"],
     officialResponsibility: ["list", "create", "update", "delete"],
     person: ["list", "read", "update", "create", "delete"],
     topic: ["list", "create"],
@@ -61,9 +42,9 @@ export const roles = {
   moderator: ac.newRole({
     administrativeUnit: ["list", "read", "update", "create", "delete"],
     administrativeUnitType: ["list"],
-    feedBack: ["create", "update", "read", "list"],
-    feedBackStatus: ["list"],
-    feedBackType: ["list"],
+    feedback: ["create", "update", "read", "list"],
+    feedbackStatus: ["list"],
+    feedbackType: ["list"],
     officialResponsibility: ["list", "create", "update", "delete"],
     topic: ["list", "create"],
     topicCategory: ["list", "create"],
@@ -74,12 +55,12 @@ export const roles = {
   }),
 
   official: ac.newRole({
-    feedBack: ["list", "update", "read"],
+    feedback: ["list", "update", "read"],
     votingVote: ["list", "read"],
   }),
 
   citizen: ac.newRole({
     votingVote: ["list"],
-    feedBack: ["list"]
+    feedback: ["list"]
   }),
 }

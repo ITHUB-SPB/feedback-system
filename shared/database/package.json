@@ -12,9 +12,9 @@
         ".": "./src/index.ts"
     },
     "dependencies": {
+        "@shared/schema": "workspace:*",
         "@dotenvx/dotenvx": "catalog:",
         "@electric-sql/pglite": "^0.3.14",
-        "@shared/schema": "workspace:*",
         "kysely": "catalog:",
         "kysely-pglite": "^0.6.1",
         "pg": "catalog:",

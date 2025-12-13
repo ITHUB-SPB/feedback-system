@@ -18,6 +18,32 @@ import { type VotingUnitTable } from "@shared/schema/voting_unit";
 import { type VotingRegionTable } from "@shared/schema/voting_region";
 import { type VotingVoteTable } from "@shared/schema/voting_vote";
 
+type SessionTable = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  expiresAt: Date;
+  token: string;
+  ipAddress?: string | null | undefined;
+  userAgent?: string | null | undefined;
+  impersonatedBy?: string | null | undefined;
+};
+
+type UserTable = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  email: string;
+  emailVerified: boolean;
+  name: string;
+  image?: string | null | undefined;
+  role: string;
+  banned: boolean | null | undefined;
+  banReason?: string | null | undefined;
+  banExpires?: Date | null | undefined;
+};
+
 type GeneratedId = {
   id: Generated<number>;
 };
@@ -44,4 +70,6 @@ export interface Database {
   voting_region: VotingRegionTable & GeneratedId;
   voting_unit: VotingUnitTable & GeneratedId;
   voting_vote: VotingVoteTable & GeneratedId & GeneratedTime;
+  session: SessionTable;
+  user: UserTable;
 }

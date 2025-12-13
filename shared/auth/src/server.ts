@@ -1,5 +1,5 @@
 import { type BetterAuthOptions, betterAuth } from "better-auth";
-import { admin as adminPlugin, openAPI } from "better-auth/plugins"
+import { admin, openAPI, customSession } from "better-auth/plugins"
 import { ac, roles } from "./permissionControl"
 
 import { db } from "@shared/database";
@@ -19,9 +19,21 @@ export const getBaseOptions = (databaseInstance: typeof db) =>
     database: { db: databaseInstance },
     plugins: [
       openAPI({ disableDefaultReference: true }),
-      adminPlugin({
+      admin({
         ac,
         roles
+      }),
+      customSession(async ({ user, session }) => {
+        const role = db.selectFrom('user').where("id", "=", session.userId)
+
+        return {
+          role,
+          user: {
+            ...user,
+            newField: "newField",
+          },
+          session
+        };
       }),
     ],
   }) satisfies BetterAuthOptions;
@@ -58,7 +70,6 @@ export const createAuth = ({
       autoSignIn: true,
       requireEmailVerification: false,
     },
-
   });
 };
 
