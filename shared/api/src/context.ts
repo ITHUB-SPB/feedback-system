@@ -12,7 +12,7 @@ type Env = {
   PUBLIC_SERVER_URL: string;
   PUBLIC_WEB_URL: string;
   PUBLIC_ADMIN_URL: string;
-  PUBLIC_BOT_URL: string;
+  PUBLIC_BOT_URL?: string | undefined;
   MINIO_ACCESS_KEY: string;
   MINIO_SECRET_KEY: string;
   MINIO_ENDPOINT: string;
@@ -49,13 +49,13 @@ export const createORPCContext = async ({
 const timingMiddleware = os.middleware(async ({ next, path }) => {
   const logger = createLogger({ env: "development" });
   const start = Date.now();
-  let waitMsDisplay = "";
   const result = await next();
   const end = Date.now();
 
   logger.info(
-    `\t[RPC] /${path.join("/")} executed after ${end - start}ms${waitMsDisplay}`,
+    `\t[RPC] /${path.join("/")} executed after ${end - start}ms`,
   );
+
   return result;
 });
 
@@ -63,7 +63,7 @@ const base = implement(apiContract);
 
 export interface Context
   extends Awaited<ReturnType<typeof createORPCContext>>,
-    ResponseHeadersPluginContext {}
+  ResponseHeadersPluginContext { }
 
 export const publicProcedure = base.$context<Context>().use(timingMiddleware);
 

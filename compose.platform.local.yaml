@@ -1,8 +1,2 @@
 include:
-  - ./infrastructure/compose.minio.local.yaml
-
-secrets:
-  minio_access_key:
-    file: ./infrastructure/secrets/authelia_jwt_secret
-  minio_secret_key:
-    file: ./infrastructure/secrets/authelia_session_secret
+  - ./infrastructure/minio/compose.minio.local.yaml

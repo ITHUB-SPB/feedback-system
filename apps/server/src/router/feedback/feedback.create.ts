@@ -94,7 +94,8 @@ const createFeedback = publicProcedure.feedback.create.handler(
                 link_to_s3: fileUrl,
               })
               .execute();
-          } catch {
+          } catch (error) {
+            console.error(error)
             throw new Error("Error on images upload");
           }
         }),

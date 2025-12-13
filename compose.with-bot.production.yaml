@@ -4,8 +4,8 @@ include:
   - ./infrastructure/dozzle/compose.dozzle.yaml
   - ./infrastructure/traefik/compose.traefik.production.yaml
   - ./infrastructure/postgres/compose.postgres.production.yaml
-  - ./infrastructure/compose.minio.production.yaml
-  - ./infrastructure/compose.redis.production.yaml
+  - ./infrastructure/minio/compose.minio.production.yaml
+  - ./infrastructure/redis/compose.redis.production.yaml
 
 services:
   server:

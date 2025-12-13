@@ -1,7 +1,7 @@
 include:
   - ./infrastructure/traefik/compose.traefik.staging.yaml
   - ./infrastructure/postgres/compose.postgres.staging.yaml
-  - ./infrastructure/compose.minio.staging.yaml
+  - ./infrastructure/minio/compose.minio.staging.yaml
 
 services:
   feedback-server:

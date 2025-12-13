@@ -1,46 +1,39 @@
 node_modules
 
-**/dist
-**/.cache
-.DS_Store
+dist/
+build/
+/out/
+.cache
+
+.vscode/*
+!.vscode/extensions.json
 
 .env
 .env.production
-
 .env.keys
+!.env.example
 
+infrastructure/**/logs
+infrastructure/**/data/*
 infrastructure/secrets/*
-infrastructure/traefik/logs/*
 
 infrastructure/authelia/*
 !infrastructure/authelia/config
 !infrastructure/authelia/compose.authelia.yaml
 
-infrastructure/postgres/data
 !infrastructure/postgres/data/pg_wal/*
 !infrastructure/postgres/data/pg_hba.conf
 !infrastructure/postgres/data/postgresql.conf
 
-infrastructure/traefik/logs/access.log
-
-shared/database/pglite
-
+pglite
 *.sqlite
 *.sqlite3
 *.db
 
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-
 venv/
 
-.idea/
-*.sublime-project
-*.sublime-workspace
+.DS_Store
 
-*.egg-info/
-*.egg/
-dist/
-build/
+

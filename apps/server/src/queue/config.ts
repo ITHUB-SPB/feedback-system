@@ -17,7 +17,7 @@ export default function getSidequestConfig(): SidequestConfig {
       backend: {
         driver: "@sidequest/sqlite-backend",
         config: {
-          debug: true
+          connection: "./sidequest.sqlite",
         }
       }
     }

@@ -1,0 +1,8 @@
+services:
+  redis:
+    extends:
+      file: compose.redis.local.yaml
+      service: redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PASSWORD: mostsecretpassword

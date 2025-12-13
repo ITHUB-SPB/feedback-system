@@ -1,6 +1,6 @@
 include:
-  - ./infrastructure/compose.minio.local.yaml
-  - ./infrastructure/compose.redis.local.yaml
+  - ./infrastructure/minio/compose.minio.staging.yaml
+  - ./infrastructure/redis/compose.redis.staging.yaml
 
 services:
   server:

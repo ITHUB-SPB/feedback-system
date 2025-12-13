@@ -4,7 +4,7 @@ include:
   - ./infrastructure/dozzle/compose.dozzle.yaml
   - ./infrastructure/traefik/compose.traefik.production.yaml
   - ./infrastructure/postgres/compose.postgres.production.yaml
-  - ./infrastructure/compose.minio.production.yaml
+  - ./infrastructure/minio/compose.minio.production.yaml
 
 services:
   feedback-server:
@@ -120,5 +120,6 @@ secrets:
     file: ./infrastructure/secrets/postgres_user
   postgres_password:
     file: ./infrastructure/secrets/postgres_password
-  dotenv_private_key_production:
-    file: ./infrastructure/secrets/dotenv_private_key_production
+  redis_password:
+    file: ./infrastructure/secrets/redis_password
+

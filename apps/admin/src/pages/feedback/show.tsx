@@ -178,7 +178,7 @@ const ShowFeedback = () => {
                     return (
                       <Image
                         key={`image_${index}`}
-                        height={140}
+                        // height={140}
                         src={image}
                         preview={{ getContainer: "#root" }}
                       />

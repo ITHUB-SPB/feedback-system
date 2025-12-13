@@ -3,14 +3,10 @@ services:
     image: redis:8.2-alpine
     container_name: feedback-redis
     restart: unless-stopped
-    env_file: .env
-    environment:
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:
       - "6379:6379"
     volumes:
-      - redis_data:/data
+      - ./data:/data
     command:
       [
         "redis-server",
@@ -31,24 +27,6 @@ services:
       interval: 15s
       timeout: 20s
       retries: 10
-
-  bullboard:
-    container_name: feedback-bullboard
-    image: venatum/bull-board
-    restart: unless-stopped
-    ports:
-      - "7990:3000"
-    env_file: .env
     environment:
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
-      REDIS_PORT: 6379
-      REDIS_USE_TLS: false
-      BULL_PREFIX: bull
-    depends_on:
-      redis:
-        condition: service_healthy
-        restart: true
-
-volumes:
-  redis_data:
+      REDIS_HOST: localhost
+      REDIS_PASSWORD: mostsecretpassword
