@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
-const updatePerson = protectedProcedure.person.update.handler(
+const updatePerson = requireModeratorProcedure.person.update.handler(
   async ({ context, input, errors }) => {
     try {
       const { body, params } = input;

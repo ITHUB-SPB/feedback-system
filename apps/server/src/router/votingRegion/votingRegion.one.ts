@@ -1,6 +1,6 @@
-import { protectedProcedure } from "@shared/api";
+import { publicProcedure } from "@shared/api";
 
-const oneVotingRegion = protectedProcedure.votingRegion.one.handler(
+const oneVotingRegion = publicProcedure.votingRegion.one.handler(
   async ({ context, input, errors }) => {
     try {
       return await context.db

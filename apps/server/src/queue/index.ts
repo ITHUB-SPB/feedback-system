@@ -1,9 +1,8 @@
-import { Sidequest, type JobData } from 'sidequest';
+import { Sidequest, type JobData } from "sidequest";
 import type { OfficialRequest } from "@shared/mail";
 
-import { MailCitizenJob, MailOfficialJob } from './jobs';
-import getSidequestConfig from './config';
-
+import { MailCitizenJob, MailOfficialJob } from "./jobs";
+import getSidequestConfig from "./config";
 
 export async function sendCitizenEmail(
   email: string,
@@ -13,8 +12,8 @@ export async function sendCitizenEmail(
   return await Sidequest.build(MailCitizenJob).enqueue({
     to: email,
     name,
-    type: approved ? "citizen-approved" : "citizen-rejected"
-  })
+    type: approved ? "citizen-approved" : "citizen-rejected",
+  });
 }
 
 export async function sendOfficialEmail({
@@ -25,19 +24,16 @@ export async function sendOfficialEmail({
   createdAt,
   files,
 }: OfficialRequest): Promise<JobData | null> {
-  return await Sidequest.build(MailOfficialJob).enqueue(
-    {
-      to: email,
-      type: 'official-request',
-      officialName,
-      description,
-      createdAt,
-      categoryTopic,
-      files,
-    },
-  );
+  return await Sidequest.build(MailOfficialJob).enqueue({
+    to: email,
+    type: "official-request",
+    officialName,
+    description,
+    createdAt,
+    categoryTopic,
+    files,
+  });
 }
-
 
 // await Sidequest.start(getSidequestConfig())
 

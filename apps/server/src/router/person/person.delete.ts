@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
-const deletePerson = protectedProcedure.person.delete.handler(
+const deletePerson = requireModeratorProcedure.person.delete.handler(
   async ({ context, input, errors }) => {
     try {
       await context.db

@@ -1,8 +1,8 @@
-import { protectedProcedure } from "@shared/api";
+import { publicProcedure } from "@shared/api";
 import { type Database } from "@shared/database";
 import _baseSelect from "./_baseSelect";
 
-const allFeedback = protectedProcedure.feedback.all.handler(
+const allFeedback = publicProcedure.feedback.all.handler(
   async ({ context, input, errors }) => {
     try {
       const { offset, limit, sort, filter } = input;

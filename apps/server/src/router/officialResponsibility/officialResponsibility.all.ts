@@ -1,9 +1,9 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 import { type Database } from "@shared/database";
 
 const allOfficialResponsibilities =
-  protectedProcedure.officialResponsibility.all.handler(
+  requireModeratorProcedure.officialResponsibility.all.handler(
     async ({ context, input, errors }) => {
       try {
         const { filter, sort, offset, limit } = input;

@@ -31,10 +31,10 @@ const ShowFeedback = () => {
     },
   });
 
-    const { data: accessData } = useCan({
-      resource: "feedback",
-      action: "show",
-    });
+  const { data: accessData } = useCan({
+    resource: "feedback",
+    action: "show",
+  });
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {

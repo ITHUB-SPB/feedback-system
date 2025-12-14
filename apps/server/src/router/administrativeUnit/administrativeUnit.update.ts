@@ -1,8 +1,8 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
 const updateAdministrativeUnit =
-  protectedProcedure.administrativeUnit.update.handler(
+  requireModeratorProcedure.administrativeUnit.update.handler(
     async ({ context, input, errors }) => {
       try {
         await context.db

@@ -9,7 +9,7 @@ const votingUnitRouter = {
   create: createVotingUnit,
   one: oneVotingUnit,
   update: updateVotingUnit,
-  delete: deleteVotingUnit
+  delete: deleteVotingUnit,
 };
 
 export default votingUnitRouter;

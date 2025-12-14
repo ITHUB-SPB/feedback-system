@@ -1,7 +1,7 @@
 import { os, implement } from "@orpc/server";
 import { type ResponseHeadersPluginContext } from "@orpc/server/plugins";
 
-import type { AuthInstance } from "@shared/auth";
+import { AuthInstance } from "@shared/auth";
 import { db as dbInstance } from "@shared/database";
 import { createLogger } from "@shared/logger";
 import apiContract from "./contracts";
@@ -34,13 +34,16 @@ export const createORPCContext = async ({
 }: CreateORPCContext): Promise<{
   db: typeof dbInstance;
   session: AuthInstance["$Infer"]["Session"] | null;
+  auth: typeof auth;
   environment: Env;
 }> => {
-  const session = await auth.api.getSession({
+  const session = (await auth.api.getSession({
     headers,
-  });
+  })) as AuthInstance["$Infer"]["Session"];
+
   return {
     db,
+    auth,
     session,
     environment,
   };
@@ -52,9 +55,7 @@ const timingMiddleware = os.middleware(async ({ next, path }) => {
   const result = await next();
   const end = Date.now();
 
-  logger.info(
-    `\t[RPC] /${path.join("/")} executed after ${end - start}ms`,
-  );
+  logger.info(`\t[RPC] /${path.join("/")} executed after ${end - start}ms`);
 
   return result;
 });
@@ -63,15 +64,63 @@ const base = implement(apiContract);
 
 export interface Context
   extends Awaited<ReturnType<typeof createORPCContext>>,
-  ResponseHeadersPluginContext { }
+    ResponseHeadersPluginContext {}
 
 export const publicProcedure = base.$context<Context>().use(timingMiddleware);
 
-export const protectedProcedure = publicProcedure.use(
-  ({ context, next, errors }) => {
+const protectedProcedure = publicProcedure.use(
+  async ({ context, next, errors }) => {
     if (!context.session?.user) {
       throw errors.UNAUTHORIZED();
     }
+
+    return next({
+      context: {
+        session: { ...context.session },
+      },
+    });
+  },
+);
+
+export const requireOfficialProcedure = protectedProcedure.use(
+  async ({ context, next, errors }) => {
+    const role = context.session.user.role;
+    if (!role) {
+      throw errors.UNAUTHORIZED();
+    }
+
+    return next({
+      context: {
+        session: { ...context.session },
+      },
+    });
+  },
+);
+
+export const requireModeratorProcedure = protectedProcedure.use(
+  async ({ context, next, errors }) => {
+    const role = context.session.user.role;
+
+    if (!["superadmin", "moderator"].includes(role)) {
+      throw errors.UNAUTHORIZED();
+    }
+
+    return next({
+      context: {
+        session: { ...context.session },
+      },
+    });
+  },
+);
+
+export const requireSuperadminProcedure = protectedProcedure.use(
+  async ({ context, next, errors }) => {
+    const role = context.session.user.role;
+
+    if (role !== "superadmin") {
+      throw errors.UNAUTHORIZED();
+    }
+
     return next({
       context: {
         session: { ...context.session },

@@ -1,15 +1,13 @@
 import { KyselyPGlite } from "kysely-pglite";
 import { Pool } from "pg";
-import {
-  Kysely,
-  PostgresDialect,
-  ParseJSONResultsPlugin,
-} from "kysely";
+import { Kysely, PostgresDialect, ParseJSONResultsPlugin } from "kysely";
 
-import { env } from "./env";
+import { parseEnv } from "./env";
 import type { Database } from "./interface";
 
 async function getDialect() {
+  const env = parseEnv();
+
   if (env.ENV === "production" || env.ENV === "staging") {
     const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } =
       env;
@@ -25,10 +23,10 @@ async function getDialect() {
   }
 
   if (env.ENV === "development") {
-    return (await KyselyPGlite.create(env.PGLITE_DATABASE_URI)).dialect
+    return (await KyselyPGlite.create(env.PGLITE_DATABASE_URI)).dialect;
   }
 
-  throw new Error("Incorrect ENV value")
+  throw new Error("Incorrect ENV value");
 }
 
 export const db = new Kysely<Database>({
@@ -36,4 +34,4 @@ export const db = new Kysely<Database>({
   plugins: [new ParseJSONResultsPlugin()],
 });
 
-export { type Database, env };
+export { type Database, parseEnv };

@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
-const createPerson = protectedProcedure.person.create.handler(
+const createPerson = requireModeratorProcedure.person.create.handler(
   async ({ context, input, errors }) => {
     try {
       const { email, phone, social, ...personInput } = input;

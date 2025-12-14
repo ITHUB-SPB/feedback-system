@@ -7,9 +7,7 @@ import projectsData from "./data/projects_deserialized.json" with {
 import topicsAndCategoriesData from "./data/topics_and_categories.json" with {
   type: "json",
 };
-import votingData from "./data/voting.json" with {
-  type: "json",
-};
+import votingData from "./data/voting.json" with { type: "json" };
 import towns from "./data/towns";
 
 type ProjectsDataItem = {
@@ -33,7 +31,7 @@ type VotingDataItem = {
   region: string;
   unit: string;
   unit_center: string;
-}
+};
 
 export async function seedAdministrativeUnitTypes(db: Kysely<Database>) {
   await db
@@ -176,8 +174,7 @@ export async function seedProjects(db: Kysely<Database>) {
 
 export async function seedVotingRegions(db: Kysely<Database>) {
   const votingRegions: Set<string> = new Set(
-    (votingData as VotingDataItem[])
-      .map(({ region }) => region)
+    (votingData as VotingDataItem[]).map(({ region }) => region),
   );
 
   await db
@@ -199,11 +196,11 @@ export async function seedVotingUnits(db: Kysely<Database>) {
         .insertInto("voting_unit")
         .values({
           title: unit,
-          voting_region_id: regionId
+          voting_region_id: regionId,
         })
         .execute();
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 }

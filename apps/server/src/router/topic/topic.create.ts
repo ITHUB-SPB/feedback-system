@@ -1,6 +1,6 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 
-const createTopic = protectedProcedure.topic.create.handler(
+const createTopic = requireModeratorProcedure.topic.create.handler(
   async ({ context, input, errors }) => {
     try {
       const { id: topicId } = await context.db

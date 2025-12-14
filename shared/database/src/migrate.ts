@@ -1,6 +1,5 @@
 import { sql } from "kysely";
 import { db } from "./index";
-import { env } from "./env";
 
 async function migratePostgres() {
   console.log(await db.introspection.getSchemas());
@@ -171,7 +170,10 @@ async function migratePostgres() {
     .addColumn("voting_region_id", "integer", (col) =>
       col.references("voting_region.id").onDelete("set null"),
     )
-    .addUniqueConstraint('voting_unit_title_region_pain_unique', ["title", "voting_region_id"])
+    .addUniqueConstraint("voting_unit_title_region_pain_unique", [
+      "title",
+      "voting_region_id",
+    ])
     .execute();
 
   await db.schema

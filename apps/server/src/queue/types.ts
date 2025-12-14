@@ -10,4 +10,7 @@ export type JobData = {
   [JobType.Mail]: MailJobData;
 };
 
-export type QueueType = JobType.Notification | `${JobType.Mail}.citizen` | `${JobType.Mail}.official`
+export type QueueType =
+  | JobType.Notification
+  | `${JobType.Mail}.citizen`
+  | `${JobType.Mail}.official`;

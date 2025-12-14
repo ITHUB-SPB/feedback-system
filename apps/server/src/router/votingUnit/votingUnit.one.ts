@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { publicProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
-const oneVotingUnit = protectedProcedure.votingUnit.one.handler(
+const oneVotingUnit = publicProcedure.votingUnit.one.handler(
   async ({ context, input, errors }) => {
     try {
       return await _baseSelect(context.db)

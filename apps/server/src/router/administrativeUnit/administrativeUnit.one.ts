@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { publicProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
-const oneAdministrativeUnit = protectedProcedure.administrativeUnit.one.handler(
+const oneAdministrativeUnit = publicProcedure.administrativeUnit.one.handler(
   async ({ context, input, errors }) => {
     try {
       return await _baseSelect(context.db)

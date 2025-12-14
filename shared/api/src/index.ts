@@ -3,8 +3,10 @@ export { experimental_ValibotToJsonSchemaConverter as ValibotToJsonSchemaConvert
 
 export {
   createORPCContext,
-  protectedProcedure,
   publicProcedure,
+  requireOfficialProcedure,
+  requireModeratorProcedure,
+  requireSuperadminProcedure,
 } from "./context";
 
 export { createAPIClient, type RouterOutput } from "./client";

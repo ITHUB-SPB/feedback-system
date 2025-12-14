@@ -1,7 +1,12 @@
 import { oc } from "@orpc/contract";
 
 import { baseInputAll, baseInputOne } from "@shared/schema/base";
-import { getVotingUnitSchema, getManyVotingUnitSchema, updateVotingUnitSchema, createVotingUnitSchema } from "@shared/schema/voting_unit";
+import {
+  getVotingUnitSchema,
+  getManyVotingUnitSchema,
+  updateVotingUnitSchema,
+  createVotingUnitSchema,
+} from "@shared/schema/voting_unit";
 
 const votingUnitContract = oc
   .tag("Voting Units")

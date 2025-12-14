@@ -71,7 +71,7 @@ const apiContract = oc
 
     votingUnit: votingUnitContract,
     votingRegion: votingRegionContract,
-    votingVote: votingVoteContract
+    votingVote: votingVoteContract,
   });
 
 export default apiContract;

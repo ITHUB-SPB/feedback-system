@@ -12,6 +12,6 @@ export default function _baseSelect(dbInstance: typeof db) {
       "voting_unit.id as id",
       "voting_unit.title as title",
       "voting_unit.voting_region_id",
-      "voting_region.title as voting_region"
+      "voting_region.title as voting_region",
     ]);
 }

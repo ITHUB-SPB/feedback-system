@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 
 const createVotingRegion =
-  protectedProcedure.votingRegion.create.handler(
+  requireModeratorProcedure.votingRegion.create.handler(
     async ({ context, input, errors }) => {
       try {
         const { id: unitId } = await context.db

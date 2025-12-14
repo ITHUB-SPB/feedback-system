@@ -7,7 +7,7 @@ const votingVoteRouter = {
   all: allVotingVotes,
   create: createVotingVote,
   one: oneVotingVote,
-  delete: deleteVotingVote
+  delete: deleteVotingVote,
 };
 
 export default votingVoteRouter;

@@ -31,7 +31,7 @@ const apiRouter = {
   officialResponsibility: officialResponsibilityRouter,
   votingRegion: votingRegionRouter,
   votingUnit: votingUnitRouter,
-  votingVote: votingVoteRouter
+  votingVote: votingVoteRouter,
 };
 
 export default apiRouter;

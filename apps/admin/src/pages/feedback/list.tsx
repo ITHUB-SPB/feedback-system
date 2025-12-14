@@ -1,4 +1,3 @@
-
 import { CanAccess, useMany, useCan } from "@refinedev/core";
 import {
   useTable,
@@ -180,7 +179,7 @@ const ListFeedback = () => {
           render={(value) => new Date(value).toLocaleDateString("ru-RU")}
         />
 
-        {accessData?.can &&
+        {accessData?.can && (
           <Table.Column
             title="Действия"
             minWidth={120}
@@ -190,8 +189,7 @@ const ListFeedback = () => {
               </Space>
             )}
           />
-        }
-
+        )}
       </Table>
     </List>
   );

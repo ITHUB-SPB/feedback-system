@@ -29,7 +29,7 @@ function App() {
     translate: (key: string, params?: any) => {
       return String(t(key, params));
     },
-    changeLocale: (_: string) => { },
+    changeLocale: (_: string) => {},
     getLocale: () => {
       return "ru";
     },
@@ -104,7 +104,7 @@ function App() {
                 meta: {
                   // parent: "Голосование",
                   label: "Результаты",
-                }
+                },
               },
               {
                 name: "voting_units",
@@ -112,15 +112,15 @@ function App() {
                 meta: {
                   // parent: "Голосование",
                   label: "Участники",
-                }
+                },
               },
               {
                 name: "voting_regions",
                 list: "/voting_regions",
                 meta: {
-                  hide: true
-                }
-              }
+                  hide: true,
+                },
+              },
             ]}
           >
             <CanAccess>

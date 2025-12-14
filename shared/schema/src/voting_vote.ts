@@ -18,16 +18,10 @@ export const getVotingVoteSchema = v.object({
   ...votingVoteSchema.entries,
   voting_unit: v.optional(v.pipe(v.string(), v.nonEmpty())),
   voting_region: v.optional(v.pipe(v.string(), v.nonEmpty())),
-})
+});
 
-export const createVotingVoteSchema = v.omit(votingVoteSchema, [
-  "id",
-]);
+export const createVotingVoteSchema = v.omit(votingVoteSchema, ["id"]);
 
-export const getManyVotingVoteSchema = v.array(
-  getVotingVoteSchema,
-);
+export const getManyVotingVoteSchema = v.array(getVotingVoteSchema);
 
-export type VotingVoteTable = v.InferOutput<
-  typeof votingVoteSchema
->;
+export type VotingVoteTable = v.InferOutput<typeof votingVoteSchema>;

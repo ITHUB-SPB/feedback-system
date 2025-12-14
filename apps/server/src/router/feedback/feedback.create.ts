@@ -1,5 +1,5 @@
 import { publicProcedure } from "@shared/api";
-import upload from '../../s3'
+import upload from "../../s3";
 
 const createFeedback = publicProcedure.feedback.create.handler(
   async ({ context, input, errors }) => {
@@ -95,7 +95,7 @@ const createFeedback = publicProcedure.feedback.create.handler(
               })
               .execute();
           } catch (error) {
-            console.error(error)
+            console.error(error);
             throw new Error("Error on images upload");
           }
         }),

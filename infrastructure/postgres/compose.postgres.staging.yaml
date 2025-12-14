@@ -6,26 +6,20 @@ services:
     container_name: feedback-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: /run/secrets/postgres_user
-      POSTGRES_PASSWORD: /run/secrets/postgres_password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: feedback
       POSTGRES_PORT: 5432
       DATA_PATH: ./data
       LOGS_PATH: ./logs
       WALG_AUTOMATED_BACKUPS: true
       WALG_RETENTION_DAYS: 30
-      WALG_LIBSODIUM_KEY: /run/secrets/walg_libsodium_key
-      AWS_ACCESS_KEY_ID: /run/secrets/minio_access_key
-      AWS_SECRET_ACCESS_KEY: /run/secrets/minio_secret_key
+      WALG_LIBSODIUM_KEY: 11ff11dd11ff1111ecedd0e11111cb4ea1d3f975f4211db40611348ae8e437af
+      AWS_ACCESS_KEY_ID: mostsecretminiokey
+      AWS_SECRET_ACCESS_KEY: mostsecretminiokey
       AWS_ENDPOINT: https://minio.localhost
       WALG_S3_PREFIX: s3://backup/postgres-backups
       LC_LANG: ru_RU.UTF-8
-    secrets:
-      - postgres_user
-      - postgres_password
-      - minio_access_key
-      - minio_secret_key
-      - walg_libsodium_key
     deploy:
       resources:
         limits:

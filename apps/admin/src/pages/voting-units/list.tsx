@@ -31,7 +31,7 @@ type UnitRecord = {
 type RegionRecord = {
   id: number;
   title: string;
-}
+};
 
 const ListVotingUnits = () => {
   const {
@@ -67,7 +67,7 @@ const ListVotingUnits = () => {
     modalProps: createUnitModalProps,
     formProps: createUnitFormProps,
     show: createUnitModalShow,
-  } = useModalForm<Pick<UnitRecord, 'title' | 'voting_region_id'>>({
+  } = useModalForm<Pick<UnitRecord, "title" | "voting_region_id">>({
     action: "create",
     resource: "voting_units",
     redirect: false,
@@ -157,7 +157,10 @@ const ListVotingUnits = () => {
                   />
                 ) : (
                   <TextField
-                    value={manyVotingRegions?.data?.find((unit) => unit.id == value)?.title}
+                    value={
+                      manyVotingRegions?.data?.find((unit) => unit.id == value)
+                        ?.title
+                    }
                     style={{ cursor: "pointer" }}
                   />
                 );

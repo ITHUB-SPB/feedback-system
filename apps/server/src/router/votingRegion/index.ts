@@ -9,7 +9,7 @@ const votingRegionRouter = {
   create: createVotingRegion,
   one: oneVotingRegion,
   update: updateVotingRegion,
-  delete: deleteVotingRegion
+  delete: deleteVotingRegion,
 };
 
 export default votingRegionRouter;

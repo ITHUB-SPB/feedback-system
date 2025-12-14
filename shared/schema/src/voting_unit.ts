@@ -15,20 +15,13 @@ export const getVotingUnitSchema = v.object({
   voting_region: v.string(),
 });
 
-export const getManyVotingUnitSchema = v.array(
-  getVotingUnitSchema,
-);
+export const getManyVotingUnitSchema = v.array(getVotingUnitSchema);
 
-export const createVotingUnitSchema = v.omit(votingUnitSchema, [
-  "id",
-]);
+export const createVotingUnitSchema = v.omit(votingUnitSchema, ["id"]);
 
 export const updateVotingUnitSchema = v.object({
   params: baseInputOne,
   body: v.partial(createVotingUnitSchema),
 });
 
-
-export type VotingUnitTable = v.InferOutput<
-  typeof votingUnitSchema
->;
+export type VotingUnitTable = v.InferOutput<typeof votingUnitSchema>;

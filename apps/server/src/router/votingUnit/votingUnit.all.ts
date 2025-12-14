@@ -1,13 +1,13 @@
 import { publicProcedure } from "@shared/api";
 import { type Database } from "@shared/database";
-import _baseSelect from './_baseSelect';
+import _baseSelect from "./_baseSelect";
 
 const allVotingUnits = publicProcedure.votingUnit.all.handler(
   async ({ context, input, errors }) => {
     try {
       const { offset, limit, filter, sort } = input;
 
-      let query = _baseSelect(context.db)
+      let query = _baseSelect(context.db);
 
       if (filter?.length) {
         const mapOperatorsToSql = {
@@ -30,11 +30,10 @@ const allVotingUnits = publicProcedure.votingUnit.all.handler(
 
           let column = matchResult[1] as
             | keyof Database["voting_region"]
-            | keyof Database["voting_unit"]
+            | keyof Database["voting_unit"];
 
           if (column === "id") {
-            column =
-              "voting_unit.id" as keyof Database["voting_unit"];
+            column = "voting_unit.id" as keyof Database["voting_unit"];
           }
 
           const operator = matchResult[2] as keyof typeof mapOperatorsToSql;

@@ -1,9 +1,9 @@
-import { protectedProcedure } from "@shared/api";
+import { requireOfficialProcedure } from "@shared/api";
 import { sendCitizenEmail, sendOfficialEmail } from "../../queue";
 import _baseSelect from "./_baseSelect";
 import _enrichSelect from "./_enrichSelect";
 
-const updateFeedback = protectedProcedure.feedback.update.handler(
+const updateFeedback = requireOfficialProcedure.feedback.update.handler(
   async ({ context, input, errors }) => {
     const { params, body } = input;
 

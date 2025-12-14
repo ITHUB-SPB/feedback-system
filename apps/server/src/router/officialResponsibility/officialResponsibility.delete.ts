@@ -1,8 +1,8 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
 const deleteOfficialResponsibility =
-  protectedProcedure.officialResponsibility.delete.handler(
+  requireModeratorProcedure.officialResponsibility.delete.handler(
     async ({ context, input, errors }) => {
       try {
         await context.db

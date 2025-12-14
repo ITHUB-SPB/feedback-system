@@ -1,5 +1,5 @@
 import { createAccessControl } from "better-auth/plugins/access";
-import { defaultStatements, adminAc } from "better-auth/plugins/admin/access"; 
+import { defaultStatements, adminAc } from "better-auth/plugins/admin/access";
 
 export const statement = {
   ...defaultStatements,
@@ -15,7 +15,7 @@ export const statement = {
   votingRegion: ["list", "read", "update", "create", "delete"],
   votingUnit: ["list", "read", "update", "create", "delete"],
   votingVote: ["list", "read", "create", "delete"],
-  project: ["create", "update", "delete", "read", "list"], 
+  project: ["create", "update", "delete", "read", "list"],
   // какие есть права доступа для контрактов
 } as const;
 
@@ -36,7 +36,7 @@ export const roles = {
     votingRegion: ["list", "read", "update", "create", "delete"],
     votingUnit: ["list", "read", "update", "create", "delete"],
     votingVote: ["list", "read", "create", "delete"],
-    project: ["create", "update", "delete", "read", "list"], 
+    project: ["create", "update", "delete", "read", "list"],
   }),
 
   moderator: ac.newRole({
@@ -51,7 +51,7 @@ export const roles = {
     votingRegion: ["list", "read", "update", "create", "delete"],
     votingUnit: ["list", "read", "update", "create", "delete"],
     votingVote: ["list", "read", "create", "delete"],
-    project: ["create", "update", "delete", "read", "list"], 
+    project: ["create", "update", "delete", "read", "list"],
   }),
 
   official: ac.newRole({
@@ -61,6 +61,6 @@ export const roles = {
 
   citizen: ac.newRole({
     votingVote: ["list"],
-    feedback: ["list"]
+    feedback: ["list"],
   }),
-}
+};

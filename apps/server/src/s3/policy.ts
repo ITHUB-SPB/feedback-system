@@ -21,7 +21,7 @@ export const backupPolicy = `
       ]
     }
   ]
-}`
+}`;
 
 export const photosPolicy = `
 {

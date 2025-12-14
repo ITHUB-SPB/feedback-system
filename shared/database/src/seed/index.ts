@@ -14,7 +14,7 @@ async function seedDatabase() {
     "seedPersonTypes",
     "seedProjects",
     "seedVotingRegions",
-    "seedVotingUnits"
+    "seedVotingUnits",
   ] as const;
 
   for await (const seedFunctionName of seedFunctionIdentifiers) {

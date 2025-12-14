@@ -1,6 +1,6 @@
 import { type BetterAuthOptions, betterAuth } from "better-auth";
-import { admin, openAPI, customSession } from "better-auth/plugins"
-import { ac, roles } from "./permissionControl"
+import { admin, openAPI, customSession } from "better-auth/plugins";
+import { ac, roles } from "./permissionControl";
 
 import { db } from "@shared/database";
 
@@ -21,19 +21,7 @@ export const getBaseOptions = (databaseInstance: typeof db) =>
       openAPI({ disableDefaultReference: true }),
       admin({
         ac,
-        roles
-      }),
-      customSession(async ({ user, session }) => {
-        const role = db.selectFrom('user').where("id", "=", session.userId)
-
-        return {
-          role,
-          user: {
-            ...user,
-            newField: "newField",
-          },
-          session
-        };
+        roles,
       }),
     ],
   }) satisfies BetterAuthOptions;
@@ -45,8 +33,10 @@ export const createAuth = ({
   db,
   authSecret,
 }: AuthOptions) => {
+  const baseOptions = getBaseOptions(db);
+
   return betterAuth({
-    ...getBaseOptions(db),
+    ...baseOptions,
     baseURL: `${serverUrl}${apiPath}/auth`,
     secret: authSecret,
     trustedOrigins,
@@ -55,21 +45,35 @@ export const createAuth = ({
         enabled: true,
         maxAge: 15 * 60,
       },
+      additionalFields: {
+        role: {
+          type: "string",
+        },
+      },
     },
     user: {
       additionalFields: {
         role: {
           type: "string",
           required: true,
-          input: true
-        }
-      }
+          input: true,
+        },
+      },
     },
     emailAndPassword: {
       enabled: true,
       autoSignIn: true,
       requireEmailVerification: false,
     },
+    plugins: [
+      ...baseOptions.plugins,
+      customSession(async ({ user, session }) => {
+        return {
+          role: user.role,
+          user,
+          session,
+        };
+      }, baseOptions),
+    ],
   });
 };
-

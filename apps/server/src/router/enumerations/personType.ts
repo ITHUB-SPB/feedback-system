@@ -1,7 +1,7 @@
-import { publicProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 
 const personTypeRouter = {
-  all: publicProcedure.personType.all.handler(async ({ context }) => {
+  all: requireModeratorProcedure.personType.all.handler(async ({ context }) => {
     const personTypes = await context.db
       .selectFrom("person_type")
       .selectAll()

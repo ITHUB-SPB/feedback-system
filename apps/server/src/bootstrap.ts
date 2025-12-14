@@ -16,8 +16,12 @@ import { createApi } from "./api";
 import { type Env } from "./env";
 
 export default function createApp(env: Env) {
-  const trustedOrigins = [env.PUBLIC_WEB_URL, env.PUBLIC_ADMIN_URL, env.PUBLIC_BOT_URL]
-    .filter(urlString => urlString !== undefined)
+  const trustedOrigins = [
+    env.PUBLIC_WEB_URL,
+    env.PUBLIC_ADMIN_URL,
+    env.PUBLIC_BOT_URL,
+  ]
+    .filter((urlString) => urlString !== undefined)
     .map((url) => new URL(url).origin)
     .concat(["localhost", "https://xn--47-dlcma4bxbi.xn--p1ai"]);
 
@@ -119,7 +123,16 @@ export default function createApp(env: Env) {
     cors({
       origin: trustedOrigins,
       credentials: true,
-      allowHeaders: ["x-total-count", "Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization", "Access-Control-Allow-Headers", "content-type"],
+      allowHeaders: [
+        "x-total-count",
+        "Origin",
+        "X-Requested-With",
+        "Content-Type",
+        "Accept",
+        "Authorization",
+        "Access-Control-Allow-Headers",
+        "content-type",
+      ],
       allowMethods: ["POST", "GET", "OPTIONS"],
       exposeHeaders: ["Content-Length"],
       maxAge: 600,
@@ -133,7 +146,16 @@ export default function createApp(env: Env) {
     cors({
       origin: trustedOrigins,
       credentials: true,
-      allowHeaders: ["x-total-count", "Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization", "Access-Control-Allow-Headers", "content-type"],
+      allowHeaders: [
+        "x-total-count",
+        "Origin",
+        "X-Requested-With",
+        "Content-Type",
+        "Accept",
+        "Authorization",
+        "Access-Control-Allow-Headers",
+        "content-type",
+      ],
       allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       exposeHeaders: ["x-total-count"],
     }),

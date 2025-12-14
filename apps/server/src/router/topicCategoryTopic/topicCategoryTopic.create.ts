@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 
 const createTopicCategoryTopic =
-  protectedProcedure.topicCategoryTopic.create.handler(
+  requireModeratorProcedure.topicCategoryTopic.create.handler(
     async ({ context, input, errors }) => {
       try {
         const { topic_category_id, topic_id } = input;

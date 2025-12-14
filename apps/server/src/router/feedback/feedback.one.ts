@@ -1,8 +1,8 @@
-import { protectedProcedure } from "@shared/api";
+import { requireOfficialProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 import _enrichSelect from "./_enrichSelect";
 
-const oneFeedback = protectedProcedure.feedback.one.handler(
+const oneFeedback = requireOfficialProcedure.feedback.one.handler(
   async ({ context, input, errors }) => {
     try {
       const feedback = await _baseSelect(context.db)

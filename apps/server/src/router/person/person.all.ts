@@ -1,8 +1,8 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import { type Database } from "@shared/database";
 import _baseSelect from "./_baseSelect";
 
-const allPersons = protectedProcedure.person.all.handler(
+const allPersons = requireModeratorProcedure.person.all.handler(
   async ({ context, input, errors }) => {
     try {
       const { offset, limit, sort, filter } = input;

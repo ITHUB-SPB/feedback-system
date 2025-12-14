@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
-const oneVotingVote = protectedProcedure.votingVote.one.handler(
+const oneVotingVote = requireModeratorProcedure.votingVote.one.handler(
   async ({ context, input, errors }) => {
     try {
       return await _baseSelect(context.db)

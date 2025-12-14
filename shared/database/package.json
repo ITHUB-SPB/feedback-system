@@ -3,10 +3,14 @@
     "type": "module",
     "scripts": {
         "check-types": "tsc --noEmit",
-        "db:reset": "tsx src/seed/index.ts reset",
-        "db:seed": "tsx src/seed/index.ts seed",
-        "db:check": "tsx src/check.ts",
-        "db:migrate": "tsx src/migrate.ts"
+        "dev:db:reset": "dotenvx run -f .env.development -- tsx src/seed/index.ts reset",
+        "dev:db:seed": "dotenvx run -f .env.development -- tsx src/seed/index.ts seed",
+        "dev:db:check": "dotenvx run -f .env.development -- tsx src/check.ts",
+        "dev:db:migrate": "dotenvx run -f .env.development -- tsx src/migrate.ts",
+        "staging:db:reset": "dotenvx run -f .env.staging -- tsx src/seed/index.ts reset",
+        "staging:db:seed": "dotenvx run -f .env.staging -- tsx src/seed/index.ts seed",
+        "staging:db:check": "dotenvx run -f .env.staging -- tsx src/check.ts",
+        "staging:db:migrate": "dotenvx run -f .env.staging -- tsx src/migrate.ts"
     },
     "exports": {
         ".": "./src/index.ts"

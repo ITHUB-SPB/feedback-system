@@ -1,7 +1,11 @@
 import { createAuthClient as createBetterAuthClient } from "better-auth/react";
-import { adminClient } from "better-auth/client/plugins"
-import { ac, roles } from "./permissionControl"
-
+import {
+  adminClient,
+  customSessionClient,
+  inferAdditionalFields,
+} from "better-auth/client/plugins";
+import { ac, roles } from "./permissionControl";
+import { createAuth } from "./server";
 
 export interface AuthClientOptions {
   apiBaseUrl: string;
@@ -17,7 +21,9 @@ export const createAuthClient = ({
     plugins: [
       adminClient({
         ac,
-        roles
+        roles,
       }),
-    ]
+      customSessionClient<ReturnType<typeof createAuth>>(),
+      inferAdditionalFields<ReturnType<typeof createAuth>>(),
+    ],
   });

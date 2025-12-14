@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
-const createProject = protectedProcedure.project.create.handler(
+const createProject = requireModeratorProcedure.project.create.handler(
   async ({ context, input, errors }) => {
     try {
       const { id: projectId } = await context.db

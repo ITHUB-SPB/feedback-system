@@ -11,13 +11,23 @@
         "dev:admin": "pnpm -F admin dev",
         "dev:web": "pnpm -F web dev",
         "dev:server": "pnpm -F server dev",
+        "dev:db:reset": "pnpm -F @shared/database dev:db:reset",
+        "dev:db:seed": "pnpm -F @shared/database dev:db:seed",
+        "dev:db:check": "pnpm -F @shared/database dev:db:check",
+        "dev:db:migrate": "pnpm -F @shared/database dev:db:migrate",
+        "dev:auth:generate": "pnpm -F @shared/auth dev:auth:generate",
+        "dev:auth:migrate": "pnpm -F @shared/auth dev:auth:migrate",
+        "dev:auth:seed": "pnpm -F @shared/auth dev:auth:seed",
         "staging:admin": "pnpm -F admin staging",
-        "auth:generate": "pnpm -F @shared/auth auth:generate",
-        "auth:migrate": "pnpm -F @shared/auth auth:migrate",
-        "db:reset": "pnpm -F @shared/database db:reset",
-        "db:seed": "pnpm -F @shared/database db:seed",
-        "db:check": "pnpm -F @shared/database db:check",
-        "db:migrate": "pnpm -F @shared/database db:migrate"
+        "staging:web": "pnpm -F web staging",
+        "staging:server": "pnpm -F server staging",
+        "staging:db:reset": "pnpm -F @shared/database staging:db:reset",
+        "staging:db:seed": "pnpm -F @shared/database staging:db:seed",
+        "staging:db:check": "pnpm -F @shared/database staging:db:check",
+        "staging:db:migrate": "pnpm -F @shared/database staging:db:migrate",
+        "staging:auth:generate": "pnpm -F @shared/auth staging:auth:generate",
+        "staging:auth:migrate": "pnpm -F @shared/auth staging:auth:migrate",
+        "staging:auth:seed": "pnpm -F @shared/auth staging:auth:seed"
     },
     "devDependencies": {
         "@biomejs/biome": "catalog:",
@@ -25,7 +35,7 @@
     },
     "packageManager": "pnpm@10.25.0",
     "engines": {
-        "node": ">=22.10.0"
+        "node": ">=24.11.0"
     },
     "pnpm": {
         "onlyBuiltDependencies": [

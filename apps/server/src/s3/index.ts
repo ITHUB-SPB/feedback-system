@@ -18,9 +18,7 @@ export default async function upload(file: File, bucketName: string, env: Env) {
       fileName,
       Buffer.from(fileBuffer),
       file.size,
-      {
-
-      }
+      {},
     );
 
     logger.info("[*] SUCCESS: File uploaded successfully!");

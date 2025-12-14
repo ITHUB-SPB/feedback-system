@@ -5,9 +5,19 @@ import * as emailTemplates from "./templates";
 import { env } from "./env";
 import { mailClient } from "./client";
 import { logger } from "./logger";
-import type { MailJobData, MailCitizenJobData, MailOfficialJobData, OfficialRequest } from "./types";
+import type {
+  MailJobData,
+  MailCitizenJobData,
+  MailOfficialJobData,
+  OfficialRequest,
+} from "./types";
 
-export type { MailJobData, OfficialRequest, MailCitizenJobData, MailOfficialJobData };
+export type {
+  MailJobData,
+  OfficialRequest,
+  MailCitizenJobData,
+  MailOfficialJobData,
+};
 
 async function buildMail(options: MailJobData) {
   if (options.type === "citizen-approved") {
@@ -15,8 +25,10 @@ async function buildMail(options: MailJobData) {
       to: options.to,
       subject: "Вместе47. Информация по вашему обращению",
       text: emailTemplates.citizenApprovalText,
-      html: await render(emailTemplates.CitizenApprovalEmail({ name: options.name })),
-    }
+      html: await render(
+        emailTemplates.CitizenApprovalEmail({ name: options.name }),
+      ),
+    };
   }
 
   if (options.type === "citizen-rejected") {
@@ -24,17 +36,15 @@ async function buildMail(options: MailJobData) {
       to: options.to,
       subject: "Вместе47. Информация по вашему обращению",
       text: emailTemplates.citizenRejectionText,
-      html: await render(emailTemplates.CitizenRejectionEmail({ name: options.name })),
-    }
+      html: await render(
+        emailTemplates.CitizenRejectionEmail({ name: options.name }),
+      ),
+    };
   }
 
   if (options.type === "official-request") {
-    const { officialName,
-      description,
-      createdAt,
-      categoryTopic,
-      files
-    } = options
+    const { officialName, description, createdAt, categoryTopic, files } =
+      options;
 
     return {
       to: options.to,
@@ -53,14 +63,14 @@ async function buildMail(options: MailJobData) {
           categoryTopic,
           files: files ?? [],
         }),
-      )
-    }
+      ),
+    };
   }
 }
 
 export async function sendMail(options: MailJobData) {
   try {
-    const mail = await buildMail(options)
+    const mail = await buildMail(options);
 
     return await mailClient?.sendMail({
       from: `"Вместе47" <${env.SMTP_USER}>`,

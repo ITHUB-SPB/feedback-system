@@ -18,9 +18,7 @@ const ListVotingResults = () => {
   const { tableProps, sorters, filters } = useTable({
     pagination: { currentPage: 1, pageSize: 24 },
     sorters: {
-      initial: [
-        { field: "created_at", order: "desc" },
-      ],
+      initial: [{ field: "created_at", order: "desc" }],
     },
   });
 
@@ -34,9 +32,7 @@ const ListVotingResults = () => {
     pagination: {
       pageSize: 48,
     },
-    sorters: [
-      { field: 'title', order: 'asc' }
-    ],
+    sorters: [{ field: "title", order: "asc" }],
     defaultValue: getDefaultFilter("voting_unit_id", filters, "eq"),
   });
 
@@ -44,15 +40,15 @@ const ListVotingResults = () => {
     pageSize: 48,
     resource: "voting_votes",
     meta: {
-      export: true
+      export: true,
     },
     mapData: (item) => ({
-      "Респондент": item.username,
-      "Описание": item.description,
-      "Поселение": item.voting_unit,
-      "Район": item.voting_region,
-      "Дата": new Date(item.created_at).toLocaleString("ru-RU")
-    })
+      Респондент: item.username,
+      Описание: item.description,
+      Поселение: item.voting_unit,
+      Район: item.voting_region,
+      Дата: new Date(item.created_at).toLocaleString("ru-RU"),
+    }),
   });
 
   return (
@@ -119,8 +115,7 @@ const ListVotingResults = () => {
               return "Загрузка...";
             }
 
-            return votingUnits?.data?.find((unit) => unit.id == value)
-              ?.title;
+            return votingUnits?.data?.find((unit) => unit.id == value)?.title;
           }}
           filterDropdown={(props) => (
             <FilterDropdown
@@ -132,10 +127,7 @@ const ListVotingResults = () => {
                   : undefined;
               }}
             >
-              <Select
-                style={{ minWidth: 200 }}
-                {...votingUnitSelectProps}
-              />
+              <Select style={{ minWidth: 200 }} {...votingUnitSelectProps} />
             </FilterDropdown>
           )}
           defaultFilteredValue={getDefaultFilter(
@@ -143,7 +135,6 @@ const ListVotingResults = () => {
             filters,
             "eq",
           )}
-
         />
         <Table.Column
           dataIndex="created_at"

@@ -1,8 +1,8 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
 const deleteAdministrativeUnit =
-  protectedProcedure.administrativeUnit.delete.handler(
+  requireModeratorProcedure.administrativeUnit.delete.handler(
     async ({ context, input, errors }) => {
       try {
         await context.db

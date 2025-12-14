@@ -27,12 +27,10 @@ const allVotingRegions = publicProcedure.votingRegion.all.handler(
             continue;
           }
 
-          let column = matchResult[1] as
-            | keyof Database["voting_region"]
+          let column = matchResult[1] as keyof Database["voting_region"];
 
           if (column === "id") {
-            column =
-              "voting_region.id" as keyof Database["voting_region"];
+            column = "voting_region.id" as keyof Database["voting_region"];
           }
 
           const operator = matchResult[2] as keyof typeof mapOperatorsToSql;

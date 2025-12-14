@@ -6,13 +6,19 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "auth:generate": "npx @better-auth/cli generate --config ./src/cli-config.ts --output ../database/src/auth.initial.sql",
-    "auth:migrate": "npx @better-auth/cli migrate --config ./src/cli-config.ts",
+    "dev:auth:generate": "dotenvx run -f .env.development -- npx @better-auth/cli generate --config ./src/cli-config.ts --output ../database/src/auth.initial.sql",
+    "dev:auth:migrate": "dotenvx run -f .env.development -- npx @better-auth/cli migrate --config ./src/cli-config.ts",
+    "dev:auth:seed": "dotenvx run -f .env.development -- tsx ./src/seed.ts",
+    "staging:auth:generate": "dotenvx run -f .env.staging -- npx @better-auth/cli generate --config ./src/cli-config.ts --output ../database/src/auth.initial.sql",
+    "staging:auth:migrate": "dotenvx run -f .env.staging -- npx @better-auth/cli migrate --config ./src/cli-config.ts",
+    "staging:auth:seed": "dotenvx run -f .env.staging -- tsx ./src/seed.ts",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "catalog:",
     "@shared/database": "workspace:*",
-    "better-auth": "catalog:"
+    "better-auth": "catalog:",
+    "tsx": "catalog:"
   },
   "devDependencies": {
     "@better-auth/cli": "^1.3.25",

@@ -1,7 +1,7 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
-const updateProject = protectedProcedure.project.update.handler(
+const updateProject = requireModeratorProcedure.project.update.handler(
   async ({ context, input, errors }) => {
     try {
       await context.db

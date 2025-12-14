@@ -1,8 +1,8 @@
-import { protectedProcedure } from "@shared/api";
+import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
 
 const createOfficialResponsibility =
-  protectedProcedure.officialResponsibility.create.handler(
+  requireModeratorProcedure.officialResponsibility.create.handler(
     async ({ context, input, errors }) => {
       try {
         const { id: officialResponsibilityId } = await context.db

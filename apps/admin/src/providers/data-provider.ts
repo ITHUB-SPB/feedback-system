@@ -69,7 +69,7 @@ export const dataProvider: DataProvider = {
     }
 
     if (meta?.export) {
-      params.append("export", "true")
+      params.append("export", "true");
     }
 
     const response = await fetcher(

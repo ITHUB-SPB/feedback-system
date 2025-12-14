@@ -3,10 +3,6 @@ import path from "node:path";
 import * as v from "valibot";
 import dotenv from "@dotenvx/dotenvx";
 
-dotenv.config({
-  path: path.join(import.meta.dirname, "..", ".env"),
-});
-
 export const envSchema = v.union([
   v.object({
     ENV: v.picklist(["production", "staging"]),
@@ -21,4 +17,16 @@ export const envSchema = v.union([
   }),
 ]);
 
-export const env = v.parse(envSchema, process.env);
+export const parseEnv = (
+  environment?: "production" | "staging" | "development" | undefined,
+) => {
+  try {
+    return v.parse(envSchema, process.env);
+  } catch {
+    const fileName = `.env.${environment || process.env.ENV}`;
+    dotenv.config({
+      path: path.join(import.meta.dirname, "..", fileName),
+    });
+    return v.parse(envSchema, process.env);
+  }
+};

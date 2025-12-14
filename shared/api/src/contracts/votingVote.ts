@@ -1,7 +1,11 @@
 import { oc } from "@orpc/contract";
 
 import { baseInputAll, baseInputOne } from "@shared/schema/base";
-import { getVotingVoteSchema, createVotingVoteSchema, getManyVotingVoteSchema } from "@shared/schema/voting_vote";
+import {
+  getVotingVoteSchema,
+  createVotingVoteSchema,
+  getManyVotingVoteSchema,
+} from "@shared/schema/voting_vote";
 
 const votingVoteContract = oc
   .tag("Voting Vote")
@@ -44,7 +48,6 @@ const votingVoteContract = oc
         summary: "Delete vote record by ID",
       })
       .input(baseInputOne),
-
   });
 
 export default votingVoteContract;

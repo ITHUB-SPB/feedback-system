@@ -1,25 +1,33 @@
 import { publicProcedure } from "@shared/api";
 import { type Database } from "@shared/database";
-import _baseSelect from './_baseSelect';
+import _baseSelect from "./_baseSelect";
 
 const allVotingVotes = publicProcedure.votingVote.all.handler(
   async ({ context, input, errors }) => {
     try {
       const { offset, limit, filter, sort } = input;
 
-      let query = _baseSelect(context.db)
+      let query = _baseSelect(context.db);
 
       if (input.export) {
         query = query
-          .innerJoin('voting_unit', 'voting_unit.id', 'voting_vote.voting_unit_id')
-          .innerJoin('voting_region', 'voting_unit.voting_region_id', 'voting_region.id')
+          .innerJoin(
+            "voting_unit",
+            "voting_unit.id",
+            "voting_vote.voting_unit_id",
+          )
+          .innerJoin(
+            "voting_region",
+            "voting_unit.voting_region_id",
+            "voting_region.id",
+          )
           .select([
             "voting_vote.username",
             "voting_vote.description",
             "voting_unit.title as voting_unit",
             "voting_region.title as voting_region",
             "voting_vote.created_at",
-          ])
+          ]);
       }
 
       if (filter?.length) {
@@ -41,12 +49,10 @@ const allVotingVotes = publicProcedure.votingVote.all.handler(
             continue;
           }
 
-          let column = matchResult[1] as
-            | keyof Database["voting_vote"]
+          let column = matchResult[1] as keyof Database["voting_vote"];
 
           if (column === "id") {
-            column =
-              "voting_vote.id" as keyof Database["voting_vote"];
+            column = "voting_vote.id" as keyof Database["voting_vote"];
           }
 
           const operator = matchResult[2] as keyof typeof mapOperatorsToSql;
