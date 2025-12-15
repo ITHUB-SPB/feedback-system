@@ -3,7 +3,7 @@ import { idSchema } from "./base/fields";
 
 const feedbackStatusSchema = v.object({
   id: idSchema,
-  title: v.picklist(["pending", "approved", "declined"]),
+  title: v.picklist(["pending", "approved", "declined", "completed"]),
 });
 
 export const getFeedbackStatusSchema = feedbackStatusSchema;

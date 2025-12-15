@@ -78,6 +78,7 @@ export async function seedFeedbackStatuses(db: Kysely<Database>) {
       { title: "approved" },
       { title: "declined" },
       { title: "pending" },
+      { title: "completed" },
     ])
     .execute();
 }
