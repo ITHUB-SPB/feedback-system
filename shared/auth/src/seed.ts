@@ -58,12 +58,9 @@ for (const account of accounts) {
     await seedAuth.api.createUser({
       body: account,
     });
-  } catch {}
-  console.log(
-    await seedAuth.api.listUsers({
-      query: {
-        limit: 10,
-      },
-    }),
-  );
+  } catch (error: unknown) {
+    console.log(
+      (error as Error).message
+    );
+  }
 }

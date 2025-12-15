@@ -45,11 +45,6 @@ export const createAuth = ({
         enabled: true,
         maxAge: 15 * 60,
       },
-      additionalFields: {
-        role: {
-          type: "string",
-        },
-      },
     },
     user: {
       additionalFields: {

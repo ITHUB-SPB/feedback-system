@@ -62,6 +62,7 @@ export default function createApp(env: Env) {
       defaultOpenAllTags: true,
       hideClientButton: false,
       pageTitle: "Feedback System | API Reference",
+      persistAuth: true,
       servers: [
         {
           url: env.PUBLIC_SERVER_URL + "/api",
@@ -72,6 +73,17 @@ export default function createApp(env: Env) {
           description: "Auth API",
         },
       ],
+      authentication: {
+        preferredSecurityScheme: "apiKeyHeader",
+        securitySchemes: {
+          apiKeyHeader: {
+            type: "apiKey",
+            in: "cookie",
+            name: "apiKeyCookie",
+            description: "session.token"
+          }
+        }
+      },
       sources: [
         {
           url: "/openapi.json",

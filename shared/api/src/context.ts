@@ -36,16 +36,18 @@ export const createORPCContext = async ({
   session: AuthInstance["$Infer"]["Session"] | null;
   auth: typeof auth;
   environment: Env;
+  headers: Headers;
 }> => {
   const session = (await auth.api.getSession({
     headers,
-  })) as AuthInstance["$Infer"]["Session"];
+  }));
 
   return {
     db,
     auth,
     session,
     environment,
+    headers
   };
 };
 
@@ -64,7 +66,7 @@ const base = implement(apiContract);
 
 export interface Context
   extends Awaited<ReturnType<typeof createORPCContext>>,
-    ResponseHeadersPluginContext {}
+  ResponseHeadersPluginContext { }
 
 export const publicProcedure = base.$context<Context>().use(timingMiddleware);
 
