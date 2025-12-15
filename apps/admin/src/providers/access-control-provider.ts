@@ -1,4 +1,4 @@
-import type { AccessControlProvider, type AuthProvider } from "@refinedev/core";
+import type { AccessControlProvider } from "@refinedev/core";
 import { createAuthClient } from "@shared/auth";
 
 const authClient = createAuthClient({
