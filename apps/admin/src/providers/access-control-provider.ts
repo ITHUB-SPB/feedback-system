@@ -1,4 +1,11 @@
-import type { AccessControlProvider } from "@refinedev/core";
+import type { AccessControlProvider, type AuthProvider } from "@refinedev/core";
+import { createAuthClient } from "@shared/auth";
+
+const authClient = createAuthClient({
+  apiBasePath: "/api",
+  apiBaseUrl: import.meta.env.VITE_API_BASE_URL!,
+});
+
 
 export const accessControlProvider: AccessControlProvider = {
   can: async ({ resource, action, params }) => {
@@ -6,7 +13,8 @@ export const accessControlProvider: AccessControlProvider = {
     console.log(action); // list, edit, delete, etc.
     console.log(params); // { id: 1 }, { id: 2 }, etc.
 
-    let role = "official";
+    const session = await authClient.getSession()
+    const role = session.data?.user.role || "citizen"
 
     if (!resource || role === "superadmin") {
       return { can: true };
@@ -17,6 +25,10 @@ export const accessControlProvider: AccessControlProvider = {
     }
 
     if (role === "official") {
+      // получать права через
+      // authClient.admin.hasPermission()
+      // информация о методе - в документации betterAuth
+
       const permissions: { [K: typeof resource]: string[] } = {
         voting_votes: ["list", "show"],
         feedback: ["list", "edit", "show"],

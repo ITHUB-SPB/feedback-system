@@ -17,6 +17,7 @@ const authProvider: AuthProvider = {
       name: email,
       email,
       password,
+      role: "official",
       fetchOptions: {
         onError: (error) => {
           throw error;
