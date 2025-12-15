@@ -1,4 +1,4 @@
-import { useShow, useUpdate, useList, useCan } from "@refinedev/core";
+import { useShow, useUpdate, useList, useCan, useGetIdentity } from "@refinedev/core";
 import { TextField, Show, ListButton } from "@refinedev/antd";
 
 import Tag from "antd/es/tag";

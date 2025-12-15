@@ -1,4 +1,4 @@
-import { CanAccess, useMany, useCan } from "@refinedev/core";
+import { CanAccess, useMany, useCan, useGetIdentity } from "@refinedev/core";
 import {
   useTable,
   ShowButton,
@@ -15,6 +15,10 @@ import Space from "antd/es/space";
 import Select from "antd/es/select";
 
 const ListFeedback = () => {
+  // узнаём роль (через getIdentity из providers/auth-provider.ts либо через user.role из authClient.getSession() )
+  const { data: identityData } = useGetIdentity();
+  const role = identityData?.role || "citizen"
+
   const { tableProps, sorters, filters } = useTable({
     resource: "feedback",
     pagination: { currentPage: 1, pageSize: 12 },
@@ -24,6 +28,17 @@ const ListFeedback = () => {
         { field: "created_at", order: "asc" },
       ],
     },
+    filters: {
+      permanent: role === "official" ? [
+        {
+          field: "feedback_status_id",
+          operator: "in",
+          value: [1, 2, 4]
+        }
+      ] : []
+    }
+    // добавить постоянный фильтр на тип предложения (выдавать только "на рассмотрении" и "выполнено")
+
   });
 
   const { result: projects, query: projectsQuery } = useMany({
@@ -59,7 +74,8 @@ const ListFeedback = () => {
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {
       pending: "orange",
-      approved: "green",
+      approved: "blue",
+      completed: "green",
       declined: "red",
     };
     return colorMap[status] || "default";
@@ -67,9 +83,10 @@ const ListFeedback = () => {
 
   const getStatusText = (status: string) => {
     return {
-      pending: "В обработке",
-      approved: "Утверждено",
+      pending: "На проверке",
+      approved: "В работе",
       declined: "Отклонено",
+      completed: "Выполнено"
     }[status];
   };
 

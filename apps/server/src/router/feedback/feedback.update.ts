@@ -30,11 +30,11 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
           ? `${citizen.first_name} ${citizen.middle_name}`
           : `${citizen.first_name}`;
 
-        await sendCitizenEmail(
-          citizen.email,
-          citizenFullName,
-          result.feedback_status === "approved",
-        );
+        // await sendCitizenEmail(
+        //   citizen.email,
+        //   citizenFullName,
+        //   result.feedback_status === "approved",
+        // );
       }
 
       if (body.feedback_status_id && result.feedback_status === "approved") {
@@ -76,14 +76,14 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
           const categoryTopic =
             result.topic !== null ? result.topic : undefined;
 
-          await sendOfficialEmail({
-            officialName,
-            categoryTopic,
-            description: result.description,
-            email: officialContact.email,
-            createdAt: result.created_at,
-            files: (feedbackImages ?? []).map(({ link_to_s3 }) => link_to_s3),
-          });
+          // await sendOfficialEmail({
+          //   officialName,
+          //   categoryTopic,
+          //   description: result.description,
+          //   email: officialContact.email,
+          //   createdAt: result.created_at,
+          //   files: (feedbackImages ?? []).map(({ link_to_s3 }) => link_to_s3),
+          // });
         }
       }
 
