@@ -13,7 +13,7 @@ import Image from "antd/es/image";
 
 type Status = {
   id: number;
-  title: "pending" | "approved" | "declined";
+  title: "pending" | "approved" | "declined" | "completed";
 };
 
 const ShowFeedback = () => {
@@ -31,15 +31,13 @@ const ShowFeedback = () => {
     },
   });
 
-  const { data: accessData } = useCan({
-    resource: "feedback",
-    action: "show",
-  });
+  const { data: identity } = useGetIdentity()
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {
       pending: "orange",
       approved: "green",
+      completed: "green",
       declined: "red",
     };
     return colorMap[status] || "default";
@@ -49,6 +47,7 @@ const ShowFeedback = () => {
     return {
       pending: "В обработке",
       approved: "Утверждено",
+      completed: "Выполнено",
       declined: "Отклонено",
     }[status];
   };
@@ -72,6 +71,30 @@ const ShowFeedback = () => {
         },
         onError: () => {
           message.error("Ошибка при согласовании предложения");
+        },
+      },
+    );
+  };
+
+  const handleComplete = () => {
+    const completedStatus = statuses?.data?.find(
+      (status) => status.title === "completed",
+    );
+
+    updateFeedback(
+      {
+        resource: "feedback",
+        id: feedback?.id,
+        values: {
+          feedback_status_id: completedStatus?.id,
+        },
+      },
+      {
+        onSuccess: () => {
+          message.success("Обращение выполнено");
+        },
+        onError: () => {
+          message.error("Ошибка при завершении обращения");
         },
       },
     );
@@ -215,7 +238,7 @@ const ShowFeedback = () => {
 
       <Divider />
 
-      {feedback?.feedback_status === "pending" && (
+      {feedback?.feedback_status === "pending" && identity?.role === "moderator" && (
         <Space>
           <Button type="primary" onClick={handleApprove}>
             Согласовать
@@ -225,6 +248,18 @@ const ShowFeedback = () => {
           </Button>
         </Space>
       )}
+      {
+        feedback?.feedback_status === "approved" && identity?.role === "official" && (
+          <Space>
+            <Button type="primary" onClick={handleComplete}>
+              Завершено
+            </Button>
+            <Button danger onClick={handleDecline}>
+              Отклонить
+            </Button>
+          </Space>
+        )
+      }
     </Show>
   );
 };
