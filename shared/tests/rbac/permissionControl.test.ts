@@ -1,33 +1,37 @@
 import { describe, expect, it } from "vitest";
 
-import { ac, roles } from "../../auth/src/permissionControl";
+import { roles } from "../../auth/src/permissionControl";
 
-const can = (role: (typeof roles)[keyof typeof roles]) =>
-  (ac as any).can(role);
+type RoleName = keyof typeof roles;
+
+const actionsOf = (role: RoleName, resource: string): string[] => {
+  const r = roles[role] as any;
+  return r?.statements?.[resource] ?? [];
+};
 
 describe("permissionControl access matrix", () => {
   it("superadmin имеет полный доступ к ключевым ресурсам", () => {
-    expect(can(roles.superadmin).project("delete")).toBe(true);
-    expect(can(roles.superadmin).feedback("update")).toBe(true);
-    expect(can(roles.superadmin).administrativeUnit("create")).toBe(true);
+    expect(actionsOf("superadmin", "project")).toContain("delete");
+    expect(actionsOf("superadmin", "feedback")).toContain("update");
+    expect(actionsOf("superadmin", "administrativeUnit")).toContain("create");
   });
 
   it("moderator может управлять проектами и голосованием", () => {
-    expect(can(roles.moderator).project("delete")).toBe(true);
-    expect(can(roles.moderator).votingUnit("update")).toBe(true);
-    expect(can(roles.moderator).feedback("update")).toBe(true);
+    expect(actionsOf("moderator", "project")).toContain("delete");
+    expect(actionsOf("moderator", "votingUnit")).toContain("update");
+    expect(actionsOf("moderator", "feedback")).toContain("update");
   });
 
   it("official может видеть и обновлять обращения, но не создавать голоса", () => {
-    expect(can(roles.official).feedback("read")).toBe(true);
-    expect(can(roles.official).feedback("update")).toBe(true);
-    expect(can(roles.official).votingVote("create")).toBe(false);
+    expect(actionsOf("official", "feedback")).toContain("read");
+    expect(actionsOf("official", "feedback")).toContain("update");
+    expect(actionsOf("official", "votingVote")).not.toContain("create");
   });
 
   it("citizen может только просматривать обращения и голоса", () => {
-    expect(can(roles.citizen).feedback("list")).toBe(true);
-    expect(can(roles.citizen).votingVote("list")).toBe(true);
-    expect(can(roles.citizen).feedback("update")).toBe(false);
-    expect(can(roles.citizen).votingVote("delete")).toBe(false);
+    expect(actionsOf("citizen", "feedback")).toContain("list");
+    expect(actionsOf("citizen", "votingVote")).toContain("list");
+    expect(actionsOf("citizen", "feedback")).not.toContain("update");
+    expect(actionsOf("citizen", "votingVote")).not.toContain("delete");
   });
 });
