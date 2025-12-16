@@ -23,7 +23,7 @@ export const getFeedbackSchema = v.object({
   project: v.string(),
   administrative_unit: v.nullable(v.string()),
   feedback_type: v.string(),
-  feedback_status: v.picklist(["pending", "approved", "declined"]),
+  feedback_status: v.picklist(["pending", "approved", "declined", "completed"]),
   image_links: v.optional(v.array(v.string()), []),
 });
 
