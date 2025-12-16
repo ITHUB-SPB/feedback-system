@@ -11,7 +11,6 @@ async function seedDatabase() {
     "seedFeedbackTopics",
     "seedFeedbackTopicCategories",
     "seedFeedbackTopicCategoryTopic",
-    "seedPersonTypes",
     "seedProjects",
     "seedVotingRegions",
     "seedVotingUnits",

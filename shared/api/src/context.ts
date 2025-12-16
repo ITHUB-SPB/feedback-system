@@ -103,23 +103,7 @@ export const requireModeratorProcedure = protectedProcedure.use(
   async ({ context, next, errors }) => {
     const role = context.session.user.role;
 
-    if (!["superadmin", "moderator"].includes(role)) {
-      throw errors.UNAUTHORIZED();
-    }
-
-    return next({
-      context: {
-        session: { ...context.session },
-      },
-    });
-  },
-);
-
-export const requireSuperadminProcedure = protectedProcedure.use(
-  async ({ context, next, errors }) => {
-    const role = context.session.user.role;
-
-    if (role !== "superadmin") {
+    if (role !== "moderator") {
       throw errors.UNAUTHORIZED();
     }
 

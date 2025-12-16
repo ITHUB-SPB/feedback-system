@@ -12,10 +12,6 @@ export const getManyAdministrativeUnitTypeSchema = v.array(
   getAdministrativeUnitTypeSchema,
 );
 
-export type AdministrativeUnitType = v.InferOutput<
-  typeof administrativeUnitTypeSchema
->;
-
 export type AdministrativeUnitTypeTable = v.InferOutput<
   typeof administrativeUnitTypeSchema
 >;

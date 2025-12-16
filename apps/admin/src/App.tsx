@@ -3,7 +3,7 @@ import AntdApp from "antd/es/app";
 import ConfigProvider from "antd/es/config-provider";
 import { useTranslation } from "react-i18next";
 
-import { CanAccess, Refine } from "@refinedev/core";
+import { Refine } from "@refinedev/core";
 import routerProvider from "@refinedev/react-router";
 import { useNotificationProvider } from "@refinedev/antd";
 
@@ -29,7 +29,7 @@ function App() {
     translate: (key: string, params?: any) => {
       return String(t(key, params));
     },
-    changeLocale: (_: string) => {},
+    changeLocale: (_: string) => { },
     getLocale: () => {
       return "ru";
     },
@@ -123,9 +123,7 @@ function App() {
               },
             ]}
           >
-            <CanAccess>
-              <AppRoutes />
-            </CanAccess>
+            <AppRoutes />
           </Refine>
         </AntdApp>
       </ConfigProvider>

@@ -18,10 +18,8 @@
         "./feedback_type": "./src/feedback_type.ts",
         "./feedback": "./src/feedback.ts",
         "./official_responsibility": "./src/official_responsibility.ts",
-        "./person_contact": "./src/person_contact.ts",
-        "./person_type": "./src/person_type.ts",
-        "./person": "./src/person.ts",
         "./project": "./src/project.ts",
+        "./user": "./src/user.ts",
         "./base": "./src/base/inputs.ts"
     },
     "dependencies": {

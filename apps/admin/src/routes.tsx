@@ -33,7 +33,6 @@ const ListVotingResults = React.lazy(
 const ListVotingUnits = React.lazy(() => import("./pages/voting-units/list"));
 
 const Login = React.lazy(() => import("./pages/auth/login"));
-const Register = React.lazy(() => import("./pages/auth/register"));
 
 export default function AppRoutes() {
   return (
@@ -50,7 +49,7 @@ export default function AppRoutes() {
           </Authenticated>
         }
       >
-        <Route index element={<NavigateToResource resource="feedback" />} />
+        <Route index element={<NavigateToResource resource="projects" />} />
         <Route path="/projects">
           <Route index element={<ListProjects />} />
           <Route path=":id" element={<ShowProject />} />
@@ -80,8 +79,8 @@ export default function AppRoutes() {
         }
       >
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
       </Route>
     </Routes>
+
   );
 }

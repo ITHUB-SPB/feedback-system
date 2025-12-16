@@ -85,38 +85,14 @@ async function migratePostgres() {
     .execute();
 
   await db.schema
-    .createTable("person_contact")
-    .ifNotExists()
-    .addColumn("id", "serial", (col) => col.primaryKey())
-    .addColumn("email", "text", (col) => col.notNull().unique())
-    .addColumn("phone", "text")
-    .addColumn("social", "text")
-    .execute();
-
-  await db.schema
-    .createTable("person")
-    .ifNotExists()
-    .addColumn("id", "serial", (col) => col.primaryKey())
-    .addColumn("first_name", "text", (col) => col.notNull())
-    .addColumn("last_name", "text", (col) => col.notNull())
-    .addColumn("middle_name", "text", (col) => col.notNull())
-    .addColumn("person_type_id", "integer", (col) =>
-      col.references("person_type.id").onDelete("set null"),
-    )
-    .addColumn("contact_id", "integer", (col) =>
-      col.references("person_contact.id").onDelete("set null"),
-    )
-    .execute();
-
-  await db.schema
     .createTable("official_responsibility")
     .ifNotExists()
     .addColumn("id", "serial", (col) => col.primaryKey())
     .addColumn("administrative_unit_id", "integer", (col) =>
       col.references("administrative_unit.id").notNull().onDelete("cascade"),
     )
-    .addColumn("official_id", "integer", (col) =>
-      col.notNull().references("person.id").onDelete("cascade"),
+    .addColumn("official_id", "text", (col) =>
+      col.notNull().references("user.id").onDelete("cascade"),
     )
     .execute();
 
@@ -134,8 +110,8 @@ async function migratePostgres() {
     .addColumn("topic_id", "integer", (col) =>
       col.references("topic_category_topic.id").onDelete("set null"),
     )
-    .addColumn("person_id", "integer", (col) =>
-      col.references("person.id").onDelete("set null"),
+    .addColumn("person_id", "text", (col) =>
+      col.references("user.id").onDelete("set null"),
     )
     .addColumn("feedback_status_id", "integer", (col) =>
       col.references("feedback_status.id").onDelete("set null"),
