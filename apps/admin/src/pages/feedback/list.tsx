@@ -85,8 +85,8 @@ const ListFeedback = () => {
     return {
       pending: "На проверке",
       approved: "В работе",
+      completed: "Выполнено",
       declined: "Отклонено",
-      completed: "Выполнено"
     }[status];
   };
 
