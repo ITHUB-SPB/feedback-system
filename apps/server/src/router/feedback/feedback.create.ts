@@ -6,49 +6,36 @@ const createFeedback = publicProcedure.feedback.create.handler(
     const transaction = await context.db.startTransaction().execute();
 
     try {
-      let personId = (
+      let respondentId = (
         await transaction
-          .selectFrom("person")
-          .innerJoin("person_contact", "person.contact_id", "person_contact.id")
-          .select("person.id")
-          .where("person_contact.email", "=", input.body.email)
+          .selectFrom("user")
+          .select("user.id")
+          .where("user.email", "=", input.body.email)
           .executeTakeFirst()
       )?.id;
 
-      if (!personId) {
-        const { id: personTypeId } = await transaction
-          .selectFrom("person_type")
-          .select("person_type.id")
-          .where("person_type.title", "=", "citizen")
-          .executeTakeFirstOrThrow();
+      if (!respondentId) {
+        const newUserValues = {
+          id: 'todo', // TODO !!!
+          email: input.body.email,
+          name: input.body.email,
+          password: input.body.email,
+          phone: input.body.phone ?? "",
+          role: "citizen",
+          firstName: input.body.first_name,
+          lastName: input.body.last_name,
+          middleName: input.body.middle_name ?? "",
+          updatedAt: new Date(),
+          createdAt: new Date(),
+          emailVerified: false,
+        } as const;
 
-        const { id: personContactId } = await transaction
-          .insertInto("person_contact")
-          .values({
-            email: input.body.email,
-            phone: input.body.phone ?? "",
-          })
+        const { id: newUserId } = await transaction
+          .insertInto("user")
+          .values(newUserValues)
           .returning("id")
           .executeTakeFirstOrThrow();
-
-        if (personContactId === undefined) {
-          throw new Error("Ошибка при создании нового контакта");
-        }
-
-        const newPersonValues = {
-          first_name: input.body.first_name,
-          last_name: input.body.last_name,
-          middle_name: input.body.middle_name ?? "",
-          person_type_id: personTypeId,
-          contact_id: Number(personContactId),
-        };
-
-        const { id } = await transaction
-          .insertInto("person")
-          .values(newPersonValues)
-          .returning("id")
-          .executeTakeFirstOrThrow();
-        personId = Number(id);
+        respondentId = newUserId;
       }
 
       const { id: pendingStatusId } = await transaction
@@ -62,7 +49,7 @@ const createFeedback = publicProcedure.feedback.create.handler(
         description: input.body.description,
         feedback_type_id: input.body.feedback_type_id,
         topic_id: input.body.topic_category_topic_id ?? null,
-        person_id: personId,
+        person_id: respondentId,
         feedback_status_id: pendingStatusId,
       };
 

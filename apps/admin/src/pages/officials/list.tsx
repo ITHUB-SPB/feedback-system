@@ -1,11 +1,10 @@
-import { useList } from "@refinedev/core";
+import { useList, type HttpError } from "@refinedev/core";
 import { authClient } from "../../providers/auth-provider";
 
 import {
   EditButton,
   getDefaultSortOrder,
   List,
-  useSelect,
   useEditableTable,
   TextField,
   SaveButton,
@@ -71,7 +70,7 @@ const ListPersons = () => {
     modalProps: createOfficialModalProps,
     formProps: createOfficialFormProps,
     show: createOfficialModalShow,
-  } = useModalForm<PersonRecord>({
+  } = useModalForm<PersonRecord, HttpError, PersonRecord>({
     action: "create",
     resource: "/auth/admin/create-user",
     redirect: false,
@@ -94,7 +93,6 @@ const ListPersons = () => {
         // },
       ],
     });
-
 
   return (
     <>
@@ -296,7 +294,7 @@ const ListPersons = () => {
             />
           </Table>
         </Form>
-      </List >
+      </List>
 
       <Modal {...createOfficialModalProps} title="Новое ответственное лицо">
         <Form
@@ -314,9 +312,9 @@ const ListPersons = () => {
                 lastName: values.lastName,
                 middleName: values.middleName,
                 phone: values.phone,
-                social: values.social
-              }
-            })
+                social: values.social,
+              },
+            });
           }}
         >
           <Flex gap={16}>
@@ -405,10 +403,14 @@ const ListPersons = () => {
                 required: true,
               },
             ]}
-          // hidden={true}
+            // hidden={true}
           >
-            <Select options={[{ value: 'moderator', label: 'moderator' }, { value: 'official', label: 'official' }]}>
-            </Select>
+            <Select
+              options={[
+                { value: "moderator", label: "moderator" },
+                { value: "official", label: "official" },
+              ]}
+            ></Select>
           </Form.Item>
         </Form>
       </Modal>

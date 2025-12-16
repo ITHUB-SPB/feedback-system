@@ -6,13 +6,12 @@ const authClient = createAuthClient({
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL!,
 });
 
-
 export const accessControlProvider: AccessControlProvider = {
   can: async ({ resource, action, params }) => {
     console.log({ resource, action, params });
 
-    const session = await authClient.getSession()
-    const role = session.data?.user.role || "citizen"
+    const session = await authClient.getSession();
+    const role = session.data?.user.role || "citizen";
 
     if (!resource || role === "moderator") {
       return { can: true };

@@ -8,7 +8,7 @@ const feedbackSchema = v.object({
   description: v.string(),
   feedback_type_id: idSchema,
   topic_id: v.nullable(idSchema),
-  person_id: idSchema,
+  person_id: v.pipe(v.string(), v.nonEmpty()),
   feedback_status_id: idSchema,
   created_at: v.union([
     v.date(),

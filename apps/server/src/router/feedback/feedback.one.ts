@@ -6,14 +6,13 @@ const oneFeedback = requireOfficialProcedure.feedback.one.handler(
   async ({ context, input, errors }) => {
     try {
       const feedback = await _baseSelect(context.db)
-        .innerJoin("person", "person.id", "feedback.person_id")
-        .innerJoin("person_contact", "person.contact_id", "person_contact.id")
+        .innerJoin("user", "user.id", "feedback.person_id")
         .select([
-          "person_contact.email as person_email",
-          "person_contact.phone as person_phone",
-          "person.first_name as person_first_name",
-          "person.last_name as person_last_name",
-          "person.middle_name as person_middle_name",
+          "user.email as respondentEmail",
+          "user.phone as respondentPhone",
+          "user.firstName as respondentFirstName",
+          "user.lastName as respondentLastName",
+          "user.middleName as respondentMiddleName",
         ])
         .where("feedback.id", "=", Number(input.id))
         .executeTakeFirstOrThrow();

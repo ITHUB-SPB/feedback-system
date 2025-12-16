@@ -1,4 +1,4 @@
-import { CanAccess, useMany, useCan } from "@refinedev/core";
+import { useMany, useCan } from "@refinedev/core";
 import {
   useTable,
   ShowButton,

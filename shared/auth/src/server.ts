@@ -31,37 +31,37 @@ export const getBaseOptions = (databaseInstance: typeof db) =>
           required: true,
           input: true,
           defaultValue: "citizen",
-          returned: true
+          returned: true,
         },
         firstName: {
           type: "string",
           required: true,
           input: true,
-          returned: true
+          returned: true,
         },
         lastName: {
           type: "string",
           required: false,
           input: true,
-          returned: true
+          returned: true,
         },
         middleName: {
           type: "string",
           required: false,
           input: true,
-          returned: true
+          returned: true,
         },
         phone: {
           type: "string",
           required: false,
           input: true,
-          returned: true
+          returned: true,
         },
         social: {
           type: "string",
           required: false,
           input: true,
-          returned: true
+          returned: true,
         },
       },
     },
@@ -105,7 +105,7 @@ export const createAuth = ({
             lastName: user.lastName,
             middleName: user.middleName,
             phone: user.phone,
-            social: user.social
+            social: user.social,
           },
           session,
         };

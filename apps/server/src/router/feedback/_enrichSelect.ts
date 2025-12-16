@@ -13,9 +13,9 @@ export default async function _enrichSelect(
   feedbackData: any,
 ) {
   const personFullName = formatFullName(
-    feedbackData.person_last_name,
-    feedbackData.person_first_name,
-    feedbackData.person_middle_name,
+    feedbackData.respondentLastName,
+    feedbackData.respondentFirstName,
+    feedbackData.respondentMiddleName,
   );
 
   const responsiblePerson = await databaseInstance
@@ -35,10 +35,10 @@ export default async function _enrichSelect(
 
   const responsiblePersonFullName = responsiblePerson
     ? formatFullName(
-      responsiblePerson.officialLastName,
-      responsiblePerson.officialFirstName,
-      responsiblePerson.officialMiddleName,
-    )
+        responsiblePerson.officialLastName,
+        responsiblePerson.officialFirstName,
+        responsiblePerson.officialMiddleName,
+      )
     : null;
 
   return {
