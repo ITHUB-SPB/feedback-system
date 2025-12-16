@@ -80,9 +80,9 @@ export default function createApp(env: Env) {
             type: "apiKey",
             in: "cookie",
             name: "apiKeyCookie",
-            description: "session.token"
-          }
-        }
+            description: "session.token",
+          },
+        },
       },
       sources: [
         {

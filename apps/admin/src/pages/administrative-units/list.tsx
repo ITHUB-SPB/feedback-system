@@ -129,8 +129,8 @@ const ListAdministrativeUnits = () => {
     },
     meta: {
       variables: {
-        nestedKey: "users"
-      }
+        nestedKey: "users",
+      },
     },
     filters: [
       {
@@ -148,7 +148,7 @@ const ListAdministrativeUnits = () => {
     },
   });
 
-  console.log(personsSelectProps)
+  console.log(personsSelectProps);
 
   return (
     <>
@@ -245,7 +245,7 @@ const ListAdministrativeUnits = () => {
                 }
 
                 if (isAttaching && attachingUnitId === record.id) {
-                  console.log(personsSelectProps)
+                  console.log(personsSelectProps);
                   return (
                     <Select
                       {...personsSelectProps}
@@ -389,7 +389,7 @@ const ListAdministrativeUnits = () => {
               ]}
               style={{ flex: 5 }}
             >
-              <Select {...personsSelectProps} >
+              <Select {...personsSelectProps}>
                 {personsSelectProps?.options?.map((option) => (
                   <Select.Option key={option.id} value={option.id}>
                     {option.label}

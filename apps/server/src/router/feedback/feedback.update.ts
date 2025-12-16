@@ -3,6 +3,10 @@ import { sendCitizenEmail, sendOfficialEmail } from "../../queue";
 import _baseSelect from "./_baseSelect";
 import _enrichSelect from "./_enrichSelect";
 
+function formatFullName(firstName: string, middleName?: string | null) {
+  return middleName ? `${firstName} ${middleName}` : firstName;
+}
+
 const updateFeedback = requireOfficialProcedure.feedback.update.handler(
   async ({ context, input, errors }) => {
     const { params, body } = input;
@@ -51,12 +55,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
           const officialContact = await context.db
             .selectFrom("user")
             .where("user.id", "=", official.official_id)
-            .select([
-              "email",
-              "firstName",
-              "lastName",
-              "middleName",
-            ])
+            .select(["email", "firstName", "lastName", "middleName"])
             .executeTakeFirstOrThrow();
 
           const feedbackImages = await context.db
@@ -66,9 +65,10 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
             .where("feedback.id", "=", Number(result.id))
             .execute();
 
-          const officialName = officialContact.middleName
-            ? `${officialContact.firstName} ${officialContact.middleName}`
-            : officialContact.firstName;
+          const officialName = formatFullName(
+            officialContact.firstName,
+            officialContact.middleName,
+          );
 
           const categoryTopic =
             result.topic !== null ? result.topic : undefined;

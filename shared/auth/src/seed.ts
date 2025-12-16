@@ -57,12 +57,10 @@ for (const { email, password, role, ...additional } of accounts) {
         name: email,
         // @ts-ignore
         role,
-        data: additional
+        data: additional,
       },
     });
   } catch (error: unknown) {
-    console.log(
-      (error as Error).message
-    );
+    console.log((error as Error).message);
   }
 }

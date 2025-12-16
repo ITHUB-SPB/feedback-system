@@ -14,7 +14,7 @@ import { type ProjectTable } from "@shared/schema/project";
 import { type VotingUnitTable } from "@shared/schema/voting_unit";
 import { type VotingRegionTable } from "@shared/schema/voting_region";
 import { type VotingVoteTable } from "@shared/schema/voting_vote";
-import { type UserTable } from '@shared/schema/user'
+import { type UserTable } from "@shared/schema/user";
 
 type GeneratedId = {
   id: Generated<number>;

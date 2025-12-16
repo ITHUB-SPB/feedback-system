@@ -29,7 +29,7 @@ function App() {
     translate: (key: string, params?: any) => {
       return String(t(key, params));
     },
-    changeLocale: (_: string) => { },
+    changeLocale: (_: string) => {},
     getLocale: () => {
       return "ru";
     },

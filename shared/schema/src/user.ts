@@ -1,4 +1,4 @@
-import * as v from "valibot"
+import * as v from "valibot";
 
 const userSchema = v.object({
   id: v.string(),
@@ -17,6 +17,6 @@ const userSchema = v.object({
   middleName: v.optional(v.string()),
   phone: v.optional(v.nullable(v.string())),
   social: v.optional(v.nullable(v.string())),
-})
+});
 
-export type UserTable = v.InferOutput<typeof userSchema>
+export type UserTable = v.InferOutput<typeof userSchema>;

@@ -33,17 +33,17 @@ const moderator = ac.newRole({
   votingUnit: ["list", "read", "update", "create", "delete"],
   votingVote: ["list", "read", "create", "delete"],
   project: ["create", "update", "delete", "read", "list"],
-})
+});
 
 const official = ac.newRole({
   user: ["get"],
   feedback: ["list", "update", "read"],
   votingVote: ["list", "read"],
-})
+});
 
 const citizen = ac.newRole({
   votingVote: ["list"],
   feedback: ["list"],
-})
+});
 
 export const roles = { moderator, official, citizen } as const;

@@ -12,7 +12,15 @@ const authProvider: AuthProvider = {
 
     return { authenticated: Boolean(session) };
   },
-  register: async ({ email, password, firstName, lastName, middleName, phone, social }) => {
+  register: async ({
+    email,
+    password,
+    firstName,
+    lastName,
+    middleName,
+    phone,
+    social,
+  }) => {
     const { error } = await authClient.admin.createUser({
       name: email,
       email,
@@ -43,7 +51,7 @@ const authProvider: AuthProvider = {
 
     // @ts-ignore
     if (data?.user?.role === "citizen") {
-      console.log('citizen login')
+      console.log("citizen login");
       return { success: false };
     }
 
@@ -84,8 +92,8 @@ const authProvider: AuthProvider = {
   },
   getIdentity: async () => {
     const { data } = await authClient.getSession();
-    console.log(data)
-    return data?.user ? { ...data?.user, role: data?.role ?? "citizen" } : null
+    console.log(data);
+    return data?.user ? { ...data?.user, role: data?.role ?? "citizen" } : null;
   },
   // ...
 };
