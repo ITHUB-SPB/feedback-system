@@ -25,6 +25,8 @@ const allOfficialResponsibilities =
             const matchResult =
               decodeURI(filterExpression).match(/(.*)\[(.*)\](.*)/);
 
+            console.log(matchResult)
+
             if (matchResult === null) {
               continue;
             }
@@ -32,7 +34,7 @@ const allOfficialResponsibilities =
             let column = matchResult[1] as
               | keyof Database["official_responsibility"]
               | keyof Database["administrative_unit"]
-              | keyof Database["person"];
+              | keyof Database["user"];
 
             if (column === "id") {
               column =

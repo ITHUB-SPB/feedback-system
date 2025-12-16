@@ -11,9 +11,6 @@ import feedbackContract from "./feedback";
 import administrativeUnitContract from "./administrativeUnit";
 import administrativeUnitTypeContract from "./administrativeUnitType";
 
-import personTypeContract from "./personType";
-import personContract from "./person";
-
 import officialResponsibilityContract from "./officialResponsibility";
 
 import projectContract from "./project";
@@ -58,9 +55,6 @@ const apiContract = oc
     feedback: feedbackContract,
     feedbackType: feedbackTypeContract,
     feedbackStatus: feedbackStatusContract,
-
-    personType: personTypeContract,
-    person: personContract,
 
     administrativeUnit: administrativeUnitContract,
     administrativeUnitType: administrativeUnitTypeContract,

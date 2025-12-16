@@ -136,17 +136,6 @@ export async function seedFeedbackTopicCategoryTopic(db: Kysely<Database>) {
   }
 }
 
-export async function seedPersonTypes(db: Kysely<Database>) {
-  await db
-    .insertInto("person_type")
-    .values([
-      { title: "citizen" },
-      { title: "official" },
-      { title: "moderator" },
-    ])
-    .execute();
-}
-
 export async function seedProjects(db: Kysely<Database>) {
   const records = await Promise.all(
     Object.values(projectsData).map(

@@ -24,6 +24,47 @@ export const getBaseOptions = (databaseInstance: typeof db) =>
         roles,
       }),
     ],
+    user: {
+      additionalFields: {
+        role: {
+          type: "string",
+          required: true,
+          input: true,
+          defaultValue: "citizen",
+          returned: true
+        },
+        firstName: {
+          type: "string",
+          required: true,
+          input: true,
+          returned: true
+        },
+        lastName: {
+          type: "string",
+          required: false,
+          input: true,
+          returned: true
+        },
+        middleName: {
+          type: "string",
+          required: false,
+          input: true,
+          returned: true
+        },
+        phone: {
+          type: "string",
+          required: false,
+          input: true,
+          returned: true
+        },
+        social: {
+          type: "string",
+          required: false,
+          input: true,
+          returned: true
+        },
+      },
+    },
   }) satisfies BetterAuthOptions;
 
 export const createAuth = ({
@@ -46,26 +87,26 @@ export const createAuth = ({
         maxAge: 15 * 60,
       },
     },
-    user: {
-      additionalFields: {
-        role: {
-          type: "string",
-          required: true,
-          input: true,
-        },
-      },
-    },
     emailAndPassword: {
       enabled: true,
       autoSignIn: true,
       requireEmailVerification: false,
+      // disableSignUp: true,
     },
     plugins: [
       ...baseOptions.plugins,
       customSession(async ({ user, session }) => {
         return {
           role: user.role,
-          user,
+          user: {
+            ...user,
+            role: user.role,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            middleName: user.middleName,
+            phone: user.phone,
+            social: user.social
+          },
           session,
         };
       }, baseOptions),

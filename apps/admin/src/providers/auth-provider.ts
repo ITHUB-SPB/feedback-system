@@ -12,12 +12,19 @@ const authProvider: AuthProvider = {
 
     return { authenticated: Boolean(session) };
   },
-  register: async ({ email, password }) => {
-    const { data, error } = await authClient.signUp.email({
+  register: async ({ email, password, firstName, lastName, middleName, phone, social }) => {
+    const { error } = await authClient.admin.createUser({
       name: email,
       email,
       password,
       role: "official",
+      data: {
+        firstName,
+        lastName,
+        middleName,
+        phone,
+        social,
+      },
       fetchOptions: {
         onError: (error) => {
           throw error;
@@ -25,11 +32,7 @@ const authProvider: AuthProvider = {
       },
     });
 
-    if (data?.token) {
-      return { success: true, redirectTo: "/" };
-    }
-
-    return { success: false };
+    return { success: !error };
   },
   login: async ({ email, password }) => {
     const { data } = await authClient.signIn.email({
@@ -37,6 +40,12 @@ const authProvider: AuthProvider = {
       password,
       rememberMe: true,
     });
+
+    // @ts-ignore
+    if (data?.user?.role === "citizen") {
+      console.log('citizen login')
+      return { success: false };
+    }
 
     if (data?.token) {
       return { success: true, redirectTo: "/" };
@@ -75,8 +84,8 @@ const authProvider: AuthProvider = {
   },
   getIdentity: async () => {
     const { data } = await authClient.getSession();
-
-    return data?.user ?? null;
+    console.log(data)
+    return data?.user ? { ...data?.user, role: data?.role ?? "citizen" } : null
   },
   // ...
 };

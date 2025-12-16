@@ -6,7 +6,6 @@ export {
   publicProcedure,
   requireOfficialProcedure,
   requireModeratorProcedure,
-  requireSuperadminProcedure,
 } from "./context";
 
 export { createAPIClient, type RouterOutput } from "./client";

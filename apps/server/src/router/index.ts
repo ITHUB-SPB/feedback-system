@@ -4,7 +4,6 @@ import topicRouter from "./topic";
 import topicCategoryRouter from "./topicCategory";
 import topicCategoryTopicRouter from "./topicCategoryTopic";
 import feedbackRouter from "./feedback";
-import personRouter from "./person";
 import officialResponsibilityRouter from "./officialResponsibility";
 
 import votingRegionRouter from "./votingRegion";
@@ -14,7 +13,6 @@ import votingVoteRouter from "./votingVote";
 import feedbackTypeRouter from "./enumerations/feedbackType";
 import administrativeUnitTypeRouter from "./enumerations/administrativeUnitType";
 import feedbackStatusRouter from "./enumerations/feedbackStatus";
-import personTypeRouter from "./enumerations/personType";
 
 const apiRouter = {
   projects: projectRouter,
@@ -26,8 +24,6 @@ const apiRouter = {
   topicCategories: topicCategoryRouter,
   topicCategoryTopic: topicCategoryTopicRouter,
   feedback: feedbackRouter,
-  person: personRouter,
-  personType: personTypeRouter,
   officialResponsibility: officialResponsibilityRouter,
   votingRegion: votingRegionRouter,
   votingUnit: votingUnitRouter,

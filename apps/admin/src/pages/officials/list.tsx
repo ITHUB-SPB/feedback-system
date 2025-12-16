@@ -21,30 +21,16 @@ import Modal from "antd/es/modal";
 import Button from "antd/es/button";
 import Flex from "antd/es/flex";
 
-type PersonContact = {
+type PersonRecord = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  role: string;
+  created_at?: string | null;
   email: string | null;
   phone: string | null;
   social: string | null;
-};
-
-type PersonRecord = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  middle_name: string;
-  person_type: string;
-  created_at?: string | null;
-  contact?: PersonContact | null;
-};
-
-type IOfficial = {
-  first_name: string;
-  last_name: string;
-  middle_name: string;
-  person_type_id: number;
-  email: string;
-  phone: string | undefined;
-  social: string | undefined;
 };
 
 const ListPersons = () => {
@@ -58,12 +44,12 @@ const ListPersons = () => {
     editButtonProps,
     sorters,
   } = useEditableTable({
-    resource: "persons",
+    resource: "auth/admin/list-users",
     pagination: { currentPage: 1, pageSize: 24 },
     sorters: {
       initial: [
         {
-          field: "last_name",
+          field: "lastName",
           order: "asc",
         },
       ],
@@ -71,7 +57,7 @@ const ListPersons = () => {
     filters: {
       initial: [
         {
-          field: "person_type.title",
+          field: "role",
           operator: "eq",
           value: "official",
         },
@@ -83,7 +69,7 @@ const ListPersons = () => {
     modalProps: createOfficialModalProps,
     formProps: createOfficialFormProps,
     show: createOfficialModalShow,
-  } = useModalForm<IOfficial>({
+  } = useModalForm<PersonRecord>({
     action: "create",
     resource: "persons",
     redirect: false,
@@ -106,13 +92,6 @@ const ListPersons = () => {
         },
       ],
     });
-
-  const { selectProps: personTypesSelectProps } = useSelect({
-    resource: "person_types",
-    pagination: {
-      pageSize: 12,
-    },
-  });
 
   return (
     <>
@@ -402,7 +381,7 @@ const ListPersons = () => {
 
           <Form.Item
             label="Тип"
-            name="person_type_id"
+            name="role"
             rules={[
               {
                 required: true,
@@ -410,12 +389,7 @@ const ListPersons = () => {
             ]}
             hidden={true}
           >
-            <Select {...personTypesSelectProps}>
-              {personTypesSelectProps?.options?.map((option) => (
-                <Select.Option key={option.id} value={option.id}>
-                  {option.title}
-                </Select.Option>
-              ))}
+            <Select options={[{ value: 'moderator', label: 'moderator' }, { value: 'official', label: 'official' }]}>
             </Select>
           </Form.Item>
         </Form>

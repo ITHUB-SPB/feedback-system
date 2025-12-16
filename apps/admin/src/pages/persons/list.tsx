@@ -9,6 +9,7 @@ import Table from "antd/es/table";
 
 const ListPersons = () => {
   const { tableProps, sorters } = useTable({
+    resource: "auth/admin/list-users",
     pagination: { currentPage: 1, pageSize: 24 },
     sorters: {
       initial: [
