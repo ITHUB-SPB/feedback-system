@@ -20,11 +20,11 @@ export default async function _enrichSelect(
 
   const responsiblePerson = await databaseInstance
     .selectFrom("official_responsibility")
-    .innerJoin("person", "official_responsibility.official_id", "person.id")
+    .innerJoin("user", "official_responsibility.official_id", "user.id")
     .select([
-      "person.first_name as official_first_name",
-      "person.last_name as official_last_name",
-      "person.middle_name as official_middle_name",
+      "user.firstName as officialFirstName",
+      "user.lastName as officialLastName",
+      "user.middleName as officialMiddleName",
     ])
     .where(
       "official_responsibility.administrative_unit_id",
@@ -35,10 +35,10 @@ export default async function _enrichSelect(
 
   const responsiblePersonFullName = responsiblePerson
     ? formatFullName(
-        responsiblePerson.official_last_name,
-        responsiblePerson.official_first_name,
-        responsiblePerson.official_middle_name,
-      )
+      responsiblePerson.officialLastName,
+      responsiblePerson.officialFirstName,
+      responsiblePerson.officialMiddleName,
+    )
     : null;
 
   return {

@@ -14,7 +14,7 @@ const ListPersons = () => {
     sorters: {
       initial: [
         {
-          field: "last_name",
+          field: "lastName",
           order: "asc",
         },
       ],
@@ -22,7 +22,7 @@ const ListPersons = () => {
     filters: {
       initial: [
         {
-          field: "person_type.title",
+          field: "role",
           operator: "eq",
           value: "citizen",
         },
@@ -45,14 +45,14 @@ const ListPersons = () => {
           dataIndex="last_name"
           title="Фамилия"
           sorter
-          defaultSortOrder={getDefaultSortOrder("last_name", sorters)}
+          defaultSortOrder={getDefaultSortOrder("lastName", sorters)}
           render={(value: string) => (
             <TextField value={value || "—"} style={{ cursor: "pointer" }} />
           )}
         />
 
         <Table.Column
-          dataIndex="first_name"
+          dataIndex="firstName"
           title="Имя"
           sorter
           defaultSortOrder={getDefaultSortOrder("first_name", sorters)}
@@ -62,10 +62,10 @@ const ListPersons = () => {
         />
 
         <Table.Column
-          dataIndex="middle_name"
+          dataIndex="middleName"
           title="Отчество"
           sorter
-          defaultSortOrder={getDefaultSortOrder("middle_name", sorters)}
+          defaultSortOrder={getDefaultSortOrder("middleName", sorters)}
           render={(value: string) => (
             <TextField value={value || "—"} style={{ cursor: "pointer" }} />
           )}

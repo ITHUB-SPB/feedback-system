@@ -20,15 +20,13 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
 
       if (body.feedback_status_id) {
         const citizen = await context.db
-          .selectFrom("person")
-          .innerJoin("person_contact", "person_contact.id", "person.contact_id")
-          .where("person.id", "=", result.person_id)
-          .select(["email", "first_name", "last_name", "middle_name"])
+          .selectFrom("user")
+          .select(["email", "firstName", "lastName", "middleName"])
           .executeTakeFirstOrThrow();
 
-        const citizenFullName = citizen.middle_name
-          ? `${citizen.first_name} ${citizen.middle_name}`
-          : `${citizen.first_name}`;
+        const citizenFullName = citizen.middleName
+          ? `${citizen.firstName} ${citizen.middleName}`
+          : `${citizen.firstName}`;
 
         // await sendCitizenEmail(
         //   citizen.email,
@@ -51,14 +49,13 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
 
         if (official) {
           const officialContact = await context.db
-            .selectFrom("person_contact")
-            .innerJoin("person", "person.contact_id", "person_contact.id")
-            .where("person.id", "=", official.official_id)
+            .selectFrom("user")
+            .where("user.id", "=", official.official_id)
             .select([
-              "person_contact.email",
-              "person.first_name",
-              "person.last_name",
-              "person.middle_name",
+              "email",
+              "firstName",
+              "lastName",
+              "middleName",
             ])
             .executeTakeFirstOrThrow();
 
@@ -69,9 +66,9 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
             .where("feedback.id", "=", Number(result.id))
             .execute();
 
-          const officialName = officialContact.middle_name
-            ? `${officialContact.first_name} ${officialContact.middle_name}`
-            : officialContact.first_name;
+          const officialName = officialContact.middleName
+            ? `${officialContact.firstName} ${officialContact.middleName}`
+            : officialContact.firstName;
 
           const categoryTopic =
             result.topic !== null ? result.topic : undefined;

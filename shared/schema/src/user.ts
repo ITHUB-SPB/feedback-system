@@ -14,7 +14,7 @@ const userSchema = v.object({
   role: v.picklist(["citizen", "official", "moderator"]),
   firstName: v.pipe(v.string(), v.nonEmpty()),
   lastName: v.pipe(v.string(), v.nonEmpty()),
-  middleName: v.optional(v.nullable(v.string())),
+  middleName: v.optional(v.string()),
   phone: v.optional(v.nullable(v.string())),
   social: v.optional(v.nullable(v.string())),
 })

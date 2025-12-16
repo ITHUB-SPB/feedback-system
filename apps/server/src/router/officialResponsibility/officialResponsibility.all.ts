@@ -69,8 +69,8 @@ const allOfficialResponsibilities =
             let [field, order] = sortExpression.split(".");
             if (field === "official_id") {
               query = query
-                .orderBy("person.last_name", order as "desc" | "asc")
-                .orderBy("person.first_name", order as "desc" | "asc");
+                .orderBy("user.lastName", order as "desc" | "asc")
+                .orderBy("user.firstName", order as "desc" | "asc");
             }
             if (field === "administrative_unit_id") {
               query = query.orderBy(
