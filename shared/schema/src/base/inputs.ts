@@ -61,6 +61,7 @@ export const baseInputOne = v.object({
       v.integer(),
       v.minValue(1),
     ),
+    v.pipe(v.string()),
     v.pipe(v.number(), v.integer(), v.minValue(1)),
   ]),
 });

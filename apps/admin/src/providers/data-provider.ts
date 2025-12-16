@@ -1,4 +1,5 @@
 import type { DataProvider } from "@refinedev/core";
+import type { authClient } from "./auth-provider";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL! + "/api";
 
@@ -38,6 +39,56 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
+    if (resource === "auth/admin/list-users") {
+      const query: { [K: string]: string } = {} satisfies Parameters<typeof authClient.admin.listUsers>[0]["query"]
+
+      if (pagination?.pageSize && pagination?.currentPage) {
+        Object.assign(query, {
+          limit: pagination?.pageSize,
+          offset: (pagination?.currentPage - 1) * pagination?.pageSize,
+        })
+      }
+
+      if (sorters?.at(0)) {
+        Object.assign(query, {
+          sortBy: sorters?.at(0)?.field,
+          sortDirection: sorters?.at(0)?.order
+        })
+      }
+
+      if (filters?.at(0)) {
+        const firstFilter = filters?.at(0)
+        if (firstFilter && 'field' in firstFilter) {
+          Object.assign(query, {
+            filterField: firstFilter.field,
+            filterValue: firstFilter.value,
+            filterOperator: firstFilter.operator,
+          })
+        }
+      }
+
+      const params = new URLSearchParams();
+      for (const param in query) {
+        params.set(param, query[param])
+      }
+
+      const response = await fetcher(
+        `${API_URL}/auth/admin/list-users?${params.toString()}`,
+      );
+
+      if (response.status < 200 || response.status > 299) throw response;
+
+      const { users } = await response.json();
+      const total = Number(response.headers.get("x-total-count")) || 0;
+
+      console.log(users)
+
+      return {
+        data: users,
+        total,
+      };
+    }
+
     const params = new URLSearchParams();
 
     if (pagination && pagination.currentPage && pagination.pageSize) {

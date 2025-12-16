@@ -24,18 +24,18 @@ import Flex from "antd/es/flex";
 
 type PersonRecord = {
   id: number;
-  first_name: string;
-  last_name: string;
-  middle_name: string;
-  person_type: string;
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  role: string;
 };
 
 type IResponsibility = {
   administrative_unit_id: number;
-  official_id: number;
-  official_first_name: string | undefined;
-  official_last_name: string | undefined;
-  official_middle_name: string | undefined;
+  official_id: string;
+  officialFirstName: string | undefined;
+  officialLastName: string | undefined;
+  officialMiddleName: string | undefined;
 };
 
 type AdministrativeUnitRecord = {
@@ -82,7 +82,7 @@ const ListAdministrativeUnits = () => {
 
   const [isAttaching, setIsAttaching] = useState(false);
   const [attachingUnitId, setAttachingUnitId] = useState<number | null>(null);
-  const [attachingOfficialId, setAttachingOfficialId] = useState<number | null>(
+  const [attachingOfficialId, setAttachingOfficialId] = useState<string | null>(
     null,
   );
 
@@ -121,15 +121,20 @@ const ListAdministrativeUnits = () => {
 
   const { selectProps: personsSelectProps } = useSelect<PersonRecord>({
     optionLabel: (item) =>
-      `${item.last_name} ${item.first_name} ${item?.middle_name ?? ""}`,
+      `${item.lastName} ${item.firstName} ${item?.middleName ?? ""}`,
     optionValue: (item) => String(item.id),
-    resource: "persons",
+    resource: "auth/admin/list-users",
     pagination: {
       pageSize: 48,
     },
+    meta: {
+      variables: {
+        nestedKey: "users"
+      }
+    },
     filters: [
       {
-        field: "person_type.title",
+        field: "role",
         operator: "eq",
         value: "official",
       },
@@ -142,6 +147,8 @@ const ListAdministrativeUnits = () => {
       pageSize: 48,
     },
   });
+
+  console.log(personsSelectProps)
 
   return (
     <>
@@ -238,12 +245,13 @@ const ListAdministrativeUnits = () => {
                 }
 
                 if (isAttaching && attachingUnitId === record.id) {
+                  console.log(personsSelectProps)
                   return (
                     <Select
                       {...personsSelectProps}
                       style={{ width: "100%" }}
                       onChange={(value) => {
-                        setAttachingOfficialId(Number(value));
+                        setAttachingOfficialId(value);
                       }}
                     >
                       {personsSelectProps?.options?.map((option) => (
@@ -277,12 +285,12 @@ const ListAdministrativeUnits = () => {
                 }
 
                 const {
-                  official_first_name,
-                  official_last_name,
-                  official_middle_name,
+                  officialFirstName,
+                  officialLastName,
+                  officialMiddleName,
                 } = responsibilityRecord;
 
-                return `${official_last_name} ${official_first_name} ${official_middle_name}`;
+                return `${officialLastName} ${officialFirstName} ${officialMiddleName}`;
               }}
             />
             <Table.Column
@@ -381,7 +389,7 @@ const ListAdministrativeUnits = () => {
               ]}
               style={{ flex: 5 }}
             >
-              <Select {...personsSelectProps}>
+              <Select {...personsSelectProps} >
                 {personsSelectProps?.options?.map((option) => (
                   <Select.Option key={option.id} value={option.id}>
                     {option.label}

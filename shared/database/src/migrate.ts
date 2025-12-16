@@ -78,13 +78,6 @@ async function migratePostgres() {
     .execute();
 
   await db.schema
-    .createTable("person_type")
-    .ifNotExists()
-    .addColumn("id", "serial", (col) => col.primaryKey())
-    .addColumn("title", "text", (col) => col.notNull().unique())
-    .execute();
-
-  await db.schema
     .createTable("official_responsibility")
     .ifNotExists()
     .addColumn("id", "serial", (col) => col.primaryKey())

@@ -1,4 +1,5 @@
 import { useList } from "@refinedev/core";
+import { authClient } from "../../providers/auth-provider";
 
 import {
   EditButton,
@@ -26,9 +27,10 @@ type PersonRecord = {
   firstName: string;
   lastName: string;
   middleName: string;
-  role: string;
+  role: "official" | "moderator";
   created_at?: string | null;
-  email: string | null;
+  email: string;
+  name: string;
   phone: string | null;
   social: string | null;
 };
@@ -43,7 +45,7 @@ const ListPersons = () => {
     cancelButtonProps,
     editButtonProps,
     sorters,
-  } = useEditableTable({
+  } = useEditableTable<PersonRecord>({
     resource: "auth/admin/list-users",
     pagination: { currentPage: 1, pageSize: 24 },
     sorters: {
@@ -71,10 +73,10 @@ const ListPersons = () => {
     show: createOfficialModalShow,
   } = useModalForm<PersonRecord>({
     action: "create",
-    resource: "persons",
+    resource: "/auth/admin/create-user",
     redirect: false,
     defaultFormValues: {
-      person_type_id: 2,
+      role: "official",
     },
   });
 
@@ -85,13 +87,14 @@ const ListPersons = () => {
         pageSize: 48,
       },
       filters: [
-        {
-          field: "official_id",
-          operator: "in",
-          value: tableProps?.dataSource?.map((official) => official.id) ?? [],
-        },
+        // {
+        //   field: "official_id",
+        //   operator: "in",
+        //   value: tableProps?.dataSource?.map((official) => official.id) ?? [],
+        // },
       ],
     });
+
 
   return (
     <>
@@ -125,7 +128,7 @@ const ListPersons = () => {
             }}
           >
             <Table.Column
-              dataIndex="last_name"
+              dataIndex="lastName"
               title="Фамилия"
               sorter
               defaultSortOrder={getDefaultSortOrder("last_name", sorters)}
@@ -144,7 +147,7 @@ const ListPersons = () => {
             />
 
             <Table.Column
-              dataIndex="first_name"
+              dataIndex="firstName"
               title="Имя"
               sorter
               defaultSortOrder={getDefaultSortOrder("first_name", sorters)}
@@ -163,7 +166,7 @@ const ListPersons = () => {
             />
 
             <Table.Column
-              dataIndex="middle_name"
+              dataIndex="middleName"
               title="Отчество"
               sorter
               defaultSortOrder={getDefaultSortOrder("middle_name", sorters)}
@@ -293,18 +296,33 @@ const ListPersons = () => {
             />
           </Table>
         </Form>
-      </List>
+      </List >
 
       <Modal {...createOfficialModalProps} title="Новое ответственное лицо">
         <Form
           {...createOfficialFormProps}
           layout="vertical"
           style={{ marginTop: 24 }}
+          onFinish={async (values: PersonRecord) => {
+            await authClient.admin.createUser({
+              email: values.email,
+              password: "1234356sh28!",
+              name: values.email,
+              role: values.role,
+              data: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                middleName: values.middleName,
+                phone: values.phone,
+                social: values.social
+              }
+            })
+          }}
         >
           <Flex gap={16}>
             <Form.Item
               label="Фамилия"
-              name="last_name"
+              name="lastName"
               rules={[
                 {
                   required: true,
@@ -316,7 +334,7 @@ const ListPersons = () => {
             </Form.Item>
             <Form.Item
               label="Имя"
-              name="first_name"
+              name="firstName"
               rules={[
                 {
                   required: true,
@@ -328,7 +346,7 @@ const ListPersons = () => {
             </Form.Item>
             <Form.Item
               label="Отчество"
-              name="middle_name"
+              name="middleName"
               rules={[
                 {
                   required: false,
@@ -387,7 +405,7 @@ const ListPersons = () => {
                 required: true,
               },
             ]}
-            hidden={true}
+          // hidden={true}
           >
             <Select options={[{ value: 'moderator', label: 'moderator' }, { value: 'official', label: 'official' }]}>
             </Select>
