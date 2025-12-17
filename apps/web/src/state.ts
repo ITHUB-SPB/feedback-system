@@ -26,4 +26,13 @@ export default class State {
       filter: `topic_category_id[eq]${categoryId}`,
     });
   }
+
+  public async loadIssuesByProject(
+    projectId: number | string,
+  ): Promise<any[]> {
+    return await apiClient.feedback.all({
+      filter: `project_id[eq]${projectId}`
+    })
+  }
+
 }
