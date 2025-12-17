@@ -18,6 +18,14 @@ const ListFeedback = () => {
   // узнаём роль (через getIdentity из providers/auth-provider.ts либо через user.role из authClient.getSession() )
   const { data: identityData } = useGetIdentity();
   const role = identityData?.role || "citizen"
+  const userId = identityData?.id
+
+  // const { result: responsibilities, query: responsibilitiesQuery } = useMany({
+  //   resource: "projects",
+  //   ids: tableProps?.dataSource?.map((feedback) => feedback.project_id) ?? [],
+  // }); 
+  // почитать документацию про useMany, заменить resource и ids
+  // далее найти в responsibilities такой элемент, у которого свойство official_id будет равно userId
 
   const { tableProps, sorters, filters } = useTable({
     resource: "feedback",
@@ -34,7 +42,12 @@ const ListFeedback = () => {
           field: "feedback_status_id",
           operator: "in",
           value: [1, 2, 4]
-        }
+        },
+        // {
+        //   field: "administrative_unit",
+        //   operator: "eq",
+        //   value: 1 // здесь должно быть название поселения, к которому приписано залогиненное ответственное лицо 
+        // }
       ] : []
     }
     // добавить постоянный фильтр на тип предложения (выдавать только "на рассмотрении" и "выполнено")

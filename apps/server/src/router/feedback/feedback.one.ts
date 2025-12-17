@@ -8,7 +8,7 @@ const oneFeedback = requireOfficialProcedure.feedback.one.handler(
       const feedback = await _baseSelect(context.db)
         .innerJoin("user", "user.id", "feedback.person_id")
         .select([
-          "user.email as respondentEmail",
+          "user.email",
           "user.phone as respondentPhone",
           "user.firstName as respondentFirstName",
           "user.lastName as respondentLastName",
