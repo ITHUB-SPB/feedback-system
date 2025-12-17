@@ -79,6 +79,12 @@ export default class FormManager {
     });
   }
 
+  private async renderIssueQuantity(projectId: number | string) {
+    // отрисовываем количество найденных проектов вместо ? в кнопке
+    const issueQuantity = await this.state.loadIssuesByProject(projectId);
+    console.log(issueQuantity)
+  }
+
   private async renderIssues(categoryId: number | string) {
     this.issueSelect.innerHTML = '<option value="">Выберите проблему</option>';
 
@@ -158,6 +164,10 @@ export default class FormManager {
 
       this.issueSelect.innerHTML =
         '<option value="">Сначала выберите категорию</option>';
+    });
+
+    this.projectSelect.addEventListener("change", (event) => {
+      this.renderIssueQuantity(event.target.value)
     });
 
     this.form.addEventListener("submit", (e) => {
