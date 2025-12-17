@@ -30,7 +30,7 @@ export const getFeedbackSchema = v.object({
 export const getOneFeedbackSchema = v.object({
   ...getFeedbackSchema.entries,
   person_full_name: v.string(),
-  person_email: v.string(),
+  email: v.string(),
   person_phone: v.nullable(v.string()),
   responsible_person_full_name: v.nullable(v.string()),
 });

@@ -188,7 +188,7 @@ const ShowFeedback = () => {
             <TextField value={feedback?.person_full_name || "—"} />
 
             <Typography.Title level={5}>Email</Typography.Title>
-            <TextField value={feedback?.person_email || "—"} />
+            <TextField value={feedback?.email || "—"} />
 
             <Typography.Title level={5}>Телефон</Typography.Title>
             <TextField value={feedback?.person_phone || "—"} />
