@@ -20,8 +20,8 @@ export const envSchema = v.object({
     ),
     true,
   ),
-  SMTP_USER: v.pipe(v.string(), v.includes("@")),
-  SMTP_PASSWORD: v.pipe(v.string(), v.minLength(3)),
+  SMTP_USER: v.optional(v.pipe(v.string(), v.includes("@"))),
+  SMTP_PASSWORD: v.optional(v.pipe(v.string(), v.minLength(3))),
 });
 
 export const env = v.parse(envSchema, process.env);
