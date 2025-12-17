@@ -7,31 +7,16 @@ import { OpenAPIGenerator } from "@orpc/openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 
 import { ValibotToJsonSchemaConverter } from "@shared/api";
-import { createAuth } from "@shared/auth";
 import { db } from "@shared/database";
 import { createHttpMiddleware } from "@shared/logger";
 
 import apiRouter from "./router";
+import auth from './auth'
 import { createApi } from "./api";
+import { trustedOrigins } from "./cors";
 import { type Env } from "./env";
 
 export default function createApp(env: Env) {
-  const trustedOrigins = [
-    env.PUBLIC_WEB_URL,
-    env.PUBLIC_ADMIN_URL,
-    env.PUBLIC_BOT_URL,
-  ]
-    .filter((urlString) => urlString !== undefined)
-    .map((url) => new URL(url).origin)
-    .concat(["localhost", "https://xn--47-dlcma4bxbi.xn--p1ai"]);
-
-  const auth = createAuth({
-    trustedOrigins,
-    serverUrl: env.PUBLIC_SERVER_URL,
-    apiPath: "/api",
-    authSecret: env.SERVER_AUTH_SECRET,
-    db,
-  });
 
   const api = createApi({
     apiRouter,

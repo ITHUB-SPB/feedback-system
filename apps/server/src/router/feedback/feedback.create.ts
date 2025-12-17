@@ -1,13 +1,17 @@
 import { publicProcedure } from "@shared/api";
+import auth from "../../auth";
 import upload from "../../s3";
+
 
 const createFeedback = publicProcedure.feedback.create.handler(
   async ({ context, input, errors }) => {
     const transaction = await context.db.startTransaction().execute();
+    let respondentId;
+    let isUserCreated = false;
 
     try {
-      let respondentId = (
-        await transaction
+      respondentId = (
+        await context.db
           .selectFrom("user")
           .select("user.id")
           .where("user.email", "=", input.body.email)
@@ -15,27 +19,27 @@ const createFeedback = publicProcedure.feedback.create.handler(
       )?.id;
 
       if (!respondentId) {
-        const newUserValues = {
-          id: 'todo', // TODO !!!
-          email: input.body.email,
-          name: input.body.email,
-          password: input.body.email,
-          phone: input.body.phone ?? "",
-          role: "citizen",
-          firstName: input.body.first_name,
-          lastName: input.body.last_name,
-          middleName: input.body.middle_name ?? "",
-          updatedAt: new Date(),
-          createdAt: new Date(),
-          emailVerified: false,
-        } as const;
-
-        const { id: newUserId } = await transaction
-          .insertInto("user")
-          .values(newUserValues)
-          .returning("id")
-          .executeTakeFirstOrThrow();
-        respondentId = newUserId;
+        try {
+          const newUser = await auth.api.createUser({
+            body: {
+              email: input.body.email,
+              name: input.body.email,
+              password: input.body.email,
+              role: "citizen",
+              data: {
+                phone: input.body.phone ?? "",
+                firstName: input.body.first_name,
+                lastName: input.body.last_name,
+                middleName: input.body.middle_name ?? "",
+              }
+            }
+          })
+          respondentId = newUser.user.id
+          isUserCreated = true
+        } catch (error) {
+          console.error(error)
+          throw new Error("Ошибка при создании аккаунта")
+        }
       }
 
       const { id: pendingStatusId } = await transaction
@@ -60,7 +64,7 @@ const createFeedback = publicProcedure.feedback.create.handler(
         .executeTakeFirstOrThrow();
 
       if (feedbackId === undefined) {
-        throw new Error("Ошибка при создании записи");
+        throw new Error("Ошибка при создании записи фидбека");
       }
 
       const images = [];
@@ -91,9 +95,17 @@ const createFeedback = publicProcedure.feedback.create.handler(
       await transaction.commit().execute();
     } catch (error) {
       await transaction.rollback().execute();
+      if (isUserCreated) {
+        await auth.api.removeUser({
+          body: {
+            userId: respondentId,
+          },
+          headers: context.headers
+        })
+      }
       console.error(error);
       throw errors.CONFLICT({
-        message: `Ошибка при создании записи`,
+        message: (error as Error).message,
       });
     }
   },
