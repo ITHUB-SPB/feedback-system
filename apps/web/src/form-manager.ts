@@ -14,12 +14,12 @@ export default class FormManager {
   private requestTypeSelect: HTMLSelectElement;
   private categorySelect: HTMLSelectElement;
   private issueSelect: HTMLSelectElement;
-  private categoryContainer = document.getElementById(
-    "categoryBlock",
-  ) as HTMLDivElement;
-  private issueContainer = document.getElementById(
-    "issueBlock",
-  ) as HTMLDivElement;
+  private issueCounter: HTMLButtonElement;
+
+  private issueCounterSpan: HTMLSpanElement;
+
+  private categoryContainer: HTMLDivElement;
+  private issueContainer: HTMLDivElement;
 
   private dragAndDrop: DragAndDropManager;
   private alertManager: AlertManager;
@@ -42,6 +42,19 @@ export default class FormManager {
     this.issueSelect = document.getElementById(
       "issueSelect",
     ) as HTMLSelectElement;
+    this.issueCounter = document.querySelector(
+      ".view_issues",
+    ) as HTMLButtonElement;
+    this.issueCounterSpan = this.issueCounter.querySelector(
+      ".view_issues__count",
+    ) as HTMLSpanElement;
+
+    this.categoryContainer = document.getElementById(
+      "categoryBlock",
+    ) as HTMLDivElement;
+    this.issueContainer = document.getElementById(
+      "issueBlock",
+    ) as HTMLDivElement;
 
     this.form = document.querySelector(".apply-form") as HTMLFormElement;
     this.dragAndDrop = new DragAndDropManager();
@@ -79,10 +92,18 @@ export default class FormManager {
     });
   }
 
-  private async renderIssueQuantity(projectId: number | string) {
-    // отрисовываем количество найденных проектов вместо ? в кнопке
-    const issueQuantity = await this.state.loadIssuesByProject(projectId);
-    console.log(issueQuantity)
+  private async renderIssueQuantity(projectId: number | string | null) {
+    if (!projectId) {
+      this.issueCounter.style.visibility = "hidden";
+      return;
+    }
+
+    const issuesByProject = await this.state.loadIssuesByProject(projectId);
+    const issuesCount = issuesByProject.length;
+    if (issuesCount) {
+      this.issueCounterSpan.textContent = issuesCount.toString();
+    }
+    this.issueCounter.style.visibility = issuesCount ? "visible" : "hidden";
   }
 
   private async renderIssues(categoryId: number | string) {
@@ -139,6 +160,7 @@ export default class FormManager {
         this.projectSelect.innerHTML =
           '<option value="">Сначала выберите город</option>';
       }
+      this.renderIssueQuantity(null);
     });
 
     this.requestTypeSelect.addEventListener("input", () => {
@@ -166,8 +188,10 @@ export default class FormManager {
         '<option value="">Сначала выберите категорию</option>';
     });
 
-    this.projectSelect.addEventListener("change", (event) => {
-      this.renderIssueQuantity(event.target.value)
+    this.projectSelect.addEventListener("change", () => {
+      const projectSelectValue = this.projectSelect.value;
+      console.log(projectSelectValue);
+      this.renderIssueQuantity(projectSelectValue ?? null);
     });
 
     this.form.addEventListener("submit", (e) => {
