@@ -17,11 +17,13 @@ const feedbackSchema = v.object({
   ]),
 });
 
-export const getFeedbackSchema = v.object({
+const getFeedbackSchema = v.object({
   ...feedbackSchema.entries,
   topic: v.nullable(v.string()),
   project: v.string(),
-  administrative_unit: v.nullable(v.string()),
+  administrative_unit_title: v.nullable(v.string()),
+  administrative_unit_id: v.nullable(v.number()),
+  official_id: v.nullable(v.string()),
   feedback_type: v.string(),
   feedback_status: v.picklist(["pending", "approved", "declined", "completed"]),
   image_links: v.optional(v.array(v.string()), []),

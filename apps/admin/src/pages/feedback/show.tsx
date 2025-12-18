@@ -155,7 +155,7 @@ const ShowFeedback = () => {
           <TextField value={feedback?.description} />
 
           <Typography.Title level={5}>Территория</Typography.Title>
-          <TextField value={feedback?.administrative_unit || "—"} />
+          <TextField value={feedback?.administrative_unit_title || "—"} />
 
           <Typography.Title level={5}>Проект</Typography.Title>
           <TextField value={feedback?.project} />

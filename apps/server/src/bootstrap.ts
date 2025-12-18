@@ -130,7 +130,7 @@ export default function createApp(env: Env) {
         "Access-Control-Allow-Headers",
         "content-type",
       ],
-      allowMethods: ["POST", "GET", "OPTIONS"],
+      allowMethods: ["POST", "GET", "OPTIONS", "PATCH"],
       exposeHeaders: ["Content-Length"],
       maxAge: 600,
     }),

@@ -15,8 +15,11 @@ const fetcher = async (url: string, options?: RequestInit) => {
 
 export const dataProvider: DataProvider = {
   getOne: async ({ resource, id, meta }) => {
-    const response = await fetcher(`${API_URL}/${resource}/${id}`);
+    const url = resource === "auth/admin/list-users" ?
+      `${API_URL}/auth/admin/get-user?id=${id}`
+      : `${API_URL}/${resource}/${id}`
 
+    const response = await fetcher(url);
     if (response.status < 200 || response.status > 299) throw response;
 
     const data = await response.json();
@@ -24,9 +27,20 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   update: async ({ resource, id, variables }) => {
-    const response = await fetcher(`${API_URL}/${resource}/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(variables),
+    const updateOptions = resource === "auth/admin/list-users" ?
+      {
+        method: "POST", body: JSON.stringify({
+          userId: id,
+          data: variables
+        })
+      } : { method: "PATCH", body: JSON.stringify(variables) }
+
+    const url = resource === "auth/admin/list-users" ?
+      `${API_URL}/auth/admin/update-user`
+      : `${API_URL}/${resource}/${id}`
+
+    const response = await fetcher(url, {
+      ...updateOptions,
       headers: {
         "Content-Type": "application/json",
       },
@@ -82,8 +96,6 @@ export const dataProvider: DataProvider = {
 
       const { users } = await response.json();
       const total = Number(response.headers.get("x-total-count")) || 0;
-
-      console.log(users);
 
       return {
         data: users,

@@ -10,8 +10,8 @@ export const accessControlProvider: AccessControlProvider = {
   can: async ({ resource, action, params }) => {
     console.log({ resource, action, params });
 
-    const session = await authClient.getSession();
-    const role = session.data?.user.role || "citizen";
+    const { data: session } = await authClient.getSession();
+    const role = session?.user.role || "citizen";
 
     if (!resource || role === "moderator") {
       return { can: true };
