@@ -16,8 +16,6 @@ export default class FormManager {
   private issueSelect: HTMLSelectElement;
   private issueCounter: HTMLButtonElement;
 
-  private issueCounterSpan: HTMLSpanElement;
-
   private categoryContainer: HTMLDivElement;
   private issueContainer: HTMLDivElement;
 
@@ -45,9 +43,6 @@ export default class FormManager {
     this.issueCounter = document.querySelector(
       ".view_issues",
     ) as HTMLButtonElement;
-    this.issueCounterSpan = this.issueCounter.querySelector(
-      ".view_issues__count",
-    ) as HTMLSpanElement;
 
     this.categoryContainer = document.getElementById(
       "categoryBlock",
@@ -93,6 +88,20 @@ export default class FormManager {
   }
 
   private async renderIssueQuantity(projectId: number | string | null) {
+    function declOfNum(number: number) {
+      const cases = [2, 0, 1, 1, 1, 2] as const;
+      const titles = ["предложение", "предложения", "предложений"] as const;
+
+      if (number % 100 > 4 && number % 100 < 20) {
+        return titles[2]
+      } else if (number % 10 < 5) {
+        const titleIx = cases[number % 10] as number;
+        return titles[titleIx]
+      } else {
+        return titles[cases[5]]
+      }
+    }
+
     if (!projectId) {
       this.issueCounter.style.visibility = "hidden";
       return;
@@ -101,7 +110,7 @@ export default class FormManager {
     const issuesByProject = await this.state.loadIssuesByProject(projectId);
     const issuesCount = issuesByProject.length;
     if (issuesCount) {
-      this.issueCounterSpan.textContent = issuesCount.toString();
+      this.issueCounter.textContent = `${issuesCount.toString()} ${declOfNum(issuesCount)}`;
     }
     this.issueCounter.style.visibility = issuesCount ? "visible" : "hidden";
   }
