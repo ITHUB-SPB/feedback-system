@@ -132,7 +132,7 @@ const ListPersons = () => {
               defaultSortOrder={getDefaultSortOrder("last_name", sorters)}
               render={(value: string, record: PersonRecord) => {
                 return isEditing(record.id) ? (
-                  <Form.Item name="last_name" style={{ margin: 0 }}>
+                  <Form.Item name="lastName" style={{ margin: 0 }}>
                     <Input autoFocus size="small" />
                   </Form.Item>
                 ) : (
@@ -151,7 +151,7 @@ const ListPersons = () => {
               defaultSortOrder={getDefaultSortOrder("first_name", sorters)}
               render={(value: string, record: PersonRecord) => {
                 return isEditing(record.id) ? (
-                  <Form.Item name="first_name" style={{ margin: 0 }}>
+                  <Form.Item name="firstName" style={{ margin: 0 }}>
                     <Input autoFocus size="small" />
                   </Form.Item>
                 ) : (
@@ -170,7 +170,7 @@ const ListPersons = () => {
               defaultSortOrder={getDefaultSortOrder("middle_name", sorters)}
               render={(value: string, record: PersonRecord) => {
                 return isEditing(record.id) ? (
-                  <Form.Item name="middle_name" style={{ margin: 0 }}>
+                  <Form.Item name="middleName" style={{ margin: 0 }}>
                     <Input autoFocus size="small" />
                   </Form.Item>
                 ) : (
@@ -279,6 +279,8 @@ const ListPersons = () => {
                         setEditId(record.id);
                         editButtonProps(record.id).onClick();
                       }}
+                      resource="auth/admin/get-user"
+                      recordItemId={record.id}
                       hideText
                       size="small"
                     />
@@ -403,7 +405,7 @@ const ListPersons = () => {
                 required: true,
               },
             ]}
-            // hidden={true}
+          // hidden={true}
           >
             <Select
               options={[

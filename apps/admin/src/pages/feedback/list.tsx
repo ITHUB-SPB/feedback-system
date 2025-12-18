@@ -15,17 +15,10 @@ import Space from "antd/es/space";
 import Select from "antd/es/select";
 
 const ListFeedback = () => {
-  // узнаём роль (через getIdentity из providers/auth-provider.ts либо через user.role из authClient.getSession() )
   const { data: identityData } = useGetIdentity();
   const role = identityData?.role || "citizen"
   const userId = identityData?.id
 
-  // const { result: responsibilities, query: responsibilitiesQuery } = useMany({
-  //   resource: "projects",
-  //   ids: tableProps?.dataSource?.map((feedback) => feedback.project_id) ?? [],
-  // }); 
-  // почитать документацию про useMany, заменить resource и ids
-  // далее найти в responsibilities такой элемент, у которого свойство official_id будет равно userId
 
   const { tableProps, sorters, filters } = useTable({
     resource: "feedback",
@@ -43,15 +36,13 @@ const ListFeedback = () => {
           operator: "in",
           value: [1, 2, 4]
         },
-        // {
-        //   field: "administrative_unit",
-        //   operator: "eq",
-        //   value: 1 // здесь должно быть название поселения, к которому приписано залогиненное ответственное лицо 
-        // }
+        {
+          field: "official_id",
+          operator: "eq",
+          value: userId
+        }
       ] : []
     }
-    // добавить постоянный фильтр на тип предложения (выдавать только "на рассмотрении" и "выполнено")
-
   });
 
   const { result: projects, query: projectsQuery } = useMany({
@@ -82,6 +73,9 @@ const ListFeedback = () => {
   const { data: accessData } = useCan({
     resource: "feedback",
     action: "show",
+    queryOptions: {
+      // staleTime: 1000 * 60
+    }
   });
 
   const getStatusColor = (status: string) => {
