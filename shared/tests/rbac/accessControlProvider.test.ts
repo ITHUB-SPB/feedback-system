@@ -1,13 +1,11 @@
 import { describe, expect, test } from "vitest";
 
-type Role = "superadmin" | "moderator" | "official" | "citizen" | null;
+type Role = "moderator" | "official" | "citizen" | null;
 type Resource = "voting_votes" | "feedback" | "users" | undefined;
 type Action = "list" | "show" | "edit" | "delete" | string;
 
 const canByRole = (role: Role, resource: Resource, action: Action): boolean => {
-  if (!resource || role === "superadmin") return true;
-
-  if (role === "moderator" && resource !== "users") return true;
+  if (!resource || role === "moderator") return true;
 
   if (role === "official") {
     const permissions: Record<string, string[]> = {
@@ -41,8 +39,8 @@ describe("admin accessControlProvider.can (spec-level)", () => {
     expect(canByRole("moderator", "voting_votes", "delete")).toBe(true);
   });
 
-  test("no resource or superadmin -> always allowed", () => {
-    expect(canByRole("superadmin", undefined, "anything")).toBe(true);
-    expect(canByRole("superadmin", "users", "delete")).toBe(true);
+  test("no resource or moderator -> always allowed", () => {
+    expect(canByRole("citizen", undefined, "anything")).toBe(true);
+    expect(canByRole("moderator", "users", "delete")).toBe(true);
   });
 });
