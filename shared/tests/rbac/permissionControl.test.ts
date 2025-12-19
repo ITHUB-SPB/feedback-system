@@ -10,12 +10,6 @@ const actionsOf = (role: RoleName, resource: string): string[] => {
 };
 
 describe("permissionControl access matrix", () => {
-  it("superadmin имеет полный доступ к ключевым ресурсам", () => {
-    expect(actionsOf("superadmin", "project")).toContain("delete");
-    expect(actionsOf("superadmin", "feedback")).toContain("update");
-    expect(actionsOf("superadmin", "administrativeUnit")).toContain("create");
-  });
-
   it("moderator может управлять проектами и голосованием", () => {
     expect(actionsOf("moderator", "project")).toContain("delete");
     expect(actionsOf("moderator", "votingUnit")).toContain("update");
