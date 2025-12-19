@@ -16,7 +16,6 @@ export const statement = {
   votingUnit: ["list", "read", "update", "create", "delete"],
   votingVote: ["list", "read", "create", "delete"],
   project: ["create", "update", "delete", "read", "list"],
-  // какие есть права доступа для контрактов
 } as const;
 
 export const ac = createAccessControl(statement);
