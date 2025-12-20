@@ -11,7 +11,7 @@ services:
 
       - "--providers.docker=true"
       - "--providers.docker.exposedByDefault=false"
-      - "--providers.file.directory=/rules" # Load dynamic configuration from one or more .toml or .yml files in a directory
+      - "--providers.file.directory=/rules" # Load dynamic configuration from .toml or .yml files
       - "--providers.file.watch=true" # Only works on top level files in the rules folder
 
       - "--api.dashboard=true"
@@ -23,20 +23,15 @@ services:
       - "--accessLog.filePath=/var/log/traefik/access.log"
 
       - "--entrypoints.web-secure.address=:443"
-      # - "--entrypoints.web-secure.http.tls=true"
-      # - "--entrypoints.web-secure.http.tls.options=tls-options@file"
-      # - "--entrypoints.web-secure.http.tls.certresolver=tlsresolver"
-      - "--entryPoints.web-secure.forwardedHeaders.insecure"
+      - "--entrypoints.web-secure.http.tls=true"
+      - "--entrypoints.web-secure.http.tls.options=tls-options-localhost@file"
+      - "--entrypoints.web-secure.http.middlewares=middleware-secure-headers@file"
 
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=web-secure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
-      - "--entryPoints.web.forwardedHeaders.insecure"
-
-      # - "--certificatesresolvers.tlsresolver.acme.email=info@sainthubs.tech"
-      # - "--certificatesresolvers.tlsresolver.acme.storage=/letsencrypt/acme.json"
-      # - "--certificatesresolvers.tlsresolver.acme.tlschallenge=true"
+      # - "--serversTransport.insecureSkipVerify=true" 
     ports:
       - "80:80"
       - "443:443"
@@ -44,15 +39,14 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./rules:/rules"
       - "./logs:/var/log/traefik"
-      # - "letsencrypt:/letsencrypt"
+      - "./certs:/certs"
     labels:
       - "traefik.enable=true"
-
       - "traefik.http.routers.dashboard.rule=Host(`traefik.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
-      - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.entrypoints=web-secure"
-      # - "traefik.http.routers.dashboard.tls.certresolver=tlsresolver"
-      - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.tls=true"
+      # - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
 
 volumes:
   letsencrypt:

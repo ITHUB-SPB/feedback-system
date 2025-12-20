@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.51.0",
-    "@shared/database": "workspace:*",
     "pino": "catalog:",
     "pino-http": "catalog:",
     "pino-pretty": "catalog:"

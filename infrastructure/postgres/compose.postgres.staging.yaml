@@ -30,7 +30,7 @@ services:
       - ./data:/var/lib/postgresql/data
       - ./logs:/var/log/wal-g
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER-LcUgfcteNXXSBrDiqniRJpGq} -d ${POSTGRES_DB-feedback}"]
+      test: ["CMD-SHELL", "pg_isready -U ${postgres} -d ${POSTGRES_DB-feedback}"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -44,15 +44,11 @@ services:
     depends_on:
       - postgres
     environment:
-      PGADMIN_DEFAULT_EMAIL: /run/secrets/pgadmin_default_email
-      PGADMIN_DEFAULT_PASSWORD: /run/secrets/pgadmin_default_password
-    secrets:
-      - pgadmin_default_email
-      - pgadmin_default_password
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pgadmin.entrypoints=web-secure"
-      - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
-      - "traefik.http.routers.pgadmin.middlewares=chain-authelia@file"
+      - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.localhost`)"
+      # - "traefik.http.routers.pgadmin.middlewares=chain-authelia@file"
       - "traefik.http.routers.pgadmin.tls=true"
-      - "traefik.http.routers.pgadmin.tls.certresolver=tlsresolver"

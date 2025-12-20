@@ -10,7 +10,6 @@
         "./client": "./src/client.ts"
     },
     "dependencies": {
-        "@shared/database": "workspace:*",
         "@shared/auth": "workspace:*",
         "@shared/logger": "workspace:*",
         "@shared/schema": "workspace:*",

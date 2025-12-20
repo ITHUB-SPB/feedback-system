@@ -93,6 +93,17 @@ export const createAuth = ({
       requireEmailVerification: false,
       // disableSignUp: true,
     },
+    advanced: {
+      cookies: {
+        session_token: {
+          attributes: {
+            sameSite: "none",
+            secure: false, // TODO
+            httpOnly: true,
+          },
+        },
+      },
+    },
     plugins: [
       ...baseOptions.plugins,
       customSession(async ({ user, session }) => {

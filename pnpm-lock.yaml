@@ -281,7 +281,13 @@ importers:
         version: 1.51.0
       '@shared/api':
         specifier: workspace:*
-        version: link:../../shared/api
+        version: file:shared/api(@opentelemetry/api@1.9.0)(typescript@5.9.2)(ws@8.18.3)
+      '@tanstack/table-core':
+        specifier: ^8.21.3
+        version: 8.21.3
+      nanostores:
+        specifier: ^1.1.0
+        version: 1.1.0
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
@@ -313,9 +319,6 @@ importers:
       '@shared/auth':
         specifier: workspace:*
         version: file:shared/auth(typescript@5.9.2)
-      '@shared/database':
-        specifier: workspace:*
-        version: file:shared/database(better-sqlite3@12.5.0)(typescript@5.9.2)
       '@shared/logger':
         specifier: workspace:*
         version: link:../logger
@@ -409,9 +412,6 @@ importers:
       '@dotenvx/dotenvx':
         specifier: ^1.51.0
         version: 1.51.0
-      '@shared/database':
-        specifier: workspace:*
-        version: file:shared/database(better-sqlite3@12.5.0)(typescript@5.9.2)
       pino:
         specifier: 'catalog:'
         version: 9.9.5
@@ -2827,6 +2827,9 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
+  '@shared/api@file:shared/api':
+    resolution: {directory: shared/api, type: directory}
+
   '@shared/auth@file:shared/auth':
     resolution: {directory: shared/auth, type: directory}
 
@@ -3075,6 +3078,10 @@ packages:
     resolution: {integrity: sha512-SXbtWSTSRXyBOe80mszPxpEbaN4XPRUp/i0EfQK1uyj3KCk/c8FuPJNIRwzOVe/OU3rzxrYtiNabsAmk1l714A==}
     peerDependencies:
       react: ^18 || ^19
+
+  '@tanstack/table-core@8.21.3':
+    resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
+    engines: {node: '>=12'}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -5347,6 +5354,10 @@ packages:
 
   nanostores@1.0.1:
     resolution: {integrity: sha512-kNZ9xnoJYKg/AfxjrVL4SS0fKX++4awQReGqWnwTRHxeHGZ1FJFVgTqr/eMrNQdp0Tz7M7tG/TDaX8QfHDwVCw==}
+    engines: {node: ^20.0.0 || >=22.0.0}
+
+  nanostores@1.1.0:
+    resolution: {integrity: sha512-yJBmDJr18xy47dbNVlHcgdPrulSn1nhSE6Ns9vTG+Nx9VPT6iV1MD6aQFp/t52zpf82FhLLTXAXr30NuCnxvwA==}
     engines: {node: ^20.0.0 || >=22.0.0}
 
   napi-build-utils@2.0.0:
@@ -9971,6 +9982,40 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
+  '@shared/api@file:shared/api(@opentelemetry/api@1.9.0)(typescript@5.9.2)(ws@8.18.3)':
+    dependencies:
+      '@orpc/client': 1.12.3(@opentelemetry/api@1.9.0)
+      '@orpc/contract': 1.12.3(@opentelemetry/api@1.9.0)
+      '@orpc/openapi-client': 1.12.3(@opentelemetry/api@1.9.0)
+      '@orpc/server': 1.12.3(@opentelemetry/api@1.9.0)(ws@8.18.3)
+      '@orpc/valibot': 1.12.3(@opentelemetry/api@1.9.0)(@orpc/contract@1.12.3(@opentelemetry/api@1.9.0))(@orpc/server@1.12.3(@opentelemetry/api@1.9.0)(ws@8.18.3))(valibot@1.1.0(typescript@5.9.2))(ws@8.18.3)
+      '@shared/auth': file:shared/auth(typescript@5.9.2)
+      '@shared/logger': file:shared/logger
+      '@shared/schema': file:shared/schema(typescript@5.9.2)
+      valibot: 1.1.0(typescript@5.9.2)
+    transitivePeerDependencies:
+      - '@libsql/kysely-libsql'
+      - '@lynx-js/react'
+      - '@opentelemetry/api'
+      - '@sveltejs/kit'
+      - '@tediousjs/connection-string'
+      - better-sqlite3
+      - crossws
+      - fastify
+      - kysely-bun-worker
+      - mysql2
+      - next
+      - pg-native
+      - react
+      - react-dom
+      - solid-js
+      - svelte
+      - tarn
+      - tedious
+      - typescript
+      - vue
+      - ws
+
   '@shared/auth@file:shared/auth(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.9.2)':
     dependencies:
       '@dotenvx/dotenvx': 1.51.0
@@ -10041,30 +10086,19 @@ snapshots:
       - tedious
       - typescript
 
-  '@shared/logger@file:shared/logger(typescript@5.9.2)':
+  '@shared/logger@file:shared/logger':
     dependencies:
       '@dotenvx/dotenvx': 1.51.0
-      '@shared/database': file:shared/database(better-sqlite3@12.5.0)(typescript@5.9.2)
       pino: 9.9.5
       pino-http: 11.0.0
       pino-pretty: 13.1.1
-    transitivePeerDependencies:
-      - '@libsql/kysely-libsql'
-      - '@tediousjs/connection-string'
-      - better-sqlite3
-      - kysely-bun-worker
-      - mysql2
-      - pg-native
-      - tarn
-      - tedious
-      - typescript
 
   '@shared/mail@file:shared/mail(@opentelemetry/api@1.9.0)(typescript@5.9.2)':
     dependencies:
       '@dotenvx/dotenvx': 1.51.0
       '@react-email/components': 0.5.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@react-email/preview-server': 4.2.12(@opentelemetry/api@1.9.0)(postcss@8.5.6)
-      '@shared/logger': file:shared/logger(typescript@5.9.2)
+      '@shared/logger': file:shared/logger
       '@shared/schema': file:shared/schema(typescript@5.9.2)
       nodemailer: 7.0.6
       react-email: 4.2.12
@@ -10072,23 +10106,15 @@ snapshots:
       valibot: 1.1.0(typescript@5.9.2)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
-      - '@libsql/kysely-libsql'
       - '@opentelemetry/api'
       - '@playwright/test'
       - '@swc/core'
-      - '@tediousjs/connection-string'
       - babel-plugin-macros
       - babel-plugin-react-compiler
-      - better-sqlite3
       - bufferutil
-      - kysely-bun-worker
-      - mysql2
-      - pg-native
       - postcss
       - sass
       - supports-color
-      - tarn
-      - tedious
       - ts-node
       - typescript
       - uglify-js
@@ -10513,6 +10539,8 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.89.0
       react: 19.0.0
+
+  '@tanstack/table-core@8.21.3': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
@@ -12899,6 +12927,8 @@ snapshots:
 
   nanostores@1.0.1: {}
 
+  nanostores@1.1.0: {}
+
   napi-build-utils@2.0.0: {}
 
   negotiator@0.6.3: {}
@@ -14651,7 +14681,7 @@ snapshots:
       mkdirp: 0.5.6
       rimraf: 2.6.3
 
-  terser-webpack-plugin@5.3.14(esbuild@0.25.0)(webpack@5.101.3(esbuild@0.25.0)):
+  terser-webpack-plugin@5.3.14(esbuild@0.25.0)(webpack@5.101.3):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
@@ -14949,7 +14979,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.2
       tapable: 2.2.3
-      terser-webpack-plugin: 5.3.14(esbuild@0.25.0)(webpack@5.101.3(esbuild@0.25.0))
+      terser-webpack-plugin: 5.3.14(esbuild@0.25.0)(webpack@5.101.3)
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     transitivePeerDependencies:

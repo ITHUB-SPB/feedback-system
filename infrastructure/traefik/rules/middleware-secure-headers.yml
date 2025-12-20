@@ -2,9 +2,13 @@ http:
   middlewares:
     middleware-secure-headers:
       headers:
-        accessControlAllowMethods: "*"
-        accessControlAllowHeaders: "*"
+        accessControlAllowMethods: "GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH"
+        accessControlAllowHeaders: "x-total-count,Origin,X-Requested-With,Content-Type,Accept,Authorization,Access-Control-Allow-Headers,content-type"
         accessControlAllowOriginList:
+          - https://api.localhost
+          - https://localhost
+          - https://admin.localhost
+          - https://minio.localhost
           - https://xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
           - https://admin.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
         addVaryHeader: true
