@@ -1,4 +1,10 @@
-import { useShow, useUpdate, useList, useCan, useGetIdentity } from "@refinedev/core";
+import {
+  useShow,
+  useUpdate,
+  useList,
+  useCan,
+  useGetIdentity,
+} from "@refinedev/core";
 import { TextField, Show, ListButton } from "@refinedev/antd";
 
 import Tag from "antd/es/tag";
@@ -31,7 +37,7 @@ const ShowFeedback = () => {
     },
   });
 
-  const { data: identity } = useGetIdentity()
+  const { data: identity } = useGetIdentity();
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {
@@ -238,18 +244,19 @@ const ShowFeedback = () => {
 
       <Divider />
 
-      {feedback?.feedback_status === "pending" && identity?.role === "moderator" && (
-        <Space>
-          <Button type="primary" onClick={handleApprove}>
-            Согласовать
-          </Button>
-          <Button danger onClick={handleDecline}>
-            Отклонить
-          </Button>
-        </Space>
-      )}
-      {
-        feedback?.feedback_status === "approved" && identity?.role === "official" && (
+      {feedback?.feedback_status === "pending" &&
+        identity?.role === "moderator" && (
+          <Space>
+            <Button type="primary" onClick={handleApprove}>
+              Согласовать
+            </Button>
+            <Button danger onClick={handleDecline}>
+              Отклонить
+            </Button>
+          </Space>
+        )}
+      {feedback?.feedback_status === "approved" &&
+        identity?.role === "official" && (
           <Space>
             <Button type="primary" onClick={handleComplete}>
               Завершено
@@ -258,8 +265,7 @@ const ShowFeedback = () => {
               Отклонить
             </Button>
           </Space>
-        )
-      }
+        )}
     </Show>
   );
 };

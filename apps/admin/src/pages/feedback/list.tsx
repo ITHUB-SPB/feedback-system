@@ -16,9 +16,8 @@ import Select from "antd/es/select";
 
 const ListFeedback = () => {
   const { data: identityData } = useGetIdentity();
-  const role = identityData?.role || "citizen"
-  const userId = identityData?.id
-
+  const role = identityData?.role || "citizen";
+  const userId = identityData?.id;
 
   const { tableProps, sorters, filters } = useTable({
     resource: "feedback",
@@ -30,19 +29,22 @@ const ListFeedback = () => {
       ],
     },
     filters: {
-      permanent: role === "official" ? [
-        {
-          field: "feedback_status_id",
-          operator: "in",
-          value: [1, 2, 4]
-        },
-        {
-          field: "official_id",
-          operator: "eq",
-          value: userId
-        }
-      ] : []
-    }
+      permanent:
+        role === "official"
+          ? [
+              {
+                field: "feedback_status_id",
+                operator: "in",
+                value: [1, 2, 4],
+              },
+              {
+                field: "official_id",
+                operator: "eq",
+                value: userId,
+              },
+            ]
+          : [],
+    },
   });
 
   const { result: projects, query: projectsQuery } = useMany({
@@ -75,7 +77,7 @@ const ListFeedback = () => {
     action: "show",
     queryOptions: {
       // staleTime: 1000 * 60
-    }
+    },
   });
 
   const getStatusColor = (status: string) => {

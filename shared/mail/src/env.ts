@@ -4,7 +4,7 @@ import { config } from "@dotenvx/dotenvx";
 
 config({ path: path.join(import.meta.dirname, "..", ".env") });
 
-console.log(import.meta.dirname)
+console.log(import.meta.dirname);
 
 export const envSchema = v.object({
   SMTP_HOST: v.optional(v.string(), "smtp.gmail.com"),

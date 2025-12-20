@@ -12,12 +12,6 @@ export default async function _enrichSelect(
   databaseInstance: typeof db,
   feedbackData: any,
 ) {
-  const personFullName = formatFullName(
-    feedbackData.respondentLastName,
-    feedbackData.respondentFirstName,
-    feedbackData.respondentMiddleName,
-  );
-
   const responsiblePerson = await databaseInstance
     .selectFrom("official_responsibility")
     .innerJoin("user", "official_responsibility.official_id", "user.id")
@@ -33,18 +27,20 @@ export default async function _enrichSelect(
     )
     .executeTakeFirst();
 
-  const responsiblePersonFullName = responsiblePerson
-    ? formatFullName(
-        responsiblePerson.officialLastName,
-        responsiblePerson.officialFirstName,
-        responsiblePerson.officialMiddleName,
-      )
-    : null;
-
   return {
     ...feedbackData,
-    person_full_name: personFullName,
+    person_full_name: formatFullName(
+      feedbackData.respondentLastName,
+      feedbackData.respondentFirstName,
+      feedbackData.respondentMiddleName,
+    ),
+    responsible_person_full_name: responsiblePerson
+      ? formatFullName(
+          responsiblePerson.officialLastName,
+          responsiblePerson.officialFirstName,
+          responsiblePerson.officialMiddleName,
+        )
+      : null,
     person_phone: feedbackData.person_phone || null,
-    responsible_person_full_name: responsiblePersonFullName,
   };
 }

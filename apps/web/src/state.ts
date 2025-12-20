@@ -28,12 +28,10 @@ export default class State {
     });
   }
 
-  public async loadIssuesByProject(
-    projectId: number | string,
-  ): Promise<any[]> {
+  public async loadIssuesByProject(projectId: number | string): Promise<any[]> {
     this.issuesByProject = await apiClient.feedback.all({
-      filter: `project_id[eq]${projectId}`
-    })
-    return this.issuesByProject
+      filter: `project_id[eq]${projectId}`,
+    });
+    return this.issuesByProject;
   }
 }

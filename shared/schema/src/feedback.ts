@@ -37,9 +37,23 @@ export const getOneFeedbackSchema = v.object({
   responsible_person_full_name: v.nullable(v.string()),
 });
 
-export const getManyFeedbackSchema = v.array(
+const getManyAuthorizedFeedbackSchema = v.array(
   v.omit(getFeedbackSchema, ["image_links"]),
 );
+
+const getManyPublicFeedbackSchema = v.array(
+  v.pick(getFeedbackSchema, [
+    "created_at",
+    "description",
+    "feedback_type",
+    "feedback_status",
+  ]),
+);
+
+export const getManyFeedbackSchema = v.union([
+  getManyAuthorizedFeedbackSchema,
+  getManyPublicFeedbackSchema,
+]);
 
 export const updateFeedbackSchema = v.object({
   params: baseInputOne,

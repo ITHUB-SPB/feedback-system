@@ -1,7 +1,7 @@
 import State from "./state";
 import FormManager from "./form-manager";
 import MapsManager from "./maps-manager";
-import { TableFeedbackManager } from './table-manager'
+import { TableFeedbackManager } from "./table-manager";
 
 const state = new State();
 
@@ -20,10 +20,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     "viewIssues",
   ) as HTMLButtonElement;
 
-  renderTableButton.addEventListener('click', () => {
-    tableFeedbackManager.renderTable()
-  })
-
+  renderTableButton.addEventListener("click", () => {
+    tableFeedbackManager.renderTable();
+  });
 
   selectOnMapButton.addEventListener("click", () => {
     mapsManager.open({

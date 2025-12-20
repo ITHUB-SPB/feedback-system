@@ -11,13 +11,12 @@ import { db } from "@shared/database";
 import { createHttpMiddleware } from "@shared/logger";
 
 import apiRouter from "./router";
-import auth from './auth'
+import auth from "./auth";
 import { createApi } from "./api";
 import { trustedOrigins } from "./cors";
 import { type Env } from "./env";
 
 export default function createApp(env: Env) {
-
   const api = createApi({
     apiRouter,
     auth,
@@ -130,9 +129,17 @@ export default function createApp(env: Env) {
         "Access-Control-Allow-Headers",
         "content-type",
       ],
-      allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
+      allowMethods: [
+        "GET",
+        "HEAD",
+        "PUT",
+        "POST",
+        "DELETE",
+        "PATCH",
+        "OPTIONS",
+      ],
       exposeHeaders: ["Content-Length"],
-      maxAge: 600
+      maxAge: 600,
     }),
   );
 
@@ -153,8 +160,16 @@ export default function createApp(env: Env) {
         "Access-Control-Allow-Headers",
         "content-type",
       ],
-      allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
-      exposeHeaders: ["x-total-count"]
+      allowMethods: [
+        "GET",
+        "HEAD",
+        "PUT",
+        "POST",
+        "DELETE",
+        "PATCH",
+        "OPTIONS",
+      ],
+      exposeHeaders: ["x-total-count"],
     }),
     async (c, next) => {
       const { matched, response } = await api.handler(c.req.raw);

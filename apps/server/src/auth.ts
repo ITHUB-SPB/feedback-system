@@ -3,7 +3,7 @@ import { db } from "@shared/database";
 import { trustedOrigins } from "./cors";
 import { env } from "./env";
 
-console.log(trustedOrigins, env)
+console.log(trustedOrigins, env);
 
 const auth: AuthInstance = createAuth({
   trustedOrigins,
@@ -11,6 +11,6 @@ const auth: AuthInstance = createAuth({
   apiPath: "/api",
   authSecret: env.SERVER_AUTH_SECRET,
   db,
-})
+});
 
-export default auth
+export default auth;

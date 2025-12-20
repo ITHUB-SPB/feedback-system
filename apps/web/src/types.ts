@@ -63,4 +63,4 @@ export type FeedbackIn = {
   feedback_type: string;
   feedback_status: string;
   created_at: string;
-} 
+};

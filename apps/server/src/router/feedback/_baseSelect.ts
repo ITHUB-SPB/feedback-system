@@ -22,7 +22,11 @@ export default function _baseSelect(databaseInstance: typeof db) {
       "feedback.feedback_status_id",
       "feedback_status.id",
     )
-    .leftJoin("official_responsibility", "project.administrative_unit_id", "official_responsibility.administrative_unit_id")
+    .leftJoin(
+      "official_responsibility",
+      "project.administrative_unit_id",
+      "official_responsibility.administrative_unit_id",
+    )
     .select([
       "feedback.id",
       "feedback.project_id",
@@ -31,13 +35,13 @@ export default function _baseSelect(databaseInstance: typeof db) {
       "feedback.topic_id",
       "feedback.person_id",
       "feedback.feedback_status_id",
+      "feedback_status.title as feedback_status",
+      "feedback.created_at",
       "project.title as project",
       "administrative_unit.id as administrative_unit_id",
       "administrative_unit.title as administrative_unit_title",
       "feedback_type.title as feedback_type",
       "topic.title as topic",
-      "feedback_status.title as feedback_status",
-      "feedback.created_at",
-      "official_responsibility.official_id as official_id"
+      "official_responsibility.official_id as official_id",
     ]);
 }

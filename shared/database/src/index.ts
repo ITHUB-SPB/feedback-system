@@ -9,7 +9,8 @@ async function getDialect() {
   const env = parseEnv();
 
   if (env.ENV === "production" || env.ENV === "staging") {
-    const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } = env;
+    const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } =
+      env;
 
     const POSTGRES_DATABASE_URI = `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}`;
 

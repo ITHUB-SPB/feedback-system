@@ -2,7 +2,6 @@ import { publicProcedure } from "@shared/api";
 import auth from "../../auth";
 import upload from "../../s3";
 
-
 const createFeedback = publicProcedure.feedback.create.handler(
   async ({ context, input, errors }) => {
     const transaction = await context.db.startTransaction().execute();
@@ -31,14 +30,14 @@ const createFeedback = publicProcedure.feedback.create.handler(
                 firstName: input.body.first_name,
                 lastName: input.body.last_name,
                 middleName: input.body.middle_name ?? "",
-              }
-            }
-          })
-          respondentId = newUser.user.id
-          isUserCreated = true
+              },
+            },
+          });
+          respondentId = newUser.user.id;
+          isUserCreated = true;
         } catch (error) {
-          console.error(error)
-          throw new Error("Ошибка при создании аккаунта")
+          console.error(error);
+          throw new Error("Ошибка при создании аккаунта");
         }
       }
 
@@ -100,8 +99,8 @@ const createFeedback = publicProcedure.feedback.create.handler(
           body: {
             userId: respondentId,
           },
-          headers: context.headers
-        })
+          headers: context.headers,
+        });
       }
       console.error(error);
       throw errors.CONFLICT({

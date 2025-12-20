@@ -92,12 +92,12 @@ export default class FormManager {
       const titles = ["предложение", "предложения", "предложений"] as const;
 
       if (number % 100 > 4 && number % 100 < 20) {
-        return titles[2]
+        return titles[2];
       } else if (number % 10 < 5) {
         const titleIx = cases[number % 10] as number;
-        return titles[titleIx]
+        return titles[titleIx];
       } else {
-        return titles[cases[5]]
+        return titles[cases[5]];
       }
     }
 
