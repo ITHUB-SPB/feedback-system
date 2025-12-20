@@ -43,7 +43,6 @@ export default class FormManager {
     this.issueCounter = document.querySelector(
       ".view_issues",
     ) as HTMLButtonElement;
-
     this.categoryContainer = document.getElementById(
       "categoryBlock",
     ) as HTMLDivElement;
@@ -197,10 +196,8 @@ export default class FormManager {
         '<option value="">Сначала выберите категорию</option>';
     });
 
-    this.projectSelect.addEventListener("change", () => {
-      const projectSelectValue = this.projectSelect.value;
-      console.log(projectSelectValue);
-      this.renderIssueQuantity(projectSelectValue ?? null);
+    this.projectSelect.addEventListener("input", () => {
+      this.renderIssueQuantity(this.projectSelect.value ?? null);
     });
 
     this.form.addEventListener("submit", (e) => {

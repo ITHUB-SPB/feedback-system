@@ -56,3 +56,11 @@ export interface Feedback {
   phone?: string;
   files?: File[];
 }
+
+export type FeedbackIn = {
+  project_id: number;
+  description: string;
+  feedback_type: string;
+  feedback_status: string;
+  created_at: string;
+} 

@@ -25,4 +25,7 @@
     },
     "eslint.enable": false,
     "prettier.enable": false,
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
 }

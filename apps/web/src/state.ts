@@ -5,6 +5,7 @@ export default class State {
   public projects: types.Project[] = [];
   public cities: types.AdministrativeUnit[] = [];
   public feedbackTypes: types.FeedbackType[] = [];
+  public issuesByProject: types.FeedbackIn[] = [];
   public categories: types.TopicCategory[] = [];
 
   public async init() {
@@ -30,9 +31,9 @@ export default class State {
   public async loadIssuesByProject(
     projectId: number | string,
   ): Promise<any[]> {
-    return await apiClient.feedback.all({
+    this.issuesByProject = await apiClient.feedback.all({
       filter: `project_id[eq]${projectId}`
     })
+    return this.issuesByProject
   }
-
 }

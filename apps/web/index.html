@@ -38,6 +38,15 @@
 </head>
 
 <body class="proposals-page">
+  <dialog class="table-popup-content">
+    <header class="table-popup-header">
+      <h3>Принятые предложения</h3>
+      <form method="dialog">
+        <button class="table-popup-close">×</button>
+      </form>
+    </header>
+    <div class="table-popup-table-wrapper"></div>
+  </dialog>
   <section id="customAlert" class="custom-alert">
     <div class="alert-content">
       <span class="alert-icon">⚠️</span>
@@ -169,16 +178,21 @@
           </div>
 
           <div class="form-block">
-            <div class="form-block-title regular-text fw-600">Проект<span class="form-block-required">*</span></div>
+            <div class="form-block-title regular-text fw-600" style="display: flex">
+              Проект
+              <span class="form-block-required">*</span>
+              <button type="button" id="viewIssues" class="view_issues" style="visibility: hidden;">...</button>
+            </div>
             <div class="input-block">
               <select name="project_id" class="object-location" id="projectSelect" required>
-                <option value="">Сначала выберите город</option>
+                <option value="">
+                  Сначала выберите город
+                </option>
               </select>
+              <!-- <button type="button" id="viewIssues" class="view_issues" style="visibility: hidden;"></button> -->
             </div>
             <span class="form-block-error">Заполните поле</span>
           </div>
-
-          <button type="button" class="view_issues" style="visibility: hidden;">?</button>
 
           <div class="form-block">
             <div class="form-block-title regular-text fw-600">

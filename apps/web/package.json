@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "catalog:",
-    "@shared/api": "workspace:*"
+    "@shared/api": "workspace:*",
+    "@tanstack/table-core": "^8.21.3",
+    "nanostores": "^1.1.0"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
