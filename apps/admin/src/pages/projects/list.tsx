@@ -1,18 +1,19 @@
 import { useMany } from "@refinedev/core";
 import {
   useTable,
-  EditButton,
-  ShowButton,
   getDefaultSortOrder,
   getDefaultFilter,
   FilterDropdown,
   useSelect,
-  List,
 } from "@refinedev/antd";
 
 import Table from "antd/es/table";
 import Select from "antd/es/select";
 import Space from "antd/es/space";
+
+import { EditButton } from "../../components/buttons/edit";
+import { ShowButton } from "../../components/buttons/show";
+import { List } from "../../components/crud/list";
 
 const ListProjects = () => {
   const { tableProps, sorters, filters } = useTable({
@@ -45,7 +46,7 @@ const ListProjects = () => {
   });
 
   return (
-    <List title="Реализованные проекты" breadcrumb={null}>
+    <List title="Реализованные проекты">
       <Table
         {...tableProps}
         rowKey="id"

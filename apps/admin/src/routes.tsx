@@ -15,15 +15,15 @@ const ListProjects = React.lazy(() => import("./pages/projects/list"));
 const CreateProject = React.lazy(() => import("./pages/projects/create"));
 
 const ListTopicCategoryTopics = React.lazy(
-  () => import("./pages/category-topics/list"),
+  () => import("./pages/category-topics/page"),
 );
 
 const ListAdministrativeUnits = React.lazy(
-  () => import("./pages/administrative-units/list"),
+  () => import("./pages/administrative-units/page"),
 );
 
-const ListPersons = React.lazy(() => import("./pages/persons/list"));
-const ListOfficials = React.lazy(() => import("./pages/officials/list"));
+const ListPersons = React.lazy(() => import("./pages/citizens/page"));
+const ListOfficials = React.lazy(() => import("./pages/officials/page"));
 
 const ListFeedback = React.lazy(() => import("./pages/feedback/list"));
 const ShowFeedback = React.lazy(() => import("./pages/feedback/show"));
@@ -33,7 +33,7 @@ const ListVotingResults = React.lazy(
 );
 const ListVotingUnits = React.lazy(() => import("./pages/voting-units/list"));
 
-const Login = React.lazy(() => import("./pages/auth/login"));
+const Login = React.lazy(() => import("./pages/auth/page"));
 
 export default function AppRoutes() {
   return (

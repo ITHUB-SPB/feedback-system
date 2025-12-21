@@ -1,8 +1,9 @@
 import React from "react";
-import { ThemedLayoutContextProvider } from "@refinedev/antd";
+import { ThemedLayoutContextProvider, type RefineThemedLayoutProps } from "@refinedev/antd";
+import Grid from 'antd/es/grid'
+import AntdLayout from 'antd/es/layout'
+
 import { ThemedSider as DefaultSider } from "./sider";
-import { Grid, Layout as AntdLayout } from "antd";
-import type { RefineThemedLayoutProps } from "@refinedev/antd";
 
 export const ThemedLayout: React.FC<RefineThemedLayoutProps> = ({
   children,

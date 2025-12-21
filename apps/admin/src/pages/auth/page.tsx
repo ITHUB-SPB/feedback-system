@@ -1,18 +1,18 @@
-import { AuthPage } from "@refinedev/antd";
 import Image from "antd/es/image";
+import { LoginCard } from "./login-card";
 
-const Login = () => {
+
+export default function Login() {
   return (
-    <AuthPage
-      type="login"
+    <LoginCard
       formProps={{
         initialValues: {
-          email: "admin2@example.com",
-          password: "admin2password",
+          email: "@example.com",
+          password: "",
         },
       }}
       renderContent={(content) => (
-        <div>
+        <>
           <div style={{ textAlign: "center", marginBottom: "24px" }}>
             <Image
               src="/logos/logo_2022_black.svg"
@@ -22,10 +22,8 @@ const Login = () => {
             />
           </div>
           {content}
-        </div>
+        </>
       )}
     />
   );
 };
-
-export default Login;

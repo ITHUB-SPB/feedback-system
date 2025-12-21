@@ -1,7 +1,11 @@
 import { useShow } from "@refinedev/core";
-import { TextField, NumberField, Show } from "@refinedev/antd";
+
+import { TextField } from "../../components/fields/text";
+import { NumberField } from "../../components/fields/number";
+import { Show } from "../../components/crud/show";
 
 import Typography from "antd/es/typography";
+
 
 const ShowProject = () => {
   const {
@@ -10,7 +14,7 @@ const ShowProject = () => {
   } = useShow();
 
   return (
-    <Show isLoading={isLoading} breadcrumb={null}>
+    <Show isLoading={isLoading} title="Информация о проекте">
       <Typography.Title level={5}>Название</Typography.Title>
       <TextField value={project?.title} />
 

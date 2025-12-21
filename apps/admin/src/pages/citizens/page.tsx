@@ -1,13 +1,13 @@
 import {
   getDefaultSortOrder,
-  List,
   useTable,
-  TextField,
 } from "@refinedev/antd";
-
 import Table from "antd/es/table";
 
-const ListPersons = () => {
+import { TextField } from "../../components/fields/text";
+import { List } from "../../components/crud/list";
+
+export default function ListCitizens() {
   const { tableProps, sorters } = useTable({
     resource: "auth/admin/list-users",
     pagination: { currentPage: 1, pageSize: 24 },
@@ -31,7 +31,7 @@ const ListPersons = () => {
   });
 
   return (
-    <List title="Респонденты" breadcrumb={null}>
+    <List title="Респонденты">
       <Table
         {...tableProps}
         rowKey="id"
@@ -42,7 +42,7 @@ const ListPersons = () => {
         }}
       >
         <Table.Column
-          dataIndex="last_name"
+          dataIndex="lastName"
           title="Фамилия"
           sorter
           defaultSortOrder={getDefaultSortOrder("lastName", sorters)}
@@ -94,5 +94,3 @@ const ListPersons = () => {
     </List>
   );
 };
-
-export default ListPersons;

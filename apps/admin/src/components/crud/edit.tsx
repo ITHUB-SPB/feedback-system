@@ -1,9 +1,6 @@
 import React from "react";
 import {
   useMutationMode,
-  useTranslate,
-  useUserFriendlyName,
-  useRefineContext,
   useBack,
   useResourceParams,
   useGo,
@@ -16,11 +13,8 @@ import {
 } from "@refinedev/antd";
 
 import { SaveButton } from "../buttons/save";
-import { RefreshButton } from "../buttons/refresh";
 import { DeleteButton } from "../buttons/delete";
-import { AutoSaveIndicator } from "../autoSaveIndicator";
-import { Breadcrumb } from "../breadcrumb";
-import type { ListButtonProps, RefreshButtonProps, DeleteButtonProps, SaveButtonProps } from "../buttons/_types";
+import type { ListButtonProps, DeleteButtonProps, SaveButtonProps } from "../buttons/_types";
 
 import Card from 'antd/es/card'
 import Space from 'antd/es/space'
@@ -28,12 +22,6 @@ import Spin from 'antd/es/spin'
 
 import type { EditProps } from "@refinedev/antd";
 
-/**
- * `<Edit>` provides us a layout for displaying the page.
- * It does not contain any logic but adds extra functionalities like a refresh button.
- *
- * @see {@link https://refine.dev/docs/ui-frameworks/antd/components/basic-views/edit} for more details.
- */
 export const Edit: React.FC<EditProps> = ({
   title,
   saveButtonProps: saveButtonPropsFromProps,
@@ -45,7 +33,6 @@ export const Edit: React.FC<EditProps> = ({
   resource: resourceFromProps,
   isLoading = false,
   dataProviderName,
-  breadcrumb: breadcrumbFromProps,
   wrapperProps,
   headerProps,
   contentProps,
@@ -54,16 +41,12 @@ export const Edit: React.FC<EditProps> = ({
   footerButtonProps,
   footerButtons,
   goBack: goBackFromProps,
-  autoSaveProps,
 }) => {
-  const translate = useTranslate();
-  const { options: { breadcrumb: globalBreadcrumb } = {} } = useRefineContext();
   const { mutationMode: mutationModeContext } = useMutationMode();
   const mutationMode = mutationModeProp ?? mutationModeContext;
 
   const back = useBack();
   const go = useGo();
-  const getUserFriendlyName = useUserFriendlyName();
 
   const {
     resource,
@@ -81,11 +64,6 @@ export const Edit: React.FC<EditProps> = ({
 
   const id = recordItemId ?? idFromParams;
 
-  const breadcrumb =
-    typeof breadcrumbFromProps === "undefined"
-      ? globalBreadcrumb
-      : breadcrumbFromProps;
-
   const hasList = resource?.list && !recordItemId;
   const isDeleteButtonVisible =
     canDelete ?? (resource?.meta?.canDelete || deleteButtonPropsFromProps);
@@ -96,13 +74,6 @@ export const Edit: React.FC<EditProps> = ({
       resource: identifier,
     }
     : undefined;
-
-  const refreshButtonProps: RefreshButtonProps = {
-    ...(isLoading ? { disabled: true } : {}),
-    resource: identifier,
-    recordItemId: id,
-    dataProviderName,
-  };
 
   const deleteButtonProps: DeleteButtonProps | undefined = isDeleteButtonVisible
     ? {
@@ -125,9 +96,7 @@ export const Edit: React.FC<EditProps> = ({
 
   const defaultHeaderButtons = (
     <>
-      {autoSaveProps && <AutoSaveIndicator {...autoSaveProps} />}
       {hasList && <ListButton {...listButtonProps} />}
-      <RefreshButton {...refreshButtonProps} />
     </>
   );
 
@@ -145,31 +114,13 @@ export const Edit: React.FC<EditProps> = ({
         onBack={
           action !== "list" && typeof action !== "undefined" ? back : undefined
         }
-        title={
-          title ??
-          translate(
-            `${identifier}.titles.edit`,
-            `Edit ${getUserFriendlyName(
-              resource?.meta?.label ?? identifier,
-              "singular"
-            )}`
-          )
-        }
+        title={title ?? "Редактирование"}
         extra={
           <Space wrap {...(headerButtonProps ?? {})}>
-            {headerButtons
-              ? typeof headerButtons === "function"
-                ? headerButtons({
-                  defaultButtons: defaultHeaderButtons,
-                  listButtonProps,
-                  refreshButtonProps,
-                })
-                : headerButtons
+            {headerButtons && typeof headerButtons !== "function"
+              ? headerButtons
               : defaultHeaderButtons}
           </Space>
-        }
-        breadcrumb={
-          typeof breadcrumb !== "undefined" ? <>{breadcrumb}</> : <Breadcrumb />
         }
         {...(headerProps ?? {})}
       >

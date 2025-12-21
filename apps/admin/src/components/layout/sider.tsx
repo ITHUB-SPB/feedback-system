@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, type CSSProperties } from "react";
 import {
   type TreeMenuItem,
-  useTranslate,
   useLogout,
   CanAccess,
   useIsExistAuthentication,
@@ -10,21 +9,18 @@ import {
   useWarnAboutChange,
   useGetIdentity,
 } from "@refinedev/core";
-import { ThemedTitle, useThemedLayoutContext } from "@refinedev/antd";
+import { ThemedTitle, useThemedLayoutContext, type RefineThemedLayoutSiderProps } from "@refinedev/antd";
 import { BarsOutlined } from "@ant-design/icons";
-import {
-  Layout,
-  Menu,
-  Grid,
-  Drawer,
-  Button,
-  theme,
-  ConfigProvider,
-} from "antd";
+
+import Layout from 'antd/es/layout'
+import Menu from 'antd/es/menu'
+import Grid from 'antd/es/grid'
+import Drawer from 'antd/es/drawer'
+import Button from 'antd/es/button'
+import theme from 'antd/es/theme'
+import ConfigProvider from 'antd/es/config-provider'
 import Typography from "antd/es/typography";
 
-import type { RefineThemedLayoutSiderProps } from "@refinedev/antd";
-import type { CSSProperties } from "react";
 
 const drawerButtonStyles: CSSProperties = {
   borderStartStartRadius: 0,
@@ -51,7 +47,6 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
   const direction = useContext(ConfigProvider.ConfigContext)?.direction;
   const Link = useLink();
   const { warnWhen, setWarnWhen } = useWarnAboutChange();
-  const translate = useTranslate();
   const { menuItems, selectedKey, defaultOpenKeys } = useMenu({ meta });
   const breakpoint = Grid.useBreakpoint();
   const { mutate: mutateLogout } = useLogout();
@@ -118,10 +113,7 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
   const handleLogout = () => {
     if (warnWhen) {
       const confirm = window.confirm(
-        translate(
-          "warnWhenUnsavedChanges",
-          "Уверены, что хотите выйти из системы? Несохраненные изменения будут утеряны",
-        ),
+        "Уверены, что хотите выйти из системы? Несохраненные изменения будут утеряны",
       );
 
       if (confirm) {
@@ -145,7 +137,7 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
         onClick={() => handleLogout()}
         style={{ textAlign: "center" }}
       >
-        {translate("buttons.logout", "Logout")}
+        Выйти
       </Menu.Item>
     </div>
   );

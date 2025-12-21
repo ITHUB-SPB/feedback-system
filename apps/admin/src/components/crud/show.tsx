@@ -1,8 +1,5 @@
 import React from "react";
 import {
-  useTranslate,
-  useUserFriendlyName,
-  useRefineContext,
   useResourceParams,
   useToPath,
   useBack,
@@ -21,17 +18,8 @@ import Spin from 'antd/es/spin'
 
 import { EditButton } from "../buttons/edit";
 import { DeleteButton } from "../buttons/delete";
-import { RefreshButton } from "../buttons/refresh";
-import { Breadcrumb } from "../breadcrumb";
-import type { ListButtonProps, EditButtonProps, DeleteButtonProps, RefreshButtonProps } from "../buttons/_types";
+import type { ListButtonProps, EditButtonProps, DeleteButtonProps } from "../buttons/_types";
 
-
-/**
- * `<Show>` provides us a layout for displaying the page.
- * It does not contain any logic but adds extra functionalities like a refresh button.
- *
- * @see {@link https://refine.dev/docs/ui-frameworks/antd/components/basic-views/show} for more details.
- */
 export const Show: React.FC<ShowProps> = ({
   title,
   canEdit,
@@ -42,7 +30,6 @@ export const Show: React.FC<ShowProps> = ({
   resource: resourceFromProps,
   recordItemId,
   dataProviderName,
-  breadcrumb: breadcrumbFromProps,
   contentProps,
   headerProps,
   wrapperProps,
@@ -52,12 +39,8 @@ export const Show: React.FC<ShowProps> = ({
   headerButtonProps,
   goBack: goBackFromProps,
 }) => {
-  const translate = useTranslate();
-  const { options: { breadcrumb: globalBreadcrumb } = {} } = useRefineContext();
-
   const back = useBack();
   const go = useGo();
-  const getUserFriendlyName = useUserFriendlyName();
 
   const {
     resource,
@@ -75,12 +58,8 @@ export const Show: React.FC<ShowProps> = ({
 
   const id = recordItemId ?? idFromParams;
 
-  const breadcrumb =
-    typeof breadcrumbFromProps === "undefined"
-      ? globalBreadcrumb
-      : breadcrumbFromProps;
-
   const hasList = resource?.list && !recordItemId;
+
   const isDeleteButtonVisible =
     canDelete ?? (resource?.meta?.canDelete || deleteButtonPropsFromProps);
 
@@ -91,6 +70,7 @@ export const Show: React.FC<ShowProps> = ({
       resource: identifier,
     }
     : undefined;
+
   const editButtonProps: EditButtonProps | undefined = isEditButtonVisible
     ? {
       ...(isLoading ? { disabled: true } : {}),
@@ -99,6 +79,7 @@ export const Show: React.FC<ShowProps> = ({
       recordItemId: id,
     }
     : undefined;
+
   const deleteButtonProps: DeleteButtonProps | undefined = isDeleteButtonVisible
     ? {
       ...(isLoading ? { disabled: true } : {}),
@@ -111,19 +92,12 @@ export const Show: React.FC<ShowProps> = ({
       ...deleteButtonPropsFromProps,
     }
     : undefined;
-  const refreshButtonProps: RefreshButtonProps = {
-    ...(isLoading ? { disabled: true } : {}),
-    resource: identifier,
-    recordItemId: id,
-    dataProviderName,
-  };
 
   const defaultHeaderButtons = (
     <>
       {hasList && <ListButton {...listButtonProps} />}
       {isEditButtonVisible && <EditButton {...editButtonProps} />}
       {isDeleteButtonVisible && <DeleteButton {...deleteButtonProps} />}
-      <RefreshButton {...refreshButtonProps} />
     </>
   );
 
@@ -134,16 +108,7 @@ export const Show: React.FC<ShowProps> = ({
         onBack={
           action !== "list" && typeof action !== "undefined" ? back : undefined
         }
-        title={
-          title ??
-          translate(
-            `${identifier}.titles.show`,
-            `Show ${getUserFriendlyName(
-              resource?.meta?.label ?? identifier,
-              "singular"
-            )}`
-          )
-        }
+        title={title ?? ""}
         extra={
           <Space key="extra-buttons" wrap {...(headerButtonProps ?? {})}>
             {headerButtons
@@ -153,14 +118,11 @@ export const Show: React.FC<ShowProps> = ({
                   deleteButtonProps,
                   editButtonProps,
                   listButtonProps,
-                  refreshButtonProps,
+                  refreshButtonProps: undefined,
                 })
                 : headerButtons
               : defaultHeaderButtons}
           </Space>
-        }
-        breadcrumb={
-          typeof breadcrumb !== "undefined" ? <>{breadcrumb}</> : <Breadcrumb />
         }
         {...(headerProps ?? {})}
       >

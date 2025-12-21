@@ -1,12 +1,9 @@
-import { CanAccess, useMany, useCan, useGetIdentity } from "@refinedev/core";
+import { useCan } from "@refinedev/core";
+
 import {
-  useTable,
-  ShowButton,
   getDefaultSortOrder,
   getDefaultFilter,
   FilterDropdown,
-  useSelect,
-  List,
 } from "@refinedev/antd";
 
 import Table from "antd/es/table";
@@ -14,64 +11,13 @@ import Tag from "antd/es/tag";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
 
+import { ShowButton } from "../../components/buttons/show";
+import { List } from "../../components/crud/list";
+
+import { useFeedbackTable } from './hooks'
+
+
 const ListFeedback = () => {
-  const { data: identityData } = useGetIdentity();
-  const role = identityData?.role || "citizen";
-  const userId = identityData?.id;
-
-  const { tableProps, sorters, filters } = useTable({
-    resource: "feedback",
-    pagination: { currentPage: 1, pageSize: 12 },
-    sorters: {
-      initial: [
-        { field: "feedback_status_id", order: "desc" },
-        { field: "created_at", order: "asc" },
-      ],
-    },
-    filters: {
-      permanent:
-        role === "official"
-          ? [
-              {
-                field: "feedback_status_id",
-                operator: "in",
-                value: [1, 2, 4],
-              },
-              {
-                field: "official_id",
-                operator: "eq",
-                value: userId,
-              },
-            ]
-          : [],
-    },
-  });
-
-  const { result: projects, query: projectsQuery } = useMany({
-    resource: "projects",
-    ids: tableProps?.dataSource?.map((feedback) => feedback.project_id) ?? [],
-  });
-
-  const { selectProps: feedbackTypeSelectProps } = useSelect({
-    resource: "feedback_types",
-    optionLabel: "title",
-    optionValue: "id",
-    pagination: {
-      pageSize: 48,
-    },
-    defaultValue: getDefaultFilter("feedback_type_id", filters, "eq"),
-  });
-
-  const { selectProps: feedbackStatusSelectProps } = useSelect({
-    resource: "feedback_statuses",
-    optionLabel: "title",
-    optionValue: "id",
-    pagination: {
-      pageSize: 48,
-    },
-    defaultValue: getDefaultFilter("feedback_status_id", filters, "eq"),
-  });
-
   const { data: accessData } = useCan({
     resource: "feedback",
     action: "show",
@@ -99,18 +45,20 @@ const ListFeedback = () => {
     }[status];
   };
 
+  const { table, projects, select } = useFeedbackTable()
+
   return (
     <List title="Предложения граждан">
       <Table
-        {...tableProps}
+        {...table.tableProps}
         rowKey="id"
-        pagination={{ ...tableProps.pagination, pageSizeOptions: [12, 24, 48] }}
+        pagination={{ ...table.tableProps.pagination, pageSizeOptions: [12, 24, 48] }}
       >
         <Table.Column
           dataIndex="description"
           title="Описание"
           sorter
-          defaultSortOrder={getDefaultSortOrder("description", sorters)}
+          defaultSortOrder={getDefaultSortOrder("description", table.sorters)}
           render={(value) => (
             <div
               style={{
@@ -128,11 +76,11 @@ const ListFeedback = () => {
           title="Проект"
           sorter
           render={(value) => {
-            if (projectsQuery.isLoading) {
+            if (projects.projectsQuery.isLoading) {
               return "Загрузка...";
             }
 
-            return projects?.data?.find((project) => project.id == value)
+            return projects.projects?.data?.find((project) => project.id == value)
               ?.title;
           }}
         />
@@ -151,12 +99,12 @@ const ListFeedback = () => {
                   : undefined;
               }}
             >
-              <Select style={{ minWidth: 200 }} {...feedbackTypeSelectProps} />
+              <Select style={{ minWidth: 200 }} {...select.feedbackTypeSelectProps} />
             </FilterDropdown>
           )}
           defaultFilteredValue={getDefaultFilter(
             "feedback_type_id",
-            filters,
+            table.filters,
             "eq",
           )}
         />
@@ -187,13 +135,13 @@ const ListFeedback = () => {
             >
               <Select
                 style={{ minWidth: 200 }}
-                {...feedbackStatusSelectProps}
+                {...select.feedbackStatusSelectProps}
               />
             </FilterDropdown>
           )}
           defaultFilteredValue={getDefaultFilter(
             "feedback_status_id",
-            filters,
+            table.filters,
             "eq",
           )}
         />
@@ -201,7 +149,7 @@ const ListFeedback = () => {
           dataIndex="created_at"
           title="Дата создания"
           sorter
-          defaultSortOrder={getDefaultSortOrder("created_at", sorters)}
+          defaultSortOrder={getDefaultSortOrder("created_at", table.sorters)}
           render={(value) => new Date(value).toLocaleDateString("ru-RU")}
         />
 

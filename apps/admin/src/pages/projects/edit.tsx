@@ -3,14 +3,16 @@ import Input from "antd/es/input";
 import Select from "antd/es/select";
 import InputNumber from "antd/es/input-number";
 
-import { useForm, useSelect, Edit } from "@refinedev/antd";
+import { useForm, useSelect } from "@refinedev/antd";
+
+import { Edit } from "../../components/crud/edit";
 
 const EditProject = () => {
-  const { formProps, saveButtonProps, query } = useForm({
+  const { formProps, saveButtonProps, query: projectQuery } = useForm({
     redirect: "show",
   });
 
-  const record = query?.data?.data;
+  const record = projectQuery?.data?.data;
 
   const { selectProps: administrativeUnitProps } = useSelect({
     resource: "administrative_units",

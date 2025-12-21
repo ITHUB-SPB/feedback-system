@@ -1,8 +1,5 @@
 import React from "react";
 import {
-  useTranslate,
-  useUserFriendlyName,
-  useRefineContext,
   useResourceParams,
 } from "@refinedev/core";
 import {
@@ -11,17 +8,10 @@ import {
 import type { ListProps } from "@refinedev/antd";
 import Space from 'antd/es/space'
 
-import { Breadcrumb } from "../breadcrumb";
 import { CreateButton } from "../buttons/create";
 import type { CreateButtonProps } from "../buttons/_types";
 
 
-/**
- * `<List>` provides us a layout for displaying the page.
- * It does not contain any logic but adds extra functionalities like a refresh button.
- *
- * @see {@link https://refine.dev/docs/ui-frameworks/antd/components/basic-views/list} for more details.
- */
 export const List: React.FC<ListProps> = ({
   canCreate,
   title,
@@ -31,26 +21,15 @@ export const List: React.FC<ListProps> = ({
   wrapperProps,
   contentProps,
   headerProps,
-  breadcrumb: breadcrumbFromProps,
   headerButtonProps,
   headerButtons,
 }) => {
-  const translate = useTranslate();
-  const { options: { breadcrumb: globalBreadcrumb } = {} } = useRefineContext();
-
-  const getUserFriendlyName = useUserFriendlyName();
-
   const { resource, identifier } = useResourceParams({
     resource: resourceFromProps,
   });
 
   const isCreateButtonVisible =
     canCreate ?? (!!resource?.create || !!createButtonPropsFromProps);
-
-  const breadcrumb =
-    typeof breadcrumbFromProps === "undefined"
-      ? globalBreadcrumb
-      : breadcrumbFromProps;
 
   const createButtonProps: CreateButtonProps | undefined = isCreateButtonVisible
     ? {
@@ -67,13 +46,7 @@ export const List: React.FC<ListProps> = ({
   return (
     <div {...(wrapperProps ?? {})}>
       <PageHeader
-        title={
-          title ??
-          translate(
-            `${identifier}.titles.list`,
-            getUserFriendlyName(resource?.meta?.label ?? identifier, "plural")
-          )
-        }
+        title={title ?? ""}
         extra={
           headerButtons ? (
             <Space wrap {...headerButtonProps}>
@@ -87,9 +60,6 @@ export const List: React.FC<ListProps> = ({
           ) : (
             defaultExtra
           )
-        }
-        breadcrumb={
-          typeof breadcrumb !== "undefined" ? <>{breadcrumb}</> : <Breadcrumb />
         }
         {...(headerProps ?? {})}
       >

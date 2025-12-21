@@ -5,7 +5,7 @@ import {
   useCan,
   useGetIdentity,
 } from "@refinedev/core";
-import { TextField, Show, ListButton } from "@refinedev/antd";
+import { ListButton } from "@refinedev/antd";
 
 import Tag from "antd/es/tag";
 import Space from "antd/es/space";
@@ -16,6 +16,9 @@ import Divider from "antd/es/divider";
 import message from "antd/es/message";
 import Flex from "antd/es/flex";
 import Image from "antd/es/image";
+
+import { TextField } from "../../components/fields/text";
+import { Show } from "../../components/crud/show";
 
 type Status = {
   id: number;
@@ -136,7 +139,6 @@ const ShowFeedback = () => {
     <Show
       isLoading={isLoading}
       title="Предложения"
-      breadcrumb={null}
       headerButtons={({ listButtonProps }) => (
         <ListButton {...listButtonProps} />
       )}
@@ -169,11 +171,6 @@ const ShowFeedback = () => {
           <Typography.Title level={5}>Ответственный</Typography.Title>
           <TextField value={feedback?.responsible_person_full_name || "—"} />
 
-          <Typography.Title level={5}>Дата создания</Typography.Title>
-          <TextField
-            value={new Date(feedback?.created_at).toLocaleString("ru-RU")}
-          />
-
           <Typography.Title level={5}>Статус</Typography.Title>
           <Tag
             color={getStatusColor(feedback?.feedback_status)}
@@ -193,11 +190,15 @@ const ShowFeedback = () => {
             <Typography.Title level={5}>ФИО</Typography.Title>
             <TextField value={feedback?.person_full_name || "—"} />
 
-            <Typography.Title level={5}>Email</Typography.Title>
-            <TextField value={feedback?.email || "—"} />
+            <Typography.Title level={5}>Контактные данные</Typography.Title>
+            {!feedback?.email && !feedback?.person_phone && "—"}
+            {feedback?.email ? <TextField value={feedback.email} /> : null}
+            {feedback?.person_phone ? <TextField value={feedback.person_phone} /> : null}
 
-            <Typography.Title level={5}>Телефон</Typography.Title>
-            <TextField value={feedback?.person_phone || "—"} />
+            <Typography.Title level={5}>Дата</Typography.Title>
+            <TextField
+              value={new Date(feedback?.created_at).toLocaleString("ru-RU")}
+            />
 
             <Divider />
 

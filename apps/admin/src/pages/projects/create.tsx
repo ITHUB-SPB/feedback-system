@@ -1,9 +1,12 @@
+import { useForm, useSelect } from "@refinedev/antd";
+
 import Form from "antd/es/form";
 import Input from "antd/es/input";
 import Select from "antd/es/select";
 import InputNumber from "antd/es/input-number";
 
-import { useForm, useSelect, Create } from "@refinedev/antd";
+
+import { Create } from '../../components/crud/create'
 
 const CreateProject = () => {
   const { formProps, saveButtonProps } = useForm();
@@ -16,7 +19,7 @@ const CreateProject = () => {
   });
 
   return (
-    <Create saveButtonProps={saveButtonProps} breadcrumb={null}>
+    <Create saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical" style={{ maxWidth: 480 }}>
         <Form.Item label="Название" name="title">
           <Input />

@@ -91,19 +91,22 @@ export const createAuth = ({
       enabled: true,
       autoSignIn: true,
       requireEmailVerification: false,
-      // disableSignUp: true,
+      disableSignUp: true,
     },
-    advanced: {
-      cookies: {
-        session_token: {
-          attributes: {
-            sameSite: "none",
-            secure: false, // TODO
-            httpOnly: true,
+    advanced:
+      serverUrl.includes(':')
+        ? {}
+        : {
+          cookies: {
+            session_token: {
+              attributes: {
+                sameSite: "none",
+                secure: false, // TODO
+                httpOnly: true,
+              },
+            },
           },
         },
-      },
-    },
     plugins: [
       ...baseOptions.plugins,
       customSession(async ({ user, session }) => {
