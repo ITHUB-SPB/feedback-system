@@ -1,9 +1,14 @@
+node_modules
 **/node_modules/
+dist
 **/dist/
+.git
 **/.git
+.gitignore
 **/.cache/
 **/.vscode/
 **/.DS_Store
 
 .env
 .env.production
+

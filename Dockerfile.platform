@@ -2,21 +2,19 @@
 
 FROM node:24-alpine AS installer
 
-ENV NODE_ENV=production
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
 ARG VITE_API_BASE_URL
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
-RUN corepack enable pnpm
-
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY --parents ./apps/*/package.json ./shared/*/package.json ./
+RUN corepack enable pnpm
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY --parents **/package.json package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+RUN --mount=type=cache,id=pnpm,target=target=/pnpm/store pnpm install --frozen-lockfile
 
 COPY . ./
 
@@ -24,35 +22,25 @@ COPY . ./
 
 FROM installer AS staging-admin
 
-RUN pnpm -F admin deploy --legacy ./prod/admin
-
-WORKDIR /app/prod/admin
-
-CMD ["pnpm", "staging"]
+CMD ["pnpm", "staging:admin"]
 
 # =========================================================================== #
 
 FROM installer AS staging-server
 
-RUN pnpm -F server deploy --legacy ./prod/server
-
-WORKDIR /app/prod/server
-
-CMD ["pnpm", "staging"]
+CMD ["pnpm", "staging:server"]
 
 # =========================================================================== #
 
 FROM installer AS staging-web
 
-RUN pnpm -F web deploy --legacy ./prod/web
-
-WORKDIR /app/prod/web
-
-CMD ["pnpm", "staging"]
+CMD ["pnpm", "staging:web"]
 
 # =========================================================================== #
 
 FROM installer AS build-admin
+
+ENV NODE_ENV=production
 
 RUN pnpm -F admin deploy --legacy ./prod/admin
 
@@ -64,6 +52,8 @@ RUN VITE_API_BASE_URL=$VITE_API_BASE_URL pnpm build
 
 FROM installer AS build-web
 
+ENV NODE_ENV=production
+
 RUN pnpm -F web deploy --legacy ./prod/web
 
 WORKDIR /app/prod/web
@@ -73,6 +63,8 @@ RUN VITE_API_BASE_URL=$VITE_API_BASE_URL pnpm build
 # =========================================================================== #
 
 FROM installer AS deploy-server
+
+ENV NODE_ENV=production
 
 RUN pnpm -F server deploy --legacy ./prod/server
 
