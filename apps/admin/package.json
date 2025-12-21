@@ -17,12 +17,16 @@
     "@refinedev/core": "catalog:",
     "@refinedev/react-router": "catalog:",
     "@shared/auth": "workspace:*",
+    "@tanstack/react-query": "^5.90.12",
     "antd": "catalog:",
+    "dayjs": "^1.11.19",
     "i18next": "^25.5.2",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-i18next": "^15.7.3",
-    "react-router": "catalog:"
+    "react-markdown": "^10.1.0",
+    "react-router": "catalog:",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@types/react": "catalog:",

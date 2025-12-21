@@ -3,12 +3,7 @@ import { useList, useMany, useCreate } from "@refinedev/core";
 
 import {
   getDefaultSortOrder,
-  List,
   useEditableTable,
-  TextField,
-  EditButton,
-  DeleteButton,
-  SaveButton,
   useSelect,
   useModalForm,
 } from "@refinedev/antd";
@@ -21,6 +16,12 @@ import Modal from "antd/es/modal";
 import Button from "antd/es/button";
 import Input from "antd/es/input";
 import Flex from "antd/es/flex";
+
+import { List } from "../../components/crud/list";
+import { TextField } from "../../components/fields/text";
+import { EditButton } from "../../components/buttons/edit";
+import { DeleteButton } from "../../components/buttons/delete";
+import { SaveButton } from "../../components/buttons/save";
 
 type PersonRecord = {
   id: number;

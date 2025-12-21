@@ -1,8 +1,9 @@
 import React from "react";
 import { Routes, Route, Outlet } from "react-router";
 
-import { Authenticated } from "@refinedev/core";
 import { NavigateToResource } from "@refinedev/react-router";
+
+import { Authenticated } from "./components/authenticated";
 
 import { ThemedLayout } from "./components/layout";
 import { ThemedSider } from "./components/layout/sider";
