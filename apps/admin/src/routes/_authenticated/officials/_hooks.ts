@@ -4,7 +4,7 @@ import {
   useModalForm,
 } from "@refinedev/antd";
 
-import type { NewUserRecord, UserRecord } from './types'
+import type { NewUserRecord, UserRecord } from './_types'
 
 
 export function useOfficialsTable() {

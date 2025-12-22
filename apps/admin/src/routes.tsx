@@ -3,38 +3,6 @@ import { Routes, Route, Outlet } from "react-router";
 
 import { NavigateToResource } from "@refinedev/react-router";
 
-import { Authenticated } from "./components/authenticated";
-
-import { ThemedLayout } from "./components/layout";
-import { ThemedSider } from "./components/layout/sider";
-import { ThemedTitle } from "./components/layout/title";
-
-const ShowProject = React.lazy(() => import("./pages/projects/show"));
-const EditProject = React.lazy(() => import("./pages/projects/edit"));
-const ListProjects = React.lazy(() => import("./pages/projects/list"));
-const CreateProject = React.lazy(() => import("./pages/projects/create"));
-
-const ListTopicCategoryTopics = React.lazy(
-  () => import("./pages/category-topics/page"),
-);
-
-const ListAdministrativeUnits = React.lazy(
-  () => import("./pages/administrative-units/page"),
-);
-
-const ListPersons = React.lazy(() => import("./pages/citizens/page"));
-const ListOfficials = React.lazy(() => import("./pages/officials/page"));
-
-const ListFeedback = React.lazy(() => import("./pages/feedback/list"));
-const ShowFeedback = React.lazy(() => import("./pages/feedback/show"));
-
-const ListVotingResults = React.lazy(
-  () => import("./pages/voting-results/list"),
-);
-const ListVotingUnits = React.lazy(() => import("./pages/voting-units/list"));
-
-const Login = React.lazy(() => import("./pages/auth/page"));
-
 export default function AppRoutes() {
   return (
     <Routes>
@@ -66,9 +34,6 @@ export default function AppRoutes() {
           <Route index element={<ListFeedback />} />
           <Route path=":id" element={<ShowFeedback />} />
         </Route>
-        <Route path="/persons" element={<ListPersons />} />
-        <Route path="/officials" element={<ListOfficials />} />
-
         <Route path="/voting_votes" element={<ListVotingResults />} />
         <Route path="/voting_units" element={<ListVotingUnits />} />
       </Route>

@@ -4,8 +4,8 @@ import Select from "antd/es/select";
 import Modal from "antd/es/modal";
 import Flex from "antd/es/flex";
 
-import { authClient } from "../../providers/auth-provider";
-import type { CreateOfficialModalFormProps, NewUserRecord } from './types'
+import { authClient } from "../../../auth-client";
+import type { CreateOfficialModalFormProps, NewUserRecord } from './_types'
 
 export default function CreateOfficialModalForm({
   createOfficialModalProps,

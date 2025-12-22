@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import {
   useShow,
   useUpdate,
@@ -5,6 +7,7 @@ import {
   useCan,
   useGetIdentity,
 } from "@refinedev/core";
+
 import { ListButton } from "@refinedev/antd";
 
 import Tag from "antd/es/tag";
@@ -17,35 +20,52 @@ import message from "antd/es/message";
 import Flex from "antd/es/flex";
 import Image from "antd/es/image";
 
-import { TextField } from "../../components/fields/text";
-import { Show } from "../../components/crud/show";
+import { TextField } from "../../../components/fields/text";
+import { Show } from "../../../components/crud/show";
+import { dataProvider } from '../../../providers/data-provider';
 
 type Status = {
   id: number;
   title: "pending" | "approved" | "declined" | "completed";
 };
 
-const ShowFeedback = () => {
-  const {
-    result: feedback,
-    query: { isLoading },
-  } = useShow();
+export const Route = createFileRoute('/_authenticated/feedback/$showId')({
+  component: ShowFeedback,
+  loader: async ({ context, params }) => {
+    const { data: feedback } = await context.queryClient.ensureQueryData({
+      queryKey: ["default", "feedback", "one", params.showId],
+      queryFn: () => dataProvider.getOne({
+        resource: "feedback",
+        id: Number(params.showId)
+      })
+    })
+
+    const { data: statuses } = await context.queryClient.ensureQueryData({
+      queryKey: ["default", "feedback_statuses", "many", { usePagination: true, pagination: { pageSize: 48 } }],
+      queryFn: () => dataProvider.getList<Status>({
+        resource: "feedback_statuses",
+        pagination: {
+          pageSize: 48
+        }
+      })
+    })
+
+    return { feedback, statuses }
+  }
+})
+
+
+function ShowFeedback() {
+  const { feedback, statuses } = Route.useLoaderData()
 
   const { mutate: updateFeedback } = useUpdate();
-
-  const { result: statuses } = useList<Status>({
-    resource: "feedback_statuses",
-    pagination: {
-      pageSize: 48,
-    },
-  });
 
   const { data: identity } = useGetIdentity();
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {
       pending: "orange",
-      approved: "green",
+      approved: "blue",
       completed: "green",
       declined: "red",
     };
@@ -62,7 +82,7 @@ const ShowFeedback = () => {
   };
 
   const handleApprove = () => {
-    const approvedStatus = statuses?.data?.find(
+    const approvedStatus = statuses?.find(
       (status) => status.title === "approved",
     );
 
@@ -86,7 +106,7 @@ const ShowFeedback = () => {
   };
 
   const handleComplete = () => {
-    const completedStatus = statuses?.data?.find(
+    const completedStatus = statuses?.find(
       (status) => status.title === "completed",
     );
 
@@ -110,7 +130,7 @@ const ShowFeedback = () => {
   };
 
   const handleDecline = () => {
-    const declinedStatus = statuses?.data?.find(
+    const declinedStatus = statuses?.find(
       (status) => status.title === "declined",
     );
 
@@ -137,7 +157,6 @@ const ShowFeedback = () => {
 
   return (
     <Show
-      isLoading={isLoading}
       title="Предложения"
       headerButtons={({ listButtonProps }) => (
         <ListButton {...listButtonProps} />
@@ -270,5 +289,3 @@ const ShowFeedback = () => {
     </Show>
   );
 };
-
-export default ShowFeedback;

@@ -1,3 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router'
 import { useCan } from "@refinedev/core";
 
 import {
@@ -11,13 +12,16 @@ import Tag from "antd/es/tag";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
 
-import { ShowButton } from "../../components/buttons/show";
-import { List } from "../../components/crud/list";
+import { ShowButton } from "../../../components/buttons/show";
+import { List } from "../../../components/crud/list";
 
 import { useFeedbackTable } from './hooks'
 
+export const Route = createFileRoute('/_authenticated/feedback/')({
+  component: ListFeedback,
+})
 
-const ListFeedback = () => {
+function ListFeedback() {
   const { data: accessData } = useCan({
     resource: "feedback",
     action: "show",
@@ -39,7 +43,7 @@ const ListFeedback = () => {
   const getStatusText = (status: string) => {
     return {
       pending: "На проверке",
-      approved: "В работе",
+      approved: "Утверждено",
       completed: "Выполнено",
       declined: "Отклонено",
     }[status];
@@ -168,5 +172,3 @@ const ListFeedback = () => {
     </List>
   );
 };
-
-export default ListFeedback;

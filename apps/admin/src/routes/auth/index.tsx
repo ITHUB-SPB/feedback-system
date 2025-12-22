@@ -1,8 +1,12 @@
+import { createFileRoute } from '@tanstack/react-router'
 import Image from "antd/es/image";
 import { LoginCard } from "./login-card";
 
+export const Route = createFileRoute('/auth/')({
+  component: LoginComponent,
+})
 
-export default function Login() {
+function LoginComponent() {
   return (
     <LoginCard
       formProps={{
@@ -26,4 +30,4 @@ export default function Login() {
       )}
     />
   );
-};
+}

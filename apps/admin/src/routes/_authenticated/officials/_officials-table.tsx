@@ -8,12 +8,12 @@ import {
   getDefaultSortOrder,
 } from "@refinedev/antd";
 
-import { useOfficialsTable } from "./hooks";
-import { TextField } from "../../components/fields/text";
-import { SaveButton } from "../../components/buttons/save";
-import { DeleteButton } from "../../components/buttons/delete";
-import { EditButton } from "../../components/buttons/edit";
-import { type UserRecord } from "./types";
+import { useOfficialsTable } from "./_hooks";
+import { TextField } from "../../../components/fields/text";
+import { SaveButton } from "../../../components/buttons/save";
+import { DeleteButton } from "../../../components/buttons/delete";
+import { EditButton } from "../../../components/buttons/edit";
+import { type UserRecord } from "./_types";
 
 export default function OfficialsTable() {
   const { table, administrativeUnits } = useOfficialsTable()

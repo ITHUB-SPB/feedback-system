@@ -18,6 +18,8 @@
     "@refinedev/react-router": "catalog:",
     "@shared/auth": "workspace:*",
     "@tanstack/react-query": "^5.90.12",
+    "@tanstack/react-router": "^1.142.7",
+    "@tanstack/router-devtools": "^1.142.7",
     "antd": "catalog:",
     "dayjs": "^1.11.19",
     "i18next": "^25.5.2",
@@ -26,9 +28,11 @@
     "react-i18next": "^15.7.3",
     "react-markdown": "^10.1.0",
     "react-router": "catalog:",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "ufo": "^1.6.1"
   },
   "devDependencies": {
+    "@tanstack/router-plugin": "^1.142.7",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
