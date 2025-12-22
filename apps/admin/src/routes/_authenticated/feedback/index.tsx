@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useCan } from "@refinedev/core";
+import { useCan, useGetIdentity } from "@refinedev/core";
 
 import {
   getDefaultSortOrder,
@@ -18,10 +18,17 @@ import { List } from "../../../components/crud/list";
 import { useFeedbackTable } from './hooks'
 
 export const Route = createFileRoute('/_authenticated/feedback/')({
+  loader: async ({ context }) => {
+    const { data } = await context.authClient.getSession()
+    return { user: data?.user }
+  },
   component: ListFeedback,
 })
 
 function ListFeedback() {
+  const { user } = Route.useLoaderData()
+  console.log(user)
+
   const { data: accessData } = useCan({
     resource: "feedback",
     action: "show",
@@ -29,6 +36,12 @@ function ListFeedback() {
       // staleTime: 1000 * 60
     },
   });
+
+  const { table, projects, select } = useFeedbackTable(user?.id, user?.role)
+
+  if (!table) {
+    return
+  }
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {
@@ -49,20 +62,18 @@ function ListFeedback() {
     }[status];
   };
 
-  const { table, projects, select } = useFeedbackTable()
-
   return (
     <List title="Предложения граждан">
       <Table
-        {...table.tableProps}
+        {...table?.tableProps}
         rowKey="id"
-        pagination={{ ...table.tableProps.pagination, pageSizeOptions: [12, 24, 48] }}
+        pagination={{ ...table?.tableProps.pagination, pageSizeOptions: [12, 24, 48] }}
       >
         <Table.Column
           dataIndex="description"
           title="Описание"
           sorter
-          defaultSortOrder={getDefaultSortOrder("description", table.sorters)}
+          defaultSortOrder={getDefaultSortOrder("description", table?.sorters)}
           render={(value) => (
             <div
               style={{
@@ -80,11 +91,11 @@ function ListFeedback() {
           title="Проект"
           sorter
           render={(value) => {
-            if (projects.projectsQuery.isLoading) {
+            if (projects?.projectsQuery.isLoading) {
               return "Загрузка...";
             }
 
-            return projects.projects?.data?.find((project) => project.id == value)
+            return projects?.projects?.data?.find((project) => project.id == value)
               ?.title;
           }}
         />
@@ -103,12 +114,12 @@ function ListFeedback() {
                   : undefined;
               }}
             >
-              <Select style={{ minWidth: 200 }} {...select.feedbackTypeSelectProps} />
+              <Select style={{ minWidth: 200 }} {...select?.feedbackTypeSelectProps} />
             </FilterDropdown>
           )}
           defaultFilteredValue={getDefaultFilter(
             "feedback_type_id",
-            table.filters,
+            table?.filters,
             "eq",
           )}
         />
@@ -139,13 +150,15 @@ function ListFeedback() {
             >
               <Select
                 style={{ minWidth: 200 }}
-                {...select.feedbackStatusSelectProps}
+                {...select?.feedbackStatusSelectProps}
+              // labelRender={({ label }) => getStatusText(String(label))}
+              // optionRender={({ data }) => getStatusText(String(data.label))}
               />
             </FilterDropdown>
           )}
           defaultFilteredValue={getDefaultFilter(
             "feedback_status_id",
-            table.filters,
+            table?.filters,
             "eq",
           )}
         />
@@ -153,7 +166,7 @@ function ListFeedback() {
           dataIndex="created_at"
           title="Дата создания"
           sorter
-          defaultSortOrder={getDefaultSortOrder("created_at", table.sorters)}
+          defaultSortOrder={getDefaultSortOrder("created_at", table?.sorters)}
           render={(value) => new Date(value).toLocaleDateString("ru-RU")}
         />
 

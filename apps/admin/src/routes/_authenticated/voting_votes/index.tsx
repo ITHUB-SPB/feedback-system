@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { useMany, useExport } from "@refinedev/core";
 import {
   useTable,
@@ -5,16 +7,21 @@ import {
   getDefaultFilter,
   FilterDropdown,
   useSelect,
-  List,
-  DeleteButton,
-  ExportButton,
 } from "@refinedev/antd";
+
+import { DeleteButton } from '../../../components/buttons/delete';
+import { ExportButton } from '../../../components/buttons/export';
+import { List } from '../../../components/crud/list';
 
 import Table from "antd/es/table";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
 
-const ListVotingResults = () => {
+export const Route = createFileRoute('/_authenticated/voting_votes/')({
+  component: ListVotingVotes,
+})
+
+function ListVotingVotes() {
   const { tableProps, sorters, filters } = useTable({
     pagination: { currentPage: 1, pageSize: 24 },
     sorters: {
@@ -155,6 +162,4 @@ const ListVotingResults = () => {
       </Table>
     </List>
   );
-};
-
-export default ListVotingResults;
+}

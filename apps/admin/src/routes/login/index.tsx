@@ -1,8 +1,23 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import Image from "antd/es/image";
 import { LoginCard } from "./login-card";
 
-export const Route = createFileRoute('/auth/')({
+export const Route = createFileRoute('/login/')({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      redirect: search?.redirect || null
+    }
+  },
+  beforeLoad: async ({ context, search }) => {
+    const { data: session, error } = await context.authClient.getSession();
+
+    console.log('created')
+    if (session?.user) {
+      throw redirect({
+        to: '/feedback',
+      })
+    }
+  },
   component: LoginComponent,
 })
 

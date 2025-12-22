@@ -8,11 +8,7 @@ import {
 
 import type { ProjectRecord } from './types'
 
-export function useFeedbackTable() {
-  const { data: identityData } = useGetIdentity();
-  const role = identityData?.role || "citizen";
-  const userId = identityData?.id;
-
+export function useFeedbackTable(userId?: string, role?: string) {
   const { tableProps, sorters, filters } = useTable({
     resource: "feedback",
     pagination: { currentPage: 1, pageSize: 12 },
@@ -23,23 +19,24 @@ export function useFeedbackTable() {
       ],
     },
     filters: {
-      permanent:
-        role === "official"
-          ? [
-            {
-              field: "feedback_status_id",
-              operator: "in",
-              value: [1, 2, 4],
-            },
-            {
-              field: "official_id",
-              operator: "eq",
-              value: userId,
-            },
-          ]
-          : [],
-    },
+      permanent: role === "official" ? [
+        {
+          field: "official_id",
+          operator: "eq",
+          value: userId,
+        },
+      ] : [],
+      initial: role === "official" ? [
+        {
+          field: "feedback_status_id",
+          operator: "in",
+          value: [1, 2, 4],
+        },
+      ] : []
+    }
   });
+
+  console.log(role === "official", sorters, filters)
 
   const { result: projects, query: projectsQuery } = useMany<ProjectRecord>({
     resource: "projects",

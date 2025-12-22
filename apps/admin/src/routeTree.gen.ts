@@ -10,11 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as AuthIndexRouteImport } from './routes/auth/index'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as AuthenticatedVoting_votesIndexRouteImport } from './routes/_authenticated/voting_votes/index'
+import { Route as AuthenticatedVoting_unitsIndexRouteImport } from './routes/_authenticated/voting_units/index'
+import { Route as AuthenticatedTopic_category_topicsIndexRouteImport } from './routes/_authenticated/topic_category_topics/index'
 import { Route as AuthenticatedProjectsIndexRouteImport } from './routes/_authenticated/projects/index'
 import { Route as AuthenticatedOfficialsIndexRouteImport } from './routes/_authenticated/officials/index'
 import { Route as AuthenticatedFeedbackIndexRouteImport } from './routes/_authenticated/feedback/index'
 import { Route as AuthenticatedCitizensIndexRouteImport } from './routes/_authenticated/citizens/index'
+import { Route as AuthenticatedAdministrative_unitsIndexRouteImport } from './routes/_authenticated/administrative_units/index'
 import { Route as AuthenticatedProjectsCreateRouteImport } from './routes/_authenticated/projects/create'
 import { Route as AuthenticatedProjectsShowIdRouteImport } from './routes/_authenticated/projects/$showId'
 import { Route as AuthenticatedFeedbackShowIdRouteImport } from './routes/_authenticated/feedback/$showId'
@@ -24,11 +29,34 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthIndexRoute = AuthIndexRouteImport.update({
-  id: '/auth/',
-  path: '/auth/',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginIndexRoute = LoginIndexRouteImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedVoting_votesIndexRoute =
+  AuthenticatedVoting_votesIndexRouteImport.update({
+    id: '/voting_votes/',
+    path: '/voting_votes/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedVoting_unitsIndexRoute =
+  AuthenticatedVoting_unitsIndexRouteImport.update({
+    id: '/voting_units/',
+    path: '/voting_units/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedTopic_category_topicsIndexRoute =
+  AuthenticatedTopic_category_topicsIndexRouteImport.update({
+    id: '/topic_category_topics/',
+    path: '/topic_category_topics/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedProjectsIndexRoute =
   AuthenticatedProjectsIndexRouteImport.update({
     id: '/projects/',
@@ -51,6 +79,12 @@ const AuthenticatedCitizensIndexRoute =
   AuthenticatedCitizensIndexRouteImport.update({
     id: '/citizens/',
     path: '/citizens/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdministrative_unitsIndexRoute =
+  AuthenticatedAdministrative_unitsIndexRouteImport.update({
+    id: '/administrative_units/',
+    path: '/administrative_units/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedProjectsCreateRoute =
@@ -79,80 +113,111 @@ const AuthenticatedProjectsEditIdEditRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/auth': typeof AuthIndexRoute
+  '/': typeof IndexRoute
+  '/login': typeof LoginIndexRoute
   '/feedback/$showId': typeof AuthenticatedFeedbackShowIdRoute
   '/projects/$showId': typeof AuthenticatedProjectsShowIdRoute
   '/projects/create': typeof AuthenticatedProjectsCreateRoute
+  '/administrative_units': typeof AuthenticatedAdministrative_unitsIndexRoute
   '/citizens': typeof AuthenticatedCitizensIndexRoute
   '/feedback': typeof AuthenticatedFeedbackIndexRoute
   '/officials': typeof AuthenticatedOfficialsIndexRoute
   '/projects': typeof AuthenticatedProjectsIndexRoute
+  '/topic_category_topics': typeof AuthenticatedTopic_category_topicsIndexRoute
+  '/voting_units': typeof AuthenticatedVoting_unitsIndexRoute
+  '/voting_votes': typeof AuthenticatedVoting_votesIndexRoute
   '/projects/$editId/edit': typeof AuthenticatedProjectsEditIdEditRoute
 }
 export interface FileRoutesByTo {
-  '/auth': typeof AuthIndexRoute
+  '/': typeof IndexRoute
+  '/login': typeof LoginIndexRoute
   '/feedback/$showId': typeof AuthenticatedFeedbackShowIdRoute
   '/projects/$showId': typeof AuthenticatedProjectsShowIdRoute
   '/projects/create': typeof AuthenticatedProjectsCreateRoute
+  '/administrative_units': typeof AuthenticatedAdministrative_unitsIndexRoute
   '/citizens': typeof AuthenticatedCitizensIndexRoute
   '/feedback': typeof AuthenticatedFeedbackIndexRoute
   '/officials': typeof AuthenticatedOfficialsIndexRoute
   '/projects': typeof AuthenticatedProjectsIndexRoute
+  '/topic_category_topics': typeof AuthenticatedTopic_category_topicsIndexRoute
+  '/voting_units': typeof AuthenticatedVoting_unitsIndexRoute
+  '/voting_votes': typeof AuthenticatedVoting_votesIndexRoute
   '/projects/$editId/edit': typeof AuthenticatedProjectsEditIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/auth/': typeof AuthIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/_authenticated/feedback/$showId': typeof AuthenticatedFeedbackShowIdRoute
   '/_authenticated/projects/$showId': typeof AuthenticatedProjectsShowIdRoute
   '/_authenticated/projects/create': typeof AuthenticatedProjectsCreateRoute
+  '/_authenticated/administrative_units/': typeof AuthenticatedAdministrative_unitsIndexRoute
   '/_authenticated/citizens/': typeof AuthenticatedCitizensIndexRoute
   '/_authenticated/feedback/': typeof AuthenticatedFeedbackIndexRoute
   '/_authenticated/officials/': typeof AuthenticatedOfficialsIndexRoute
   '/_authenticated/projects/': typeof AuthenticatedProjectsIndexRoute
+  '/_authenticated/topic_category_topics/': typeof AuthenticatedTopic_category_topicsIndexRoute
+  '/_authenticated/voting_units/': typeof AuthenticatedVoting_unitsIndexRoute
+  '/_authenticated/voting_votes/': typeof AuthenticatedVoting_votesIndexRoute
   '/_authenticated/projects/$editId/edit': typeof AuthenticatedProjectsEditIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/auth'
+    | '/'
+    | '/login'
     | '/feedback/$showId'
     | '/projects/$showId'
     | '/projects/create'
+    | '/administrative_units'
     | '/citizens'
     | '/feedback'
     | '/officials'
     | '/projects'
+    | '/topic_category_topics'
+    | '/voting_units'
+    | '/voting_votes'
     | '/projects/$editId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/auth'
+    | '/'
+    | '/login'
     | '/feedback/$showId'
     | '/projects/$showId'
     | '/projects/create'
+    | '/administrative_units'
     | '/citizens'
     | '/feedback'
     | '/officials'
     | '/projects'
+    | '/topic_category_topics'
+    | '/voting_units'
+    | '/voting_votes'
     | '/projects/$editId/edit'
   id:
     | '__root__'
+    | '/'
     | '/_authenticated'
-    | '/auth/'
+    | '/login/'
     | '/_authenticated/feedback/$showId'
     | '/_authenticated/projects/$showId'
     | '/_authenticated/projects/create'
+    | '/_authenticated/administrative_units/'
     | '/_authenticated/citizens/'
     | '/_authenticated/feedback/'
     | '/_authenticated/officials/'
     | '/_authenticated/projects/'
+    | '/_authenticated/topic_category_topics/'
+    | '/_authenticated/voting_units/'
+    | '/_authenticated/voting_votes/'
     | '/_authenticated/projects/$editId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  AuthIndexRoute: typeof AuthIndexRoute
+  LoginIndexRoute: typeof LoginIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -164,12 +229,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/': {
-      id: '/auth/'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthIndexRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/voting_votes/': {
+      id: '/_authenticated/voting_votes/'
+      path: '/voting_votes'
+      fullPath: '/voting_votes'
+      preLoaderRoute: typeof AuthenticatedVoting_votesIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/voting_units/': {
+      id: '/_authenticated/voting_units/'
+      path: '/voting_units'
+      fullPath: '/voting_units'
+      preLoaderRoute: typeof AuthenticatedVoting_unitsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/topic_category_topics/': {
+      id: '/_authenticated/topic_category_topics/'
+      path: '/topic_category_topics'
+      fullPath: '/topic_category_topics'
+      preLoaderRoute: typeof AuthenticatedTopic_category_topicsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/projects/': {
       id: '/_authenticated/projects/'
@@ -197,6 +290,13 @@ declare module '@tanstack/react-router' {
       path: '/citizens'
       fullPath: '/citizens'
       preLoaderRoute: typeof AuthenticatedCitizensIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/administrative_units/': {
+      id: '/_authenticated/administrative_units/'
+      path: '/administrative_units'
+      fullPath: '/administrative_units'
+      preLoaderRoute: typeof AuthenticatedAdministrative_unitsIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/projects/create': {
@@ -234,10 +334,14 @@ interface AuthenticatedRouteChildren {
   AuthenticatedFeedbackShowIdRoute: typeof AuthenticatedFeedbackShowIdRoute
   AuthenticatedProjectsShowIdRoute: typeof AuthenticatedProjectsShowIdRoute
   AuthenticatedProjectsCreateRoute: typeof AuthenticatedProjectsCreateRoute
+  AuthenticatedAdministrative_unitsIndexRoute: typeof AuthenticatedAdministrative_unitsIndexRoute
   AuthenticatedCitizensIndexRoute: typeof AuthenticatedCitizensIndexRoute
   AuthenticatedFeedbackIndexRoute: typeof AuthenticatedFeedbackIndexRoute
   AuthenticatedOfficialsIndexRoute: typeof AuthenticatedOfficialsIndexRoute
   AuthenticatedProjectsIndexRoute: typeof AuthenticatedProjectsIndexRoute
+  AuthenticatedTopic_category_topicsIndexRoute: typeof AuthenticatedTopic_category_topicsIndexRoute
+  AuthenticatedVoting_unitsIndexRoute: typeof AuthenticatedVoting_unitsIndexRoute
+  AuthenticatedVoting_votesIndexRoute: typeof AuthenticatedVoting_votesIndexRoute
   AuthenticatedProjectsEditIdEditRoute: typeof AuthenticatedProjectsEditIdEditRoute
 }
 
@@ -245,10 +349,16 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedFeedbackShowIdRoute: AuthenticatedFeedbackShowIdRoute,
   AuthenticatedProjectsShowIdRoute: AuthenticatedProjectsShowIdRoute,
   AuthenticatedProjectsCreateRoute: AuthenticatedProjectsCreateRoute,
+  AuthenticatedAdministrative_unitsIndexRoute:
+    AuthenticatedAdministrative_unitsIndexRoute,
   AuthenticatedCitizensIndexRoute: AuthenticatedCitizensIndexRoute,
   AuthenticatedFeedbackIndexRoute: AuthenticatedFeedbackIndexRoute,
   AuthenticatedOfficialsIndexRoute: AuthenticatedOfficialsIndexRoute,
   AuthenticatedProjectsIndexRoute: AuthenticatedProjectsIndexRoute,
+  AuthenticatedTopic_category_topicsIndexRoute:
+    AuthenticatedTopic_category_topicsIndexRoute,
+  AuthenticatedVoting_unitsIndexRoute: AuthenticatedVoting_unitsIndexRoute,
+  AuthenticatedVoting_votesIndexRoute: AuthenticatedVoting_votesIndexRoute,
   AuthenticatedProjectsEditIdEditRoute: AuthenticatedProjectsEditIdEditRoute,
 }
 
@@ -257,8 +367,9 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  AuthIndexRoute: AuthIndexRoute,
+  LoginIndexRoute: LoginIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

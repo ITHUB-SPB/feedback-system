@@ -1,3 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router'
 import { useMany } from "@refinedev/core";
 
 import {
@@ -33,7 +34,11 @@ type RegionRecord = {
   title: string;
 };
 
-const ListVotingUnits = () => {
+export const Route = createFileRoute('/_authenticated/voting_units/')({
+  component: ListVotingUnits,
+})
+
+function ListVotingUnits() {
   const {
     tableProps,
     formProps,
@@ -291,6 +296,4 @@ const ListVotingUnits = () => {
       </Modal>
     </>
   );
-};
-
-export default ListVotingUnits;
+}

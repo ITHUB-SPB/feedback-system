@@ -1,13 +1,20 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import Space from "antd/es/space";
 import Button from "antd/es/button";
 
-import { List } from "../../components/crud/list";
+import { List } from "../../../components/crud/list";
 
 import AdministrativeUnitsTable from "./table";
 import AssignOfficialModalForm from "./modal-form";
 import { useAssignOfficialModalForm } from "./hooks";
 
-export default function ListAdministrativeUnits() {
+
+export const Route = createFileRoute('/_authenticated/administrative_units/')({
+  component: ListAdministrativeUnits,
+})
+
+function ListAdministrativeUnits() {
   const {
     assignOfficialModalShow,
     assignOfficialModalProps,

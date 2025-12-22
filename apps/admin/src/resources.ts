@@ -17,7 +17,6 @@ export const resources = [
     name: "citizens",
     list: "/citizens",
     meta: {
-      parent: "Пользователи",
       label: "Респонденты",
     },
   },
@@ -25,13 +24,12 @@ export const resources = [
     name: "officials",
     list: "/officials",
     meta: {
-      parent: "Пользователи",
       label: "Администрация",
     },
   },
   {
     name: "topic_category_topics",
-    list: "/issues",
+    list: "/topic_category_topics",
     meta: {
       label: "Категории",
     },
@@ -47,7 +45,6 @@ export const resources = [
     name: "voting_votes",
     list: "/voting_votes",
     meta: {
-      parent: "Голосование",
       label: "Результаты",
     },
   },
@@ -55,7 +52,6 @@ export const resources = [
     name: "voting_units",
     list: "/voting_units",
     meta: {
-      parent: "Голосование",
       label: "Участники",
     },
   },

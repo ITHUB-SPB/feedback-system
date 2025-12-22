@@ -2,7 +2,6 @@ import React, { useContext, type CSSProperties } from "react";
 import {
   type TreeMenuItem,
   useLogout,
-  CanAccess,
   useIsExistAuthentication,
   useMenu,
   useLink,
@@ -17,6 +16,7 @@ import Menu from 'antd/es/menu'
 import Grid from 'antd/es/grid'
 import Drawer from 'antd/es/drawer'
 import Button from 'antd/es/button'
+import Tabs from 'antd/es/tabs'
 import theme from 'antd/es/theme'
 import ConfigProvider from 'antd/es/config-provider'
 import Typography from "antd/es/typography";
@@ -64,22 +64,6 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
       const icon = meta?.icon;
       const route = list;
 
-      if (children.length > 0) {
-        return (
-          <CanAccess
-            key={item.key}
-            resource={name}
-            action="list"
-            params={{
-              resource: item,
-            }}
-          >
-            <Menu.SubMenu key={item.key} icon={null} title={label}>
-              {renderTreeView(children, selectedKey)}
-            </Menu.SubMenu>
-          </CanAccess>
-        );
-      }
       const isSelected = key === selectedKey;
       const isRoute = !(parentName !== undefined && children.length === 0);
 
@@ -87,25 +71,16 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
         activeItemDisabled && isSelected ? { pointerEvents: "none" } : {};
 
       return (
-        <CanAccess
+        <Menu.Item
           key={item.key}
-          resource={name}
-          action="list"
-          params={{
-            resource: item,
-          }}
+          icon={icon ?? (isRoute && null)}
+          style={linkStyle}
         >
-          <Menu.Item
-            key={item.key}
-            icon={icon ?? (isRoute && null)}
-            style={linkStyle}
-          >
-            <Link to={route ?? ""} style={linkStyle}>
-              {label}
-            </Link>
-            {isSelected && <div className="ant-menu-tree-arrow" />}
-          </Menu.Item>
-        </CanAccess>
+          <Link to={route ?? ""} style={linkStyle}>
+            {label}
+          </Link>
+          {isSelected && <div className="ant-menu-tree-arrow" />}
+        </Menu.Item>
       );
     });
   };
@@ -150,37 +125,45 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
 
   const items = renderTreeView(menuItems, selectedKey);
 
-  const renderSider = () => {
+  const renderSider = (availableItems: string[]) => {
+    const itemsToRender = items.filter(item => availableItems.includes(item.key))
     if (render) {
       return render({
-        items,
+        items: itemsToRender,
         logout,
         collapsed: false,
       });
     }
-    return [...items, logout].filter(Boolean);
+    return [...itemsToRender, logout].filter(Boolean);
   };
 
-  const renderMenu = () => {
+  const renderMenu = (tab: "feedback" | "voting") => {
+    const tabsMapping = {
+      voting: ["/voting_votes", "/voting_regions", "/citizens"],
+      feedback: ["/feedback", "/projects", "/topic_category_topics", "/officials", "/administrative_units", "/citizens"]
+    } as const;
+
     return (
-      <Menu
-        selectedKeys={selectedKey ? [selectedKey] : []}
-        defaultOpenKeys={[...defaultOpenKeys, ...defaultExpandMenuItems]}
-        mode="inline"
-        style={{
-          paddingTop: "8px",
-          border: "none",
-          overflow: "auto",
-          height: "calc(100% - 72px)",
-          display: "flex",
-          flexDirection: "column",
-        }}
-        onClick={() => {
-          setMobileSiderOpen(false);
-        }}
-      >
-        {renderSider()}
-      </Menu>
+      <>
+        <Menu
+          selectedKeys={selectedKey ? [selectedKey] : []}
+          defaultOpenKeys={[...defaultOpenKeys, ...defaultExpandMenuItems]}
+          mode="inline"
+          style={{
+            paddingTop: "8px",
+            border: "none",
+            overflow: "auto",
+            height: "calc(100dvh - 130px)",
+            display: "flex",
+            flexDirection: "column",
+          }}
+          onClick={() => {
+            setMobileSiderOpen(false);
+          }}
+        >
+          {renderSider(tabsMapping[tab])}
+        </Menu>
+      </>
     );
   };
 
@@ -206,6 +189,8 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
                 height: "100vh",
                 backgroundColor: token.colorBgContainer,
                 borderRight: `1px solid ${token.colorBgElevated}`,
+                display: "flex",
+                flexDirection: "column"
               }}
             >
               <div
@@ -221,7 +206,23 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
               >
                 <RenderToTitle collapsed={false} />
               </div>
-              {renderMenu()}
+
+              <Tabs
+                defaultActiveKey="feedback"
+                centered
+                items={[
+                  {
+                    label: `Предложения`,
+                    key: "feedback",
+                    children: renderMenu("feedback")
+                  },
+                  {
+                    label: `Голосование`,
+                    key: "voting",
+                    children: renderMenu("voting")
+                  },
+                ]}
+              />
             </Layout.Sider>
           </Layout>
         </Drawer>
@@ -256,15 +257,15 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
       {fixed && (
         <div
           style={{
-            width: "200px",
+            width: "240px",
             transition: "all 0.2s",
           }}
         />
       )}
-      <Layout.Sider style={siderStyles} breakpoint="lg">
+      <Layout.Sider style={{ ...siderStyles, width: "240px" }} width={240} breakpoint="lg">
         <div
           style={{
-            width: "200px",
+            width: "240px",
             padding: "0 16px",
             display: "flex",
             justifyContent: "flex-start",
@@ -276,7 +277,24 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
         >
           <RenderToTitle collapsed={false} />
         </div>
-        {renderMenu()}
+        <Tabs
+          defaultActiveKey="feedback"
+          centered
+          size="small"
+          tabBarGutter={20}
+          items={[
+            {
+              label: `Предложения`,
+              key: "feedback",
+              children: renderMenu("feedback")
+            },
+            {
+              label: `Голосование`,
+              key: "voting",
+              children: renderMenu("voting")
+            },
+          ]}
+        />
       </Layout.Sider>
     </div>
   );

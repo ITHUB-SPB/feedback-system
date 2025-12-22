@@ -3,10 +3,9 @@ import { ThemedLayoutContextProvider, type RefineThemedLayoutProps } from "@refi
 import Grid from 'antd/es/grid'
 import AntdLayout from 'antd/es/layout'
 
-import { ThemedSider as DefaultSider } from "./sider";
-
 export const ThemedLayout: React.FC<RefineThemedLayoutProps> = ({
   children,
+  Header,
   Sider,
   Title,
   Footer,
@@ -15,7 +14,7 @@ export const ThemedLayout: React.FC<RefineThemedLayoutProps> = ({
   onSiderCollapsed,
 }) => {
   const breakpoint = Grid.useBreakpoint();
-  const SiderToRender = Sider ?? DefaultSider;
+  const SiderToRender = Sider ?? null;
   const isSmall = typeof breakpoint.sm === "undefined" ? true : breakpoint.sm;
 
   return (
@@ -24,8 +23,9 @@ export const ThemedLayout: React.FC<RefineThemedLayoutProps> = ({
       onSiderCollapsed={onSiderCollapsed}
     >
       <AntdLayout style={{ minHeight: "100vh" }} hasSider={true}>
-        <SiderToRender Title={Title} />
+        {SiderToRender ? <SiderToRender Title={Title} /> : null}
         <AntdLayout>
+          {Header && <Header />}
           <AntdLayout.Content>
             <div
               style={{

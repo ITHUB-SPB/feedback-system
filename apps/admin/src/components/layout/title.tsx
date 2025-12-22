@@ -31,7 +31,7 @@ export const ThemedTitle: React.FC<RefineLayoutThemedTitleProps> = ({
       >
         <div
           style={{
-            height: "24px",
+            // height: "24px",
             width: "24px",
             color: token.colorPrimary,
           }}

@@ -1,12 +1,19 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import Button from "antd/es/button";
 import Space from "antd/es/space";
 
-import { List } from "../../components/crud/list";
+import { List } from "../../../components/crud/list";
 import { useTopicCategoryTopic } from "./hooks";
 import ModalForm from "./modal-form";
 import CategoryTopicsTable from "./table";
 
-const ListTopicCategoryTopics = () => {
+
+export const Route = createFileRoute('/_authenticated/topic_category_topics/')({
+  component: ListTopicCategoryTopics,
+})
+
+function ListTopicCategoryTopics() {
   const { modal, table, topicCategories, topics } = useTopicCategoryTopic()
 
   return (
@@ -43,6 +50,4 @@ const ListTopicCategoryTopics = () => {
       />
     </>
   );
-};
-
-export default ListTopicCategoryTopics;
+}

@@ -9,10 +9,10 @@ import Form from "antd/es/form";
 import Button from "antd/es/button";
 import Input from "antd/es/input";
 
-import { TextField } from "../../components/fields/text";
-import { EditButton } from "../../components/buttons/edit";
-import { DeleteButton } from "../../components/buttons/delete";
-import { SaveButton } from "../../components/buttons/save";
+import { TextField } from "../../../components/fields/text";
+import { EditButton } from "../../../components/buttons/edit";
+import { DeleteButton } from "../../../components/buttons/delete";
+import { SaveButton } from "../../../components/buttons/save";
 
 import type { PersonRecord, AdministrativeUnitRecord } from './types'
 import { useAttach, useAdministrativeUnitsTable, useOfficials } from "./hooks";
