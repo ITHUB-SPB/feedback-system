@@ -3,6 +3,7 @@ import {
   type LoginPageProps,
   type LoginFormTypes,
   useLogin,
+  useNotification,
 } from "@refinedev/core";
 
 import {
@@ -41,6 +42,7 @@ export const LoginCard: React.FC<LoginProps> = ({
   const { token } = theme.useToken();
   const [form] = Form.useForm<LoginFormTypes>();
   const { mutate: login, isPending } = useLogin<LoginFormTypes>();
+  const notify = useNotification()
 
   const CardTitle = (
     <Typography.Title
@@ -70,7 +72,9 @@ export const LoginCard: React.FC<LoginProps> = ({
       <Form<LoginFormTypes>
         layout="vertical"
         form={form}
-        onFinish={(values) => login({ ...values, ...mutationVariables })}
+        onFinish={(values) => {
+          login({ ...values, ...mutationVariables })
+        }}
         requiredMark={false}
         initialValues={{
           remember: false,

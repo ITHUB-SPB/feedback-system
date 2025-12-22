@@ -9,7 +9,7 @@ export type OfficialRequest = {
 
 export type MailCitizenJobData = {
   to: string;
-  type: "citizen-approved" | "citizen-rejected";
+  type: "citizen-approved" | "citizen-completed" | "citizen-declined";
   name: string;
   attachments?: string[];
 };

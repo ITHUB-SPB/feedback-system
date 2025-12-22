@@ -305,7 +305,7 @@ importers:
         version: 1.51.0
       '@shared/api':
         specifier: workspace:*
-        version: file:shared/api(@opentelemetry/api@1.9.0)(typescript@5.9.2)(ws@8.18.3)
+        version: link:../../shared/api
       '@tanstack/table-core':
         specifier: ^8.21.3
         version: 8.21.3
@@ -415,6 +415,9 @@ importers:
         specifier: 'catalog:'
         version: 1.1.0(typescript@5.9.2)
     devDependencies:
+      '@faker-js/faker':
+        specifier: ^10.1.0
+        version: 10.1.0
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1415,6 +1418,10 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@faker-js/faker@10.1.0':
+    resolution: {integrity: sha512-C3mrr3b5dRVlKPJdfrAXS8+dq+rq8Qm5SNRazca0JKgw1HQERFmrVb0towvMmw5uu8hHKNiQasMaR/tydf3Zsg==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@floating-ui/core@1.7.3':
     resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
@@ -2850,9 +2857,6 @@ packages:
 
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
-
-  '@shared/api@file:shared/api':
-    resolution: {directory: shared/api, type: directory}
 
   '@shared/auth@file:shared/auth':
     resolution: {directory: shared/auth, type: directory}
@@ -8955,6 +8959,8 @@ snapshots:
   '@esbuild/win32-x64@0.25.9':
     optional: true
 
+  '@faker-js/faker@10.1.0': {}
+
   '@floating-ui/core@1.7.3':
     dependencies:
       '@floating-ui/utils': 0.2.10
@@ -10453,40 +10459,6 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@shared/api@file:shared/api(@opentelemetry/api@1.9.0)(typescript@5.9.2)(ws@8.18.3)':
-    dependencies:
-      '@orpc/client': 1.12.3(@opentelemetry/api@1.9.0)
-      '@orpc/contract': 1.12.3(@opentelemetry/api@1.9.0)
-      '@orpc/openapi-client': 1.12.3(@opentelemetry/api@1.9.0)
-      '@orpc/server': 1.12.3(@opentelemetry/api@1.9.0)(ws@8.18.3)
-      '@orpc/valibot': 1.12.3(@opentelemetry/api@1.9.0)(@orpc/contract@1.12.3(@opentelemetry/api@1.9.0))(@orpc/server@1.12.3(@opentelemetry/api@1.9.0)(ws@8.18.3))(valibot@1.1.0(typescript@5.9.2))(ws@8.18.3)
-      '@shared/auth': file:shared/auth(typescript@5.9.2)
-      '@shared/logger': file:shared/logger
-      '@shared/schema': file:shared/schema(typescript@5.9.2)
-      valibot: 1.1.0(typescript@5.9.2)
-    transitivePeerDependencies:
-      - '@libsql/kysely-libsql'
-      - '@lynx-js/react'
-      - '@opentelemetry/api'
-      - '@sveltejs/kit'
-      - '@tediousjs/connection-string'
-      - better-sqlite3
-      - crossws
-      - fastify
-      - kysely-bun-worker
-      - mysql2
-      - next
-      - pg-native
-      - react
-      - react-dom
-      - solid-js
-      - svelte
-      - tarn
-      - tedious
-      - typescript
-      - vue
-      - ws
-
   '@shared/auth@file:shared/auth(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(solid-js@1.9.10)(typescript@5.9.2)':
     dependencies:
       '@dotenvx/dotenvx': 1.51.0
@@ -11109,7 +11081,7 @@ snapshots:
     optionalDependencies:
       '@tanstack/react-router': 1.142.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       vite: 7.1.5(@types/node@22.18.3)(jiti@2.6.1)(terser@5.44.0)(tsx@4.20.5)(yaml@2.8.1)
-      webpack: 5.101.3
+      webpack: 5.101.3(esbuild@0.25.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -15842,16 +15814,6 @@ snapshots:
     optionalDependencies:
       esbuild: 0.25.0
 
-  terser-webpack-plugin@5.3.14(webpack@5.101.3):
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.31
-      jest-worker: 27.5.1
-      schema-utils: 4.3.2
-      serialize-javascript: 6.0.2
-      terser: 5.44.0
-      webpack: 5.101.3
-    optional: true
-
   terser@5.44.0:
     dependencies:
       '@jridgewell/source-map': 0.3.11
@@ -16178,39 +16140,6 @@ snapshots:
   webpack-sources@3.3.3: {}
 
   webpack-virtual-modules@0.6.2: {}
-
-  webpack@5.101.3:
-    dependencies:
-      '@types/eslint-scope': 3.7.7
-      '@types/estree': 1.0.8
-      '@types/json-schema': 7.0.15
-      '@webassemblyjs/ast': 1.14.1
-      '@webassemblyjs/wasm-edit': 1.14.1
-      '@webassemblyjs/wasm-parser': 1.14.1
-      acorn: 8.15.0
-      acorn-import-phases: 1.0.4(acorn@8.15.0)
-      browserslist: 4.26.2
-      chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.18.3
-      es-module-lexer: 1.7.0
-      eslint-scope: 5.1.1
-      events: 3.3.0
-      glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.11
-      json-parse-even-better-errors: 2.3.1
-      loader-runner: 4.3.0
-      mime-types: 2.1.35
-      neo-async: 2.6.2
-      schema-utils: 4.3.2
-      tapable: 2.2.3
-      terser-webpack-plugin: 5.3.14(webpack@5.101.3)
-      watchpack: 2.4.4
-      webpack-sources: 3.3.3
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-    optional: true
 
   webpack@5.101.3(esbuild@0.25.0):
     dependencies:

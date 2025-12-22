@@ -27,7 +27,6 @@ export const Route = createFileRoute('/_authenticated/feedback/')({
 
 function ListFeedback() {
   const { user } = Route.useLoaderData()
-  console.log(user)
 
   const { data: accessData } = useCan({
     resource: "feedback",
@@ -38,10 +37,6 @@ function ListFeedback() {
   });
 
   const { table, projects, select } = useFeedbackTable(user?.id, user?.role)
-
-  if (!table) {
-    return
-  }
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {
@@ -169,18 +164,15 @@ function ListFeedback() {
           defaultSortOrder={getDefaultSortOrder("created_at", table?.sorters)}
           render={(value) => new Date(value).toLocaleDateString("ru-RU")}
         />
-
-        {accessData?.can && (
-          <Table.Column
-            title="Действия"
-            minWidth={120}
-            render={(_, record) => (
-              <Space>
-                <ShowButton hideText size="small" recordItemId={record.id} />
-              </Space>
-            )}
-          />
-        )}
+        <Table.Column
+          title="Действия"
+          minWidth={120}
+          render={(_, record) => (
+            <Space>
+              <ShowButton hideText size="small" recordItemId={record.id} />
+            </Space>
+          )}
+        />
       </Table>
     </List>
   );

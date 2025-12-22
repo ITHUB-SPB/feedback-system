@@ -58,7 +58,19 @@ export const Route = createFileRoute('/_authenticated/feedback/$showId')({
 function ShowFeedback() {
   const { feedback, statuses } = Route.useLoaderData()
 
-  const { mutate: updateFeedback } = useUpdate();
+  const { mutate: updateFeedback } = useUpdate({
+    resource: "feedback",
+    id: Number(feedback?.id),
+    successNotification: {
+      type: "success",
+      message: "Статус обновлен"
+    },
+    errorNotification: {
+      type: "error",
+      message: "Ошибка обновления"
+    },
+    invalidates: ["list", "many", "detail"]
+  });
 
   const { data: identity } = useGetIdentity();
 
@@ -88,8 +100,6 @@ function ShowFeedback() {
 
     updateFeedback(
       {
-        resource: "feedback",
-        id: feedback?.id,
         values: {
           feedback_status_id: approvedStatus?.id,
         },
@@ -112,18 +122,16 @@ function ShowFeedback() {
 
     updateFeedback(
       {
-        resource: "feedback",
-        id: feedback?.id,
         values: {
           feedback_status_id: completedStatus?.id,
         },
       },
       {
         onSuccess: () => {
-          message.success("Обращение выполнено");
+          message.success("Статус изменен");
         },
         onError: () => {
-          message.error("Ошибка при завершении обращения");
+          message.error("Ошибка при изменении статуса");
         },
       },
     );
@@ -136,8 +144,6 @@ function ShowFeedback() {
 
     updateFeedback(
       {
-        resource: "feedback",
-        id: feedback?.id,
         values: {
           feedback_status_id: declinedStatus?.id,
         },

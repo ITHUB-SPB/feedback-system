@@ -3,9 +3,7 @@ import { authClient } from "../auth-client";
 
 const authProvider: AuthProvider = {
   check: async () => {
-    const { data: session, error } = await authClient.getSession();
-
-    return { authenticated: Boolean(session) };
+    throw new Error("Not implemented")
   },
   register: async ({
     email,
@@ -38,7 +36,7 @@ const authProvider: AuthProvider = {
     return { success: !error };
   },
   login: async ({ email, password }) => {
-    const { data } = await authClient.signIn.email({
+    const { data, error } = await authClient.signIn.email({
       email,
       password,
       rememberMe: true,
@@ -46,12 +44,11 @@ const authProvider: AuthProvider = {
 
     // @ts-ignore
     if (data?.user?.role === "citizen") {
-      console.log("citizen login");
       return { success: false };
     }
 
     if (data?.token) {
-      return { success: true, redirectTo: "/" };
+      return { success: true, redirectTo: "/feedback" };
     }
 
     return { success: false };
@@ -72,6 +69,7 @@ const authProvider: AuthProvider = {
     }
   },
   onError: async (error) => {
+    console.log(error)
     if (error?.status === 401) {
       return {
         logout: true,

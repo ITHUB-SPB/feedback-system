@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async ({ context, location }) => {
     const { data: session, error } = await context.authClient.getSession();
 
-    if (!session?.user) {
+    if (!session?.user || session?.role === "citizen") {
       throw redirect({
         to: '/login',
         search: {

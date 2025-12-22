@@ -3,7 +3,7 @@ import { useLink } from "@refinedev/core";
 import type { RefineLayoutThemedTitleProps } from "@refinedev/antd";
 import Typography from 'antd/es/typography'
 import theme from 'antd/es/theme'
-import Space from 'antd/es/Space'
+import Space from 'antd/es/space'
 
 export const ThemedTitle: React.FC<RefineLayoutThemedTitleProps> = ({
   collapsed,

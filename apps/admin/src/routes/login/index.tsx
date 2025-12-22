@@ -10,9 +10,9 @@ export const Route = createFileRoute('/login/')({
   },
   beforeLoad: async ({ context, search }) => {
     const { data: session, error } = await context.authClient.getSession();
+    console.log(session, error)
 
-    console.log('created')
-    if (session?.user) {
+    if (session?.user && session.role !== "citizen") {
       throw redirect({
         to: '/feedback',
       })
@@ -22,6 +22,7 @@ export const Route = createFileRoute('/login/')({
 })
 
 function LoginComponent() {
+  
   return (
     <LoginCard
       formProps={{

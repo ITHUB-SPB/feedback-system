@@ -35,7 +35,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
         // await sendCitizenEmail(
         //   citizen.email,
         //   citizenFullName,
-        //   result.feedback_status === "approved",
+        //   result.feedback_status,
         // );
       }
 
@@ -47,7 +47,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
             "administrative_unit.id",
             "official_responsibility.administrative_unit_id",
           )
-          .where("administrative_unit.title", "=", result.administrative_unit)
+          .where("administrative_unit.title", "=", result.administrative_unit_title)
           .select("official_responsibility.official_id")
           .executeTakeFirst();
 

@@ -14,14 +14,10 @@ import "../i18n";
 
 import "antd/dist/reset.css";
 
-// import { Route as tasksRoute } from "./tasks";
-// import { Route as slotsRoute } from "./slots";
-
 import { authClient } from '../auth-client';
 import { dataProvider } from "../providers/data-provider";
-import { authProvider } from "../providers/auth-provider";
-import { accessControlProvider } from "../providers/access-control-provider";
 import { routerProvider } from '../providers/router-provider'
+import { authProvider } from "../providers/auth-provider";
 import { resources } from "../resources";
 
 interface RouterContext {
@@ -62,12 +58,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         <AntdApp>
           <Refine
             dataProvider={dataProvider}
-            authProvider={authProvider}
             routerProvider={routerProvider}
-            accessControlProvider={accessControlProvider}
             notificationProvider={useNotificationProvider}
             i18nProvider={i18nProvider}
             resources={resources}
+            authProvider={authProvider}
           // options={
           //   {
           //     reactQuery: {

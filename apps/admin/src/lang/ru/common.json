@@ -21,50 +21,6 @@
                 "rememberMe": "Запомнить меня"
             }
         },
-        "forgotPassword": {
-            "title": "Забыли пароль?",
-            "fields": {
-                "email": "Электронная почта"
-            },
-            "errors": {
-                "validEmail": "Неверный адрес электронной почты",
-                "requiredEmail": "Электронная почта обязательна"
-            },
-            "buttons": {
-                "submit": "Отправить инструкции для сброса"
-            }
-        },
-        "register": {
-            "title": "Зарегистрируйтесь для создания аккаунта",
-            "fields": {
-                "email": "Электронная почта",
-                "password": "Пароль"
-            },
-            "errors": {
-                "validEmail": "Неверный адрес электронной почты",
-                "requiredEmail": "Электронная почта обязательна",
-                "requiredPassword": "Пароль обязателен"
-            },
-            "buttons": {
-                "submit": "Зарегистрироваться",
-                "haveAccount": "Уже есть аккаунт?"
-            }
-        },
-        "updatePassword": {
-            "title": "Обновить пароль",
-            "fields": {
-                "password": "Новый пароль",
-                "confirmPassword": "Подтвердите новый пароль"
-            },
-            "errors": {
-                "confirmPasswordNotMatch": "Пароли не совпадают",
-                "requiredPassword": "Пароль обязателен",
-                "requiredConfirmPassword": "Подтверждение пароля обязательно"
-            },
-            "buttons": {
-                "submit": "Обновить"
-            }
-        },
         "error": {
             "info": "Возможно, вы забыли добавить компонент {{action}} к ресурсу {{resource}}.",
             "404": "Извините, страница, которую вы посетили, не существует.",

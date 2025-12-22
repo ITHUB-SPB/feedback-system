@@ -31,7 +31,7 @@ async function buildMail(options: MailJobData) {
     };
   }
 
-  if (options.type === "citizen-rejected") {
+  if (options.type === "citizen-declined") {
     return {
       to: options.to,
       subject: "Вместе47. Информация по вашему обращению",
@@ -41,6 +41,18 @@ async function buildMail(options: MailJobData) {
       ),
     };
   }
+
+  if (options.type === "citizen-completed") {
+    return {
+      to: options.to,
+      subject: "Вместе47. Информация по вашему обращению",
+      text: emailTemplates.citizenCompletedText,
+      html: await render(
+        emailTemplates.CitizenCompletedEmail({ name: options.name }),
+      ),
+    };
+  }
+
 
   if (options.type === "official-request") {
     const { officialName, description, createdAt, categoryTopic, files } =

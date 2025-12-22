@@ -31,18 +31,25 @@ export const dataProvider: DataProvider = {
     const updateOptions =
       resource === "auth/admin/list-users"
         ? {
-            method: "POST",
-            body: JSON.stringify({
-              userId: id,
-              data: variables,
-            }),
-          }
+          method: "POST",
+          body: JSON.stringify({
+            userId: id,
+            data: variables,
+          }),
+        }
         : { method: "PATCH", body: JSON.stringify(variables) };
 
     const url =
       resource === "auth/admin/list-users"
         ? `${API_URL}/auth/admin/update-user`
         : `${API_URL}/${resource}/${id}`;
+
+    console.log({
+      ...updateOptions,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
 
     const response = await fetcher(url, {
       ...updateOptions,

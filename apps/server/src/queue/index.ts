@@ -7,12 +7,12 @@ import getSidequestConfig from "./config";
 export async function sendCitizenEmail(
   email: string,
   name: string,
-  approved: boolean,
+  type: "approved" | "declined" | "completed",
 ): Promise<JobData | null> {
   return await Sidequest.build(MailCitizenJob).enqueue({
     to: email,
     name,
-    type: approved ? "citizen-approved" : "citizen-rejected",
+    type: `citizen-${type}`,
   });
 }
 

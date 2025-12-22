@@ -16,15 +16,16 @@
         ".": "./src/index.ts"
     },
     "dependencies": {
-        "@shared/schema": "workspace:*",
         "@dotenvx/dotenvx": "catalog:",
         "@electric-sql/pglite": "^0.3.14",
+        "@shared/schema": "workspace:*",
         "kysely": "catalog:",
         "kysely-pglite": "^0.6.1",
         "pg": "catalog:",
         "valibot": "catalog:"
     },
     "devDependencies": {
+        "@faker-js/faker": "^10.1.0",
         "@shared/typescript-config": "workspace:*",
         "@types/node": "catalog:",
         "@types/pg": "catalog:",
