@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1.20
 
 FROM dhi.io/node:24-alpine3.22-sfw-dev AS base
-# dckr_pat_s6Gd6xwAgqg-Ca3dnFdjFRoQJjk
 
 ENV CI=1
 RUN corepack enable pnpm
