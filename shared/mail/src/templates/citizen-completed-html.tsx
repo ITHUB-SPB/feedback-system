@@ -23,7 +23,9 @@ const CitizenCompletedEmail = ({ name }: Props) => {
     <Html dir="ltr" lang="ru">
       <Tailwind>
         <Head />
-        <Preview>Уважаемый житель! Работы по Вашему обращению выполнены!</Preview>
+        <Preview>
+          Уважаемый житель! Работы по Вашему обращению выполнены!
+        </Preview>
         <Body className="bg-[#f2f2fa] py-[40px] font-sans">
           <Container className="mx-auto max-w-[720px] rounded-[8px] bg-white px-[40px] py-[40px]">
             <Section className="mb-[32px] text-center">
@@ -40,8 +42,8 @@ const CitizenCompletedEmail = ({ name }: Props) => {
               </Heading>
 
               <Text className="mb-[24px] text-[#0b0917] text-[16px]">
-                Работы по Вашему предложению проведены. Благодарим Вас за вклад в
-                благоустройство Ленинградской области!
+                Работы по Вашему предложению проведены. Благодарим Вас за вклад
+                в благоустройство Ленинградской области!
               </Text>
             </Section>
 

@@ -2,7 +2,6 @@ import React from "react";
 import type { LinkProps } from "antd/lib/typography/Link";
 import { UrlField } from "./url";
 
-
 type RefineFieldFileProps<
   TComponentProps extends {} = {},
   TExtraProps extends {} = {},
@@ -20,7 +19,6 @@ type RefineFieldFileProps<
   };
 
 type FileFieldProps = RefineFieldFileProps<LinkProps>;
-
 
 /**
  * This field is used to display files and uses {@link https://ant.design/components/typography `<Typography.Link>`} from Ant Design.

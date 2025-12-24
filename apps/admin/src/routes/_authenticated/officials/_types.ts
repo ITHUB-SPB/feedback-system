@@ -1,5 +1,4 @@
-import type { UseModalFormReturnType } from '@refinedev/antd';
-
+import type { UseModalFormReturnType } from "@refinedev/antd";
 
 export type UserRecord = {
   id: number;
@@ -14,10 +13,9 @@ export type UserRecord = {
   social: string | null;
 };
 
-export type NewUserRecord = Omit<UserRecord, "name" | "id" | "created_at">
-
+export type NewUserRecord = Omit<UserRecord, "name" | "id" | "created_at">;
 
 export type CreateOfficialModalFormProps = {
-  createOfficialModalProps: UseModalFormReturnType<UserRecord>["modalProps"],
-  createOfficialFormProps: UseModalFormReturnType<UserRecord>["formProps"]
-}
+  createOfficialModalProps: UseModalFormReturnType<UserRecord>["modalProps"];
+  createOfficialFormProps: UseModalFormReturnType<UserRecord>["formProps"];
+};

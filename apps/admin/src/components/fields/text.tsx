@@ -1,5 +1,5 @@
 import React, { type ReactNode } from "react";
-import Typography from 'antd/es/typography'
+import Typography from "antd/es/typography";
 import type { TextProps } from "antd/lib/typography/Text";
 import type { RefineFieldCommonProps } from "./_types";
 

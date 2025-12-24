@@ -1,5 +1,5 @@
 import React from "react";
-import Typography from 'antd/es/typography'
+import Typography from "antd/es/typography";
 import type { LinkProps } from "antd/es/typography/Link";
 import type { RefineFieldCommonProps } from "./_types";
 
@@ -10,7 +10,6 @@ type RefineFieldUrlProps<
 > = RefineFieldCommonProps<TValueType> & TComponentProps & TExtraProps & {};
 
 type UrlFieldProps = RefineFieldUrlProps<string | undefined, LinkProps>;
-
 
 /**
  * This field lets you embed a link. It uses Ant Design's {@link https://ant.design/components/typography/ `<Typography.Link>`} component.

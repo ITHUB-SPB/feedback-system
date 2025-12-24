@@ -125,10 +125,10 @@ export function Authenticated({
     const queryToValue: string | undefined = parsed.params?.to
       ? parsed.params.to
       : go({
-        to: pathname,
-        options: { keepQuery: true },
-        type: "path",
-      });
+          to: pathname,
+          options: { keepQuery: true },
+          type: "path",
+        });
 
     return (
       <Redirect
@@ -137,8 +137,8 @@ export function Authenticated({
           query:
             appendCurrentPathToQuery && (queryToValue ?? "").length > 1
               ? {
-                to: queryToValue,
-              }
+                  to: queryToValue,
+                }
               : undefined,
           type: "replace",
         }}

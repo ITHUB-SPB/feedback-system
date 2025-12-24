@@ -1,24 +1,19 @@
 import React from "react";
-import {
-  useResourceParams,
-  useToPath,
-  useBack,
-  useGo,
-} from "@refinedev/core";
+import { useResourceParams, useToPath, useBack, useGo } from "@refinedev/core";
 
-import {
-  ListButton,
-  PageHeader,
-  type ShowProps
-} from "@refinedev/antd";
+import { ListButton, PageHeader, type ShowProps } from "@refinedev/antd";
 
-import Card from 'antd/es/card'
-import Space from 'antd/es/space'
-import Spin from 'antd/es/spin'
+import Card from "antd/es/card";
+import Space from "antd/es/space";
+import Spin from "antd/es/spin";
 
 import { EditButton } from "../buttons/edit";
 import { DeleteButton } from "../buttons/delete";
-import type { ListButtonProps, EditButtonProps, DeleteButtonProps } from "../buttons/_types";
+import type {
+  ListButtonProps,
+  EditButtonProps,
+  DeleteButtonProps,
+} from "../buttons/_types";
 
 export const Show: React.FC<ShowProps> = ({
   title,
@@ -67,30 +62,30 @@ export const Show: React.FC<ShowProps> = ({
 
   const listButtonProps: ListButtonProps | undefined = hasList
     ? {
-      resource: identifier,
-    }
+        resource: identifier,
+      }
     : undefined;
 
   const editButtonProps: EditButtonProps | undefined = isEditButtonVisible
     ? {
-      ...(isLoading ? { disabled: true } : {}),
-      type: "primary",
-      resource: identifier,
-      recordItemId: id,
-    }
+        ...(isLoading ? { disabled: true } : {}),
+        type: "primary",
+        resource: identifier,
+        recordItemId: id,
+      }
     : undefined;
 
   const deleteButtonProps: DeleteButtonProps | undefined = isDeleteButtonVisible
     ? {
-      ...(isLoading ? { disabled: true } : {}),
-      resource: identifier,
-      recordItemId: id,
-      onSuccess: () => {
-        go({ to: goListPath });
-      },
-      dataProviderName,
-      ...deleteButtonPropsFromProps,
-    }
+        ...(isLoading ? { disabled: true } : {}),
+        resource: identifier,
+        recordItemId: id,
+        onSuccess: () => {
+          go({ to: goListPath });
+        },
+        dataProviderName,
+        ...deleteButtonPropsFromProps,
+      }
     : undefined;
 
   const defaultHeaderButtons = (
@@ -114,12 +109,12 @@ export const Show: React.FC<ShowProps> = ({
             {headerButtons
               ? typeof headerButtons === "function"
                 ? headerButtons({
-                  defaultButtons: defaultHeaderButtons,
-                  deleteButtonProps,
-                  editButtonProps,
-                  listButtonProps,
-                  refreshButtonProps: undefined,
-                })
+                    defaultButtons: defaultHeaderButtons,
+                    deleteButtonProps,
+                    editButtonProps,
+                    listButtonProps,
+                    refreshButtonProps: undefined,
+                  })
                 : headerButtons
               : defaultHeaderButtons}
           </Space>
@@ -132,14 +127,14 @@ export const Show: React.FC<ShowProps> = ({
             actions={
               footerButtons
                 ? [
-                  <Space key="footer-buttons" wrap {...footerButtonProps}>
-                    {typeof footerButtons === "function"
-                      ? footerButtons({
-                        defaultButtons: null,
-                      })
-                      : footerButtons}
-                  </Space>,
-                ]
+                    <Space key="footer-buttons" wrap {...footerButtonProps}>
+                      {typeof footerButtons === "function"
+                        ? footerButtons({
+                            defaultButtons: null,
+                          })
+                        : footerButtons}
+                    </Space>,
+                  ]
                 : undefined
             }
             {...(contentProps ?? {})}

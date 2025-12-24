@@ -7,18 +7,19 @@ import {
   useToPath,
 } from "@refinedev/core";
 
-import {
-  ListButton,
-  PageHeader,
-} from "@refinedev/antd";
+import { ListButton, PageHeader } from "@refinedev/antd";
 
 import { SaveButton } from "../buttons/save";
 import { DeleteButton } from "../buttons/delete";
-import type { ListButtonProps, DeleteButtonProps, SaveButtonProps } from "../buttons/_types";
+import type {
+  ListButtonProps,
+  DeleteButtonProps,
+  SaveButtonProps,
+} from "../buttons/_types";
 
-import Card from 'antd/es/card'
-import Space from 'antd/es/space'
-import Spin from 'antd/es/spin'
+import Card from "antd/es/card";
+import Space from "antd/es/space";
+import Spin from "antd/es/spin";
 
 import type { EditProps } from "@refinedev/antd";
 
@@ -70,23 +71,23 @@ export const Edit: React.FC<EditProps> = ({
 
   const listButtonProps: ListButtonProps | undefined = hasList
     ? {
-      ...(isLoading ? { disabled: true } : {}),
-      resource: identifier,
-    }
+        ...(isLoading ? { disabled: true } : {}),
+        resource: identifier,
+      }
     : undefined;
 
   const deleteButtonProps: DeleteButtonProps | undefined = isDeleteButtonVisible
     ? {
-      ...(isLoading ? { disabled: true } : {}),
-      resource: identifier,
-      mutationMode,
-      onSuccess: () => {
-        go({ to: goListPath });
-      },
-      recordItemId: id,
-      dataProviderName,
-      ...deleteButtonPropsFromProps,
-    }
+        ...(isLoading ? { disabled: true } : {}),
+        resource: identifier,
+        mutationMode,
+        onSuccess: () => {
+          go({ to: goListPath });
+        },
+        recordItemId: id,
+        dataProviderName,
+        ...deleteButtonPropsFromProps,
+      }
     : undefined;
 
   const saveButtonProps: SaveButtonProps = {
@@ -95,9 +96,7 @@ export const Edit: React.FC<EditProps> = ({
   };
 
   const defaultHeaderButtons = (
-    <>
-      {hasList && <ListButton {...listButtonProps} />}
-    </>
+    <>{hasList && <ListButton {...listButtonProps} />}</>
   );
 
   const defaultFooterButtons = (
@@ -140,10 +139,10 @@ export const Edit: React.FC<EditProps> = ({
                 {footerButtons
                   ? typeof footerButtons === "function"
                     ? footerButtons({
-                      defaultButtons: defaultFooterButtons,
-                      deleteButtonProps,
-                      saveButtonProps,
-                    })
+                        defaultButtons: defaultFooterButtons,
+                        deleteButtonProps,
+                        saveButtonProps,
+                      })
                     : footerButtons
                   : defaultFooterButtons}
               </Space>,

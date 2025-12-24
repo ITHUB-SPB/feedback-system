@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
 import Space from "antd/es/space";
 import Button from "antd/es/button";
@@ -9,10 +9,9 @@ import AdministrativeUnitsTable from "./table";
 import AssignOfficialModalForm from "./modal-form";
 import { useAssignOfficialModalForm } from "./hooks";
 
-
-export const Route = createFileRoute('/_authenticated/administrative_units/')({
+export const Route = createFileRoute("/_authenticated/administrative_units/")({
   component: ListAdministrativeUnits,
-})
+});
 
 function ListAdministrativeUnits() {
   const {

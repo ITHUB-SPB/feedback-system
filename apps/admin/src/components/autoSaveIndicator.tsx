@@ -10,7 +10,7 @@ import type { UseUpdateReturnType } from "../../hooks/data/useUpdate";
 export type AutoSaveIndicatorProps<
   TData extends BaseRecord = BaseRecord,
   TError extends HttpError = HttpError,
-  TVariables = {}
+  TVariables = {},
 > = {
   /**
    * The data returned by the update request.

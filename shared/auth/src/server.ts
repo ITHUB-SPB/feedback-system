@@ -82,10 +82,13 @@ export const createAuth = ({
     secret: authSecret,
     trustedOrigins,
     session: {
-      cookieCache: {
-        enabled: true,
-        maxAge: 15 * 60,
-      },
+      expiresIn: 60 * 60 * 24 * 7,
+      updateAge: 60 * 60 * 24,
+    },
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
+      strategy: "compact",
     },
     emailAndPassword: {
       enabled: true,
@@ -93,20 +96,31 @@ export const createAuth = ({
       requireEmailVerification: false,
       disableSignUp: true,
     },
-    advanced:
-      serverUrl.includes(':')
-        ? {}
+    advanced: serverUrl.includes("localhost:")
+      ? {}
+      : serverUrl.includes("localhost")
+        ? {
+            crossSubDomainCookies: {
+              enabled: true,
+            },
+            defaultCookieAttributes: {
+              sameSite: "none",
+              secure: false,
+              httpOnly: true,
+              partitioned: true,
+            },
+          }
         : {
-          cookies: {
-            session_token: {
-              attributes: {
-                sameSite: "none",
-                secure: false, // TODO
-                httpOnly: true,
-              },
+            crossSubDomainCookies: {
+              enabled: true,
+            },
+            defaultCookieAttributes: {
+              sameSite: "none",
+              secure: true,
+              httpOnly: true,
+              partitioned: true,
             },
           },
-        },
     plugins: [
       ...baseOptions.plugins,
       customSession(async ({ user, session }) => {
@@ -127,3 +141,5 @@ export const createAuth = ({
     ],
   });
 };
+
+export type CreateAuth = typeof createAuth;

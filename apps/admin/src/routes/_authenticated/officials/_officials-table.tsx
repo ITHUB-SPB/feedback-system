@@ -4,9 +4,7 @@ import Space from "antd/es/space";
 import Input from "antd/es/input";
 import Button from "antd/es/button";
 
-import {
-  getDefaultSortOrder,
-} from "@refinedev/antd";
+import { getDefaultSortOrder } from "@refinedev/antd";
 
 import { useOfficialsTable } from "./_hooks";
 import { TextField } from "../../../components/fields/text";
@@ -16,7 +14,7 @@ import { EditButton } from "../../../components/buttons/edit";
 import { type UserRecord } from "./_types";
 
 export default function OfficialsTable() {
-  const { table, administrativeUnits } = useOfficialsTable()
+  const { table, administrativeUnits } = useOfficialsTable();
 
   return (
     <Form {...table.formProps}>
@@ -40,10 +38,7 @@ export default function OfficialsTable() {
                 <Input autoFocus size="small" />
               </Form.Item>
             ) : (
-              <TextField
-                value={value || "—"}
-                style={{ cursor: "pointer" }}
-              />
+              <TextField value={value || "—"} style={{ cursor: "pointer" }} />
             );
           }}
         />
@@ -59,10 +54,7 @@ export default function OfficialsTable() {
                 <Input autoFocus size="small" />
               </Form.Item>
             ) : (
-              <TextField
-                value={value || "—"}
-                style={{ cursor: "pointer" }}
-              />
+              <TextField value={value || "—"} style={{ cursor: "pointer" }} />
             );
           }}
         />
@@ -78,10 +70,7 @@ export default function OfficialsTable() {
                 <Input autoFocus size="small" />
               </Form.Item>
             ) : (
-              <TextField
-                value={value || "—"}
-                style={{ cursor: "pointer" }}
-              />
+              <TextField value={value || "—"} style={{ cursor: "pointer" }} />
             );
           }}
         />
@@ -97,10 +86,7 @@ export default function OfficialsTable() {
                 <Input autoFocus size="small" />
               </Form.Item>
             ) : (
-              <TextField
-                value={value || "—"}
-                style={{ cursor: "pointer" }}
-              />
+              <TextField value={value || "—"} style={{ cursor: "pointer" }} />
             );
           }}
         />
@@ -116,10 +102,7 @@ export default function OfficialsTable() {
                 <Input autoFocus size="small" />
               </Form.Item>
             ) : (
-              <TextField
-                value={value || "—"}
-                style={{ cursor: "pointer" }}
-              />
+              <TextField value={value || "—"} style={{ cursor: "pointer" }} />
             );
           }}
         />
@@ -133,10 +116,7 @@ export default function OfficialsTable() {
                 <Input autoFocus size="small" />
               </Form.Item>
             ) : (
-              <TextField
-                value={value || "—"}
-                style={{ cursor: "pointer" }}
-              />
+              <TextField value={value || "—"} style={{ cursor: "pointer" }} />
             );
           }}
         />
@@ -168,7 +148,11 @@ export default function OfficialsTable() {
             if (table.isEditing(record.id)) {
               return (
                 <Space>
-                  <SaveButton {...table.saveButtonProps} hideText size="small" />
+                  <SaveButton
+                    {...table.saveButtonProps}
+                    hideText
+                    size="small"
+                  />
                   <Button {...table.cancelButtonProps} size="small">
                     Отменить
                   </Button>
@@ -200,6 +184,5 @@ export default function OfficialsTable() {
         />
       </Table>
     </Form>
-
-  )
+  );
 }

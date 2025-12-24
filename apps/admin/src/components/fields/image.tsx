@@ -1,6 +1,6 @@
 import React from "react";
 import type { ImageProps } from "antd";
-import Image from 'antd/es/image'
+import Image from "antd/es/image";
 import type { RefineFieldCommonProps } from "./_types";
 
 type RefineFieldImageProps<

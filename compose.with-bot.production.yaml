@@ -8,10 +8,10 @@ include:
   - ./infrastructure/redis/compose.redis.production.yaml
 
 services:
-  server:
+  feedback-server:
     extends:
-      file: compose.with-bot.local.yaml
-      service: server
+      file: compose.with-bot.development.yaml
+      service: feedback-server
     labels:
       - "traefik.enable=true"
 
@@ -30,10 +30,10 @@ services:
       - "traefik.http.services.server-external.loadbalancer.server.port=3001"
       - "traefik.http.services.server-internal.loadbalancer.server.port=3001"
 
-  admin:
+  feedback-admin:
     extends:
-      file: compose.with-bot.local.yaml
-      service: admin
+      file: compose.with-bot.development.yaml
+      service: feedback-admin
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -48,10 +48,10 @@ services:
       - "traefik.http.routers.admin.middlewares=chain-no-auth@file"
       - "traefik.http.services.admin.loadbalancer.server.port=5174"
 
-  bot:
+  feedback-bot:
     extends:
-      file: compose.with-bot.local.yaml
-      service: bot
+      file: compose.with-bot.development.yaml
+      service: feedback-bot
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bot.rule=Host(`telegram.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
@@ -60,17 +60,17 @@ services:
       - "traefik.http.routers.bot.middlewares=middleware-rate-limit@file"
       - "traefik.http.services.bot.loadbalancer.server.port=8000"
 
-  web:
+  feedback-web:
     extends:
-      file: compose.with-bot.local.yaml
-      service: web
+      file: compose.with-bot.development.yaml
+      service: feedback-web
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web.rule=Host(`xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
       - "traefik.http.routers.web.entrypoints=web-secure"
       - "traefik.http.routers.web.tls.certresolver=tlsresolver"
       - "traefik.http.routers.web.middlewares=chain-no-auth@file"
-      - "traefik.http.services.web.loadbalancer.server.port=5175"
+      - "traefik.http.services.web.loadbalancer.server.port=5173"
 
 volumes:
   letsencrypt:

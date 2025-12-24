@@ -1,12 +1,8 @@
 import { useMany, useGetIdentity } from "@refinedev/core";
 
-import {
-  useTable,
-  getDefaultFilter,
-  useSelect,
-} from "@refinedev/antd";
+import { useTable, getDefaultFilter, useSelect } from "@refinedev/antd";
 
-import type { ProjectRecord } from './types'
+import type { ProjectRecord } from "./types";
 
 export function useFeedbackTable(userId?: string, role?: string) {
   const { tableProps, sorters, filters } = useTable({
@@ -19,24 +15,28 @@ export function useFeedbackTable(userId?: string, role?: string) {
       ],
     },
     filters: {
-      permanent: role === "official" ? [
-        {
-          field: "official_id",
-          operator: "eq",
-          value: userId,
-        },
-      ] : [],
-      initial: role === "official" ? [
-        {
-          field: "feedback_status_id",
-          operator: "in",
-          value: [1, 2, 4],
-        },
-      ] : []
-    }
+      permanent:
+        role === "official"
+          ? [
+              {
+                field: "official_id",
+                operator: "eq",
+                value: userId,
+              },
+            ]
+          : [],
+      initial:
+        role === "official"
+          ? [
+              {
+                field: "feedback_status_id",
+                operator: "in",
+                value: [1, 2, 4],
+              },
+            ]
+          : [],
+    },
   });
-
-  console.log(role === "official", sorters, filters)
 
   const { result: projects, query: projectsQuery } = useMany<ProjectRecord>({
     resource: "projects",
@@ -65,15 +65,17 @@ export function useFeedbackTable(userId?: string, role?: string) {
 
   return {
     table: {
-      tableProps, sorters, filters
+      tableProps,
+      sorters,
+      filters,
     },
     projects: {
       projects,
-      projectsQuery
+      projectsQuery,
     },
     select: {
       feedbackTypeSelectProps,
-      feedbackStatusSelectProps
-    }
-  }
+      feedbackStatusSelectProps,
+    },
+  };
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSaveButton } from "@refinedev/core";
 import { SaveOutlined } from "@ant-design/icons";
-import Button from 'antd/es/button'
+import Button from "antd/es/button";
 import type { SaveButtonProps } from "./_types";
 import { RefineButtonClassNames } from "./_enums";
 

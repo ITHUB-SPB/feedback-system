@@ -2,7 +2,7 @@ import React from "react";
 import { useShowButton } from "@refinedev/core";
 import { EyeOutlined } from "@ant-design/icons";
 
-import Button from 'antd/es/button'
+import Button from "antd/es/button";
 import type { ShowButtonProps } from "./_types";
 import { RefineButtonClassNames } from "./_enums";
 

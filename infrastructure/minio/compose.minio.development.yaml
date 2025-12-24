@@ -5,8 +5,8 @@ services:
     restart: unless-stopped
     command: server --console-address ":9001" /data
     ports:
-      - 9000:9000 # API
-      - 9001:9001 # Web console
+      - 9000:9000
+      - 9001:9001
     volumes:
       - ./data:/data
     environment:

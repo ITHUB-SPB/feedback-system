@@ -11,6 +11,7 @@
     "@dotenvx/dotenvx": "catalog:",
     "@shared/api": "workspace:*",
     "@tanstack/table-core": "^8.21.3",
+    "esbuild": "^0.27.2",
     "nanostores": "^1.1.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import React from "react";
-import Typography from 'antd/es/typography'
+import Typography from "antd/es/typography";
 import dayjs, { type ConfigType } from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import type { TextProps } from "antd/lib/typography/Text";
@@ -47,8 +47,8 @@ export const DateField: React.FC<DateFieldProps> = ({
     <Typography.Text {...rest}>
       {value
         ? dayjs(value)
-          .locale(locales || defaultLocale)
-          .format(dateFormat)
+            .locale(locales || defaultLocale)
+            .format(dateFormat)
         : ""}
     </Typography.Text>
   );

@@ -3,7 +3,7 @@ import { authClient } from "../auth-client";
 
 const authProvider: AuthProvider = {
   check: async () => {
-    throw new Error("Not implemented")
+    throw new Error("Not implemented");
   },
   register: async ({
     email,
@@ -69,7 +69,7 @@ const authProvider: AuthProvider = {
     }
   },
   onError: async (error) => {
-    console.log(error)
+    console.log(error);
     if (error?.status === 401) {
       return {
         logout: true,
@@ -85,7 +85,6 @@ const authProvider: AuthProvider = {
   },
   getIdentity: async () => {
     const { data } = await authClient.getSession();
-    console.log(data);
     return data?.user ? { ...data?.user, role: data?.role ?? "citizen" } : null;
   },
   // ...

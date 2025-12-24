@@ -6,9 +6,11 @@
         "check": "oxlint",
         "check-types": "pnpm -r check-types",
         "format": "pnpm exec biome format --fix --json-formatter-enabled=false",
+        "build:server": "pnpm -F server build",
         "build:web": "pnpm -F web build",
         "build:admin": "pnpm -F admin build",
         "dev:admin": "pnpm -F admin dev",
+        "start:server": "pnpm -F server start",
         "dev:web": "pnpm -F web dev",
         "dev:server": "pnpm -F server dev",
         "dev:db:reset": "pnpm -F @shared/database dev:db:reset",
@@ -46,5 +48,8 @@
             "protobufjs",
             "sharp"
         ]
+    },
+    "dependencies": {
+        "tsdown": "^0.18.2"
     }
 }

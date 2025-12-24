@@ -1,12 +1,8 @@
 import { useMany } from "@refinedev/core";
 
-import {
-  useTable,
-  useSelect,
-  useModalForm,
-} from "@refinedev/antd";
+import { useTable, useSelect, useModalForm } from "@refinedev/antd";
 
-import type { ITopicCategoryTopic } from './types'
+import type { ITopicCategoryTopic } from "./types";
 
 export function useTopicCategoryTopic() {
   const { tableProps, sorters, filters } = useTable({
@@ -55,22 +51,24 @@ export function useTopicCategoryTopic() {
 
   return {
     table: {
-      tableProps, sorters, filters
+      tableProps,
+      sorters,
+      filters,
     },
     topics: {
       topics,
       topicsQuery,
-      topicsSelectProps
+      topicsSelectProps,
     },
     topicCategories: {
       topicCategories,
       topicCategoriesQuery,
-      topicCategoriesSelectProps
+      topicCategoriesSelectProps,
     },
     modal: {
       topicCategoryTopicModalProps,
       topicCategoryTopicFormProps,
-      createTopicCategoryTopicModalShow
-    }
-  }
+      createTopicCategoryTopicModalShow,
+    },
+  };
 }

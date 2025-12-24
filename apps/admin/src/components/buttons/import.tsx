@@ -2,8 +2,8 @@ import React from "react";
 import { useImportButton } from "@refinedev/core";
 import { ImportOutlined } from "@ant-design/icons";
 
-import Upload from 'antd/es/upload'
-import Button from 'antd/es/button'
+import Upload from "antd/es/upload";
+import Button from "antd/es/button";
 import type { ImportButtonProps } from "./_types";
 import { RefineButtonClassNames } from "./_enums";
 

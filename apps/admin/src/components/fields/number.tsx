@@ -1,7 +1,7 @@
 import React, { type ReactNode } from "react";
-import Typography from 'antd/es/typography'
+import Typography from "antd/es/typography";
 import type { TextProps } from "antd/lib/typography/Text";
-import type { RefineFieldCommonProps } from './_types'
+import type { RefineFieldCommonProps } from "./_types";
 
 function toLocaleStringSupportsOptions() {
   return !!(
@@ -29,7 +29,6 @@ type RefineFieldNumberProps<
   };
 
 type NumberFieldProps = RefineFieldNumberProps<ReactNode, TextProps>;
-
 
 /**
  * This field is used to display a number formatted according to the browser locale, right aligned. and uses {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl `Intl`} to display date format.

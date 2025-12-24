@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { useList, useMany, useCreate } from "@refinedev/core";
 
-import {
-  useEditableTable,
-  useSelect,
-  useModalForm,
-} from "@refinedev/antd";
+import { useEditableTable, useSelect, useModalForm } from "@refinedev/antd";
 
-import type { IResponsibility, PersonRecord } from './types'
+import type { IResponsibility, PersonRecord } from "./types";
 
 export function useAttach() {
   const { mutate: attachOfficial, mutation: attachOfficialMutation } =
@@ -30,7 +26,7 @@ export function useAttach() {
     setAttachingUnitId,
     attachingOfficialId,
     setAttachingOfficialId,
-  }
+  };
 }
 
 export function useAssignOfficialModalForm() {
@@ -47,8 +43,8 @@ export function useAssignOfficialModalForm() {
   return {
     assignOfficialModalProps,
     assignOfficialFormProps,
-    assignOfficialModalShow
-  }
+    assignOfficialModalShow,
+  };
 }
 
 export function useAdministrativeUnitsTable() {
@@ -110,13 +106,13 @@ export function useAdministrativeUnitsTable() {
     },
     responsibilities: {
       responsibilities,
-      responsibilitiesQuery
+      responsibilitiesQuery,
     },
     unitTypes: {
       unitTypes,
-      unitTypesQuery
+      unitTypesQuery,
     },
-  }
+  };
 }
 
 export function useOfficials() {
@@ -137,7 +133,7 @@ export function useOfficials() {
     ],
   });
 
-  return { officialsSelectProps }
+  return { officialsSelectProps };
 }
 
 export function useAdministrativeUnits() {
@@ -148,5 +144,5 @@ export function useAdministrativeUnits() {
     },
   });
 
-  return { administrativeUnitsSelectProps }
+  return { administrativeUnitsSelectProps };
 }

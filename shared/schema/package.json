@@ -23,6 +23,7 @@
         "./base": "./src/base/inputs.ts"
     },
     "dependencies": {
+        "esbuild": "^0.27.2",
         "valibot": "catalog:"
     },
     "devDependencies": {

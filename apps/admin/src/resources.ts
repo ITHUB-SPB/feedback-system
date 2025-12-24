@@ -62,4 +62,4 @@ export const resources = [
       hide: true,
     },
   },
-]
+];

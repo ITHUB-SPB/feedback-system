@@ -27,7 +27,7 @@ const flexRender = <TProps extends object>(comp: any, props: TProps) => {
 const useTable = <TData extends RowData>(options: TableOptions<TData>) => {
   const resolvedOptions: TableOptionsResolved<TData> = {
     state: {}, // Dummy state
-    onStateChange: () => { }, // noop
+    onStateChange: () => {}, // noop
     renderFallbackValue: null,
     ...options,
   };
@@ -84,8 +84,8 @@ export class TableFeedbackManager {
       this.columnHelper.accessor("feedback_status", {
         header: "Статус",
         cell: (info) => {
-          const value = info.getValue() as keyof typeof this.statuses
-          return this.statuses[value]
+          const value = info.getValue() as keyof typeof this.statuses;
+          return this.statuses[value];
         },
       }),
       this.columnHelper.accessor("created_at", {

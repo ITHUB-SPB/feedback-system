@@ -8,19 +8,22 @@ import {
   useWarnAboutChange,
   useGetIdentity,
 } from "@refinedev/core";
-import { ThemedTitle, useThemedLayoutContext, type RefineThemedLayoutSiderProps } from "@refinedev/antd";
+import {
+  ThemedTitle,
+  useThemedLayoutContext,
+  type RefineThemedLayoutSiderProps,
+} from "@refinedev/antd";
 import { BarsOutlined } from "@ant-design/icons";
 
-import Layout from 'antd/es/layout'
-import Menu from 'antd/es/menu'
-import Grid from 'antd/es/grid'
-import Drawer from 'antd/es/drawer'
-import Button from 'antd/es/button'
-import Tabs from 'antd/es/tabs'
-import theme from 'antd/es/theme'
-import ConfigProvider from 'antd/es/config-provider'
+import Layout from "antd/es/layout";
+import Menu from "antd/es/menu";
+import Grid from "antd/es/grid";
+import Drawer from "antd/es/drawer";
+import Button from "antd/es/button";
+import Tabs from "antd/es/tabs";
+import theme from "antd/es/theme";
+import ConfigProvider from "antd/es/config-provider";
 import Typography from "antd/es/typography";
-
 
 const drawerButtonStyles: CSSProperties = {
   borderStartStartRadius: 0,
@@ -126,7 +129,9 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
   const items = renderTreeView(menuItems, selectedKey);
 
   const renderSider = (availableItems: string[]) => {
-    const itemsToRender = items.filter(item => availableItems.includes(item.key))
+    const itemsToRender = items.filter((item) =>
+      availableItems.includes(item.key),
+    );
     if (render) {
       return render({
         items: itemsToRender,
@@ -140,7 +145,14 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
   const renderMenu = (tab: "feedback" | "voting") => {
     const tabsMapping = {
       voting: ["/voting_votes", "/voting_regions", "/citizens"],
-      feedback: ["/feedback", "/projects", "/topic_category_topics", "/officials", "/administrative_units", "/citizens"]
+      feedback: [
+        "/feedback",
+        "/projects",
+        "/topic_category_topics",
+        "/officials",
+        "/administrative_units",
+        "/citizens",
+      ],
     } as const;
 
     return (
@@ -190,7 +202,7 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
                 backgroundColor: token.colorBgContainer,
                 borderRight: `1px solid ${token.colorBgElevated}`,
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
               }}
             >
               <div
@@ -214,12 +226,12 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
                   {
                     label: `Предложения`,
                     key: "feedback",
-                    children: renderMenu("feedback")
+                    children: renderMenu("feedback"),
                   },
                   {
                     label: `Голосование`,
                     key: "voting",
-                    children: renderMenu("voting")
+                    children: renderMenu("voting"),
                   },
                 ]}
               />
@@ -262,7 +274,11 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
           }}
         />
       )}
-      <Layout.Sider style={{ ...siderStyles, width: "240px" }} width={240} breakpoint="lg">
+      <Layout.Sider
+        style={{ ...siderStyles, width: "240px" }}
+        width={240}
+        breakpoint="lg"
+      >
         <div
           style={{
             width: "240px",
@@ -286,12 +302,12 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
             {
               label: `Предложения`,
               key: "feedback",
-              children: renderMenu("feedback")
+              children: renderMenu("feedback"),
             },
             {
               label: `Голосование`,
               key: "voting",
-              children: renderMenu("voting")
+              children: renderMenu("voting"),
             },
           ]}
         />

@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  useBack,
-} from "@refinedev/core";
+import { useBack } from "@refinedev/core";
 
-import {
-  PageHeader,
-  type CreateProps
-} from "@refinedev/antd";
+import { PageHeader, type CreateProps } from "@refinedev/antd";
 
-import Card from 'antd/es/card'
-import Space from 'antd/es/space'
-import Spin from 'antd/es/spin'
+import Card from "antd/es/card";
+import Space from "antd/es/space";
+import Spin from "antd/es/spin";
 
 import { SaveButton } from "../buttons/save";
 import type { SaveButtonProps } from "../buttons/_types";
@@ -54,8 +49,8 @@ export const Create: React.FC<CreateProps> = ({
             {headerButtons
               ? typeof headerButtons === "function"
                 ? headerButtons({
-                  defaultButtons: null,
-                })
+                    defaultButtons: null,
+                  })
                 : headerButtons
               : null}
           </Space>
@@ -74,9 +69,9 @@ export const Create: React.FC<CreateProps> = ({
                 {footerButtons
                   ? typeof footerButtons === "function"
                     ? footerButtons({
-                      defaultButtons: defaultFooterButtons,
-                      saveButtonProps: saveButtonProps,
-                    })
+                        defaultButtons: defaultFooterButtons,
+                        saveButtonProps: saveButtonProps,
+                      })
                     : footerButtons
                   : defaultFooterButtons}
               </Space>,

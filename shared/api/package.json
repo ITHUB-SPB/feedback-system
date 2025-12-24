@@ -10,14 +10,16 @@
         "./client": "./src/client.ts"
     },
     "dependencies": {
-        "@shared/auth": "workspace:*",
-        "@shared/logger": "workspace:*",
-        "@shared/schema": "workspace:*",
         "@orpc/client": "catalog:",
         "@orpc/contract": "catalog:",
         "@orpc/openapi-client": "catalog:",
         "@orpc/server": "catalog:",
         "@orpc/valibot": "catalog:",
+        "@shared/auth": "workspace:*",
+        "@shared/database": "workspace:*",
+        "@shared/logger": "workspace:*",
+        "@shared/schema": "workspace:*",
+        "esbuild": "^0.27.2",
         "valibot": "catalog:"
     },
     "devDependencies": {

@@ -5,15 +5,11 @@ import dotenv from "@dotenvx/dotenvx";
 
 export const envSchema = v.union([
   v.object({
-    ENV: v.picklist(["production", "staging"]),
+    ENV: v.picklist(["development", "production", "staging"]),
     POSTGRES_HOST: v.string(),
     POSTGRES_USER: v.string(),
     POSTGRES_PASSWORD: v.string(),
     POSTGRES_DB: v.string(),
-  }),
-  v.object({
-    ENV: v.literal("development"),
-    PGLITE_DATABASE_URI: v.string(),
   }),
 ]);
 

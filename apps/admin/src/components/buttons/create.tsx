@@ -1,7 +1,7 @@
 import React from "react";
 import { useCreateButton } from "@refinedev/core";
 import { PlusSquareOutlined } from "@ant-design/icons";
-import Button from 'antd/es/button'
+import Button from "antd/es/button";
 import type { CreateButtonProps } from "./_types";
 import { RefineButtonClassNames } from "./_enums";
 
@@ -26,7 +26,7 @@ export const CreateButton: React.FC<CreateButtonProps> = ({
       resource: resourceNameFromProps,
       meta,
       accessControl,
-    }
+    },
   );
 
   const isDisabled = disabled || rest.disabled;

@@ -3,8 +3,6 @@ import { db } from "@shared/database";
 import { trustedOrigins } from "./cors";
 import { env } from "./env";
 
-console.log(trustedOrigins, env);
-
 const auth: AuthInstance = createAuth({
   trustedOrigins,
   serverUrl: env.PUBLIC_SERVER_URL,

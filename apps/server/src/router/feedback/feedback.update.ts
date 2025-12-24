@@ -20,6 +20,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
 
       const result = await _baseSelect(context.db)
         .where("feedback.id", "=", Number(params.id))
+        .innerJoin("user", "feedback.person_id", "user.id")
         .executeTakeFirstOrThrow();
 
       if (body.feedback_status_id) {
@@ -47,7 +48,11 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
             "administrative_unit.id",
             "official_responsibility.administrative_unit_id",
           )
-          .where("administrative_unit.title", "=", result.administrative_unit_title)
+          .where(
+            "administrative_unit.title",
+            "=",
+            result.administrative_unit_title,
+          )
           .select("official_responsibility.official_id")
           .executeTakeFirst();
 

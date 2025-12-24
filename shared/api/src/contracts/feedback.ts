@@ -113,7 +113,7 @@ const feedbackContract = oc
         path: "/{id}",
         inputStructure: "detailed",
         summary: "Update feedback record",
-        description: "Update feedback record (topic, status, project)",
+        description: "Update feedback record (status, project)",
       })
       .input(updateFeedbackSchema)
       .output(getOneFeedbackSchema),

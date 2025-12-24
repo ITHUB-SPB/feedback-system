@@ -1,7 +1,7 @@
 import { os, implement } from "@orpc/server";
 import { type ResponseHeadersPluginContext } from "@orpc/server/plugins";
 
-import { AuthInstance } from "@shared/auth";
+import { type AuthInstance } from "@shared/auth";
 import { db as dbInstance } from "@shared/database";
 import { createLogger } from "@shared/logger";
 import apiContract from "./contracts";

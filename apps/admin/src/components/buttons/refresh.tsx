@@ -2,7 +2,7 @@ import React from "react";
 import { useRefreshButton } from "@refinedev/core";
 import { RedoOutlined } from "@ant-design/icons";
 
-import Button from 'antd/es/button'
+import Button from "antd/es/button";
 import type { RefreshButtonProps } from "./_types";
 import { RefineButtonClassNames } from "./_enums";
 

@@ -1,6 +1,4 @@
-import {
-  getDefaultSortOrder,
-} from "@refinedev/antd";
+import { getDefaultSortOrder } from "@refinedev/antd";
 
 import Table from "antd/es/table";
 import Space from "antd/es/space";
@@ -14,7 +12,7 @@ import { EditButton } from "../../../components/buttons/edit";
 import { DeleteButton } from "../../../components/buttons/delete";
 import { SaveButton } from "../../../components/buttons/save";
 
-import type { PersonRecord, AdministrativeUnitRecord } from './types'
+import type { PersonRecord, AdministrativeUnitRecord } from "./types";
 import { useAttach, useAdministrativeUnitsTable, useOfficials } from "./hooks";
 
 const translateUnitType = (value: string) => {
@@ -23,7 +21,6 @@ const translateUnitType = (value: string) => {
     town: "Город",
   }[value];
 };
-
 
 export default function AdministrativeUnitsTable() {
   const {
@@ -35,15 +32,11 @@ export default function AdministrativeUnitsTable() {
     setAttachingUnitId,
     attachingOfficialId,
     setAttachingOfficialId,
-  } = useAttach()
+  } = useAttach();
 
-  const {
-    table,
-    responsibilities,
-    unitTypes
-  } = useAdministrativeUnitsTable()
+  const { table, responsibilities, unitTypes } = useAdministrativeUnitsTable();
 
-  const { officialsSelectProps } = useOfficials()
+  const { officialsSelectProps } = useOfficials();
 
   return (
     <Form {...table.formProps}>
@@ -68,10 +61,7 @@ export default function AdministrativeUnitsTable() {
                 <Input size="small" />
               </Form.Item>
             ) : (
-              <TextField
-                value={value || "—"}
-                style={{ cursor: "pointer" }}
-              />
+              <TextField value={value || "—"} style={{ cursor: "pointer" }} />
             );
           }}
         />
@@ -139,10 +129,11 @@ export default function AdministrativeUnitsTable() {
               );
             }
 
-            const responsibilityRecord = responsibilities.responsibilities?.data?.find(
-              (responsibility) =>
-                responsibility.administrative_unit_id == record.id,
-            );
+            const responsibilityRecord =
+              responsibilities.responsibilities?.data?.find(
+                (responsibility) =>
+                  responsibility.administrative_unit_id == record.id,
+              );
 
             if (!responsibilityRecord) {
               return (
@@ -160,11 +151,8 @@ export default function AdministrativeUnitsTable() {
               );
             }
 
-            const {
-              officialFirstName,
-              officialLastName,
-              officialMiddleName,
-            } = responsibilityRecord;
+            const { officialFirstName, officialLastName, officialMiddleName } =
+              responsibilityRecord;
 
             return `${officialLastName} ${officialFirstName} ${officialMiddleName}`;
           }}
@@ -211,7 +199,11 @@ export default function AdministrativeUnitsTable() {
             } else if (table.isEditing(record.id)) {
               return (
                 <Space>
-                  <SaveButton {...table.saveButtonProps} hideText size="small" />
+                  <SaveButton
+                    {...table.saveButtonProps}
+                    hideText
+                    size="small"
+                  />
                   <Button {...table.cancelButtonProps} size="small">
                     ↩
                   </Button>
@@ -242,6 +234,5 @@ export default function AdministrativeUnitsTable() {
         />
       </Table>
     </Form>
-
-  )
+  );
 }

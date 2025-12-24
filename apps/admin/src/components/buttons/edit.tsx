@@ -1,7 +1,7 @@
 import React from "react";
 import { useEditButton } from "@refinedev/core";
 import { EditOutlined } from "@ant-design/icons";
-import Button from 'antd/es/button'
+import Button from "antd/es/button";
 import type { EditButtonProps } from "./_types";
 import { RefineButtonClassNames } from "./_enums";
 

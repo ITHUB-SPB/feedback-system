@@ -17,11 +17,11 @@
     },
     "dependencies": {
         "@dotenvx/dotenvx": "catalog:",
-        "@electric-sql/pglite": "^0.3.14",
         "@shared/schema": "workspace:*",
+        "esbuild": "^0.27.2",
         "kysely": "catalog:",
-        "kysely-pglite": "^0.6.1",
         "pg": "catalog:",
+        "pg-native": "^3.5.2",
         "valibot": "catalog:"
     },
     "devDependencies": {

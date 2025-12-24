@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
 import { useMany, useExport } from "@refinedev/core";
 import {
@@ -9,17 +9,17 @@ import {
   useSelect,
 } from "@refinedev/antd";
 
-import { DeleteButton } from '../../../components/buttons/delete';
-import { ExportButton } from '../../../components/buttons/export';
-import { List } from '../../../components/crud/list';
+import { DeleteButton } from "../../../components/buttons/delete";
+import { ExportButton } from "../../../components/buttons/export";
+import { List } from "../../../components/crud/list";
 
 import Table from "antd/es/table";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
 
-export const Route = createFileRoute('/_authenticated/voting_votes/')({
+export const Route = createFileRoute("/_authenticated/voting_votes/")({
   component: ListVotingVotes,
-})
+});
 
 function ListVotingVotes() {
   const { tableProps, sorters, filters } = useTable({

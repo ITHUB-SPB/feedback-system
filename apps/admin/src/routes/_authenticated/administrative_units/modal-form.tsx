@@ -3,16 +3,21 @@ import Form from "antd/es/form";
 import Modal from "antd/es/modal";
 import Flex from "antd/es/flex";
 
-import { useAssignOfficialModalForm, useOfficials, useAdministrativeUnits } from "./hooks";
-
+import {
+  useAssignOfficialModalForm,
+  useOfficials,
+  useAdministrativeUnits,
+} from "./hooks";
 
 export default function AssignOfficialModalForm({
   assignOfficialModalProps,
-  assignOfficialFormProps
-}: Omit<ReturnType<typeof useAssignOfficialModalForm>, "assignOfficialModalShow">) {
-
-  const { officialsSelectProps } = useOfficials()
-  const { administrativeUnitsSelectProps } = useAdministrativeUnits()
+  assignOfficialFormProps,
+}: Omit<
+  ReturnType<typeof useAssignOfficialModalForm>,
+  "assignOfficialModalShow"
+>) {
+  const { officialsSelectProps } = useOfficials();
+  const { administrativeUnitsSelectProps } = useAdministrativeUnits();
 
   return (
     <Modal
@@ -66,5 +71,5 @@ export default function AssignOfficialModalForm({
         </Flex>
       </Form>
     </Modal>
-  )
+  );
 }

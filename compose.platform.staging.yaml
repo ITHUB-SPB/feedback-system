@@ -5,22 +5,21 @@ include:
 
 services:
   feedback-server:
-    container_name: feedback-server
+    container_name: feedback-server-staging
     build:
       context: .
       dockerfile: ./Dockerfile.platform
-      target: staging-server
-    # image: feedback-server
-    develop:
-      watch:
-        - action: sync+restart
-          path: ./apps/server/src
-          target: /app/prod/server
+      target: installer
+    image: feedback-server-staging
     env_file:
       - ./apps/server/.env.staging
     restart: unless-stopped
     ports:
       - 3001:3001
+    volumes:
+      - ./apps:/app/apps
+      - ./shared:/app/shared
+    command: pnpm staging:server
     healthcheck:
       interval: 30s
       timeout: 10s
@@ -48,19 +47,20 @@ services:
       - "traefik.http.services.server-internal.loadbalancer.server.port=3001"
 
   feedback-admin:
-    container_name: feedback-admin
+    container_name: feedback-admin-staging
     build:
       context: .
       dockerfile: ./Dockerfile.platform
-      target: staging-admin
+      target: installer
+      args:
+        VITE_API_BASE_URL: https://api.localhost
+
     env_file:
       - ./apps/admin/.env.staging
-    image: feedback-admin
-    develop:
-      watch:
-        - action: sync
-          path: ./apps/admin/src
-          target: /app/prod/admin/src
+    volumes:
+      - ./apps:/app/apps
+      - ./shared:/app/shared
+    command: pnpm staging:admin
     ports:
       - 5174:5174
     depends_on:
@@ -72,38 +72,21 @@ services:
       - "traefik.http.routers.admin.tls=true"
       - "traefik.http.services.admin.loadbalancer.server.port=5174"
 
-
   feedback-web:
-    container_name: feedback-web
+    container_name: feedback-web-staging
     build:
       context: .
       dockerfile: ./Dockerfile.platform
-      # args:
-      #   VITE_API_BASE_URL: http://localhost:3001
-      target: staging-web
+      args:
+        VITE_API_BASE_URL: http://localhost:3001
+      target: prod-web
     env_file:
       - ./apps/web/.env.staging
-    image: feedback-web:latest
-    develop:
-      watch:
-        - action: sync+restart
-          path: ./apps/web/public
-          target: /app/prod/web/public
-        - action: sync
-          path: ./apps/web/src
-          target: /app/prod/web/src
-        - action: sync+restart
-          path: ./apps/web/index.html
-          target: /app/prod/web/index.html
-        - action: sync+restart
-          path: ./apps/web/vite.config.ts
-          target: /app/prod/web/vite.config.ts
-        - action: rebuild
-          path: ./apps/web/package.json
-          target: /apps/prod/web/package.json
+    image: feedback-web-staging
     ports:
       - 5173:5173
     restart: unless-stopped
+    command: --brotli --port 5173
     depends_on:
       - feedback-server
     labels:

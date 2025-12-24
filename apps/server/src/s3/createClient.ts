@@ -7,19 +7,18 @@ interface ClientProps {
 }
 
 export default async function createMinioClient({ env }: ClientProps) {
-  const minioClient = new Client({
-    endPoint: env.MINIO_ENDPOINT,
-    port: 9000,
-    useSSL: false, // ?
-    accessKey: env.MINIO_ACCESS_KEY,
-    secretKey: env.MINIO_SECRET_KEY,
-  });
-
   try {
+    const minioClient = new Client({
+      endPoint: env.MINIO_ENDPOINT,
+      port: 9000,
+      useSSL: false, // ?
+      accessKey: env.MINIO_ACCESS_KEY,
+      secretKey: env.MINIO_SECRET_KEY,
+    });
+
     await minioClient.setBucketPolicy("photos", photosPolicy);
+    return minioClient;
   } catch (error) {
     console.error(error);
   }
-
-  return minioClient;
 }

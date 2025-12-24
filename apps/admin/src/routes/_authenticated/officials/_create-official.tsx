@@ -5,11 +5,11 @@ import Modal from "antd/es/modal";
 import Flex from "antd/es/flex";
 
 import { authClient } from "../../../auth-client";
-import type { CreateOfficialModalFormProps, NewUserRecord } from './_types'
+import type { CreateOfficialModalFormProps, NewUserRecord } from "./_types";
 
 export default function CreateOfficialModalForm({
   createOfficialModalProps,
-  createOfficialFormProps
+  createOfficialFormProps,
 }: CreateOfficialModalFormProps) {
   return (
     <Modal {...createOfficialModalProps} title="Новое ответственное лицо">
@@ -119,7 +119,7 @@ export default function CreateOfficialModalForm({
               required: true,
             },
           ]}
-        // hidden={true}
+          // hidden={true}
         >
           <Select
             options={[
@@ -130,6 +130,5 @@ export default function CreateOfficialModalForm({
         </Form.Item>
       </Form>
     </Modal>
-
-  )
+  );
 }

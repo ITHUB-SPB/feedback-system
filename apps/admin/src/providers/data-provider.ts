@@ -31,12 +31,12 @@ export const dataProvider: DataProvider = {
     const updateOptions =
       resource === "auth/admin/list-users"
         ? {
-          method: "POST",
-          body: JSON.stringify({
-            userId: id,
-            data: variables,
-          }),
-        }
+            method: "POST",
+            body: JSON.stringify({
+              userId: id,
+              data: variables,
+            }),
+          }
         : { method: "PATCH", body: JSON.stringify(variables) };
 
     const url =
@@ -49,7 +49,7 @@ export const dataProvider: DataProvider = {
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    });
 
     const response = await fetcher(url, {
       ...updateOptions,

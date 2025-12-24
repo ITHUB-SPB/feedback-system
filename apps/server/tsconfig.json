@@ -4,6 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": "./",
@@ -17,6 +18,8 @@
       "node"
     ],
     "composite": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   }
 }

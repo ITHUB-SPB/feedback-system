@@ -13,7 +13,6 @@ services:
       context: .
       dockerfile: ./Dockerfile.platform
       target: prod-server
-    command: "pnpm start" 
     env_file:
       - ./apps/server/.env
     restart: unless-stopped
@@ -42,7 +41,8 @@ services:
       - "traefik.http.routers.server-internal.rule=Host(`api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
       - "traefik.http.routers.server-internal.entrypoints=web-secure"
       - "traefik.http.routers.server-internal.tls.certresolver=tlsresolver"
-      # - "traefik.http.routers.server-internal.middlewares=chain-no-auth@file"
+      # 
+      - "traefik.http.routers.server-internal.middlewares=chain-no-auth@file"
       - "traefik.http.routers.server-internal.service=server-internal"
 
       - "traefik.http.services.server-external.loadbalancer.server.port=3001"
@@ -68,7 +68,7 @@ services:
       - feedback-server
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.admin.rule=Host(`admin.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
+      - "traefik.http.routers.admin.rule=Host(`xn--80aimpg.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
       - "traefik.http.routers.admin.entrypoints=web-secure"
       - "traefik.http.routers.admin.tls.certresolver=tlsresolver"
       - "traefik.http.routers.admin.middlewares=chain-no-auth@file"
@@ -83,8 +83,8 @@ services:
         VITE_API_BASE_URL: https://api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
       target: prod-web
     ports:
-      - 5175:5175
-    command: --brotli --port 5175
+      - 5173:5173
+    command: --brotli --port 5173
     restart: unless-stopped
     depends_on:
       - feedback-server
@@ -94,7 +94,7 @@ services:
       - "traefik.http.routers.web.entrypoints=web-secure"
       - "traefik.http.routers.web.tls.certresolver=tlsresolver"
       - "traefik.http.routers.web.middlewares=chain-no-auth@file"
-      - "traefik.http.services.web.loadbalancer.server.port=5175"
+      - "traefik.http.services.web.loadbalancer.server.port=5173"
 
 volumes:
   letsencrypt:

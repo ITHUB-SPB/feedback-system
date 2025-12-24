@@ -24,6 +24,7 @@ const createFeedback = publicProcedure.feedback.create.handler(
               email: input.body.email,
               name: input.body.email,
               password: input.body.email,
+              // @ts-ignore
               role: "citizen",
               data: {
                 phone: input.body.phone ?? "",
@@ -93,6 +94,7 @@ const createFeedback = publicProcedure.feedback.create.handler(
 
       await transaction.commit().execute();
     } catch (error) {
+      console.error(error);
       await transaction.rollback().execute();
       if (isUserCreated) {
         await auth.api.removeUser({
@@ -102,7 +104,6 @@ const createFeedback = publicProcedure.feedback.create.handler(
           headers: context.headers,
         });
       }
-      console.error(error);
       throw errors.CONFLICT({
         message: (error as Error).message,
       });

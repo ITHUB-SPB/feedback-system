@@ -57,14 +57,7 @@ export const getManyFeedbackSchema = v.union([
 
 export const updateFeedbackSchema = v.object({
   params: baseInputOne,
-  body: v.partial(
-    v.pick(feedbackSchema, [
-      "topic_id",
-      "feedback_type_id",
-      "feedback_status_id",
-      "project_id",
-    ]),
-  ),
+  body: v.partial(v.pick(feedbackSchema, ["feedback_status_id", "project_id"])),
 });
 
 export const createFeedbackSchema = v.object({

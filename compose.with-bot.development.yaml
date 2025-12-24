@@ -1,6 +1,7 @@
 include:
-  - ./infrastructure/minio/compose.minio.local.yaml
-  - ./infrastructure/redis/compose.redis.local.yaml
+  - ./infrastructure/postgres/compose.postgres.development.yaml
+  - ./infrastructure/minio/compose.minio.development.yaml
+  - ./infrastructure/redis/compose.redis.development.yaml
 
 services:
   bot:

@@ -1,2 +1,0 @@
-include:
-  - ./infrastructure/minio/compose.minio.local.yaml

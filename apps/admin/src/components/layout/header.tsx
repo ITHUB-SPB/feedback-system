@@ -1,26 +1,22 @@
 import React from "react";
 import { Layout as AntdLayout, Avatar } from "antd";
 
-import Button from 'antd/es/button'
-import Space from 'antd/es/space'
-import theme from 'antd/es/theme'
+import Button from "antd/es/button";
+import Space from "antd/es/space";
+import theme from "antd/es/theme";
 import Typography from "antd/es/typography";
 
-import {
-  useLogout, useWarnAboutChange
-} from "@refinedev/core";
+import { useLogout, useWarnAboutChange } from "@refinedev/core";
 
 import { ThemedTitle } from "../../components/layout/title";
-
 
 export type RefineThemedLayoutHeaderProps = {
   sticky?: boolean;
   user: {
-    name: string,
-    avatar?: string | undefined | null
-  }
+    name: string;
+    avatar?: string | undefined | null;
+  };
 };
-
 
 export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
   sticky,
@@ -72,10 +68,12 @@ export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
           {user?.name && <Typography.Text strong>{user.name}</Typography.Text>}
           {user?.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
         </Space>
-        <Button onClick={handleLogout} style={{ textAlign: "center" }}>Выйти</Button>
+        <Button onClick={handleLogout} style={{ textAlign: "center" }}>
+          Выйти
+        </Button>
       </Space>
     </AntdLayout.Header>
   );
 };
 
-export default ThemedHeader
+export default ThemedHeader;

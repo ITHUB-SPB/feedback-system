@@ -10,10 +10,11 @@ const router = createRouter({
   routeTree,
   context: {
     queryClient: queryClient,
-    authClient: authClient
+    authClient: authClient,
   },
-  Wrap: ({ children }: React.PropsWithChildren) =>
+  Wrap: ({ children }: React.PropsWithChildren) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  ),
 });
 
 declare module "@tanstack/react-router" {

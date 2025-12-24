@@ -1,7 +1,7 @@
 import React, { type ReactNode } from "react";
 
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-import Tooltip from 'antd/es/tooltip'
+import Tooltip from "antd/es/tooltip";
 import type { AbstractTooltipProps } from "antd/lib/tooltip";
 
 import type { RefineFieldCommonProps } from "./_types";
@@ -36,7 +36,6 @@ type RefineFieldBooleanProps<
      */
     falseIcon?: ReactNode;
   };
-
 
 export type BooleanFieldProps = RefineFieldBooleanProps<
   unknown,

@@ -11,12 +11,14 @@
     "export": "email export --packageManager"
   },
   "dependencies": {
-    "@shared/schema": "workspace:*",
-    "@shared/logger": "workspace:*",
+    "@dotenvx/dotenvx": "catalog:",
     "@react-email/components": "catalog:",
     "@react-email/preview-server": "catalog:",
-    "@dotenvx/dotenvx": "catalog:",
+    "@shared/logger": "workspace:*",
+    "@shared/schema": "workspace:*",
+    "esbuild": "^0.27.2",
     "nodemailer": "catalog:",
+    "postcss": "8.1.0",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-email": "catalog:",

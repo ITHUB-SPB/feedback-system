@@ -1,5 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useCan, useGetIdentity } from "@refinedev/core";
+import { createFileRoute } from "@tanstack/react-router";
 
 import {
   getDefaultSortOrder,
@@ -11,32 +10,25 @@ import Table from "antd/es/table";
 import Tag from "antd/es/tag";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
+import Typography from "antd/es/typography";
 
 import { ShowButton } from "../../../components/buttons/show";
 import { List } from "../../../components/crud/list";
 
-import { useFeedbackTable } from './hooks'
+import { useFeedbackTable } from "./hooks";
 
-export const Route = createFileRoute('/_authenticated/feedback/')({
+export const Route = createFileRoute("/_authenticated/feedback/")({
   loader: async ({ context }) => {
-    const { data } = await context.authClient.getSession()
-    return { user: data?.user }
+    const { data } = await context.authClient.getSession();
+    return { user: data?.user };
   },
   component: ListFeedback,
-})
+});
 
 function ListFeedback() {
-  const { user } = Route.useLoaderData()
+  const { user } = Route.useLoaderData();
 
-  const { data: accessData } = useCan({
-    resource: "feedback",
-    action: "show",
-    queryOptions: {
-      // staleTime: 1000 * 60
-    },
-  });
-
-  const { table, projects, select } = useFeedbackTable(user?.id, user?.role)
+  const { table, projects, select } = useFeedbackTable(user?.id, user?.role);
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {
@@ -62,36 +54,59 @@ function ListFeedback() {
       <Table
         {...table?.tableProps}
         rowKey="id"
-        pagination={{ ...table?.tableProps.pagination, pageSizeOptions: [12, 24, 48] }}
+        pagination={{
+          ...table?.tableProps.pagination,
+          pageSizeOptions: [12, 24, 48],
+        }}
       >
         <Table.Column
           dataIndex="description"
           title="Описание"
           sorter
           defaultSortOrder={getDefaultSortOrder("description", table?.sorters)}
-          render={(value) => (
-            <div
-              style={{
-                maxWidth: 300,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {value}
-            </div>
+          render={(value, record) => (
+            <>
+              <Typography.Paragraph strong>
+                {record.topic
+                  ? `${record.feedback_type} (${record.topic})`
+                  : record.feedback_type}
+              </Typography.Paragraph>
+              <Typography.Paragraph
+                ellipsis={{
+                  rows: 4,
+                  expandable: true,
+                  symbol: "Читать полностью",
+                }}
+              >
+                {value}
+              </Typography.Paragraph>
+            </>
           )}
         />
         <Table.Column
           dataIndex="project_id"
           title="Проект"
           sorter
-          render={(value) => {
+          width={220}
+          render={(value, record) => {
             if (projects?.projectsQuery.isLoading) {
               return "Загрузка...";
             }
 
-            return projects?.projects?.data?.find((project) => project.id == value)
-              ?.title;
+            return (
+              <>
+                <Typography.Paragraph strong>
+                  {record.administrative_unit_title}
+                </Typography.Paragraph>
+                <Typography.Paragraph>
+                  {
+                    projects?.projects?.data?.find(
+                      (project) => project.id == value,
+                    )?.title
+                  }
+                </Typography.Paragraph>
+              </>
+            );
           }}
         />
         <Table.Column
@@ -109,7 +124,10 @@ function ListFeedback() {
                   : undefined;
               }}
             >
-              <Select style={{ minWidth: 200 }} {...select?.feedbackTypeSelectProps} />
+              <Select
+                style={{ minWidth: 200 }}
+                {...select?.feedbackTypeSelectProps}
+              />
             </FilterDropdown>
           )}
           defaultFilteredValue={getDefaultFilter(
@@ -117,12 +135,6 @@ function ListFeedback() {
             table?.filters,
             "eq",
           )}
-        />
-        <Table.Column
-          dataIndex="topic"
-          title="Тема"
-          sorter
-          render={(value) => value || "—"}
         />
         <Table.Column
           dataIndex="feedback_status_id"
@@ -146,8 +158,8 @@ function ListFeedback() {
               <Select
                 style={{ minWidth: 200 }}
                 {...select?.feedbackStatusSelectProps}
-              // labelRender={({ label }) => getStatusText(String(label))}
-              // optionRender={({ data }) => getStatusText(String(data.label))}
+                labelRender={({ label }) => getStatusText(String(label))}
+                optionRender={({ data }) => getStatusText(String(data.label))}
               />
             </FilterDropdown>
           )}
@@ -176,4 +188,4 @@ function ListFeedback() {
       </Table>
     </List>
   );
-};
+}

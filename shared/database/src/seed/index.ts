@@ -17,15 +17,15 @@ async function seedDatabase() {
     "seedVotingUnits",
   ] as const;
 
-  // for await (const seedFunctionName of seedFunctionIdentifiers) {
-  //   try {
-  //     await real[seedFunctionName](db);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  for await (const seedFunctionName of seedFunctionIdentifiers) {
+    try {
+      await real[seedFunctionName](db);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-  await seedFeedback()
+  await seedFeedback();
 }
 
 (async () => {

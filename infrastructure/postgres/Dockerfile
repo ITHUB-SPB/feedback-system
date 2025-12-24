@@ -30,10 +30,16 @@ RUN mkdir -p /etc/wal-g/env \
     && chown -R postgres:postgres /var/log/wal-g \
     && chown -R postgres:postgres /scripts
 
-COPY scripts/ /scripts/
+COPY ./scripts/ /scripts/
+RUN cat /scripts/archive-command.sh | sed 's/\r$//' > /scripts/archive-command.sh
+RUN cat /scripts/backup-cron.sh | sed 's/\r$//' > /scripts/backup-cron.sh
+RUN cat /scripts/cleanup-cron.sh | sed 's/\r$//' > /scripts/cleanup-cron.sh
+RUN cat /scripts/init-walg.sh | sed 's/\r$//' > /scripts/init-walg.sh
+RUN cat /scripts/setup-cron.sh | sed 's/\r$//' > /scripts/setup-cron.sh
 RUN chmod +x /scripts/*.sh
 
-COPY scripts/entrypoint.sh /usr/local/bin/docker-entrypoint-walg.sh
+COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN cat /usr/local/bin/entrypoint.sh | sed 's/\r$//' > /usr/local/bin/docker-entrypoint-walg.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint-walg.sh
 
 EXPOSE 5432

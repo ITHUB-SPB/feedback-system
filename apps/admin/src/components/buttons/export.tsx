@@ -2,7 +2,7 @@ import React from "react";
 import { useExportButton } from "@refinedev/core";
 import { ExportOutlined } from "@ant-design/icons";
 
-import Button from 'antd/es/button'
+import Button from "antd/es/button";
 import type { ExportButtonProps } from "./_types";
 import { RefineButtonClassNames } from "./_enums";
 

@@ -13,7 +13,7 @@ export default async function upload(file: File, bucketName: string, env: Env) {
 
     await createBucket(minioClient, bucketName ?? "photos");
 
-    await minioClient.putObject(
+    await minioClient?.putObject(
       bucketName ?? "photos",
       fileName,
       Buffer.from(fileBuffer),

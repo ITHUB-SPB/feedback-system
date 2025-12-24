@@ -1,8 +1,8 @@
 import React from "react";
 import { useDeleteButton } from "@refinedev/core";
 import { DeleteOutlined } from "@ant-design/icons";
-import Button from 'antd/es/button'
-import Popconfirm from 'antd/es/popconfirm'
+import Button from "antd/es/button";
+import Popconfirm from "antd/es/popconfirm";
 import type { DeleteButtonProps } from "./_types";
 import { RefineButtonClassNames } from "./_enums";
 

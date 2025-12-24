@@ -25,8 +25,6 @@ const allOfficialResponsibilities =
             const matchResult =
               decodeURI(filterExpression).match(/(.*)\[(.*)\](.*)/);
 
-            console.log(matchResult);
-
             if (matchResult === null) {
               continue;
             }

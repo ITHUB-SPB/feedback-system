@@ -25,11 +25,7 @@ import Button from "antd/es/button";
 import Checkbox from "antd/es/checkbox";
 import theme from "antd/es/theme";
 
-import {
-  type CardProps,
-  type LayoutProps,
-  type FormProps,
-} from "antd";
+import { type CardProps, type LayoutProps, type FormProps } from "antd";
 
 type LoginProps = LoginPageProps<LayoutProps, CardProps, FormProps>;
 
@@ -42,7 +38,7 @@ export const LoginCard: React.FC<LoginProps> = ({
   const { token } = theme.useToken();
   const [form] = Form.useForm<LoginFormTypes>();
   const { mutate: login, isPending } = useLogin<LoginFormTypes>();
-  const notify = useNotification()
+  const notify = useNotification();
 
   const CardTitle = (
     <Typography.Title
@@ -68,12 +64,11 @@ export const LoginCard: React.FC<LoginProps> = ({
         backgroundColor: token.colorBgElevated,
       }}
     >
-
       <Form<LoginFormTypes>
         layout="vertical"
         form={form}
         onFinish={(values) => {
-          login({ ...values, ...mutationVariables })
+          login({ ...values, ...mutationVariables });
         }}
         requiredMark={false}
         initialValues={{
@@ -95,10 +90,7 @@ export const LoginCard: React.FC<LoginProps> = ({
             },
           ]}
         >
-          <Input
-            size="large"
-            placeholder="Email"
-          />
+          <Input size="large" placeholder="Email" />
         </Form.Item>
         <Form.Item
           name="password"
@@ -106,7 +98,7 @@ export const LoginCard: React.FC<LoginProps> = ({
           rules={[
             {
               required: true,
-              message: "Заполните поле"
+              message: "Заполните поле",
             },
           ]}
         >

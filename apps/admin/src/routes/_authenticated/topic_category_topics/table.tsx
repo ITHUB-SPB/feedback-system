@@ -6,8 +6,7 @@ import {
 
 import Table from "antd/es/table";
 import Select from "antd/es/select";
-import type { CategoryTopicsTableProps } from './types'
-
+import type { CategoryTopicsTableProps } from "./types";
 
 export default function CategoryTopicsTable({
   table,
@@ -34,8 +33,9 @@ export default function CategoryTopicsTable({
             return "Загрузка...";
           }
 
-          return topicCategories.topicCategories?.data?.find((unit) => unit.id == value)
-            ?.title;
+          return topicCategories.topicCategories?.data?.find(
+            (unit) => unit.id == value,
+          )?.title;
         }}
         filterDropdown={(props) => (
           <FilterDropdown
@@ -83,6 +83,5 @@ export default function CategoryTopicsTable({
         )}
       />
     </Table>
-
-  )
+  );
 }

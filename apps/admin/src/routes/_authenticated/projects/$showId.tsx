@@ -1,38 +1,47 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 import { TextField } from "../../../components/fields/text";
 import { NumberField } from "../../../components/fields/number";
 import { Show } from "../../../components/crud/show";
-import { DeleteButton } from '../../../components/buttons/delete';
-import { dataProvider } from '../../../providers/data-provider';
+import { DeleteButton } from "../../../components/buttons/delete";
+import { dataProvider } from "../../../providers/data-provider";
 
 import Typography from "antd/es/typography";
 
-
-export const Route = createFileRoute('/_authenticated/projects/$showId')({
+export const Route = createFileRoute("/_authenticated/projects/$showId")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
     const { data: project } = await context.queryClient.ensureQueryData({
       queryKey: ["default", "feedback", "one", params.showId],
-      queryFn: () => dataProvider.getOne({
-        resource: "projects",
-        id: Number(params.showId)
-      })
-    })
-    return project
-  }
-})
+      queryFn: () =>
+        dataProvider.getOne({
+          resource: "projects",
+          id: Number(params.showId),
+        }),
+    });
+    return project;
+  },
+});
 
 function RouteComponent() {
-  const project = Route.useLoaderData()
-  const navigate = Route.useNavigate()
+  const project = Route.useLoaderData();
+  const navigate = Route.useNavigate();
 
   return (
-    <Show title="Информация о проекте" footerButtons={() => {
-      return <DeleteButton resource='projects' recordItemId={project.id} onSuccess={() => {
-        navigate({ from: Route.fullPath, to: '/projects' })
-      }} />
-    }}>
+    <Show
+      title="Информация о проекте"
+      footerButtons={() => {
+        return (
+          <DeleteButton
+            resource="projects"
+            recordItemId={project.id}
+            onSuccess={() => {
+              navigate({ from: Route.fullPath, to: "/projects" });
+            }}
+          />
+        );
+      }}
+    >
       <Typography.Title level={5}>Название</Typography.Title>
       <TextField value={project?.title} />
 

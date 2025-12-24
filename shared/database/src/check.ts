@@ -1,5 +1,4 @@
 import { db } from "./index";
-import { parseEnv } from "./env";
 
 async function checkConnection() {
   return await db.introspection.getTables();
@@ -7,10 +6,7 @@ async function checkConnection() {
 
 checkConnection()
   .then((meta) => {
-    const env = parseEnv();
-    const checkDatabase = env.ENV === "development" ? "pglite" : "postgres";
-
-    console.log(`Connection for ${checkDatabase} OK`);
+    console.log(`Connection for postgres OK`);
     console.log(meta.map(({ name }) => name).join(", "));
   })
   .catch((error) => {

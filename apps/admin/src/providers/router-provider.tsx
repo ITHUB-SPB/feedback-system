@@ -5,7 +5,7 @@ import {
   type GoConfig,
   type RouterProvider,
   type IResourceItem,
-} from '@refinedev/core';
+} from "@refinedev/core";
 
 import {
   Link,
@@ -13,9 +13,9 @@ import {
   useMatch,
   useNavigate,
   useRouter,
-} from '@tanstack/react-router';
-import { type ComponentProps, useCallback, useContext, useMemo } from 'react';
-import { stringifyQuery } from 'ufo';
+} from "@tanstack/react-router";
+import { type ComponentProps, useCallback, useContext, useMemo } from "react";
+import { stringifyQuery } from "ufo";
 
 export const routerProvider: RouterProvider = {
   go: () => {
@@ -43,26 +43,27 @@ export const routerProvider: RouterProvider = {
         const hasUrlQuery = Object.keys(urlQuery).length > 0;
 
         /** Get hash */
-        const urlHash = `#${(hash || (keepHash && existingHash) || '').replace(
+        const urlHash = `#${(hash || (keepHash && existingHash) || "").replace(
           /^#/,
-          '',
+          "",
         )}`;
 
         const hasUrlHash = urlHash.length > 1;
 
-        const urlTo = to || '';
+        const urlTo = to || "";
 
-        const fullPath = `${urlTo}?${hasUrlQuery ? stringifyQuery(urlQuery) : ''
-          }${hasUrlHash ? urlHash : ''}`;
+        const fullPath = `${urlTo}?${
+          hasUrlQuery ? stringifyQuery(urlQuery) : ""
+        }${hasUrlHash ? urlHash : ""}`;
 
-        if (type === 'path') {
+        if (type === "path") {
           return fullPath;
         }
 
         /** Navigate to the url */
         navigate({
           to: fullPath,
-          replace: type === 'replace',
+          replace: type === "replace",
         });
 
         return;
@@ -124,7 +125,7 @@ export const routerProvider: RouterProvider = {
     return fn;
   },
   Link: function RefineLink(
-    props: ComponentProps<NonNullable<RouterBindings['Link']>>,
+    props: ComponentProps<NonNullable<RouterBindings["Link"]>>,
   ) {
     return <Link {...props} />;
   },
@@ -173,7 +174,7 @@ export function parse({ resources, params, pathname, search }: ParseInput) {
 }
 
 export const convertToNumberIfPossible = (value: string | undefined) => {
-  if (typeof value === 'undefined') {
+  if (typeof value === "undefined") {
     return value;
   }
   const num = Number(value);

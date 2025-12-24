@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 import { useMany } from "@refinedev/core";
 import {
   useTable,
@@ -16,10 +16,9 @@ import { EditButton } from "../../../components/buttons/edit";
 import { ShowButton } from "../../../components/buttons/show";
 import { List } from "../../../components/crud/list";
 
-export const Route = createFileRoute('/_authenticated/projects/')({
+export const Route = createFileRoute("/_authenticated/projects/")({
   component: ListProjects,
-})
-
+});
 
 function ListProjects() {
   const { tableProps, sorters, filters } = useTable({
@@ -123,4 +122,4 @@ function ListProjects() {
       </Table>
     </List>
   );
-};
+}

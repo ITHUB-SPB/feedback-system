@@ -15,6 +15,7 @@ build/
 
 infrastructure/**/logs
 infrastructure/**/data/*
+infrastructure/**/data-development/*
 infrastructure/secrets/*
 
 infrastructure/authelia/*

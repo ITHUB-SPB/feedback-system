@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  useResourceParams,
-} from "@refinedev/core";
-import {
-  PageHeader,
-} from "@refinedev/antd";
+import { useResourceParams } from "@refinedev/core";
+import { PageHeader } from "@refinedev/antd";
 import type { ListProps } from "@refinedev/antd";
-import Space from 'antd/es/space'
+import Space from "antd/es/space";
 
 import { CreateButton } from "../buttons/create";
 import type { CreateButtonProps } from "../buttons/_types";
-
 
 export const List: React.FC<ListProps> = ({
   canCreate,
@@ -33,10 +28,10 @@ export const List: React.FC<ListProps> = ({
 
   const createButtonProps: CreateButtonProps | undefined = isCreateButtonVisible
     ? {
-      size: "middle",
-      resource: identifier,
-      ...createButtonPropsFromProps,
-    }
+        size: "middle",
+        resource: identifier,
+        ...createButtonPropsFromProps,
+      }
     : undefined;
 
   const defaultExtra = isCreateButtonVisible ? (
@@ -52,9 +47,9 @@ export const List: React.FC<ListProps> = ({
             <Space wrap {...headerButtonProps}>
               {typeof headerButtons === "function"
                 ? headerButtons({
-                  defaultButtons: defaultExtra,
-                  createButtonProps,
-                })
+                    defaultButtons: defaultExtra,
+                    createButtonProps,
+                  })
                 : headerButtons}
             </Space>
           ) : (

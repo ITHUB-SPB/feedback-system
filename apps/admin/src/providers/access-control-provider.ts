@@ -1,15 +1,8 @@
 import type { AccessControlProvider } from "@refinedev/core";
-import { createAuthClient } from "@shared/auth";
-
-const authClient = createAuthClient({
-  apiBasePath: "/api",
-  apiBaseUrl: import.meta.env.VITE_API_BASE_URL!,
-});
+import { authClient } from "../auth-client";
 
 export const accessControlProvider: AccessControlProvider = {
   can: async ({ resource, action, params }) => {
-    console.log({ resource, action, params });
-
     const { data: session } = await authClient.getSession();
     const role = session?.user.role || "citizen";
 
@@ -38,7 +31,6 @@ export const accessControlProvider: AccessControlProvider = {
         feedback: ["list"],
       } as const;
 
-      console.log(Boolean(permissions[resource]?.includes(action)));
       return {
         can: Boolean(permissions[resource]?.includes(action)),
       };

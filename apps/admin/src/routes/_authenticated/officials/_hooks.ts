@@ -1,11 +1,7 @@
 import { useList, type HttpError } from "@refinedev/core";
-import {
-  useEditableTable,
-  useModalForm,
-} from "@refinedev/antd";
+import { useEditableTable, useModalForm } from "@refinedev/antd";
 
-import type { NewUserRecord, UserRecord } from './_types'
-
+import type { NewUserRecord, UserRecord } from "./_types";
 
 export function useOfficialsTable() {
   const {
@@ -39,16 +35,16 @@ export function useOfficialsTable() {
     },
     successNotification: {
       message: "Операция выполнена",
-      type: "success"
+      type: "success",
     },
     errorNotification(error) {
       return {
         message: `Ошибка при редактировании`,
         description: error?.message ?? "Попробуйте позже",
-        type: "error"
-      }
-    }
-  })
+        type: "error",
+      };
+    },
+  });
 
   const { result: administrativeUnits, query: administrativeUnitsQuery } =
     useList({
@@ -78,9 +74,9 @@ export function useOfficialsTable() {
     },
     administrativeUnits: {
       result: administrativeUnits,
-      query: administrativeUnitsQuery
-    }
-  }
+      query: administrativeUnitsQuery,
+    },
+  };
 }
 
 export function useCreateOfficial() {
@@ -97,20 +93,20 @@ export function useCreateOfficial() {
     },
     successNotification: {
       message: "Аккаунт успешно создан",
-      type: "success"
+      type: "success",
     },
     errorNotification(error) {
       return {
         message: `Ошибка при создании аккаунта`,
         description: error?.message ?? "Попробуйте позже",
-        type: "error"
-      }
+        type: "error",
+      };
     },
   });
 
   return {
     createOfficialModalProps,
     createOfficialFormProps,
-    createOfficialModalShow
-  }
+    createOfficialModalShow,
+  };
 }

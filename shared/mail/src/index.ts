@@ -53,7 +53,6 @@ async function buildMail(options: MailJobData) {
     };
   }
 
-
   if (options.type === "official-request") {
     const { officialName, description, createdAt, categoryTopic, files } =
       options;

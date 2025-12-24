@@ -30,7 +30,7 @@ export default class State {
 
   public async loadIssuesByProject(projectId: number | string): Promise<any[]> {
     this.issuesByProject = await apiClient.feedback.all({
-      filter: `project_id[eq]${projectId}`,
+      filter: `project_id[eq]${projectId}&feedback_type_id[eq]2&feedback_status_id[in]1,4`,
     });
     return this.issuesByProject;
   }

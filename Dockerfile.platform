@@ -1,48 +1,38 @@
 # syntax=docker/dockerfile:1.20
 
-FROM node:24-alpine AS installer
+FROM dhi.io/node:24-alpine3.22-sfw-dev AS base
+# dckr_pat_s6Gd6xwAgqg-Ca3dnFdjFRoQJjk
+
+ENV CI=1
+RUN corepack enable pnpm
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+
+# =========================================================================== #
+
+FROM base AS installer
+
+WORKDIR /app
+
+COPY pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch
+
+COPY --parents **/package.json package.json pnpm-lock.yaml  ./
+RUN --mount=type=cache,target=/pnpm/store pnpm install --frozen-lockfile --offline
+
+# =========================================================================== #
+
+FROM installer AS build-admin
 
 ARG VITE_API_BASE_URL
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 WORKDIR /app
 
-RUN corepack enable pnpm
+COPY . .
 
-COPY --parents **/package.json package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
-RUN --mount=type=cache,id=pnpm,target=target=/pnpm/store pnpm install --frozen-lockfile
-
-COPY . ./
-
-# =========================================================================== #
-
-FROM installer AS staging-admin
-
-CMD ["pnpm", "staging:admin"]
-
-# =========================================================================== #
-
-FROM installer AS staging-server
-
-CMD ["pnpm", "staging:server"]
-
-# =========================================================================== #
-
-FROM installer AS staging-web
-
-CMD ["pnpm", "staging:web"]
-
-# =========================================================================== #
-
-FROM installer AS build-admin
-
-ENV NODE_ENV=production
-
-RUN pnpm -F admin deploy --legacy ./prod/admin
+RUN pnpm -F admin deploy --legacy /app/prod/admin
 
 WORKDIR /app/prod/admin
 
@@ -52,9 +42,11 @@ RUN VITE_API_BASE_URL=$VITE_API_BASE_URL pnpm build
 
 FROM installer AS build-web
 
-ENV NODE_ENV=production
+WORKDIR /app
 
-RUN pnpm -F web deploy --legacy ./prod/web
+COPY . .
+
+RUN pnpm -F web deploy --legacy /app/prod/web
 
 WORKDIR /app/prod/web
 
@@ -62,29 +54,35 @@ RUN VITE_API_BASE_URL=$VITE_API_BASE_URL pnpm build
 
 # =========================================================================== #
 
-FROM installer AS deploy-server
+FROM installer AS build-server
 
-ENV NODE_ENV=production
+WORKDIR /app
 
-RUN pnpm -F server deploy --legacy ./prod/server
+RUN pnpm -F server deploy --legacy /app/prod/server
+
+WORKDIR /app/prod/server
+
+RUN pnpm start
+
+# =========================================================================== #
+
+FROM dhi.io/node:24.12-alpine3.22 AS prod-server
+
+COPY --from=build-server /app/apps/server /app
+
+ENV NODE_ENV=production \
+    NODE_OPTIONS="--enable-source-maps"
+
+EXPOSE 3001
+
+# =========================================================================== #
+
+FROM devforth/spa-to-http:latest AS prod-web
+
+COPY --from=build-web /app/prod/web/dist /app
 
 # =========================================================================== #
 
 FROM devforth/spa-to-http:latest AS prod-admin
 
 COPY --from=build-admin /app/prod/admin/dist .
-
-# =========================================================================== #
-
-FROM installer AS prod-server
-
-WORKDIR /app
-COPY --from=deploy-server /app/prod/server ./
-COPY ./apps/server/.env ./
-
-# =========================================================================== #
-
-FROM devforth/spa-to-http:latest AS prod-web
-
-WORKDIR /app
-COPY --from=build-web /app/prod/web/dist ./

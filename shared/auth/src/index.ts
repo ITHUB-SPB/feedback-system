@@ -1,3 +1,2 @@
-export type { AuthInstance } from "./server";
-export { createAuth } from "./server";
-export { createAuthClient } from "./client";
+export { createAuth, type AuthInstance, type CreateAuth } from "./server";
+export { ac, roles } from "./permissionControl";

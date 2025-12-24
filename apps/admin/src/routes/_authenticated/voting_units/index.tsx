@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 import { useMany } from "@refinedev/core";
 
 import {
@@ -34,9 +34,9 @@ type RegionRecord = {
   title: string;
 };
 
-export const Route = createFileRoute('/_authenticated/voting_units/')({
+export const Route = createFileRoute("/_authenticated/voting_units/")({
   component: ListVotingUnits,
-})
+});
 
 function ListVotingUnits() {
   const {

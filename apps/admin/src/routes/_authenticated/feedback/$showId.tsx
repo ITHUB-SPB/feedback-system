@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
 import {
   useShow,
@@ -22,54 +22,56 @@ import Image from "antd/es/image";
 
 import { TextField } from "../../../components/fields/text";
 import { Show } from "../../../components/crud/show";
-import { dataProvider } from '../../../providers/data-provider';
+import { dataProvider } from "../../../providers/data-provider";
 
 type Status = {
   id: number;
   title: "pending" | "approved" | "declined" | "completed";
 };
 
-export const Route = createFileRoute('/_authenticated/feedback/$showId')({
+export const Route = createFileRoute("/_authenticated/feedback/$showId")({
   component: ShowFeedback,
   loader: async ({ context, params }) => {
     const { data: feedback } = await context.queryClient.ensureQueryData({
       queryKey: ["default", "feedback", "one", params.showId],
-      queryFn: () => dataProvider.getOne({
-        resource: "feedback",
-        id: Number(params.showId)
-      })
-    })
+      queryFn: () =>
+        dataProvider.getOne({
+          resource: "feedback",
+          id: Number(params.showId),
+        }),
+    });
 
     const { data: statuses } = await context.queryClient.ensureQueryData({
-      queryKey: ["default", "feedback_statuses", "many", { usePagination: true, pagination: { pageSize: 48 } }],
-      queryFn: () => dataProvider.getList<Status>({
-        resource: "feedback_statuses",
-        pagination: {
-          pageSize: 48
-        }
-      })
-    })
+      queryKey: [
+        "default",
+        "feedback_statuses",
+        "many",
+        { usePagination: true, pagination: { pageSize: 48 } },
+      ],
+      queryFn: () =>
+        dataProvider.getList<Status>({
+          resource: "feedback_statuses",
+          pagination: {
+            pageSize: 48,
+          },
+        }),
+    });
 
-    return { feedback, statuses }
-  }
-})
-
+    return { feedback, statuses };
+  },
+});
 
 function ShowFeedback() {
-  const { feedback, statuses } = Route.useLoaderData()
+  const { feedback, statuses } = Route.useLoaderData();
 
   const { mutate: updateFeedback } = useUpdate({
     resource: "feedback",
     id: Number(feedback?.id),
-    successNotification: {
-      type: "success",
-      message: "Статус обновлен"
-    },
+    successNotification: false,
     errorNotification: {
       type: "error",
-      message: "Ошибка обновления"
+      message: "Ошибка",
     },
-    invalidates: ["list", "many", "detail"]
   });
 
   const { data: identity } = useGetIdentity();
@@ -163,29 +165,27 @@ function ShowFeedback() {
 
   return (
     <Show
-      title="Предложения"
+      title={
+        <Flex align="center" gap={14}>
+          Обращение №{feedback?.id}
+          <Tag color={getStatusColor(feedback?.feedback_status)}>
+            {getStatusText(feedback?.feedback_status)}
+          </Tag>
+        </Flex>
+      }
       headerButtons={({ listButtonProps }) => (
         <ListButton {...listButtonProps} />
       )}
     >
-      <Typography.Title level={3}>Обращение №{feedback?.id}</Typography.Title>
-
       <Flex align="stretch">
         <Card
           variant={"borderless"}
           style={{
             boxShadow: "none",
-            flex: "1 0 max-content",
+            flex: "1 0 50%",
           }}
         >
-          <Typography.Title level={5}>Тип обращения</Typography.Title>
-          <TextField value={feedback?.feedback_type} />
-
-          <Typography.Title level={5}>Тема</Typography.Title>
-          <TextField value={feedback?.topic || "—"} />
-
-          <Typography.Title level={5}>Описание</Typography.Title>
-          <TextField value={feedback?.description} />
+          <Typography.Title level={4}>Объект</Typography.Title>
 
           <Typography.Title level={5}>Территория</Typography.Title>
           <TextField value={feedback?.administrative_unit_title || "—"} />
@@ -196,13 +196,24 @@ function ShowFeedback() {
           <Typography.Title level={5}>Ответственный</Typography.Title>
           <TextField value={feedback?.responsible_person_full_name || "—"} />
 
-          <Typography.Title level={5}>Статус</Typography.Title>
-          <Tag
-            color={getStatusColor(feedback?.feedback_status)}
-            style={{ marginBottom: "16px" }}
-          >
-            {getStatusText(feedback?.feedback_status)}
-          </Tag>
+          <Divider />
+
+          <Typography.Title level={4}>Респондент</Typography.Title>
+
+          <Typography.Title level={5}>ФИО</Typography.Title>
+          <TextField value={feedback?.person_full_name || "—"} />
+
+          <Typography.Title level={5}>Контактные данные</Typography.Title>
+          {!feedback?.email && !feedback?.person_phone && "—"}
+          {feedback?.email ? <TextField value={feedback.email} /> : null}
+          {feedback?.person_phone ? (
+            <TextField value={feedback.person_phone} />
+          ) : null}
+
+          <Typography.Title level={5}>Дата</Typography.Title>
+          <TextField
+            value={new Date(feedback?.created_at).toLocaleString("ru-RU")}
+          />
         </Card>
 
         <Card
@@ -210,24 +221,24 @@ function ShowFeedback() {
           style={{ width: "55%", boxShadow: "none", gap: 24 }}
         >
           <Flex vertical>
-            <Typography.Title level={4}>Респондент</Typography.Title>
+            <Typography.Title level={4}>Обращение</Typography.Title>
 
-            <Typography.Title level={5}>ФИО</Typography.Title>
-            <TextField value={feedback?.person_full_name || "—"} />
+            <Typography.Title level={5}>Тема</Typography.Title>
+            <TextField value={feedback?.feedback_type} />
+            {feedback?.topic && <TextField value={` (${feedback?.topic})`} />}
 
-            <Typography.Title level={5}>Контактные данные</Typography.Title>
-            {!feedback?.email && !feedback?.person_phone && "—"}
-            {feedback?.email ? <TextField value={feedback.email} /> : null}
-            {feedback?.person_phone ? <TextField value={feedback.person_phone} /> : null}
+            <Typography.Title level={5}>Описание</Typography.Title>
+            <Typography.Paragraph
+              ellipsis={{
+                rows: 10,
+                expandable: true,
+                symbol: "Читать полностью",
+              }}
+            >
+              {feedback?.description}
+            </Typography.Paragraph>
 
-            <Typography.Title level={5}>Дата</Typography.Title>
-            <TextField
-              value={new Date(feedback?.created_at).toLocaleString("ru-RU")}
-            />
-
-            <Divider />
-
-            <Typography.Title style={{ marginBottom: 24 }} level={4}>
+            <Typography.Title style={{ marginBottom: 24 }} level={5}>
               Фотографии
             </Typography.Title>
 
@@ -238,7 +249,7 @@ function ShowFeedback() {
                     return (
                       <Image
                         key={`image_${index}`}
-                        // height={140}
+                        height={100}
                         src={image}
                         preview={{ getContainer: "#root" }}
                       />
@@ -294,4 +305,4 @@ function ShowFeedback() {
         )}
     </Show>
   );
-};
+}

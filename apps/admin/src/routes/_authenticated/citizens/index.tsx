@@ -1,16 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
-import {
-  getDefaultSortOrder,
-  useTable,
-} from "@refinedev/antd";
+import { createFileRoute } from "@tanstack/react-router";
+import { getDefaultSortOrder, useTable } from "@refinedev/antd";
 import Table from "antd/es/table";
 
 import { TextField } from "../../../components/fields/text";
 import { List } from "../../../components/crud/list";
 
-export const Route = createFileRoute('/_authenticated/citizens/')({
+export const Route = createFileRoute("/_authenticated/citizens/")({
   component: ListCitizens,
-})
+});
 
 export default function ListCitizens() {
   const { tableProps, sorters } = useTable({
@@ -98,4 +95,4 @@ export default function ListCitizens() {
       </Table>
     </List>
   );
-};
+}

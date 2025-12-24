@@ -1,7 +1,7 @@
 services:
   redis:
     extends:
-      file: compose.redis.local.yaml
+      file: compose.redis.development.yaml
       service: redis
     environment:
       REDIS_HOST: redis

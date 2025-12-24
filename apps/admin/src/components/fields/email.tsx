@@ -1,6 +1,6 @@
 import React, { type ReactNode } from "react";
 
-import Typography from 'antd/es/typography'
+import Typography from "antd/es/typography";
 import type { LinkProps } from "antd/lib/typography/Link";
 
 import type { RefineFieldCommonProps } from "./_types";

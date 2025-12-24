@@ -3,7 +3,7 @@ include:
   - ./infrastructure/redis/compose.redis.staging.yaml
 
 services:
-  server:
+  feedback-server:
     build:
       context: .
       dockerfile: ./Dockerfile.platform
@@ -11,7 +11,7 @@ services:
     command: "pnpm start" 
     env_file:
       - ./apps/server/.env
-    container_name: server
+    container_name: feedback-server-staging
     restart: unless-stopped
     ports:
       - 3001:3001
@@ -27,12 +27,12 @@ services:
     depends_on:
       - postgres
 
-  bot:
+  feedback-bot:
     build:
       context: .
       dockerfile: ./Dockerfile.bot
       target: prod-bot
-    container_name: bot
+    container_name: feedback-bot-staging
     restart: unless-stopped
     ports:
       - 8000:8000
@@ -46,9 +46,9 @@ services:
         - action: rebuild
           path: ./uv.lock
     depends_on:
-      - server
+      - feedback-server
 
-  admin:
+  feedback-admin:
     build:
       context: .
       dockerfile: ./Dockerfile.platform
@@ -57,7 +57,7 @@ services:
       target: prod-admin
     env_file:
       - ./apps/admin/.env
-    container_name: admin
+    container_name: feedback-admin-staging
     restart: unless-stopped
     ports:
       - 5174:5174
@@ -67,20 +67,20 @@ services:
       timeout: 10s
       retries: 3
     depends_on:
-      - server
+      - feedback-server
 
-  web:
+  feedback-web:
     build:
       context: .
       dockerfile: ./Dockerfile.platform
       target: prod-web
     ports:
-      - 5175:5175
-    command: "pnpm dlx serve -p 5175"
-    container_name: web
+      - 5173:5173
+    command: --brotli --port 5173
+    container_name: feedback-web-staging
     restart: unless-stopped
     depends_on:
-      - server
+      - feedback-server
 
 secrets:
   minio_access_key:

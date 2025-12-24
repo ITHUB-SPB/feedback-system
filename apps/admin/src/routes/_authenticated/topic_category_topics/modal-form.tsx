@@ -2,13 +2,13 @@ import Modal from "antd/es/modal";
 import Form from "antd/es/form";
 import Select from "antd/es/select";
 
-import type { ModalFormProps } from './types'
+import type { ModalFormProps } from "./types";
 
 export default function ModalForm({
   topicCategoryTopicModalProps,
   topicCategoryTopicFormProps,
   topicCategoriesSelectProps,
-  topicsSelectProps
+  topicsSelectProps,
 }: ModalFormProps) {
   return (
     <Modal
@@ -55,6 +55,5 @@ export default function ModalForm({
         </Form.Item>
       </Form>
     </Modal>
-
-  )
+  );
 }

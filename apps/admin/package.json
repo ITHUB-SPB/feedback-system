@@ -1,11 +1,10 @@
 {
   "name": "admin",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "dotenvx run -f .env.development -- vite --port 5174",
-    "staging": "dotenvx run -f .env.staging -- vite --port 5174",
+    "staging": "dotenvx run -f .env.staging -- vite --port 5174 --host",
     "build": "vite build"
   },
   "dependencies": {
@@ -15,30 +14,31 @@
     "@refinedev/antd": "catalog:",
     "@refinedev/cli": "catalog:",
     "@refinedev/core": "catalog:",
-    "@refinedev/react-router": "catalog:",
     "@shared/auth": "workspace:*",
+    "@tanstack/react-devtools": "^0.7.0",
     "@tanstack/react-query": "^5.90.12",
-    "@tanstack/react-router": "^1.142.7",
-    "@tanstack/router-devtools": "^1.142.7",
+    "@tanstack/react-router": "^1.132.0",
+    "@tanstack/react-router-devtools": "^1.132.0",
+    "@tanstack/router-plugin": "^1.132.0",
     "antd": "catalog:",
+    "better-auth": "catalog:",
     "dayjs": "^1.11.19",
-    "i18next": "^25.5.2",
+    "esbuild": "^0.27.2",
+    "i18next": "^25.7.3",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-i18next": "^15.7.3",
-    "react-markdown": "^10.1.0",
-    "react-router": "catalog:",
-    "remark-gfm": "^4.0.1",
+    "react-i18next": "^15.7.4",
+    "server": "^1.0.42",
     "ufo": "^1.6.1"
   },
   "devDependencies": {
-    "@tanstack/router-plugin": "^1.142.7",
+    "@tanstack/devtools-vite": "^0.3.11",
+    "@types/node": "^22.10.2",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "catalog:",
+    "@vitejs/plugin-react": "^5.0.4",
     "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-bundle-analyzer": "^1.2.3"
+    "vite": "^7.1.7"
   },
   "packageManager": "pnpm@10.25.0"
 }
