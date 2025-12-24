@@ -4,5 +4,8 @@
   "type": "module",
   "files": [
     "*.json"
-  ]
+  ],
+  "exports": {
+    "./internal-package.json": "./internal-package.json"
+  }
 }

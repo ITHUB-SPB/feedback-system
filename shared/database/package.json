@@ -18,10 +18,8 @@
     "dependencies": {
         "@dotenvx/dotenvx": "catalog:",
         "@shared/schema": "workspace:*",
-        "esbuild": "^0.27.2",
         "kysely": "catalog:",
         "pg": "catalog:",
-        "pg-native": "^3.5.2",
         "valibot": "catalog:"
     },
     "devDependencies": {

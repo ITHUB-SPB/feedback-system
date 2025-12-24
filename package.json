@@ -48,8 +48,5 @@
             "protobufjs",
             "sharp"
         ]
-    },
-    "dependencies": {
-        "tsdown": "^0.18.2"
     }
 }
