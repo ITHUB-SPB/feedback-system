@@ -60,7 +60,7 @@ session:
   cookies:
     - domain: 'xn--47-dlckcacbiv4afwllqms4x.xn--p1ai'
       authelia_url: 'https://authelia.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai'
-      default_redirection_url: 'https://admin.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai'
+      default_redirection_url: 'https://xn--j1ab.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai'
  
 regulation:
   max_retries: 10

@@ -9,8 +9,9 @@ http:
           - https://localhost
           - https://admin.localhost
           - https://minio.localhost
+          - https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
           - https://xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
-          - https://admin.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
+          - https://xn--j1ab.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
         addVaryHeader: true
         accessControlAllowCredentials: true
         sslProxyHeaders:

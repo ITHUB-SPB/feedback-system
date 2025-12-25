@@ -96,3 +96,6 @@ secrets:
     file: ./infrastructure/secrets/postgres_user
   postgres_password:
     file: ./infrastructure/secrets/postgres_password
+  redis_password:
+    file: ./infrastructure/secrets/redis_password
+

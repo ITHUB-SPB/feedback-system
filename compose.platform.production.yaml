@@ -15,6 +15,7 @@ services:
       target: prod-server
     env_file:
       - ./apps/server/.env
+    command: pnpm start:server
     restart: unless-stopped
     ports:
       - 3001:3001
@@ -68,7 +69,7 @@ services:
       - feedback-server
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.admin.rule=Host(`xn--80aimpg.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
+      - "traefik.http.routers.admin.rule=Host(`xn--j1ab.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
       - "traefik.http.routers.admin.entrypoints=web-secure"
       - "traefik.http.routers.admin.tls.certresolver=tlsresolver"
       - "traefik.http.routers.admin.middlewares=chain-no-auth@file"
@@ -83,8 +84,8 @@ services:
         VITE_API_BASE_URL: https://api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
       target: prod-web
     ports:
-      - 5173:5173
-    command: --brotli --port 5173
+      - 5175:5175
+    command: --brotli --port 5175
     restart: unless-stopped
     depends_on:
       - feedback-server
@@ -94,7 +95,7 @@ services:
       - "traefik.http.routers.web.entrypoints=web-secure"
       - "traefik.http.routers.web.tls.certresolver=tlsresolver"
       - "traefik.http.routers.web.middlewares=chain-no-auth@file"
-      - "traefik.http.services.web.loadbalancer.server.port=5173"
+      - "traefik.http.services.web.loadbalancer.server.port=5175"
 
 volumes:
   letsencrypt:
@@ -106,20 +107,9 @@ secrets:
     file: ./infrastructure/secrets/authelia_session_secret
   authelia_storage_encryption_key:
     file: ./infrastructure/secrets/authelia_storage_encryption_key
-  pgadmin_default_email:
-    file: ./infrastructure/secrets/pgadmin_default_email
-  pgadmin_default_password:
-    file: ./infrastructure/secrets/pgadmin_default_password
-  minio_access_key:
-    file: ./infrastructure/secrets/authelia_jwt_secret
-  minio_secret_key:
-    file: ./infrastructure/secrets/authelia_session_secret
   walg_libsodium_key:
     file: ./infrastructure/secrets/walg_libsodium_key
   postgres_user:
     file: ./infrastructure/secrets/postgres_user
   postgres_password:
     file: ./infrastructure/secrets/postgres_password
-  redis_password:
-    file: ./infrastructure/secrets/redis_password
-
