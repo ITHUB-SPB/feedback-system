@@ -18,6 +18,9 @@ infrastructure/**/data/*
 infrastructure/**/data-development/*
 infrastructure/secrets/*
 
+infrastructure/crowdsec/config/appsec-rules/*
+infrastructure/crowdsec/config/hub/*
+
 infrastructure/authelia/*
 !infrastructure/authelia/config
 !infrastructure/authelia/compose.authelia.yaml
