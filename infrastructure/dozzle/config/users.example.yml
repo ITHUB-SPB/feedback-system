@@ -1,0 +1,5 @@
+users:
+  admin:
+    name: Admin
+    password: argon2-id-password
+    roles: all

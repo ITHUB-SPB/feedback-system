@@ -5,7 +5,7 @@
     "smallerScrollbars": false,
     "showTimestamp": true,
     "showStd": false,
-    "showAllContainers": false,
+    "showAllContainers": true,
     "softWrap": true,
     "collapseNav": false,
     "automaticRedirect": "delayed",
@@ -14,7 +14,8 @@
     "lightTheme": "auto",
     "hourStyle": "24",
     "dateLocale": "de-DE",
-    "locale": "en"
+    "locale": "en",
+    "groupContainers": "at-least-2"
   },
   "pinned": [],
   "releaseSeen": "v8.14.6",

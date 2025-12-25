@@ -10,20 +10,22 @@ build/
 
 .env
 .env.production
-.env.keys
-!.env.example
 
 infrastructure/**/logs
 infrastructure/**/data/*
 infrastructure/**/data-development/*
 infrastructure/secrets/*
 
-infrastructure/crowdsec/config/appsec-rules/*
-infrastructure/crowdsec/config/hub/*
+infrastructure/crowdsec/config/**/*
+!infrastructure/crowdsec/config/parsers
+infrastructure/crowdsec/local_api_credentials.yaml
+infrastructure/crowdsec/online_api_credentials.yaml
 
-infrastructure/authelia/*
-!infrastructure/authelia/config
-!infrastructure/authelia/compose.authelia.yaml
+infrastructure/dozzle/config/users.yml
+
+infrastructure/authelia/config
+!infrastructure/authelia/config/configuration.yml
+!infrastructure/authelia/config/users.example.yml
 
 !infrastructure/postgres/data/pg_wal/*
 !infrastructure/postgres/data/pg_hba.conf

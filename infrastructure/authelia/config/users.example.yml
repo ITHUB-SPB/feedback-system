@@ -1,8 +1,0 @@
-users:
-  user:
-    disabled: false
-    displayname: ""
-    email: 
-    password: argon2id-hashed
-    groups:
-      - admins
