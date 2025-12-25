@@ -6,6 +6,7 @@
     "*.json"
   ],
   "exports": {
-    "./internal-package.json": "./internal-package.json"
+    "./internal-package.json": "./internal-package.json",
+    "./vite.json": "./vite.json"
   }
 }

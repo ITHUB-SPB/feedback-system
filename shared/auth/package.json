@@ -19,6 +19,9 @@
     "staging:auth:generate": "dotenvx run -f .env.staging -- npx @better-auth/cli generate --config ./src/cli-config.ts --output ../database/src/auth.initial.sql",
     "staging:auth:migrate": "dotenvx run -f .env.staging -- npx @better-auth/cli migrate --config ./src/cli-config.ts",
     "staging:auth:seed": "dotenvx run -f .env.staging -- tsx ./src/seed.ts",
+    "production:auth:generate": "dotenvx run -f .env.production -- npx @better-auth/cli generate --config ./src/cli-config.ts --output ../database/src/auth.initial.sql",
+    "production:auth:migrate": "dotenvx run -f .env.production -- npx @better-auth/cli migrate --config ./src/cli-config.ts",
+    "production:auth:seed": "dotenvx run -f .env.production -- tsx ./src/seed.ts",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {

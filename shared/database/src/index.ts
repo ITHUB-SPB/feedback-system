@@ -14,7 +14,7 @@ async function getDialect() {
   return new PostgresDialect({
     pool: new Pool({
       connectionString: POSTGRES_DATABASE_URI,
-      ssl: env.ENV === "production",
+      ssl: false && env.ENV === "production", // TODO
     }),
   });
 }

@@ -10,7 +10,11 @@
         "staging:db:reset": "dotenvx run -f .env.staging -- tsx src/seed/index.ts reset",
         "staging:db:seed": "dotenvx run -f .env.staging -- tsx src/seed/index.ts seed",
         "staging:db:check": "dotenvx run -f .env.staging -- tsx src/check.ts",
-        "staging:db:migrate": "dotenvx run -f .env.staging -- tsx src/migrate.ts"
+        "staging:db:migrate": "dotenvx run -f .env.staging -- tsx src/migrate.ts",
+        "production:db:reset": "dotenvx run -f .env.production -- tsx src/seed/index.ts reset",
+        "production:db:seed": "dotenvx run -f .env.production -- tsx src/seed/index.ts seed",
+        "production:db:check": "dotenvx run -f .env.production -- tsx src/check.ts",
+        "production:db:migrate": "dotenvx run -f .env.production -- tsx src/migrate.ts"
     },
     "exports": {
         ".": "./src/index.ts"

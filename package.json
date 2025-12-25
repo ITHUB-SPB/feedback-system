@@ -29,7 +29,14 @@
         "staging:db:migrate": "pnpm -F @shared/database staging:db:migrate",
         "staging:auth:generate": "pnpm -F @shared/auth staging:auth:generate",
         "staging:auth:migrate": "pnpm -F @shared/auth staging:auth:migrate",
-        "staging:auth:seed": "pnpm -F @shared/auth staging:auth:seed"
+        "staging:auth:seed": "pnpm -F @shared/auth staging:auth:seed",
+        "production:db:reset": "pnpm -F @shared/database production:db:reset",
+        "production:db:seed": "pnpm -F @shared/database production:db:seed",
+        "production:db:check": "pnpm -F @shared/database production:db:check",
+        "production:db:migrate": "pnpm -F @shared/database production:db:migrate",
+        "production:auth:generate": "pnpm -F @shared/auth production:auth:generate",
+        "production:auth:migrate": "pnpm -F @shared/auth production:auth:migrate",
+        "production:auth:seed": "pnpm -F @shared/auth production:auth:seed"
     },
     "devDependencies": {
         "@biomejs/biome": "catalog:",
