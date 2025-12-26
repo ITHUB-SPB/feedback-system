@@ -17,11 +17,11 @@
         "production:db:migrate": "dotenvx run -f .env.production -- tsx src/migrate.ts"
     },
     "exports": {
-        ".": "./src/index.ts"
+        ".": "./src/index.ts",
+        "./*": "./src/*.ts"
     },
     "dependencies": {
         "@dotenvx/dotenvx": "catalog:",
-        "@shared/schema": "workspace:*",
         "kysely": "catalog:",
         "pg": "catalog:",
         "valibot": "catalog:"

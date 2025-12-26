@@ -1,23 +1,25 @@
 import { oc } from "@orpc/contract";
+import * as v from "valibot";
 
-import { baseInputAll, baseInputOne } from "@shared/schema/base";
-import {
-  getVotingRegionSchema,
-  getManyVotingRegionSchema,
-  updateVotingRegionSchema,
-  createVotingRegionSchema,
-} from "@shared/schema/voting_region";
+import { votingRegionSchema } from "@shared/database/models/voting_region";
+import { baseInputAll, baseInputOne } from "./_inputs";
+
+export const getManyVotingRegionSchema = v.array(votingRegionSchema);
+export const createVotingRegionSchema = v.omit(votingRegionSchema, ["id"]);
+export const updateVotingRegionSchema = v.object({
+  body: v.partial(v.omit(votingRegionSchema, ["id"])),
+  params: v.object({ id: v.string() }),
+});
 
 const votingRegionContract = oc
-  .tag("Voting Regions")
+  .tag("Голосующие поселения")
   .prefix("/voting_regions")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List all voting regions",
-        description: "Get full information for all voting regions",
+        summary: "Список голосующих районов",
       })
       .input(baseInputAll)
       .output(getManyVotingRegionSchema),
@@ -26,30 +28,29 @@ const votingRegionContract = oc
       .route({
         method: "GET",
         path: "/{id}",
-        summary: "Get a voting region",
-        description: "Get voting region information by id",
+        summary: "Информация о голосующем районе",
       })
       .input(baseInputOne)
-      .output(getVotingRegionSchema),
+      .output(votingRegionSchema),
 
     update: oc
       .route({
         method: "PATCH",
         path: "/{id}",
         inputStructure: "detailed",
-        summary: "Update voting region",
+        summary: "Обновление голосующего района",
       })
       .input(updateVotingRegionSchema)
-      .output(getVotingRegionSchema),
+      .output(votingRegionSchema),
 
     create: oc
       .route({
         method: "POST",
         path: "/",
-        summary: "Create voting region",
+        summary: "Добавление голосующего района",
       })
       .input(createVotingRegionSchema)
-      .output(getVotingRegionSchema),
+      .output(votingRegionSchema),
 
     delete: oc
       .route({

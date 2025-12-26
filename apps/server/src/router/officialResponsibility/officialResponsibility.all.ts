@@ -1,6 +1,6 @@
 import { requireModeratorProcedure } from "@shared/api";
 import _baseSelect from "./_baseSelect";
-import { type Database } from "@shared/database";
+import { type Tables } from "@shared/database";
 
 const allOfficialResponsibilities =
   requireModeratorProcedure.officialResponsibility.all.handler(
@@ -30,13 +30,13 @@ const allOfficialResponsibilities =
             }
 
             let column = matchResult[1] as
-              | keyof Database["official_responsibility"]
-              | keyof Database["administrative_unit"]
-              | keyof Database["user"];
+              | keyof Tables["official_responsibility"]
+              | keyof Tables["administrative_unit"]
+              | keyof Tables["user"];
 
             if (column === "id") {
               column =
-                "official_responsibility.id" as keyof Database["official_responsibility"];
+                "official_responsibility.id" as keyof Tables["official_responsibility"];
             }
 
             const operator = matchResult[2] as keyof typeof mapOperatorsToSql;

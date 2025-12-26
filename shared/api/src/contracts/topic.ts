@@ -1,33 +1,27 @@
 import { oc } from "@orpc/contract";
-
-import {
-  getTopicSchema,
-  getManyTopicsSchema,
-  createTopicSchema,
-} from "@shared/schema/topic";
+import * as v from "valibot";
+import { topicSchema } from "@shared/database/models/topic";
 
 const topicContract = oc
-  .tag("Categories & Topics")
+  .tag("Категории замечаний")
   .prefix("/topics")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List feedback topics",
-        description: "Get information for all feedback topics",
+        summary: "Список топиков",
       })
-      .output(getManyTopicsSchema),
+      .output(v.array(topicSchema)),
 
     create: oc
       .route({
         method: "POST",
         path: "/",
-        summary: "New feedback topic",
-        description: "Create a new feedback topic category",
+        summary: "Создание топика",
       })
-      .input(createTopicSchema)
-      .output(getTopicSchema),
+      .input(v.omit(topicSchema, ["id"]))
+      .output(topicSchema),
   });
 
 export default topicContract;

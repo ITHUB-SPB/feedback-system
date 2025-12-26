@@ -281,9 +281,6 @@ importers:
       '@shared/mail':
         specifier: workspace:*
         version: link:../../shared/mail
-      '@shared/schema':
-        specifier: workspace:*
-        version: link:../../shared/schema
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../shared/typescript-config
@@ -351,9 +348,6 @@ importers:
       '@shared/logger':
         specifier: workspace:*
         version: link:../logger
-      '@shared/schema':
-        specifier: workspace:*
-        version: link:../schema
       esbuild:
         specifier: ^0.27.2
         version: 0.27.2
@@ -407,9 +401,6 @@ importers:
       '@dotenvx/dotenvx':
         specifier: 'catalog:'
         version: 1.51.2
-      '@shared/schema':
-        specifier: workspace:*
-        version: link:../schema
       kysely:
         specifier: 'catalog:'
         version: 0.28.9
@@ -481,9 +472,6 @@ importers:
       '@shared/logger':
         specifier: workspace:*
         version: link:../logger
-      '@shared/schema':
-        specifier: workspace:*
-        version: link:../schema
       esbuild:
         specifier: ^0.27.2
         version: 0.27.2
@@ -521,22 +509,6 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.1.0(@types/react@19.1.0)
-      typescript:
-        specifier: 'catalog:'
-        version: 5.9.3
-
-  shared/schema:
-    dependencies:
-      esbuild:
-        specifier: ^0.27.2
-        version: 0.27.2
-      valibot:
-        specifier: 'catalog:'
-        version: 1.2.0(typescript@5.9.3)
-    devDependencies:
-      '@shared/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       typescript:
         specifier: 'catalog:'
         version: 5.9.3

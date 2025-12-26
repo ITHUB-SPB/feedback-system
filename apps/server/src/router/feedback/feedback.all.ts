@@ -1,5 +1,5 @@
 import { publicProcedure } from "@shared/api";
-import { type Database } from "@shared/database";
+import { type Tables } from "@shared/database";
 import _baseSelect from "./_baseSelect";
 
 const allFeedback = publicProcedure.feedback.all.handler(
@@ -29,19 +29,18 @@ const allFeedback = publicProcedure.feedback.all.handler(
           }
 
           let column = matchResult[1] as
-            | keyof Database["feedback"]
-            | keyof Database["topic"]
-            | keyof Database["project"]
-            | keyof Database["feedback_status"]
-            | keyof Database["feedback_type"];
+            | keyof Tables["feedback"]
+            | keyof Tables["topic"]
+            | keyof Tables["project"]
+            | keyof Tables["feedback_status"]
+            | keyof Tables["feedback_type"];
 
           if (column === "id") {
-            column = "feedback.id" as keyof Database["feedback"];
+            column = "feedback.id" as keyof Tables["feedback"];
           }
 
           if (column === "feedback_status_id") {
-            column =
-              "feedback.feedback_status_id" as keyof Database["feedback"];
+            column = "feedback.feedback_status_id" as keyof Tables["feedback"];
           }
 
           const operator = matchResult[2] as keyof typeof mapOperatorsToSql;
@@ -72,7 +71,7 @@ const allFeedback = publicProcedure.feedback.all.handler(
           }
 
           query = query.orderBy(
-            field as keyof Database["feedback"],
+            field as keyof Tables["feedback"],
             order as "desc" | "asc",
           );
         }

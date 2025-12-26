@@ -1,23 +1,32 @@
 import { oc } from "@orpc/contract";
+import * as v from "valibot";
 
-import { baseInputAll, baseInputOne } from "@shared/schema/base";
-import {
-  getAdministrativeUnitSchema,
-  createAdministrativeUnitSchema,
-  updateAdministrativeUnitSchema,
-  getManyAdministrativeUnitSchema,
-} from "@shared/schema/administrative_unit";
+import { administrativeUnitSchema } from "@shared/database/models/administrative_unit";
+import { baseInputOne, baseInputAll } from "./_inputs";
+
+const getAdministrativeUnitSchema = v.object({
+  ...administrativeUnitSchema.entries,
+  unit_type: v.string(),
+});
+
+const createAdministrativeUnitSchema = v.omit(administrativeUnitSchema, ["id"]);
+
+const updateAdministrativeUnitSchema = v.object({
+  params: baseInputOne,
+  body: v.partial(createAdministrativeUnitSchema),
+});
+
+const getManyAdministrativeUnitSchema = v.array(getAdministrativeUnitSchema);
 
 const administrativeUnitContract = oc
-  .tag("Administrative Units")
+  .tag("Поселения")
   .prefix("/administrative_units")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List all administrative units",
-        description: "Get full information for all administrative_units",
+        summary: "Список всех поселений",
       })
       .input(baseInputAll)
       .output(getManyAdministrativeUnitSchema),
@@ -26,8 +35,7 @@ const administrativeUnitContract = oc
       .route({
         method: "GET",
         path: "/{id}",
-        summary: "Get an administrative unit",
-        description: "Get administrative unit information by id",
+        summary: "Информация по поселению",
       })
       .input(baseInputOne)
       .output(getAdministrativeUnitSchema),
@@ -37,7 +45,7 @@ const administrativeUnitContract = oc
         method: "PATCH",
         path: "/{id}",
         inputStructure: "detailed",
-        summary: "Update administrative unit",
+        summary: "Обновление поселения",
       })
       .input(updateAdministrativeUnitSchema)
       .output(getAdministrativeUnitSchema),
@@ -46,7 +54,7 @@ const administrativeUnitContract = oc
       .route({
         method: "POST",
         path: "/",
-        summary: "Create administrative unit",
+        summary: "Создание поселения",
       })
       .input(createAdministrativeUnitSchema)
       .output(getAdministrativeUnitSchema),
@@ -55,7 +63,7 @@ const administrativeUnitContract = oc
       .route({
         method: "DELETE",
         path: "/{id}",
-        summary: "Delete administrative unit by ID",
+        summary: "Удаление поселения",
       })
       .input(baseInputOne),
   });

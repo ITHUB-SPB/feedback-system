@@ -1,19 +1,18 @@
 import { oc } from "@orpc/contract";
-
-import { getManyFeedbackTypeSchema } from "@shared/schema/feedback_type";
+import * as v from "valibot";
+import { feedbackTypeSchema } from "@shared/database/models/feedback_type";
 
 const feedbackTypeContract = oc
-  .tag("Feedback")
+  .tag("Обращения")
   .prefix("/feedback_types")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List all feedback types",
-        description: "Get information for all feedback types",
+        summary: "Список типов обращений",
       })
-      .output(getManyFeedbackTypeSchema),
+      .output(v.array(feedbackTypeSchema)),
   });
 
 export default feedbackTypeContract;

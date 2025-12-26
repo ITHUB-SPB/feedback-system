@@ -1,19 +1,19 @@
 import { oc } from "@orpc/contract";
+import * as v from "valibot";
 
-import { getManyAdministrativeUnitTypeSchema } from "@shared/schema/administrative_unit_type";
+import { administrativeUnitTypeSchema } from "@shared/database/models/administrative_unit_type";
 
 const administrativeUnitTypeContract = oc
-  .tag("Administrative Units")
+  .tag("Поселения")
   .prefix("/administrative_unit_types")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List all administrative unit types",
-        description: "Get information for all administrative unit types",
+        summary: "Список типов поселений",
       })
-      .output(getManyAdministrativeUnitTypeSchema),
+      .output(v.array(administrativeUnitTypeSchema)),
   });
 
 export default administrativeUnitTypeContract;

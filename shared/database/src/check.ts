@@ -1,4 +1,4 @@
-import { db } from "./index";
+import { db } from "./connection";
 
 async function checkConnection() {
   return await db.introspection.getTables();

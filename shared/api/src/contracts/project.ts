@@ -1,25 +1,24 @@
 import { oc } from "@orpc/contract";
 import * as v from "valibot";
 
-import {
-  getProjectSchema,
-  getManyProjectsSchema,
-  createProjectSchema,
-  updateProjectSchema,
-} from "@shared/schema/project";
+import { projectSchema } from "@shared/database/models/project";
+import { baseInputAll, baseInputOne } from "./_inputs";
 
-import { baseInputAll, baseInputOne } from "@shared/schema/base";
+export const getProjectSchema = v.object({
+  ...projectSchema.entries,
+  administrative_unit: v.string(),
+  administrative_unit_type: v.string(),
+});
 
 const projectContract = oc
-  .tag("Projects")
+  .tag("Проекты")
   .prefix("/projects")
   .router({
     one: oc
       .route({
         method: "GET",
         path: "/{id}",
-        summary: "Get a project",
-        description: "Get full project information by id",
+        summary: "Полная информация о проекте",
       })
       .input(baseInputOne)
       .output(getProjectSchema),
@@ -28,13 +27,12 @@ const projectContract = oc
       .route({
         method: "PATCH",
         path: "/{id}",
-        summary: "Update a project",
-        description: "Update project information by id",
+        summary: "Обновление проекта",
         inputStructure: "detailed",
       })
       .input(
         v.object({
-          body: updateProjectSchema,
+          body: v.partial(v.omit(projectSchema, ["id", "created_at"])),
           params: v.object({ id: v.string() }),
         }),
       )
@@ -44,8 +42,8 @@ const projectContract = oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List all projects",
-        description: "Get brief information for all projects",
+        summary: "Список всех проектов",
+        description: "Краткая информация по всем проектам",
         spec: (spec) => ({
           ...spec,
           parameters: [
@@ -83,23 +81,22 @@ const projectContract = oc
         }),
       })
       .input(baseInputAll)
-      .output(getManyProjectsSchema),
+      .output(v.array(getProjectSchema)),
 
     create: oc
       .route({
         method: "POST",
         path: "/",
-        summary: "New project",
-        description: "Create a new project",
+        summary: "Добавление проекта",
       })
-      .input(createProjectSchema)
+      .input(v.omit(projectSchema, ["id", "created_at"]))
       .output(getProjectSchema),
 
     delete: oc
       .route({
         method: "DELETE",
         path: "/{id}",
-        summary: "Delete project by ID",
+        summary: "Удаление проекта",
       })
       .input(baseInputOne),
   });

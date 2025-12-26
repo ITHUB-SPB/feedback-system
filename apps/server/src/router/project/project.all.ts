@@ -1,5 +1,5 @@
 import { publicProcedure } from "@shared/api";
-import { type Database } from "@shared/database";
+import { type Tables } from "@shared/database";
 import _baseSelect from "./_baseSelect";
 
 const allProjects = publicProcedure.project.all.handler(
@@ -29,12 +29,12 @@ const allProjects = publicProcedure.project.all.handler(
           }
 
           let column = matchResult[1] as
-            | keyof Database["project"]
-            | keyof Database["administrative_unit"]
-            | keyof Database["administrative_unit_type"];
+            | keyof Tables["project"]
+            | keyof Tables["administrative_unit"]
+            | keyof Tables["administrative_unit_type"];
 
           if (["id", "title"].includes(column)) {
-            column = `project.${column}` as keyof Database["project"];
+            column = `project.${column}` as keyof Tables["project"];
           }
 
           const operator = matchResult[2] as keyof typeof mapOperatorsToSql;
@@ -63,7 +63,7 @@ const allProjects = publicProcedure.project.all.handler(
             field = `project.${field}`;
           }
           query = query.orderBy(
-            field as keyof Database["project"],
+            field as keyof Tables["project"],
             order as "desc" | "asc",
           );
         }

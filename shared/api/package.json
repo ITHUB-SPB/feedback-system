@@ -18,7 +18,6 @@
         "@shared/auth": "workspace:*",
         "@shared/database": "workspace:*",
         "@shared/logger": "workspace:*",
-        "@shared/schema": "workspace:*",
         "esbuild": "^0.27.2",
         "valibot": "catalog:"
     },

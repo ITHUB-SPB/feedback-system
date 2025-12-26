@@ -1,33 +1,28 @@
 import { oc } from "@orpc/contract";
+import * as v from "valibot";
 
-import {
-  getTopicCategorySchema,
-  getManyTopicCategoriesSchema,
-  createTopicCategorySchema,
-} from "@shared/schema/topic_category";
+import { topicCategorySchema } from "@shared/database/models/topic_category";
 
 const topicCategoryContract = oc
-  .tag("Categories & Topics")
+  .tag("Категории замечаний")
   .prefix("/topic_categories")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List topic categories",
-        description: "Get information for all feedback topic categories",
+        summary: "Список категорий замечаний",
       })
-      .output(getManyTopicCategoriesSchema),
+      .output(v.array(topicCategorySchema)),
 
     create: oc
       .route({
         method: "POST",
         path: "/",
-        summary: "New topic category",
-        description: "Create a new feedback topic category",
+        summary: "Создание новой категории",
       })
-      .input(createTopicCategorySchema)
-      .output(getTopicCategorySchema),
+      .input(v.pick(topicCategorySchema, ["title"]))
+      .output(topicCategorySchema),
   });
 
 export default topicCategoryContract;

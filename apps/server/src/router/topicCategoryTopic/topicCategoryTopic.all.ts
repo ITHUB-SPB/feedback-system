@@ -1,5 +1,5 @@
 import { publicProcedure } from "@shared/api";
-import { type Database } from "@shared/database";
+import { type Tables } from "@shared/database";
 
 const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
   async ({ context, input, errors }) => {
@@ -42,13 +42,13 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
           }
 
           let column = matchResult[1] as
-            | keyof Database["topic_category_topic"]
-            | keyof Database["topic"]
-            | keyof Database["topic_category"];
+            | keyof Tables["topic_category_topic"]
+            | keyof Tables["topic"]
+            | keyof Tables["topic_category"];
 
           if (column === "id") {
             column =
-              "topic_category_topic.id" as keyof Database["topic_category_topic"];
+              "topic_category_topic.id" as keyof Tables["topic_category_topic"];
           }
 
           const operator = matchResult[2] as keyof typeof mapOperatorsToSql;

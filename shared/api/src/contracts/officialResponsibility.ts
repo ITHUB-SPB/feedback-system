@@ -1,24 +1,44 @@
 import { oc } from "@orpc/contract";
+import * as v from "valibot";
 
-import {
+import { officialResponsibilitySchema } from "@shared/database/models/official_responsibility";
+import { baseInputAll, baseInputOne } from "./_inputs";
+
+export const getOfficialResponsibilitySchema = v.object({
+  ...officialResponsibilitySchema.entries,
+  administrative_unit: v.string(),
+  officialFirstName: v.string(),
+  officialLastName: v.string(),
+  officialMiddleName: v.optional(v.string()),
+});
+
+export const getManyOfficialResponsibilitySchema = v.array(
   getOfficialResponsibilitySchema,
-  getManyOfficialResponsibilitySchema,
-  createOfficialResponsibilitySchema,
-  updateOfficialResponsibilitySchema,
-  deleteOfficialResponsibilitySchema,
-} from "@shared/schema/official_responsibility";
+);
 
-import { baseInputAll } from "@shared/schema/base";
+export const createOfficialResponsibilitySchema = v.omit(
+  officialResponsibilitySchema,
+  ["id"],
+);
+
+export const updateOfficialResponsibilitySchema = v.object({
+  params: baseInputOne,
+  body: v.partial(v.omit(officialResponsibilitySchema, ["id"])),
+});
+
+export const deleteOfficialResponsibilitySchema = v.object({
+  params: baseInputOne,
+});
 
 const officialResponsibilityContract = oc
-  .tag("Officials")
+  .tag("Ответственные")
   .prefix("/official_responsibilities")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "Список ответственных за территории лиц",
+        summary: "Список ответственных",
       })
       .input(baseInputAll)
       .output(getManyOfficialResponsibilitySchema),
@@ -27,8 +47,7 @@ const officialResponsibilityContract = oc
       .route({
         method: "POST",
         path: "/",
-        summary: "Назначение нового ответственного на новую территорию",
-        description: "Создание новой пары Территория-Ответственный",
+        summary: "Назначение ответственного на территорию",
       })
       .input(createOfficialResponsibilitySchema)
       .output(getOfficialResponsibilitySchema),
@@ -50,7 +69,7 @@ const officialResponsibilityContract = oc
         method: "DELETE",
         path: "/{id}",
         inputStructure: "detailed",
-        summary: "Delete project by ID",
+        summary: "Удаление проекта",
       })
       .input(deleteOfficialResponsibilitySchema),
   });

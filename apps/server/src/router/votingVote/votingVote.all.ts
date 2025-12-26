@@ -1,5 +1,5 @@
 import { publicProcedure } from "@shared/api";
-import { type Database } from "@shared/database";
+import { type Tables } from "@shared/database";
 import _baseSelect from "./_baseSelect";
 
 const allVotingVotes = publicProcedure.votingVote.all.handler(
@@ -49,10 +49,10 @@ const allVotingVotes = publicProcedure.votingVote.all.handler(
             continue;
           }
 
-          let column = matchResult[1] as keyof Database["voting_vote"];
+          let column = matchResult[1] as keyof Tables["voting_vote"];
 
           if (column === "id") {
-            column = "voting_vote.id" as keyof Database["voting_vote"];
+            column = "voting_vote.id" as keyof Tables["voting_vote"];
           }
 
           const operator = matchResult[2] as keyof typeof mapOperatorsToSql;
@@ -83,7 +83,7 @@ const allVotingVotes = publicProcedure.votingVote.all.handler(
         for (const sortExpression of sort) {
           const [field, order] = sortExpression.split(".");
           query = query.orderBy(
-            field as keyof Database["voting_vote"],
+            field as keyof Tables["voting_vote"],
             order as "desc" | "asc",
           );
         }

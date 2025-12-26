@@ -1,43 +1,33 @@
-import { type Generated } from "kysely";
+import { type AdministrativeUnitTypeTable } from "./models/administrative_unit_type";
+import { type AdministrativeUnitTable } from "./models/administrative_unit";
+import { type TopicTable } from "./models/topic";
+import { type TopicCategoryTable } from "./models/topic_category";
+import { type TopicCategoryTopicTable } from "./models/topic_category_topic";
+import { type FeedbackImageTable } from "./models/feedback_image";
+import { type FeedbackStatusTable } from "./models/feedback_status";
+import { type FeedbackTypeTable } from "./models/feedback_type";
+import { type FeedbackTable } from "./models/feedback";
+import { type UserTable } from "./models/user";
+import { type ProjectTable } from "./models/project";
+import { type OfficialResponsibilityTable } from "./models/official_responsibility";
+import { type VotingRegionTable } from "./models/voting_region";
+import { type VotingUnitTable } from "./models/voting_unit";
+import { type VotingVoteTable } from "./models/voting_vote";
 
-import { type AdministrativeUnitTable } from "@shared/schema/administrative_unit";
-import { type AdministrativeUnitTypeTable } from "@shared/schema/administrative_unit_type";
-import { type FeedbackTable } from "@shared/schema/feedback";
-import { type FeedbackStatusTable } from "@shared/schema/feedback_status";
-import { type FeedbackImageTable } from "@shared/schema/feedback_image";
-import { type FeedbackTypeTable } from "@shared/schema/feedback_type";
-import { type TopicTable } from "@shared/schema/topic";
-import { type TopicCategoryTable } from "@shared/schema/topic_category";
-import { type TopicCategoryTopicTable } from "@shared/schema/topic_category_topic";
-import { type OfficialResponsibilityTable } from "@shared/schema/official_responsibility";
-import { type ProjectTable } from "@shared/schema/project";
-import { type VotingUnitTable } from "@shared/schema/voting_unit";
-import { type VotingRegionTable } from "@shared/schema/voting_region";
-import { type VotingVoteTable } from "@shared/schema/voting_vote";
-import { type UserTable } from "@shared/schema/user";
-
-type GeneratedId = {
-  id: Generated<number>;
-};
-
-type GeneratedTime = {
-  created_at: Generated<string>;
-};
-
-export interface Database {
-  administrative_unit: AdministrativeUnitTable & GeneratedId;
-  administrative_unit_type: AdministrativeUnitTypeTable & GeneratedId;
-  project: ProjectTable & GeneratedId & GeneratedTime;
-  topic: TopicTable & GeneratedId;
-  topic_category: TopicCategoryTable & GeneratedId;
-  topic_category_topic: TopicCategoryTopicTable & GeneratedId;
-  feedback: FeedbackTable & GeneratedId & GeneratedTime;
-  feedback_status: FeedbackStatusTable & GeneratedId;
-  feedback_image: FeedbackImageTable & GeneratedId;
-  feedback_type: FeedbackTypeTable & GeneratedId;
-  official_responsibility: OfficialResponsibilityTable & GeneratedId;
-  voting_region: VotingRegionTable & GeneratedId;
-  voting_unit: VotingUnitTable & GeneratedId;
-  voting_vote: VotingVoteTable & GeneratedId & GeneratedTime;
+export interface Tables {
+  administrative_unit: AdministrativeUnitTable;
+  administrative_unit_type: AdministrativeUnitTypeTable;
+  topic: TopicTable;
+  topic_category: TopicCategoryTable;
+  topic_category_topic: TopicCategoryTopicTable;
+  feedback_image: FeedbackImageTable;
+  feedback_status: FeedbackStatusTable;
+  feedback_type: FeedbackTypeTable;
+  feedback: FeedbackTable;
+  project: ProjectTable;
+  official_responsibility: OfficialResponsibilityTable;
+  voting_region: VotingRegionTable;
+  voting_unit: VotingUnitTable;
+  voting_vote: VotingVoteTable;
   user: UserTable;
 }

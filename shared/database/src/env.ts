@@ -1,5 +1,4 @@
 import path from "node:path";
-
 import * as v from "valibot";
 import dotenv from "@dotenvx/dotenvx";
 

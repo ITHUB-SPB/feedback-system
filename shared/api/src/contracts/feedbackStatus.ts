@@ -1,19 +1,19 @@
 import { oc } from "@orpc/contract";
+import * as v from "valibot";
 
-import { getManyFeedbackStatusSchema } from "@shared/schema/feedback_status";
+import { feedbackStatusSchema } from "@shared/database/models/feedback_status";
 
 const feedbackStatusContract = oc
-  .tag("Feedback")
+  .tag("Обращения")
   .prefix("/feedback_statuses")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List all feedback statuses",
-        description: "Get information for all feedback statuses",
+        summary: "Список статусов обращения",
       })
-      .output(getManyFeedbackStatusSchema),
+      .output(v.array(feedbackStatusSchema)),
   });
 
 export default feedbackStatusContract;

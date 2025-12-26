@@ -1,5 +1,5 @@
 import type { Kysely } from "kysely";
-import type { Database } from "../interface";
+import type { Tables } from "../interface";
 
 import projectsData from "./data/projects_deserialized.json" with {
   type: "json",
@@ -33,14 +33,14 @@ type VotingDataItem = {
   unit_center: string;
 };
 
-export async function seedAdministrativeUnitTypes(db: Kysely<Database>) {
+export async function seedAdministrativeUnitTypes(db: Kysely<Tables>) {
   await db
     .insertInto("administrative_unit_type")
     .values([{ title: "settlement" }, { title: "town" }])
     .execute();
 }
 
-export async function seedAdministrativeUnits(db: Kysely<Database>) {
+export async function seedAdministrativeUnits(db: Kysely<Tables>) {
   const { id: unitTypeTownId } = await db
     .selectFrom("administrative_unit_type")
     .select(["id"])
@@ -71,7 +71,7 @@ export async function seedAdministrativeUnits(db: Kysely<Database>) {
     .execute();
 }
 
-export async function seedFeedbackStatuses(db: Kysely<Database>) {
+export async function seedFeedbackStatuses(db: Kysely<Tables>) {
   await db
     .insertInto("feedback_status")
     .values([
@@ -83,14 +83,14 @@ export async function seedFeedbackStatuses(db: Kysely<Database>) {
     .execute();
 }
 
-export async function seedFeedbackTypes(db: Kysely<Database>) {
+export async function seedFeedbackTypes(db: Kysely<Tables>) {
   await db
     .insertInto("feedback_type")
     .values([{ title: "Пожелание" }, { title: "Замечание" }])
     .execute();
 }
 
-export async function seedFeedbackTopics(db: Kysely<Database>) {
+export async function seedFeedbackTopics(db: Kysely<Tables>) {
   const feedbackTopics: Set<string> = new Set(
     (topicsAndCategoriesData as TopicsAndCategoriesDataItem[])
       .map(({ items }) => items)
@@ -103,7 +103,7 @@ export async function seedFeedbackTopics(db: Kysely<Database>) {
     .execute();
 }
 
-export async function seedFeedbackTopicCategories(db: Kysely<Database>) {
+export async function seedFeedbackTopicCategories(db: Kysely<Tables>) {
   const topicCategories = (
     topicsAndCategoriesData as TopicsAndCategoriesDataItem[]
   ).map(({ title }) => ({ title }));
@@ -111,7 +111,7 @@ export async function seedFeedbackTopicCategories(db: Kysely<Database>) {
   await db.insertInto("topic_category").values(topicCategories).execute();
 }
 
-export async function seedFeedbackTopicCategoryTopic(db: Kysely<Database>) {
+export async function seedFeedbackTopicCategoryTopic(db: Kysely<Tables>) {
   for (const { title, items } of topicsAndCategoriesData) {
     const { id: topicCategoryId } = await db
       .selectFrom("topic_category")
@@ -137,7 +137,7 @@ export async function seedFeedbackTopicCategoryTopic(db: Kysely<Database>) {
   }
 }
 
-export async function seedProjects(db: Kysely<Database>) {
+export async function seedProjects(db: Kysely<Tables>) {
   const records = await Promise.all(
     Object.values(projectsData).map(
       async ({ title, coordinates, year, region }: ProjectsDataItem) => {
@@ -162,7 +162,7 @@ export async function seedProjects(db: Kysely<Database>) {
   await db.insertInto("project").values(records).execute();
 }
 
-export async function seedVotingRegions(db: Kysely<Database>) {
+export async function seedVotingRegions(db: Kysely<Tables>) {
   const votingRegions: Set<string> = new Set(
     (votingData as VotingDataItem[]).map(({ region }) => region),
   );
@@ -173,7 +173,7 @@ export async function seedVotingRegions(db: Kysely<Database>) {
     .execute();
 }
 
-export async function seedVotingUnits(db: Kysely<Database>) {
+export async function seedVotingUnits(db: Kysely<Tables>) {
   for (const { region, unit } of votingData) {
     const { id: regionId } = await db
       .selectFrom("voting_region")

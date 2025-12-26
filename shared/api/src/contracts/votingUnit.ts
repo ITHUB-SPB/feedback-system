@@ -1,33 +1,50 @@
-import { oc } from "@orpc/contract";
+/**
+ * TODO
+ *
+ * Переработать модель:
+ *
+ * - id
+ * - administrative_unit_id (FK)
+ * - voting_title (именование для пользователей)
+ *
+ * Убрать дублирование данных с иными таблицами
+ */
 
-import { baseInputAll, baseInputOne } from "@shared/schema/base";
-import {
-  getVotingUnitSchema,
-  getManyVotingUnitSchema,
-  updateVotingUnitSchema,
-  createVotingUnitSchema,
-} from "@shared/schema/voting_unit";
+import { oc } from "@orpc/contract";
+import * as v from "valibot";
+
+import { votingUnitSchema } from "@shared/database/models/voting_unit";
+import { baseInputOne, baseInputAll } from "./_inputs";
+
+export const getVotingUnitSchema = v.object({
+  ...votingUnitSchema.entries,
+  voting_region: v.string(),
+});
+
+export const createVotingUnitSchema = v.omit(votingUnitSchema, ["id"]);
+export const updateVotingUnitSchema = v.object({
+  params: baseInputOne,
+  body: v.partial(createVotingUnitSchema),
+});
 
 const votingUnitContract = oc
-  .tag("Voting Units")
+  .tag("Голосующие поселения")
   .prefix("/voting_units")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List all voting units",
-        description: "Get full information for all voting units",
+        summary: "Список всех голосующих поселений",
       })
       .input(baseInputAll)
-      .output(getManyVotingUnitSchema),
+      .output(v.array(getVotingUnitSchema)),
 
     one: oc
       .route({
         method: "GET",
         path: "/{id}",
-        summary: "Get an voting unit",
-        description: "Get voting unit information by id",
+        summary: "Информация о голосующем поселении",
       })
       .input(baseInputOne)
       .output(getVotingUnitSchema),
@@ -37,7 +54,7 @@ const votingUnitContract = oc
         method: "PATCH",
         path: "/{id}",
         inputStructure: "detailed",
-        summary: "Update voting unit",
+        summary: "Обновление информации о голосующем поселении",
       })
       .input(updateVotingUnitSchema)
       .output(getVotingUnitSchema),
@@ -46,7 +63,7 @@ const votingUnitContract = oc
       .route({
         method: "POST",
         path: "/",
-        summary: "Create voting unit",
+        summary: "Добавление голосующего поселения",
       })
       .input(createVotingUnitSchema)
       .output(getVotingUnitSchema),
@@ -55,7 +72,7 @@ const votingUnitContract = oc
       .route({
         method: "DELETE",
         path: "/{id}",
-        summary: "Delete voting unit by ID",
+        summary: "Удаление голосующего поселения",
       })
       .input(baseInputOne),
   });

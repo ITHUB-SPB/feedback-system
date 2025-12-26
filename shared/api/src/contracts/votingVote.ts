@@ -1,22 +1,27 @@
 import { oc } from "@orpc/contract";
+import * as v from "valibot";
 
-import { baseInputAll, baseInputOne } from "@shared/schema/base";
-import {
-  getVotingVoteSchema,
-  createVotingVoteSchema,
-  getManyVotingVoteSchema,
-} from "@shared/schema/voting_vote";
+import { votingVoteSchema } from "@shared/database/models/voting_vote";
+import { baseInputAll, baseInputOne } from "./_inputs";
+
+export const getVotingVoteSchema = v.object({
+  ...votingVoteSchema.entries,
+  voting_unit: v.optional(v.pipe(v.string(), v.nonEmpty())),
+  voting_region: v.optional(v.pipe(v.string(), v.nonEmpty())),
+});
+
+export const createVotingVoteSchema = v.omit(votingVoteSchema, ["id"]);
+export const getManyVotingVoteSchema = v.array(getVotingVoteSchema);
 
 const votingVoteContract = oc
-  .tag("Voting Vote")
+  .tag("Голосование")
   .prefix("/voting_votes")
   .router({
     all: oc
       .route({
         method: "GET",
         path: "/",
-        summary: "List vote records",
-        description: "Get information for all vote records",
+        summary: "Список всех записей голосования",
       })
       .input(baseInputAll)
       .output(getManyVotingVoteSchema),
@@ -25,8 +30,7 @@ const votingVoteContract = oc
       .route({
         method: "GET",
         path: "/{id}",
-        summary: "Get an voting unit",
-        description: "Get voting unit information by id",
+        summary: "Информация о записи голосования",
       })
       .input(baseInputOne)
       .output(getVotingVoteSchema),
@@ -35,8 +39,7 @@ const votingVoteContract = oc
       .route({
         method: "POST",
         path: "/",
-        summary: "New vote record",
-        description: "Create a vote record",
+        summary: "Добавление новой записи голосования",
       })
       .input(createVotingVoteSchema)
       .output(getVotingVoteSchema),
@@ -45,7 +48,7 @@ const votingVoteContract = oc
       .route({
         method: "DELETE",
         path: "/{id}",
-        summary: "Delete vote record by ID",
+        summary: "Удаление записи голосования",
       })
       .input(baseInputOne),
   });

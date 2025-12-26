@@ -29,7 +29,6 @@
         "@shared/database": "workspace:*",
         "@shared/logger": "workspace:*",
         "@shared/mail": "workspace:*",
-        "@shared/schema": "workspace:*",
         "@shared/typescript-config": "workspace:*",
         "@types/node": "catalog:",
         "tsx": "catalog:",

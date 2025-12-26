@@ -1,7 +1,7 @@
 import * as v from "valibot";
-import { idSchema } from "./base/fields";
+import { idSchema, type GeneratedId, type GeneratedTime } from "./_base";
 
-const projectSchema = v.object({
+export const projectSchema = v.object({
   id: idSchema,
   title: v.pipe(v.string(), v.nonEmpty()),
   latitude: v.pipe(v.number(), v.minValue(-90), v.maxValue(90)),
@@ -23,14 +23,6 @@ const projectSchema = v.object({
   ),
 });
 
-export const getProjectSchema = v.object({
-  ...projectSchema.entries,
-  administrative_unit: v.string(),
-  administrative_unit_type: v.string(),
-});
-
-export const getManyProjectsSchema = v.array(getProjectSchema);
-export const createProjectSchema = v.omit(projectSchema, ["id", "created_at"]);
-export const updateProjectSchema = v.partial(createProjectSchema);
-
-export type ProjectTable = v.InferOutput<typeof projectSchema>;
+export type ProjectTable = v.InferOutput<typeof projectSchema> &
+  GeneratedId &
+  GeneratedTime;

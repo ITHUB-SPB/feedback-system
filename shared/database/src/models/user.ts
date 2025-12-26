@@ -1,6 +1,6 @@
 import * as v from "valibot";
 
-const userSchema = v.object({
+export const userSchema = v.object({
   id: v.string(),
   createdAt: v.fallback(v.date(), new Date()),
   updatedAt: v.fallback(v.date(), new Date()),

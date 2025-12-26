@@ -1,5 +1,5 @@
 import { publicProcedure } from "@shared/api";
-import { type Database } from "@shared/database";
+import { type Tables } from "@shared/database";
 import _baseSelect from "./_baseSelect";
 
 const allAdministrativeUnits = publicProcedure.administrativeUnit.all.handler(
@@ -29,12 +29,12 @@ const allAdministrativeUnits = publicProcedure.administrativeUnit.all.handler(
           }
 
           let column = matchResult[1] as
-            | keyof Database["administrative_unit"]
-            | keyof Database["administrative_unit_type"];
+            | keyof Tables["administrative_unit"]
+            | keyof Tables["administrative_unit_type"];
 
           if (column === "id") {
             column =
-              "administrative_unit.id" as keyof Database["administrative_unit"];
+              "administrative_unit.id" as keyof Tables["administrative_unit"];
           }
 
           const operator = matchResult[2] as keyof typeof mapOperatorsToSql;
@@ -65,7 +65,7 @@ const allAdministrativeUnits = publicProcedure.administrativeUnit.all.handler(
         for (const sortExpression of sort) {
           const [field, order] = sortExpression.split(".");
           query = query.orderBy(
-            field as keyof Database["administrative_unit"],
+            field as keyof Tables["administrative_unit"],
             order as "desc" | "asc",
           );
         }
