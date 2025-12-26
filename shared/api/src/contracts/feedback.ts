@@ -52,17 +52,17 @@ export const updateFeedbackSchema = v.object({
 });
 
 export const createFeedbackSchema = v.object({
-  project_id: v.pick(feedbackSchema, ["project_id"]),
-  description: v.pick(feedbackSchema, ["description"]),
-  feedback_type_id: v.pick(feedbackSchema, ["feedback_type_id"]),
+  project_id: feedbackSchema.entries["project_id"],
+  description: feedbackSchema.entries["description"],
+  feedback_type_id: feedbackSchema.entries["feedback_type_id"],
 
-  topic_category_topic_id: v.optional(v.pick(topicCategoryTopicSchema, ["id"])),
+  topic_category_topic_id: v.optional(topicCategoryTopicSchema.entries["id"]),
 
-  first_name: v.pick(userSchema, ["firstName"]),
-  last_name: v.pick(userSchema, ["lastName"]),
-  middle_name: v.pick(userSchema, ["middleName"]),
-  email: v.pick(userSchema, ["email"]),
-  phone: v.pick(userSchema, ["phone"]),
+  first_name: userSchema.entries["firstName"],
+  last_name: userSchema.entries["lastName"],
+  middle_name: userSchema.entries["middleName"],
+  email: userSchema.entries["email"],
+  phone: userSchema.entries["phone"],
 
   files: v.optional(
     v.union([

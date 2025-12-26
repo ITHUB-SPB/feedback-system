@@ -4,7 +4,7 @@ import { feedbackSchema } from "./feedback";
 
 export const feedbackImageSchema = v.object({
   id: idSchema,
-  feedback_id: v.pick(feedbackSchema, ["id"]),
+  feedback_id: feedbackSchema.entries["id"],
   link_to_s3: v.pipe(v.string(), v.nonEmpty()),
   created_at: v.pipe(v.string()), // TODO: narrow
 });

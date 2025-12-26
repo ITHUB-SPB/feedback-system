@@ -9,8 +9,8 @@ import { baseInputAll } from "./_inputs";
 
 const getTopicCategoryTopicSchema = v.object({
   ...topicCategoryTopicSchema.entries,
-  topic: v.pick(topicSchema, ["title"]),
-  topic_category: v.pick(topicCategorySchema, ["title"]),
+  topic: topicSchema.entries["title"],
+  topic_category: topicCategorySchema.entries["title"],
 });
 
 const topicCategoryTopicContract = oc

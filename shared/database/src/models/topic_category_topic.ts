@@ -5,8 +5,8 @@ import { topicSchema } from "./topic";
 
 export const topicCategoryTopicSchema = v.object({
   id: idSchema,
-  topic_id: v.pick(topicSchema, ["id"]),
-  topic_category_id: v.pick(topicCategorySchema, ["id"]),
+  topic_id: topicSchema.entries["id"],
+  topic_category_id: topicCategorySchema.entries["id"],
 });
 
 export type TopicCategoryTopicTable = v.InferOutput<
