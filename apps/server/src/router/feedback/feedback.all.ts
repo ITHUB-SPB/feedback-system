@@ -39,7 +39,7 @@ const allFeedback = publicProcedure.feedback.all.handler(
             column = "feedback.id" as keyof Tables["feedback"];
           }
 
-          if (column === "feedback_status_id") {
+          if (column === "status.id") {
             column = "feedback.feedback_status_id" as keyof Tables["feedback"];
           }
 
@@ -97,13 +97,13 @@ const allFeedback = publicProcedure.feedback.all.handler(
 
       return publicFieldsOnly
         ? results.map(
-            ({ created_at, description, feedback_type, feedback_status }) => ({
-              created_at,
-              description,
-              feedback_type,
-              feedback_status,
-            }),
-          )
+          ({ created_at, description, feedback_type, status }) => ({
+            created_at,
+            description,
+            feedback_type,
+            status,
+          }),
+        )
         : results;
     } catch (error) {
       console.error(error);

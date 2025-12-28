@@ -1,8 +1,9 @@
 import { sql } from "kysely";
 import { db } from "./index";
+import { resetDatabase } from "./seed/reset";
 
 async function migratePostgres() {
-  console.log(await db.introspection.getSchemas());
+  await resetDatabase(db)
 
   await db.schema
     .createTable("administrative_unit_type")
@@ -75,6 +76,7 @@ async function migratePostgres() {
     .ifNotExists()
     .addColumn("id", "serial", (col) => col.primaryKey())
     .addColumn("title", "text", (col) => col.notNull().unique())
+    .addColumn("translation", "text", (col) => col.notNull())
     .execute();
 
   await db.schema
@@ -109,7 +111,11 @@ async function migratePostgres() {
     .addColumn("feedback_status_id", "integer", (col) =>
       col.references("feedback_status.id").onDelete("set null"),
     )
+    .addColumn("feedback_status_comment", "text")
     .addColumn("created_at", "timestamp", (col) =>
+      col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`),
+    )
+    .addColumn("updated_at", "timestamp", (col) =>
       col.notNull().defaultTo(sql`CURRENT_TIMESTAMP`),
     )
     .execute();

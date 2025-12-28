@@ -19,9 +19,6 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  optimizeDeps: {
-    noDiscovery: true,
-  },
   server: {
     cors: false,
     host: true,

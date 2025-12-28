@@ -1,4 +1,4 @@
-import resetDatabase from "./reset";
+import { resetTables } from "./reset";
 import * as real from "./real";
 import seedFeedback from "./feedback";
 import { db } from "../index";
@@ -30,7 +30,7 @@ async function seedDatabase() {
 
 (async () => {
   const commandsMapping: { [K: string]: Function } = {
-    reset: () => resetDatabase(db),
+    reset: () => resetTables(db),
     seed: seedDatabase,
   } as const;
 

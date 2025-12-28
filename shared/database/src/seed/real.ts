@@ -75,10 +75,13 @@ export async function seedFeedbackStatuses(db: Kysely<Tables>) {
   await db
     .insertInto("feedback_status")
     .values([
-      { title: "approved" },
-      { title: "declined" },
-      { title: "pending" },
-      { title: "completed" },
+      { title: "approved", translation: "Передано АМО" },
+      { title: "declined", translation: "Отклонено АМО" },
+      { title: "pending", translation: "Модерация" },
+      { title: "completed", translation: "Выполнено" },
+      { title: "archived", translation: "Архив" },
+      { title: "proceeding", translation: "В работе АМО" },
+      { title: "banned", translation: "Отклонено" }
     ])
     .execute();
 }

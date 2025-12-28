@@ -16,7 +16,6 @@
         "@scalar/hono-api-reference": "^0.9.30",
         "@sidequest/postgres-backend": "^1.13.1",
         "@sidequest/sqlite-backend": "^1.13.1",
-        "esbuild": "^0.27.2",
         "hono": "catalog:",
         "minio": "catalog:",
         "node-cron": "^4.2.1",

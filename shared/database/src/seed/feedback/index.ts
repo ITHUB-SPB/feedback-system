@@ -12,14 +12,14 @@ type PersonIn = {
 
 type FeedbackTypeIn =
   | {
-      feedback_type_id: number;
-      topic_category_topic_id?: null;
-    }
+    feedback_type_id: number;
+    topic_category_topic_id?: null;
+  }
   | {
-      feedback_type_id: number;
-      topic_category_topic_id: number;
-      files: Blob[];
-    };
+    feedback_type_id: number;
+    topic_category_topic_id: number;
+    files: Blob[];
+  };
 
 type FeedbackIn = PersonIn &
   FeedbackTypeIn & { project_id: number } & { description: string };
@@ -111,7 +111,7 @@ async function generateFiles(): Promise<{ files: Blob[] }> {
 }
 
 export default async function seedFeedback() {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 40; i++) {
     const feedbackRecord = await generateFeedback();
     const form = new FormData();
     for (const field in feedbackRecord) {

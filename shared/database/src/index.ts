@@ -3,3 +3,4 @@ import { parseEnv } from "./env";
 import { db } from "./connection";
 
 export { type Tables, parseEnv, db };
+export { jsonObjectFrom } from 'kysely/helpers/postgres'

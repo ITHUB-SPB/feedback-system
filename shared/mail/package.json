@@ -15,7 +15,6 @@
     "@react-email/components": "catalog:",
     "@react-email/preview-server": "catalog:",
     "@shared/logger": "workspace:*",
-    "esbuild": "^0.27.2",
     "nodemailer": "catalog:",
     "postcss": "8.1.0",
     "react": "catalog:",

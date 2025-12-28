@@ -3,7 +3,18 @@ import { authClient } from "../auth-client";
 
 const authProvider: AuthProvider = {
   check: async () => {
-    throw new Error("Not implemented");
+    try {
+      const { data } = await authClient.getSession();
+
+      return {
+        authenticated: Boolean(data?.session?.token)
+      }
+    } catch (error) {
+      console.error(error)
+      return {
+        authenticated: false
+      }
+    }
   },
   register: async ({
     email,
@@ -69,7 +80,7 @@ const authProvider: AuthProvider = {
     }
   },
   onError: async (error) => {
-    console.log(error);
+    console.log(error.message);
     if (error?.status === 401) {
       return {
         logout: true,

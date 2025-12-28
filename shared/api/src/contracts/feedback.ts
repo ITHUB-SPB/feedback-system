@@ -3,7 +3,7 @@ import { oc } from "@orpc/contract";
 
 import { feedbackSchema } from "@shared/database/models/feedback";
 import { topicCategoryTopicSchema } from "@shared/database/models/topic_category_topic";
-import { feedbackStatusTitleSchema } from "@shared/database/models/feedback_status";
+import { feedbackStatusSchema } from "@shared/database/models/feedback_status";
 import { userSchema } from "@shared/database/models/user";
 
 import { baseInputAll, baseInputOne } from "./_inputs";
@@ -16,8 +16,10 @@ const getFeedbackSchema = v.object({
   administrative_unit_id: v.nullable(v.number()),
   official_id: v.nullable(v.string()),
   feedback_type: v.string(),
-  feedback_status: feedbackStatusTitleSchema,
   image_links: v.optional(v.array(v.string()), []),
+  status: v.object({
+    ...feedbackStatusSchema.entries,
+  })
 });
 
 export const getOneFeedbackSchema = v.object({
@@ -26,6 +28,12 @@ export const getOneFeedbackSchema = v.object({
   email: v.string(),
   person_phone: v.nullable(v.string()),
   responsible_person_full_name: v.nullable(v.string()),
+  availableActions: v.array(v.strictObject({
+    action: v.string(),
+    params: v.strictObject({
+      feedback_status_id: v.number()
+    })
+  }))
 });
 
 const getManyAuthorizedFeedbackSchema = v.array(
@@ -36,7 +44,7 @@ const getManyPublicFeedbackSchema = v.array(
   v.pick(getFeedbackSchema, [
     "description",
     "feedback_type",
-    "feedback_status",
+    "status",
     "created_at",
   ]),
 );
@@ -48,7 +56,7 @@ export const getManyFeedbackSchema = v.union([
 
 export const updateFeedbackSchema = v.object({
   params: baseInputOne,
-  body: v.partial(v.pick(feedbackSchema, ["feedback_status_id", "project_id"])),
+  body: v.partial(v.pick(feedbackSchema, ["feedback_status_id", "feedback_status_comment"])),
 });
 
 export const createFeedbackSchema = v.object({
@@ -176,7 +184,6 @@ const feedbackContract = oc
         summary: "Обновление обращения",
       })
       .input(updateFeedbackSchema)
-      .output(getOneFeedbackSchema),
   });
 
 export default feedbackContract;

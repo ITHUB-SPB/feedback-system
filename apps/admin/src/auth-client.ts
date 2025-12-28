@@ -1,22 +1,6 @@
-import { createAuthClient } from "better-auth/react";
-import {
-  adminClient,
-  customSessionClient,
-  inferAdditionalFields,
-} from "better-auth/client/plugins";
-
-import { ac, roles, type CreateAuth } from "@shared/auth";
+import { getAuthClient } from "@shared/auth/client";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL!;
 
-export const authClient = createAuthClient({
-  baseURL: `${apiBaseUrl}/api/auth`,
-  plugins: [
-    adminClient({
-      ac,
-      roles,
-    }),
-    customSessionClient<ReturnType<CreateAuth>>(),
-    inferAdditionalFields<ReturnType<CreateAuth>>(),
-  ],
-});
+export const authClient = getAuthClient(apiBaseUrl)
+export type AuthClient = typeof authClient
