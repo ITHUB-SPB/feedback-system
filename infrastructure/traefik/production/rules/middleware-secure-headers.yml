@@ -1,0 +1,29 @@
+http:
+  middlewares:
+    middleware-secure-headers:
+      headers:
+        accessControlAllowMethods: "GET,POST,PUT,DELETE,HEAD,OPTIONS,PATCH"
+        accessControlAllowHeaders: "x-total-count,Origin,X-Requested-With,Content-Type,Accept,Authorization,Access-Control-Allow-Headers,content-type"
+        accessControlAllowOriginList:
+          - https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
+          - https://api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
+          - https://xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
+          - https://xn--j1ab.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
+        addVaryHeader: true
+        accessControlAllowCredentials: true
+        sslProxyHeaders:
+          X-Forwarded-Proto: "https"
+        stsSeconds: 63072000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        # forceSTSHeader: true # This is a good thing but it can be tricky. Enable after everything works.
+        customFrameOptionsValue: SAMEORIGIN # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+        contentTypeNosniff: true
+        browserXssFilter: true
+        referrerPolicy: "strict-origin-when-cross-origin"
+        permissionsPolicy: "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        customResponseHeaders:
+          X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex," # disable search engines from indexing home server
+          X-Forwarded-Proto: "https"
+          X-Powered-By: ""
+          Server: ""

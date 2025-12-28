@@ -9,9 +9,6 @@ http:
           - https://localhost
           - https://admin.localhost
           - https://minio.localhost
-          - https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
-          - https://xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
-          - https://xn--j1ab.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
         addVaryHeader: true
         accessControlAllowCredentials: true
         sslProxyHeaders:
@@ -24,7 +21,7 @@ http:
         contentTypeNosniff: true
         browserXssFilter: true
         referrerPolicy: "strict-origin-when-cross-origin"
-        permissionsPolicy: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), vr=()"
+        permissionsPolicy: "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
         customResponseHeaders:
           X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex," # disable search engines from indexing home server
           X-Forwarded-Proto: "https"

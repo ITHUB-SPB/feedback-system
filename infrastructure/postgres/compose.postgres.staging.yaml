@@ -1,10 +1,13 @@
 services:
   feedback-postgres:
+    extends:
+      file: compose.postgres.development.yaml
+      service: feedback-postgres
+
     image: feedback-postgres-staging
     build:
       context: .
     container_name: feedback-postgres-staging
-    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -20,32 +23,16 @@ services:
       AWS_ENDPOINT: https://minio.localhost
       WALG_S3_PREFIX: s3://backup/postgres-backups
       LC_LANG: ru_RU.UTF-8
-    deploy:
-      resources:
-        limits:
-          memory: 2000M
-    ports:
-      - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
       - ./logs:/var/log/wal-g
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${postgres} -d ${POSTGRES_DB-feedback}"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
   feedback-pgadmin:
-    image: dpage/pgadmin4:latest
+    extends:
+      file: compose.postgres.development.yaml
+      service: feedback-pgadmin
+
     container_name: feedback-pgadmin-staging
-    restart: unless-stopped
-    ports:
-      - "5050:80"
-    depends_on:
-      - feedback-postgres
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: adminpassword
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pgadmin.entrypoints=web-secure"

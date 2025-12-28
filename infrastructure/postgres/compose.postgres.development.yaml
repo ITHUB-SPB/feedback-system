@@ -1,8 +1,20 @@
 services:
   feedback-postgres:
+    deploy:
+      resources:
+        limits:
+          memory: 2000M
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${postgres-postgres} -d ${POSTGRES_DB-feedback}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
     image: "postgres:17.6-bookworm"
     container_name: feedback-postgres-base
-    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -10,28 +22,17 @@ services:
       POSTGRES_PORT: 5432
       DATA_PATH: ./data
       LC_LANG: ru_RU.UTF-8
-    deploy:
-      resources:
-        limits:
-          memory: 2000M
-    ports:
-      - "5432:5432"
     volumes:
       - ./data-development:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${postgres-postgres} -d ${POSTGRES_DB-feedback}"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
   feedback-pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: feedback-pgadmin-base
     restart: unless-stopped
     ports:
       - "5050:80"
     depends_on:
       - feedback-postgres
+    container_name: feedback-pgadmin-base
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: adminpassword

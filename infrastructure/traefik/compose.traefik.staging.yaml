@@ -3,6 +3,8 @@ services:
     image: traefik:v3.6.2
     container_name: traefik
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     security_opt:
       - no-new-privileges:true
     command:
@@ -11,11 +13,11 @@ services:
 
       - "--providers.docker=true"
       - "--providers.docker.exposedByDefault=false"
-      - "--providers.file.directory=/rules" # Load dynamic configuration from .toml or .yml files
-      - "--providers.file.watch=true" # Only works on top level files in the rules folder
+      - "--providers.file.directory=/rules"
+      - "--providers.file.watch=true" # Only works on top level files
 
       - "--api.dashboard=true"
-      - "--api.insecure=false"
+      - "--api.insecure=true"
 
       - "--log=true"
       - "--log.level=DEBUG"
@@ -24,7 +26,7 @@ services:
 
       - "--entrypoints.web-secure.address=:443"
       - "--entrypoints.web-secure.http.tls=true"
-      - "--entrypoints.web-secure.http.tls.options=tls-options-localhost@file"
+      - "--entrypoints.web-secure.http.tls.options=tls-opts@file"
       - "--entrypoints.web-secure.http.middlewares=middleware-secure-headers@file"
 
       - "--entrypoints.web.address=:80"
@@ -33,20 +35,21 @@ services:
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
       # - "--serversTransport.insecureSkipVerify=true" 
     ports:
-      - "80:80"
-      - "443:443"
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./rules:/rules"
-      - "./logs:/var/log/traefik"
-      - "./certs:/certs"
+      # - "./staging/rules/dynamic.yml:/rules/dynamic.yml:ro"
+      - "./staging/rules:/rules"
+      - "./staging/logs:/var/log/traefik"
+      - "./staging/certs:/certs"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dashboard.rule=Host(`traefik.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
-      - "traefik.http.routers.dashboard.entrypoints=web-secure"
+      - "traefik.http.routers.dashboard.entrypoints=web"
       - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.tls=true"
-      # - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
+      - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
 
 volumes:
   letsencrypt:
