@@ -9,12 +9,12 @@ export function useAttach() {
       resource: "official_responsibilities",
       successNotification: {
         message: "Ответственный закреплен",
-        type: "success"
+        type: "success",
       },
       errorNotification: {
         message: "Назначение не удалось",
-        type: "error"
-      }
+        type: "error",
+      },
     });
 
   const [isAttaching, setIsAttaching] = useState(false);

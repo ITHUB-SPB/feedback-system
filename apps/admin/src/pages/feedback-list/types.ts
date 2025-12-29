@@ -1,5 +1,6 @@
 export type FeedbackListPageProps = {
-    user: {
+  user:
+    | {
         role: string;
         firstName: string;
         lastName: string | null | undefined;
@@ -16,17 +17,18 @@ export type FeedbackListPageProps = {
         banned: boolean | null | undefined;
         banReason?: string | null | undefined;
         banExpires?: Date | null | undefined;
-    } | undefined
-}
+      }
+    | undefined;
+};
 
 export type ProjectRecord = {
-    id: number;
-    title: string;
-    latitude: number;
-    longitude: number;
-    year_of_completion: number;
-    administrative_unit_id: number;
-    created_at: string;
-    administrative_unit: string;
-    administrative_unit_type: string;
+  id: number;
+  title: string;
+  latitude: number;
+  longitude: number;
+  year_of_completion: number;
+  administrative_unit_id: number;
+  created_at: string;
+  administrative_unit: string;
+  administrative_unit_type: string;
 };

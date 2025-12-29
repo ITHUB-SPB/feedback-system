@@ -24,28 +24,35 @@ const oneFeedback = requireOfficialProcedure.feedback.one.handler(
         .where("feedback.id", "=", Number(input.id))
         .executeTakeFirstOrThrow();
 
-      const statusList = await context.db.selectFrom("feedback_status").selectAll().execute()
+      const statusList = await context.db
+        .selectFrom("feedback_status")
+        .selectAll()
+        .execute();
 
       const availableActionsMapping = {
         moderator: {
           pending: ["approved", "banned"],
-          completed: ["archived"]
+          completed: ["archived"],
         },
         official: {
           approved: ["proceeding", "declined"],
           proceeding: ["completed", "declined"],
-        }
+        },
       } as const;
 
-      const role = context.session.role as "moderator" | "official"
-      const availableActionsByRole = availableActionsMapping[role]
-      const availableActionsByStatus = availableActionsByRole[feedback.status.title] ?? []
-      const availableActions = availableActionsByStatus.map((action: string) => ({
-        action,
-        params: {
-          feedback_status_id: statusList.find(({ title }) => title === action)?.id
-        }
-      }))
+      const role = context.session.role as "moderator" | "official";
+      const availableActionsByRole = availableActionsMapping[role];
+      const availableActionsByStatus =
+        availableActionsByRole[feedback.status.title] ?? [];
+      const availableActions = availableActionsByStatus.map(
+        (action: string) => ({
+          action,
+          params: {
+            feedback_status_id: statusList.find(({ title }) => title === action)
+              ?.id,
+          },
+        }),
+      );
 
       const feedbackImages = await context.db
         .selectFrom("feedback_image")
@@ -78,10 +85,10 @@ const oneFeedback = requireOfficialProcedure.feedback.one.handler(
         ),
         responsible_person_full_name: responsiblePerson
           ? formatFullName(
-            responsiblePerson.officialLastName,
-            responsiblePerson.officialFirstName,
-            responsiblePerson.officialMiddleName,
-          )
+              responsiblePerson.officialLastName,
+              responsiblePerson.officialFirstName,
+              responsiblePerson.officialMiddleName,
+            )
           : null,
         person_phone: feedback.respondentPhone || null,
         availableActions,

@@ -1,8 +1,8 @@
 export type FeedbackShowPageProps = {
-    feedback: any,
-}
+  feedback: any;
+};
 
 export type ActionButtonsProps = {
-    updateStatus: any,
-    availableActions: any
-}
+  updateStatus: any;
+  availableActions: any;
+};

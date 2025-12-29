@@ -3,7 +3,7 @@ import { db } from "./index";
 import { resetDatabase } from "./seed/reset";
 
 async function migratePostgres() {
-  await resetDatabase(db)
+  await resetDatabase(db);
 
   await db.schema
     .createTable("administrative_unit_type")

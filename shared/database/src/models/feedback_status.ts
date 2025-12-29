@@ -14,9 +14,16 @@ export const feedbackStatusTitleSchema = v.picklist([
 export const feedbackStatusSchema = v.object({
   id: idSchema,
   title: feedbackStatusTitleSchema,
-  translation: v.picklist(["Модерация", "Отклонено", "Передано АМО", "В работе АМО", "Отклонено АМО", "Выполнено", "Архив"])
-})
+  translation: v.picklist([
+    "Модерация",
+    "Отклонено",
+    "Передано АМО",
+    "В работе АМО",
+    "Отклонено АМО",
+    "Выполнено",
+    "Архив",
+  ]),
+});
 
-export type FeedbackStatusTable =
-  v.InferOutput<typeof feedbackStatusSchema>
-  & GeneratedId
+export type FeedbackStatusTable = v.InferOutput<typeof feedbackStatusSchema> &
+  GeneratedId;

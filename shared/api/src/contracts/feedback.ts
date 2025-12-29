@@ -19,7 +19,7 @@ const getFeedbackSchema = v.object({
   image_links: v.optional(v.array(v.string()), []),
   status: v.object({
     ...feedbackStatusSchema.entries,
-  })
+  }),
 });
 
 export const getOneFeedbackSchema = v.object({
@@ -28,12 +28,14 @@ export const getOneFeedbackSchema = v.object({
   email: v.string(),
   person_phone: v.nullable(v.string()),
   responsible_person_full_name: v.nullable(v.string()),
-  availableActions: v.array(v.strictObject({
-    action: v.string(),
-    params: v.strictObject({
-      feedback_status_id: v.number()
-    })
-  }))
+  availableActions: v.array(
+    v.strictObject({
+      action: v.string(),
+      params: v.strictObject({
+        feedback_status_id: v.number(),
+      }),
+    }),
+  ),
 });
 
 const getManyAuthorizedFeedbackSchema = v.array(
@@ -56,7 +58,9 @@ export const getManyFeedbackSchema = v.union([
 
 export const updateFeedbackSchema = v.object({
   params: baseInputOne,
-  body: v.partial(v.pick(feedbackSchema, ["feedback_status_id", "feedback_status_comment"])),
+  body: v.partial(
+    v.pick(feedbackSchema, ["feedback_status_id", "feedback_status_comment"]),
+  ),
 });
 
 export const createFeedbackSchema = v.object({
@@ -183,7 +187,7 @@ const feedbackContract = oc
         inputStructure: "detailed",
         summary: "Обновление обращения",
       })
-      .input(updateFeedbackSchema)
+      .input(updateFeedbackSchema),
   });
 
 export default feedbackContract;

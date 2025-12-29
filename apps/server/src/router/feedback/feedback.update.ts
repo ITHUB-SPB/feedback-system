@@ -11,7 +11,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
         .updateTable("feedback")
         .set({
           ...body,
-          updated_at: new Date()
+          updated_at: new Date(),
         })
         .where("feedback.id", "=", Number(params.id))
         .executeTakeFirstOrThrow();
@@ -38,7 +38,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
         // );
       }
 
-      return {}
+      return {};
     } catch (error) {
       console.error(error);
       throw errors.NOT_FOUND({

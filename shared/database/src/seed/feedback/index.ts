@@ -12,14 +12,14 @@ type PersonIn = {
 
 type FeedbackTypeIn =
   | {
-    feedback_type_id: number;
-    topic_category_topic_id?: null;
-  }
+      feedback_type_id: number;
+      topic_category_topic_id?: null;
+    }
   | {
-    feedback_type_id: number;
-    topic_category_topic_id: number;
-    files: Blob[];
-  };
+      feedback_type_id: number;
+      topic_category_topic_id: number;
+      files: Blob[];
+    };
 
 type FeedbackIn = PersonIn &
   FeedbackTypeIn & { project_id: number } & { description: string };

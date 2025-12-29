@@ -22,5 +22,5 @@ export const Route = createFileRoute("/_authenticated/feedback/$showId")({
 function ShowFeedback() {
   const { feedback } = Route.useLoaderData();
 
-  return <FeedbackShowPage feedback={feedback} />
+  return <FeedbackShowPage feedback={feedback} />;
 }

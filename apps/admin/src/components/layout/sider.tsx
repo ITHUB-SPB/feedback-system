@@ -34,17 +34,19 @@ const drawerButtonStyles: CSSProperties = {
   zIndex: 999,
 };
 
-export const ThemedSider: React.FC<RefineThemedLayoutSiderProps & { user: typeof authClient.$Infer.Session.user }> = ({
+export const ThemedSider: React.FC<
+  RefineThemedLayoutSiderProps & { user: typeof authClient.$Infer.Session.user }
+> = ({
   Title: TitleFromProps,
   render,
   meta,
   fixed,
   activeItemDisabled = false,
   siderItemsAreCollapsed = true,
-  user
+  user,
 }) => {
   const { token } = theme.useToken();
-  const redirect = useNavigate()
+  const redirect = useNavigate();
 
   const { mobileSiderOpen, setMobileSiderOpen } = useThemedLayoutContext();
 
@@ -96,12 +98,12 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps & { user: typeof
 
       if (confirm) {
         setWarnWhen(false);
-        await authClient.signOut()
-        redirect({ to: '/login', search: { redirect: "feedback" } })
+        await authClient.signOut();
+        redirect({ to: "/login", search: { redirect: "feedback" } });
       }
     } else {
-      await authClient.signOut()
-      redirect({ to: '/login', search: { redirect: "feedback" } })
+      await authClient.signOut();
+      redirect({ to: "/login", search: { redirect: "feedback" } });
     }
   };
 
@@ -129,8 +131,8 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps & { user: typeof
   const items = renderTreeView(menuItems, selectedKey);
 
   const renderSider = (availableItems: string[]) => {
-    const itemsToRender = items.filter((item) =>
-      item.key && availableItems.includes(item.key),
+    const itemsToRender = items.filter(
+      (item) => item.key && availableItems.includes(item.key),
     );
     if (render) {
       return render({

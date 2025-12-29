@@ -6,5 +6,5 @@ export const Route = createFileRoute("/_authenticated/officials")({
 });
 
 export default function ListOfficials() {
-  return <OfficialsPage />
+  return <OfficialsPage />;
 }

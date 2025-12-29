@@ -1,3 +1,3 @@
 import FeedbackShowPage from "./page";
 
-export { FeedbackShowPage }
+export { FeedbackShowPage };

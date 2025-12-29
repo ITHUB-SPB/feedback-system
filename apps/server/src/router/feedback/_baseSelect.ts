@@ -22,7 +22,7 @@ export default function _baseSelect(databaseInstance: typeof db) {
       "project.administrative_unit_id",
       "official_responsibility.administrative_unit_id",
     )
-    .select(eb => [
+    .select((eb) => [
       "feedback.id",
       "feedback.project_id",
       "feedback.description",
@@ -39,9 +39,16 @@ export default function _baseSelect(databaseInstance: typeof db) {
       "topic.title as topic",
       "official_responsibility.official_id as official_id",
       jsonObjectFrom(
-        eb.selectFrom("feedback_status")
-          .select(["feedback_status.id", "feedback_status.title", "feedback_status.translation"])
+        eb
+          .selectFrom("feedback_status")
+          .select([
+            "feedback_status.id",
+            "feedback_status.title",
+            "feedback_status.translation",
+          ])
           .whereRef("feedback_status.id", "=", "feedback.feedback_status_id"),
-      ).$notNull().as("status")
+      )
+        .$notNull()
+        .as("status"),
     ]);
 }

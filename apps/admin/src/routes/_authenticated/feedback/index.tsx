@@ -12,5 +12,5 @@ export const Route = createFileRoute("/_authenticated/feedback/")({
 function ListFeedback() {
   const { user } = Route.useLoaderData();
 
-  return <FeedbackListPage user={user} />
+  return <FeedbackListPage user={user} />;
 }

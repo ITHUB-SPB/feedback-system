@@ -81,7 +81,7 @@ export async function seedFeedbackStatuses(db: Kysely<Tables>) {
       { title: "completed", translation: "Выполнено" },
       { title: "archived", translation: "Архив" },
       { title: "proceeding", translation: "В работе АМО" },
-      { title: "banned", translation: "Отклонено" }
+      { title: "banned", translation: "Отклонено" },
     ])
     .execute();
 }

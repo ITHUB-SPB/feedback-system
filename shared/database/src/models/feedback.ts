@@ -4,7 +4,10 @@ import { idSchema, type GeneratedId, type GeneratedTime } from "./_base";
 export const feedbackSchema = v.object({
   id: idSchema,
   description: v.string(),
-  feedback_status_comment: v.fallback(v.nullable(v.pipe(v.string(), v.nonEmpty())), null),
+  feedback_status_comment: v.fallback(
+    v.nullable(v.pipe(v.string(), v.nonEmpty())),
+    null,
+  ),
   feedback_status_id: idSchema,
   feedback_type_id: idSchema,
   project_id: idSchema,

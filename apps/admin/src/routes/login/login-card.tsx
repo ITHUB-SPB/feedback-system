@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  type LoginPageProps,
-  type LoginFormTypes,
-} from "@refinedev/core";
+import { type LoginPageProps, type LoginFormTypes } from "@refinedev/core";
 import { authClient } from "@/auth-client";
 
 import {
@@ -66,12 +63,15 @@ export const LoginCard: React.FC<LoginProps> = ({
         form={form}
         onFinish={async ({ email, password, remember }) => {
           if (!email || !password) {
-            return
+            return;
           }
 
-          await authClient.signIn.email(
-            { email, password, rememberMe: remember, callbackURL: "/feedback" }
-          )
+          await authClient.signIn.email({
+            email,
+            password,
+            rememberMe: remember,
+            callbackURL: "/feedback",
+          });
         }}
         requiredMark={false}
         initialValues={{
@@ -132,12 +132,7 @@ export const LoginCard: React.FC<LoginProps> = ({
           )}
         </div>
         <Form.Item>
-          <Button
-            type="primary"
-            size="large"
-            htmlType="submit"
-            block
-          >
+          <Button type="primary" size="large" htmlType="submit" block>
             Войти
           </Button>
         </Form.Item>

@@ -7,19 +7,17 @@ import Popconfirm, { type PopconfirmProps } from "antd/es/popconfirm";
 
 import { RefineButtonClassNames } from "./_enums";
 
-
 type HandleConfirmProp = {
-  handleConfirm: (event: MouseEventHandler<HTMLButtonElement>, { feedback_status_comment }: { feedback_status_comment: string | null }) => void
-}
+  handleConfirm: (
+    event: MouseEventHandler<HTMLButtonElement>,
+    { feedback_status_comment }: { feedback_status_comment: string | null },
+  ) => void;
+};
 
-export const DeclineButton: React.FC<ButtonProps & PopconfirmProps & HandleConfirmProp> = ({
-  children,
-  color,
-  variant,
-  title,
-  handleConfirm
-}) => {
-  const [comment, setComment] = useState('')
+export const DeclineButton: React.FC<
+  ButtonProps & PopconfirmProps & HandleConfirmProp
+> = ({ children, color, variant, title, handleConfirm }) => {
+  const [comment, setComment] = useState("");
 
   return (
     <Popconfirm
@@ -29,9 +27,19 @@ export const DeclineButton: React.FC<ButtonProps & PopconfirmProps & HandleConfi
       okType="primary"
       title={title}
       icon={null}
-      description={<Input.TextArea rows={4} style={{ resize: "none", width: "100%" }} value={comment} onChange={e => setComment(e.target.value)} required />}
+      description={
+        <Input.TextArea
+          rows={4}
+          style={{ resize: "none", width: "100%" }}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          required
+        />
+      }
       okButtonProps={{ disabled: comment.length < 3 }}
-      onConfirm={(event: any) => handleConfirm(event, { feedback_status_comment: comment })}
+      onConfirm={(event: any) =>
+        handleConfirm(event, { feedback_status_comment: comment })
+      }
     >
       <Button
         color={color}

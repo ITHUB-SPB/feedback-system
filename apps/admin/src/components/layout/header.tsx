@@ -27,7 +27,7 @@ export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
   const { token } = theme.useToken();
   const { warnWhen, setWarnWhen } = useWarnAboutChange();
   const { data: session } = authClient.useSession();
-  const redirect = useNavigate()
+  const redirect = useNavigate();
 
   if (!session?.user.name) {
     return null;
@@ -56,12 +56,12 @@ export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
 
       if (confirm) {
         setWarnWhen(false);
-        await authClient.signOut()
-        redirect({ to: '/login', search: { redirect: "feedback" } })
+        await authClient.signOut();
+        redirect({ to: "/login", search: { redirect: "feedback" } });
       }
     } else {
-      await authClient.signOut()
-      redirect({ to: '/login', search: { redirect: "feedback" } })
+      await authClient.signOut();
+      redirect({ to: "/login", search: { redirect: "feedback" } });
     }
   };
 

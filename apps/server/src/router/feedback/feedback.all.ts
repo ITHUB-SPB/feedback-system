@@ -96,14 +96,12 @@ const allFeedback = publicProcedure.feedback.all.handler(
       const publicFieldsOnly = !context.session?.user?.role;
 
       return publicFieldsOnly
-        ? results.map(
-          ({ created_at, description, feedback_type, status }) => ({
+        ? results.map(({ created_at, description, feedback_type, status }) => ({
             created_at,
             description,
             feedback_type,
             status,
-          }),
-        )
+          }))
         : results;
     } catch (error) {
       console.error(error);
