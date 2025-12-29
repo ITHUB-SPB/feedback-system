@@ -29,6 +29,7 @@ export default function FeedbackListPage({ user }: FeedbackListPageProps) {
                     ...table?.tableProps.pagination,
                     pageSizeOptions: [12, 24, 48],
                 }}
+                sticky
             >
                 <Table.Column
                     dataIndex="description"
@@ -151,8 +152,7 @@ export default function FeedbackListPage({ user }: FeedbackListPageProps) {
                     render={(value) => new Date(value).toLocaleString("ru")}
                 />
                 <Table.Column
-                    title="Действия"
-                    minWidth={120}
+                    width={120}
                     render={(_, record) => (
                         <Space>
                             <ShowButton hideText size="small" recordItemId={record.id} />

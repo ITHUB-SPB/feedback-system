@@ -1,13 +1,11 @@
 import React, { useContext, type CSSProperties } from "react";
 import {
   type TreeMenuItem,
-  useLogout,
-  useIsExistAuthentication,
   useMenu,
   useLink,
   useWarnAboutChange,
-  useGetIdentity,
 } from "@refinedev/core";
+
 import {
   ThemedTitle,
   useThemedLayoutContext,
@@ -25,6 +23,9 @@ import theme from "antd/es/theme";
 import ConfigProvider from "antd/es/config-provider";
 import Typography from "antd/es/typography";
 
+import { authClient } from "@/auth-client";
+import { useNavigate } from "@tanstack/react-router";
+
 const drawerButtonStyles: CSSProperties = {
   borderStartStartRadius: 0,
   borderEndStartRadius: 0,
@@ -33,26 +34,25 @@ const drawerButtonStyles: CSSProperties = {
   zIndex: 999,
 };
 
-export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
+export const ThemedSider: React.FC<RefineThemedLayoutSiderProps & { user: typeof authClient.$Infer.Session.user }> = ({
   Title: TitleFromProps,
   render,
   meta,
   fixed,
   activeItemDisabled = false,
   siderItemsAreCollapsed = true,
+  user
 }) => {
   const { token } = theme.useToken();
-  const { data: user } = useGetIdentity();
+  const redirect = useNavigate()
 
   const { mobileSiderOpen, setMobileSiderOpen } = useThemedLayoutContext();
 
-  const isExistAuthentication = useIsExistAuthentication();
   const direction = useContext(ConfigProvider.ConfigContext)?.direction;
   const Link = useLink();
   const { warnWhen, setWarnWhen } = useWarnAboutChange();
   const { menuItems, selectedKey, defaultOpenKeys } = useMenu({ meta });
   const breakpoint = Grid.useBreakpoint();
-  const { mutate: mutateLogout } = useLogout();
 
   const isMobile =
     typeof breakpoint.lg === "undefined" ? false : !breakpoint.lg;
@@ -88,7 +88,7 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
     });
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (warnWhen) {
       const confirm = window.confirm(
         "Уверены, что хотите выйти из системы? Несохраненные изменения будут утеряны",
@@ -96,23 +96,23 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
 
       if (confirm) {
         setWarnWhen(false);
-        mutateLogout();
+        await authClient.signOut()
+        redirect({ to: '/login', search: { redirect: "feedback" } })
       }
     } else {
-      mutateLogout();
+      await authClient.signOut()
+      redirect({ to: '/login', search: { redirect: "feedback" } })
     }
   };
 
-  const logout = isExistAuthentication && (
+  const logout = user.name && (
     <div style={{ marginTop: "auto" }}>
-      {user?.name && (
-        <Typography.Paragraph strong style={{ textAlign: "center" }}>
-          {user.name}
-        </Typography.Paragraph>
-      )}
+      <Typography.Paragraph strong style={{ textAlign: "center" }}>
+        {user.name}
+      </Typography.Paragraph>
       <Menu.Item
         key="logout"
-        onClick={() => handleLogout()}
+        onClick={handleLogout}
         style={{ textAlign: "center" }}
       >
         Выйти
@@ -130,7 +130,7 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
 
   const renderSider = (availableItems: string[]) => {
     const itemsToRender = items.filter((item) =>
-      availableItems.includes(item.key),
+      item.key && availableItems.includes(item.key),
     );
     if (render) {
       return render({

@@ -25,7 +25,6 @@ const translateUnitType = (value: string) => {
 export default function AdministrativeUnitsTable() {
   const {
     attachOfficial,
-    attachOfficialMutation,
     isAttaching,
     setIsAttaching,
     attachingUnitId,
@@ -117,7 +116,7 @@ export default function AdministrativeUnitsTable() {
                   {...officialsSelectProps}
                   style={{ width: "100%" }}
                   onChange={(value) => {
-                    setAttachingOfficialId(value);
+                    setAttachingOfficialId(value as unknown as string);
                   }}
                 >
                   {officialsSelectProps?.options?.map((option) => (
@@ -158,7 +157,6 @@ export default function AdministrativeUnitsTable() {
           }}
         />
         <Table.Column
-          title="Действия"
           width={120}
           render={(_, record) => {
             if (isAttaching && attachingUnitId === record.id) {

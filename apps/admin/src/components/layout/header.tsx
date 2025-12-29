@@ -6,9 +6,11 @@ import Space from "antd/es/space";
 import theme from "antd/es/theme";
 import Typography from "antd/es/typography";
 
-import { useLogout, useWarnAboutChange } from "@refinedev/core";
+import { useWarnAboutChange } from "@refinedev/core";
+import { useNavigate } from "@tanstack/react-router";
 
-import { ThemedTitle } from "../../components/layout/title";
+import { authClient } from "@/auth-client";
+import { ThemedTitle } from "@/components/layout/title";
 
 export type RefineThemedLayoutHeaderProps = {
   sticky?: boolean;
@@ -23,10 +25,11 @@ export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
   user,
 }) => {
   const { token } = theme.useToken();
-  const { mutate: mutateLogout } = useLogout();
   const { warnWhen, setWarnWhen } = useWarnAboutChange();
+  const { data: session } = authClient.useSession();
+  const redirect = useNavigate()
 
-  if (!user.name) {
+  if (!session?.user.name) {
     return null;
   }
 
@@ -45,7 +48,7 @@ export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
     headerStyles.zIndex = 1;
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (warnWhen) {
       const confirm = window.confirm(
         "Уверены, что хотите выйти из системы? Несохраненные изменения будут утеряны",
@@ -53,10 +56,12 @@ export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
 
       if (confirm) {
         setWarnWhen(false);
-        mutateLogout();
+        await authClient.signOut()
+        redirect({ to: '/login', search: { redirect: "feedback" } })
       }
     } else {
-      mutateLogout();
+      await authClient.signOut()
+      redirect({ to: '/login', search: { redirect: "feedback" } })
     }
   };
 

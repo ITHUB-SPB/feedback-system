@@ -1,9 +1,3 @@
-import type {
-  UseModalFormReturnType,
-  UseSelectReturnType,
-  useEditableTable,
-} from "@refinedev/antd";
-
 export type PersonRecord = {
   id: number;
   firstName: string;

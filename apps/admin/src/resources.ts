@@ -61,5 +61,5 @@ export const resources = [
     meta: {
       hide: true,
     },
-  },
+  }
 ];

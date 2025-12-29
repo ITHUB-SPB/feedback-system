@@ -46,7 +46,7 @@ export const Route = createFileRoute("/_authenticated")({
         }
         Sider={
           user.role === "moderator"
-            ? (props) => <ThemedSider {...props} fixed />
+            ? (props) => <ThemedSider {...props} user={user} fixed />
             : undefined
         }
       >

@@ -1,5 +1,5 @@
 import type { DataProvider } from "@refinedev/core";
-import type { authClient } from "./auth-provider";
+import type { authClient } from "../auth-client";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL! + "/api";
 
@@ -182,7 +182,12 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   create: async ({ resource, variables }) => {
-    const response = await fetcher(`${API_URL}/${resource}`, {
+    const url =
+      resource === "auth/admin/create-user"
+        ? `${API_URL}/auth/admin/create-user`
+        : `${API_URL}/${resource}`;
+
+    const response = await fetcher(url, {
       method: "POST",
       body: JSON.stringify(variables),
       headers: {
@@ -208,8 +213,4 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   getApiUrl: () => API_URL,
-  // createMany: () => { /* ... */ },
-  // deleteMany: () => { /* ... */ },
-  // updateMany: () => { /* ... */ },
-  // custom: () => { /* ... */ },
 };

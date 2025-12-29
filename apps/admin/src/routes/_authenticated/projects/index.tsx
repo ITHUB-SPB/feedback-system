@@ -110,8 +110,7 @@ function ListProjects() {
         <Table.Column dataIndex="latitude" title="Широта" />
         <Table.Column dataIndex="longitude" title="Долгота" />
         <Table.Column
-          title="Действия"
-          minWidth={120}
+          width={120}
           render={(_, record) => (
             <Space>
               <ShowButton hideText size="small" recordItemId={record.id} />

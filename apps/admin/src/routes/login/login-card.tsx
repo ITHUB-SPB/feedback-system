@@ -2,9 +2,8 @@ import React from "react";
 import {
   type LoginPageProps,
   type LoginFormTypes,
-  useLogin,
-  useNotification,
 } from "@refinedev/core";
+import { authClient } from "@/auth-client";
 
 import {
   bodyStyles,
@@ -37,8 +36,6 @@ export const LoginCard: React.FC<LoginProps> = ({
 }) => {
   const { token } = theme.useToken();
   const [form] = Form.useForm<LoginFormTypes>();
-  const { mutate: login, isPending } = useLogin<LoginFormTypes>();
-  const notify = useNotification();
 
   const CardTitle = (
     <Typography.Title
@@ -67,8 +64,14 @@ export const LoginCard: React.FC<LoginProps> = ({
       <Form<LoginFormTypes>
         layout="vertical"
         form={form}
-        onFinish={(values) => {
-          login({ ...values, ...mutationVariables });
+        onFinish={async ({ email, password, remember }) => {
+          if (!email || !password) {
+            return
+          }
+
+          await authClient.signIn.email(
+            { email, password, rememberMe: remember, callbackURL: "/feedback" }
+          )
         }}
         requiredMark={false}
         initialValues={{
@@ -133,7 +136,6 @@ export const LoginCard: React.FC<LoginProps> = ({
             type="primary"
             size="large"
             htmlType="submit"
-            loading={isPending}
             block
           >
             Войти

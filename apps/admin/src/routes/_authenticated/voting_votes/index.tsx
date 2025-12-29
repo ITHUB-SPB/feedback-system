@@ -151,8 +151,7 @@ function ListVotingVotes() {
           render={(value) => new Date(value).toLocaleString("ru-RU")}
         />
         <Table.Column
-          title="Действия"
-          minWidth={120}
+          width={120}
           render={(_, record) => (
             <Space>
               <DeleteButton hideText size="small" recordItemId={record.id} />
