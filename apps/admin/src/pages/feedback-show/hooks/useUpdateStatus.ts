@@ -1,4 +1,4 @@
-import { useUpdate, type HttpError } from "@/core/refine-core";
+import { useUpdate, type HttpError } from "@refinedev/core";
 import type { FeedbackContract } from "@/types";
 
 export default function useUpdateStatus(feedbackId: number) {

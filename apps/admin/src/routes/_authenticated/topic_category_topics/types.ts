@@ -3,7 +3,7 @@ import type {
   UseSelectReturnType,
   useTableReturnType,
 } from "@/core/refine-antd";
-import type { useMany } from "@/core/refine-core";
+import type { useMany } from "@refinedev/core";
 
 export type ITopicCategoryTopic = {
   topic_category_id: number;

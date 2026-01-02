@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 
-import { useInvalidate, type HttpError } from "@/core/refine-core";
+import { useInvalidate, type HttpError } from "@refinedev/core";
 import { useModalForm } from "@/core/refine-antd";
 import type { NewUserRecord } from "../types";
 

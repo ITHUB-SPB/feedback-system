@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useList, useMany, useCreate } from "@/core/refine-core";
+import { useList, useMany, useCreate } from "@refinedev/core";
 import { useEditableTable, useSelect, useModalForm } from "@/core/refine-antd";
 
 import type { IResponsibility, PersonRecord } from "./types";

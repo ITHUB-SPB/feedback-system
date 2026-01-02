@@ -9,7 +9,7 @@ import Modal from "antd/es/modal";
 import Button from "antd/es/button";
 import Flex from "antd/es/flex";
 
-import { useMany } from "@/core/refine-core";
+import { useMany } from "@refinedev/core";
 
 import {
   EditButton,

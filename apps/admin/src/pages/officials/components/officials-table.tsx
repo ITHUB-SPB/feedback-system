@@ -7,7 +7,7 @@ import Input from "antd/es/input";
 import Button from "antd/es/button";
 import Select from "antd/es/select";
 
-import { useInvalidate } from "@/core/refine-core";
+import { useInvalidate } from "@refinedev/core";
 import { getDefaultSortOrder, TextField, SaveButton, DeleteButton, EditButton } from "@/core/refine-antd";
 
 import useOfficialsTable from "../hooks/useOfficialsTable";

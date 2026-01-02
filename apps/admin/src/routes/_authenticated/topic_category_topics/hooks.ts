@@ -1,4 +1,4 @@
-import { useMany } from "@/core/refine-core";
+import { useMany } from "@refinedev/core";
 import { useTable, useSelect, useModalForm } from "@/core/refine-antd";
 
 import type { ITopicCategoryTopic } from "./types";

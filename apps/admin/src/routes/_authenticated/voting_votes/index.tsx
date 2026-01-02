@@ -4,7 +4,7 @@ import Table from "antd/es/table";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
 
-import { useMany, useExport } from "@/core/refine-core";
+import { useMany, useExport } from "@refinedev/core";
 import {
   useTable,
   getDefaultSortOrder,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCreate, useInvalidate } from "@/core/refine-core";
+import { useCreate, useInvalidate } from "@refinedev/core";
 
 import type { IResponsibility } from "../types";
 
