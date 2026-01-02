@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getDefaultSortOrder, useTable } from "@refinedev/antd";
 import Table from "antd/es/table";
 
-import { TextField } from "../../../components/fields/text";
-import { List } from "../../../components/crud/list";
+import { TextField, List, getDefaultSortOrder, useTable } from "@/core/refine-antd";
 
 export const Route = createFileRoute("/_authenticated/citizens/")({
   component: ListCitizens,
@@ -12,7 +10,7 @@ export const Route = createFileRoute("/_authenticated/citizens/")({
 export default function ListCitizens() {
   const { tableProps, sorters } = useTable({
     resource: "auth/admin/list-users",
-    pagination: { currentPage: 1, pageSize: 24 },
+    pagination: { currentPage: 1, pageSize: 24, mode: "server" },
     sorters: {
       initial: [
         {

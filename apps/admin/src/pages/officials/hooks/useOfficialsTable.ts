@@ -1,13 +1,14 @@
-import { useList } from "@refinedev/core";
-import { useEditableTable, useSelect } from "@refinedev/antd";
+import { getRouteApi } from "@tanstack/react-router";
+import { useEditableTable, useSelectFromQuery } from "@/core/refine-antd";
 
 import type {
-  AdministrativeUnitRecord,
-  IResponsibility,
   UserRecord,
 } from "../types";
 
 export default function useOfficialsTable() {
+  const routeApi = getRouteApi("/_authenticated/officials")
+  const { officialResponsibilities, administrativeUnits } = routeApi.useLoaderData()
+
   const {
     tableProps,
     formProps,
@@ -18,8 +19,8 @@ export default function useOfficialsTable() {
     editButtonProps,
     sorters,
   } = useEditableTable<UserRecord>({
-    resource: "auth/admin/list-users",
-    pagination: { currentPage: 1, pageSize: 24 },
+    resource: "officials",
+    pagination: { currentPage: 1, pageSize: 24, mode: "server" },
     sorters: {
       initial: [
         {
@@ -50,27 +51,12 @@ export default function useOfficialsTable() {
     },
   });
 
-  const { result: administrativeUnits, query: administrativeUnitsQuery } =
-    useList<IResponsibility>({
-      resource: "official_responsibilities",
-      pagination: {
-        pageSize: 48,
-      },
-      filters: [
-        {
-          field: "official_id",
-          operator: "in",
-          value: tableProps?.dataSource?.map((official) => official.id) ?? [],
-        },
-      ],
-    });
-
   const { selectProps: administrativeUnitsSelectProps } =
-    useSelect<AdministrativeUnitRecord>({
-      resource: "administrative_units",
-      pagination: {
-        pageSize: 48,
-      },
+    useSelectFromQuery<
+      typeof administrativeUnits[0], 
+      { label: string, value: number }
+    >({
+      data: administrativeUnits
     });
 
   return {
@@ -85,8 +71,7 @@ export default function useOfficialsTable() {
       sorters,
     },
     administrativeUnits: {
-      result: administrativeUnits,
-      query: administrativeUnitsQuery,
+      result: officialResponsibilities,
       select: administrativeUnitsSelectProps,
     },
   };

@@ -16,13 +16,13 @@ import { Route as AuthenticatedOfficialsRouteImport } from './routes/_authentica
 import { Route as AuthenticatedVoting_votesIndexRouteImport } from './routes/_authenticated/voting_votes/index'
 import { Route as AuthenticatedVoting_unitsIndexRouteImport } from './routes/_authenticated/voting_units/index'
 import { Route as AuthenticatedTopic_category_topicsIndexRouteImport } from './routes/_authenticated/topic_category_topics/index'
-import { Route as AuthenticatedProjectsIndexRouteImport } from './routes/_authenticated/projects/index'
-import { Route as AuthenticatedFeedbackIndexRouteImport } from './routes/_authenticated/feedback/index'
+import { Route as AuthenticatedProjectsIndexRouteImport } from './routes/_authenticated/projects.index'
+import { Route as AuthenticatedFeedbackIndexRouteImport } from './routes/_authenticated/feedback.index'
 import { Route as AuthenticatedCitizensIndexRouteImport } from './routes/_authenticated/citizens/index'
 import { Route as AuthenticatedAdministrative_unitsIndexRouteImport } from './routes/_authenticated/administrative_units/index'
 import { Route as AuthenticatedProjectsCreateRouteImport } from './routes/_authenticated/projects/create'
 import { Route as AuthenticatedProjectsShowIdRouteImport } from './routes/_authenticated/projects/$showId'
-import { Route as AuthenticatedFeedbackShowIdRouteImport } from './routes/_authenticated/feedback/$showId'
+import { Route as AuthenticatedFeedbackShowIdRouteImport } from './routes/_authenticated/feedback.$showId'
 import { Route as AuthenticatedProjectsEditIdEditRouteImport } from './routes/_authenticated/projects/$editId.edit'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({

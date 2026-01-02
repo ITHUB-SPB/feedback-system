@@ -1,3 +1,5 @@
+import { useNavigate } from "@tanstack/react-router";
+
 import Table from "antd/es/table";
 import Form from "antd/es/form";
 import Space from "antd/es/space";
@@ -5,16 +7,13 @@ import Input from "antd/es/input";
 import Button from "antd/es/button";
 import Select from "antd/es/select";
 
-import { getDefaultSortOrder } from "@refinedev/antd";
-
-import { TextField } from "@/components/fields/text";
-import { SaveButton } from "@/components/buttons/save";
-import { DeleteButton } from "@/components/buttons/delete";
-import { EditButton } from "@/components/buttons/edit";
+import { useInvalidate } from "@/core/refine-core";
+import { getDefaultSortOrder, TextField, SaveButton, DeleteButton, EditButton } from "@/core/refine-antd";
 
 import useOfficialsTable from "../hooks/useOfficialsTable";
 import { useAttach } from "../hooks/useAttachOfficial";
 import { type UserRecord, type AdministrativeUnitRecord } from "../types";
+
 
 export default function OfficialsTable() {
   const { table, administrativeUnits } = useOfficialsTable();
@@ -28,6 +27,9 @@ export default function OfficialsTable() {
     attachingOfficialId,
     setAttachingOfficialId,
   } = useAttach();
+
+  const navigate = useNavigate()
+  const invalidate = useInvalidate()
 
   return (
     <Form {...table.formProps}>
@@ -121,28 +123,10 @@ export default function OfficialsTable() {
         />
 
         <Table.Column
-          dataIndex="social"
-          title="Соцсеть"
-          render={(value: string, record: UserRecord) => {
-            return table.isEditing(record.id) ? (
-              <Form.Item name="social" style={{ margin: 0 }}>
-                <Input autoFocus size="small" />
-              </Form.Item>
-            ) : (
-              <TextField value={value || "—"} style={{ cursor: "pointer" }} />
-            );
-          }}
-        />
-
-        <Table.Column
           title="Поселение"
           sorter
-          width={340}
+          width={300}
           render={(_, record: UserRecord) => {
-            if (administrativeUnits.query.isLoading) {
-              return "Загрузка...";
-            }
-
             if (isAttaching && attachingOfficialId === record.id) {
               return (
                 <Select
@@ -162,7 +146,7 @@ export default function OfficialsTable() {
             }
 
             const responsibilityRecord =
-              administrativeUnits?.result?.data?.find(
+              administrativeUnits?.result?.find(
                 (unit) => unit.official_id === record.id,
               )?.administrative_unit;
 
@@ -232,7 +216,7 @@ export default function OfficialsTable() {
                     size="small"
                   />
                   <Button {...table.cancelButtonProps} size="small">
-                    Отменить
+                    ↩
                   </Button>
                 </Space>
               );
@@ -253,8 +237,25 @@ export default function OfficialsTable() {
                 <DeleteButton
                   hideText
                   size="small"
+                  resource="auth/admin/remove-user"
                   recordItemId={record.id}
-                  resource="persons"
+                  successNotification={{
+                    description: "Успешно",
+                    message: "Ответственное лицо удалено",
+                    type: "success"
+                  }}
+                  errorNotification={{
+                    description: "Ошибка",
+                    message: "Не удалось удалить аккаунт",
+                    type: "error"
+                  }}
+                  onSuccess={() => {
+                    invalidate({
+                      resource: "officials",
+                      invalidates: ["all"]
+                    })
+                    navigate({ to: "/officials", })
+                  }}
                 />
               </Space>
             );

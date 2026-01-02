@@ -1,11 +1,12 @@
+import Table from "antd/es/table";
+import Select from "antd/es/select";
+
 import {
   getDefaultSortOrder,
   getDefaultFilter,
   FilterDropdown,
-} from "@refinedev/antd";
+} from "@/core/refine-antd";
 
-import Table from "antd/es/table";
-import Select from "antd/es/select";
 import type { CategoryTopicsTableProps } from "./types";
 
 export default function CategoryTopicsTable({
@@ -22,6 +23,7 @@ export default function CategoryTopicsTable({
         ...table.tableProps.pagination,
         pageSizeOptions: [12, 24, 48],
       }}
+      size="middle"
     >
       <Table.Column
         dataIndex="topic_category_id"

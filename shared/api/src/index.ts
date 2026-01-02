@@ -8,5 +8,5 @@ export {
   requireModeratorProcedure,
 } from "./context";
 
-export { createAPIClient, type RouterOutput } from "./client";
+export { createAPIClient, type RouterOutput, type RouterInput } from "./client";
 export { onErrorInterceptor } from "./interceptors";

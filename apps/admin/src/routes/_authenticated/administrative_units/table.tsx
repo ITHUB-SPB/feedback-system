@@ -1,4 +1,4 @@
-import { getDefaultSortOrder } from "@refinedev/antd";
+import { getDefaultSortOrder } from "@/core/refine-antd";
 
 import Table from "antd/es/table";
 import Space from "antd/es/space";
@@ -7,13 +7,10 @@ import Form from "antd/es/form";
 import Button from "antd/es/button";
 import Input from "antd/es/input";
 
-import { TextField } from "../../../components/fields/text";
-import { EditButton } from "../../../components/buttons/edit";
-import { DeleteButton } from "../../../components/buttons/delete";
-import { SaveButton } from "../../../components/buttons/save";
+import { TextField, EditButton, DeleteButton, SaveButton } from "@/core/refine-antd";
 
-import type { PersonRecord, AdministrativeUnitRecord } from "./types";
-import { useAttach, useAdministrativeUnitsTable, useOfficials } from "./hooks";
+import type { AdministrativeUnitRecord } from "./types";
+import { useAdministrativeUnitsTable } from "./hooks";
 
 const translateUnitType = (value: string) => {
   return {
@@ -23,19 +20,7 @@ const translateUnitType = (value: string) => {
 };
 
 export default function AdministrativeUnitsTable() {
-  const {
-    attachOfficial,
-    isAttaching,
-    setIsAttaching,
-    attachingUnitId,
-    setAttachingUnitId,
-    attachingOfficialId,
-    setAttachingOfficialId,
-  } = useAttach();
-
-  const { table, responsibilities, unitTypes } = useAdministrativeUnitsTable();
-
-  const { officialsSelectProps } = useOfficials();
+  const { table, unitTypes } = useAdministrativeUnitsTable();
 
   return (
     <Form {...table.formProps}>
@@ -48,6 +33,7 @@ export default function AdministrativeUnitsTable() {
           hideOnSinglePage: true,
           pageSizeOptions: [12, 24, 48],
         }}
+        size="small"
       >
         <Table.Column
           dataIndex="title"
@@ -102,99 +88,9 @@ export default function AdministrativeUnitsTable() {
           }}
         />
         <Table.Column
-          title="Ответственный"
-          width={340}
-          sorter
-          render={(_, record: PersonRecord) => {
-            if (responsibilities.responsibilitiesQuery.isLoading) {
-              return "Загрузка...";
-            }
-
-            if (isAttaching && attachingUnitId === record.id) {
-              return (
-                <Select
-                  {...officialsSelectProps}
-                  style={{ width: "100%" }}
-                  onChange={(value) => {
-                    setAttachingOfficialId(value as unknown as string);
-                  }}
-                >
-                  {officialsSelectProps?.options?.map((option) => (
-                    <Select.Option key={option.id} value={option.id}>
-                      {option.label}
-                    </Select.Option>
-                  ))}
-                </Select>
-              );
-            }
-
-            const responsibilityRecord =
-              responsibilities.responsibilities?.data?.find(
-                (responsibility) =>
-                  responsibility.administrative_unit_id == record.id,
-              );
-
-            if (!responsibilityRecord) {
-              return (
-                <Button
-                  onClick={() => {
-                    setIsAttaching(true);
-                    setAttachingUnitId(record.id);
-                  }}
-                  size="small"
-                  type="default"
-                  color="geekblue"
-                >
-                  Назначить
-                </Button>
-              );
-            }
-
-            const { officialFirstName, officialLastName, officialMiddleName } =
-              responsibilityRecord;
-
-            return `${officialLastName} ${officialFirstName} ${officialMiddleName}`;
-          }}
-        />
-        <Table.Column
-          width={120}
+          width={80}
           render={(_, record) => {
-            if (isAttaching && attachingUnitId === record.id) {
-              return (
-                <Space>
-                  <SaveButton
-                    {...table.saveButtonProps}
-                    hideText
-                    disabled={!attachingOfficialId}
-                    size="small"
-                    onClick={() => {
-                      attachOfficial({
-                        values: {
-                          official_id: attachingOfficialId,
-                          administrative_unit_id: record.id,
-                        },
-                      });
-                      setAttachingOfficialId(null);
-                      setIsAttaching(false);
-                      table.setId(undefined);
-                    }}
-                  />
-                  <Button
-                    {...table.cancelButtonProps}
-                    size="small"
-                    onClick={() => {
-                      if (isAttaching) {
-                        setAttachingOfficialId(null);
-                        setIsAttaching(false);
-                        table.cancelButtonProps.onClick();
-                      }
-                    }}
-                  >
-                    ↩
-                  </Button>
-                </Space>
-              );
-            } else if (table.isEditing(record.id)) {
+            if (table.isEditing(record.id)) {
               return (
                 <Space>
                   <SaveButton
@@ -202,9 +98,7 @@ export default function AdministrativeUnitsTable() {
                     hideText
                     size="small"
                   />
-                  <Button {...table.cancelButtonProps} size="small">
-                    ↩
-                  </Button>
+                  <Button {...table.cancelButtonProps} size="small">↩</Button>
                 </Space>
               );
             }
@@ -225,6 +119,16 @@ export default function AdministrativeUnitsTable() {
                   size="small"
                   recordItemId={record.id}
                   resource="administrative_units"
+                  successNotification={{
+                    message: "Успешно",
+                    description: "Поселение удалено",
+                    type: "success",
+                  }}
+                  errorNotification={{
+                    message: "Ошибка",
+                    description: "Не удалось удалить поселение",
+                    type: "error"
+                  }}
                 />
               </Space>
             );

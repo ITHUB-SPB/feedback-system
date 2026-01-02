@@ -1,11 +1,12 @@
-import { type HttpError } from "@refinedev/core";
-import { useModalForm } from "@refinedev/antd";
 import { useNavigate } from "@tanstack/react-router";
 
+import { useInvalidate, type HttpError } from "@/core/refine-core";
+import { useModalForm } from "@/core/refine-antd";
 import type { NewUserRecord } from "../types";
 
 export default function useCreateOfficial() {
   const navigate = useNavigate();
+  const invalidate = useInvalidate()
 
   const {
     modalProps: createOfficialModalProps,
@@ -13,11 +14,18 @@ export default function useCreateOfficial() {
     show: createOfficialModalShow,
   } = useModalForm<NewUserRecord, HttpError>({
     action: "create",
-    resource: "/auth/admin/create-user",
+    resource: "officials",
     onMutationSuccess: () => {
       navigate({ from: "/officials", to: "/officials" });
+      invalidate({
+        resource: "officials",
+        invalidates: ["all"]
+      })
+      invalidate({
+        resource: "auth/admin/list-users",
+        invalidates: ["all"]
+      })
     },
-    invalidates: ["resourceAll"],
     defaultFormValues: {
       password: crypto.randomUUID().slice(0, 8),
       role: "official",

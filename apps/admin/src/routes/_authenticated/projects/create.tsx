@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useForm, useSelect } from "@refinedev/antd";
 
 import Form from "antd/es/form";
 import Input from "antd/es/input";
@@ -7,7 +6,7 @@ import Select from "antd/es/select";
 import InputNumber from "antd/es/input-number";
 import Flex from "antd/es/flex";
 
-import { Create } from "../../../components/crud/create";
+import { useForm, useSelect, Create } from "@/core/refine-antd";
 
 export const Route = createFileRoute("/_authenticated/projects/create")({
   component: CreateProject,
@@ -20,6 +19,7 @@ function CreateProject() {
     resource: "administrative_units",
     pagination: {
       pageSize: 48,
+      mode: "server"
     },
   });
 

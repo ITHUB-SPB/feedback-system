@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useCreate } from "@refinedev/core";
+import { useCreate, useInvalidate } from "@/core/refine-core";
 
 import type { IResponsibility } from "../types";
 
 export function useAttach() {
+  const invalidate = useInvalidate()
+
   const { mutate: attachOfficial, mutation: attachOfficialMutation } =
     useCreate<IResponsibility>({
       resource: "official_responsibilities",
@@ -15,6 +17,19 @@ export function useAttach() {
         message: "Назначение не удалось",
         type: "error",
       },
+      mutationOptions: {
+        onSuccess: () => {
+          invalidate({
+            resource: "official_responsibilities",
+            invalidates: ["all"]
+          })
+
+          invalidate({
+            resource: "administrative_units",
+            invalidates: ["all"]
+          })
+        }
+      }
     });
 
   const [isAttaching, setIsAttaching] = useState(false);

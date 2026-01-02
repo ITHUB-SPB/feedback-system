@@ -1,5 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMany } from "@refinedev/core";
+
+import Table from "antd/es/table";
+import Form from "antd/es/form";
+import Space from "antd/es/space";
+import Input from "antd/es/input";
+import Select from "antd/es/select";
+import Modal from "antd/es/modal";
+import Button from "antd/es/button";
+import Flex from "antd/es/flex";
+
+import { useMany } from "@/core/refine-core";
 
 import {
   EditButton,
@@ -11,16 +21,7 @@ import {
   SaveButton,
   DeleteButton,
   useModalForm,
-} from "@refinedev/antd";
-
-import Table from "antd/es/table";
-import Form from "antd/es/form";
-import Space from "antd/es/space";
-import Input from "antd/es/input";
-import Select from "antd/es/select";
-import Modal from "antd/es/modal";
-import Button from "antd/es/button";
-import Flex from "antd/es/flex";
+} from "@/core/refine-antd";
 
 type UnitRecord = {
   id: number;
@@ -50,7 +51,7 @@ function ListVotingUnits() {
     sorters,
   } = useEditableTable<UnitRecord>({
     resource: "voting_units",
-    pagination: { currentPage: 1, pageSize: 48 },
+    pagination: { currentPage: 1, pageSize: 48, mode: "server" },
     sorters: {
       initial: [
         {
@@ -97,6 +98,7 @@ function ListVotingUnits() {
     resource: "voting_regions",
     pagination: {
       pageSize: 48,
+      mode: "server"
     },
   });
 

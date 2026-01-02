@@ -1,4 +1,4 @@
-import type { DataProvider } from "@refinedev/core";
+import type { DataProvider } from "../core/refine-core";
 import type { authClient } from "../auth-client";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL! + "/api";
@@ -8,6 +8,7 @@ const fetcher = async (url: string, options?: RequestInit) => {
     ...options,
     credentials: "include",
     headers: {
+      "Content-Type": "application/json",
       ...options?.headers,
     },
   });
@@ -16,7 +17,7 @@ const fetcher = async (url: string, options?: RequestInit) => {
 export const dataProvider: DataProvider = {
   getOne: async ({ resource, id, meta }) => {
     const url =
-      resource === "auth/admin/list-users"
+      resource === "officials"
         ? `${API_URL}/auth/admin/get-user?id=${id}`
         : `${API_URL}/${resource}/${id}`;
 
@@ -29,27 +30,20 @@ export const dataProvider: DataProvider = {
   },
   update: async ({ resource, id, variables }) => {
     const updateOptions =
-      resource === "auth/admin/list-users"
+      resource === "officials"
         ? {
-            method: "POST",
-            body: JSON.stringify({
-              userId: id,
-              data: variables,
-            }),
-          }
+          method: "POST",
+          body: JSON.stringify({
+            userId: id,
+            data: variables,
+          }),
+        }
         : { method: "PATCH", body: JSON.stringify(variables) };
 
     const url =
-      resource === "auth/admin/list-users"
+      resource === "officials"
         ? `${API_URL}/auth/admin/update-user`
         : `${API_URL}/${resource}/${id}`;
-
-    console.log({
-      ...updateOptions,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
     const response = await fetcher(url, {
       ...updateOptions,
@@ -65,7 +59,7 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
-    if (resource === "auth/admin/list-users") {
+    if (resource === "officials") {
       const query: { [K: string]: string } = {} satisfies Parameters<
         typeof authClient.admin.listUsers
       >[0]["query"];
@@ -183,7 +177,7 @@ export const dataProvider: DataProvider = {
   },
   create: async ({ resource, variables }) => {
     const url =
-      resource === "auth/admin/create-user"
+      resource === "officials"
         ? `${API_URL}/auth/admin/create-user`
         : `${API_URL}/${resource}`;
 
@@ -202,9 +196,22 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   deleteOne: async ({ resource, id }) => {
-    const response = await fetcher(`${API_URL}/${resource}/${id}`, {
-      method: "DELETE",
-    });
+    const fetcherProps: [string, RequestInit] = resource === "officials" ?
+      [
+        `${API_URL}/auth/admin/remove-user`, {
+          method: "POST",
+          body: JSON.stringify({
+            userId: id
+          })
+        }
+      ] :
+      [
+        `${API_URL}/${resource}/${id}`, {
+          method: "DELETE",
+        }
+      ];
+
+    const response = await fetcher(...fetcherProps);
 
     if (response.status < 200 || response.status > 299) throw response;
 

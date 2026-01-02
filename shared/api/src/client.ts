@@ -4,6 +4,7 @@ import { OpenAPILink } from "@orpc/openapi-client/fetch";
 
 import type {
   ContractRouterClient,
+  InferContractRouterInputs,
   InferContractRouterOutputs,
 } from "@orpc/contract";
 
@@ -15,6 +16,7 @@ interface APIClientOptions {
 }
 
 export type RouterOutput = InferContractRouterOutputs<typeof apiContract>;
+export type RouterInput = InferContractRouterInputs<typeof apiContract>;
 
 export const createAPIClient = ({ serverUrl, apiPath }: APIClientOptions) => {
   const link = new OpenAPILink(apiContract, {

@@ -6,9 +6,7 @@ import Select from "antd/es/select";
 import InputNumber from "antd/es/input-number";
 import Flex from "antd/es/flex";
 
-import { useForm, useSelect } from "@refinedev/antd";
-
-import { Edit } from "../../../components/crud/edit";
+import { useForm, useSelect, Edit } from "@/core/refine-antd";
 
 export const Route = createFileRoute("/_authenticated/projects/$editId/edit")({
   component: EditProject,
@@ -34,11 +32,12 @@ function EditProject() {
     defaultValue: record?.administrative_unit_id,
     pagination: {
       pageSize: 48,
+      mode: "server"
     },
   });
 
   return (
-    <Edit saveButtonProps={saveButtonProps} breadcrumb={null}>
+    <Edit saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
         <Form.Item label="Название" name="title">
           <Input />

@@ -1,60 +1,62 @@
-import { useMany } from "@refinedev/core";
-import { useTable, getDefaultFilter, useSelect } from "@refinedev/antd";
+import { getRouteApi } from "@tanstack/react-router";
 
-import type { ProjectRecord } from "../types";
+import {
+  useSelectFromQuery, useTable
+} from "@/core/refine-antd";
 
-export default function useFeedbackTable(userId?: string, role?: string) {
-  const { tableProps, sorters, filters } = useTable({
+import type { FeedbackContract } from "@/types";
+import type { FeedbackTypeContract, FeedbackStatusContract } from "@/types";
+
+
+export default function useFeedbackTable() {
+  const routeApi = getRouteApi("/_authenticated/feedback/")
+  const { user, feedbackStatuses, feedbackTypes } = routeApi.useLoaderData()
+
+  const { tableProps, sorters, filters } = useTable<FeedbackContract["outputs"]["all"][0]>({
     resource: "feedback",
-    pagination: { currentPage: 1, pageSize: 12 },
+    pagination: { currentPage: 1, pageSize: 12, mode: "server" },
     sorters: {
       initial: [{ field: "created_at", order: "desc" }],
     },
     filters: {
       permanent:
-        role === "official"
+        user?.role === "official"
           ? [
-              {
-                field: "official_id",
-                operator: "eq",
-                value: userId,
-              },
-            ]
+            {
+              field: "official_id",
+              operator: "eq",
+              value: user?.id,
+            },
+          ]
           : [],
       initial: [
         {
           field: "status.id",
           operator: "in",
-          value: role === "official" ? [1, 2, 4, 6] : [1, 2, 3, 4, 6, 7],
+          value: user?.role === "official" ? [1, 2, 4, 6] : [1, 2, 3, 4, 6, 7],
         },
       ],
     },
   });
 
-  const { result: projects, query: projectsQuery } = useMany<ProjectRecord>({
-    resource: "projects",
-    ids: tableProps?.dataSource?.map((feedback) => feedback.project_id) ?? [],
-  });
-
-  const { selectProps: feedbackTypeSelectProps } = useSelect({
-    resource: "feedback_types",
+  const { selectProps: feedbackTypeSelectProps } = useSelectFromQuery<
+    FeedbackTypeContract["all"][0],
+    { label: string, value: number }
+  >({
+    data: feedbackTypes,
     optionLabel: "title",
     optionValue: "id",
-    pagination: {
-      pageSize: 48,
-    },
-    defaultValue: getDefaultFilter("feedback_type_id", filters, "eq"),
   });
 
-  const { selectProps: feedbackStatusSelectProps } = useSelect({
-    resource: "feedback_statuses",
+  const { selectProps: feedbackStatusSelectProps } = useSelectFromQuery<
+    FeedbackStatusContract["all"][0],
+    { label: string, value: number }
+  >({
+    data: feedbackStatuses,
     optionLabel: "translation",
     optionValue: "id",
-    pagination: {
-      pageSize: 48,
-    },
-    defaultValue: getDefaultFilter("status.id", filters, "in"),
   });
+
 
   return {
     table: {
@@ -62,13 +64,7 @@ export default function useFeedbackTable(userId?: string, role?: string) {
       sorters,
       filters,
     },
-    projects: {
-      projects,
-      projectsQuery,
-    },
-    select: {
-      feedbackTypeSelectProps,
-      feedbackStatusSelectProps,
-    },
+    feedbackTypeSelectProps,
+    feedbackStatusSelectProps
   };
 }

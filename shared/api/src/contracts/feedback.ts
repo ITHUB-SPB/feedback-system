@@ -187,7 +187,8 @@ const feedbackContract = oc
         inputStructure: "detailed",
         summary: "Обновление обращения",
       })
-      .input(updateFeedbackSchema),
+      .input(updateFeedbackSchema)
+      .output(v.object({}))
   });
 
 export default feedbackContract;

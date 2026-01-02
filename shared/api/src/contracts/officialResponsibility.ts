@@ -9,7 +9,7 @@ export const getOfficialResponsibilitySchema = v.object({
   administrative_unit: v.string(),
   officialFirstName: v.string(),
   officialLastName: v.string(),
-  officialMiddleName: v.optional(v.string()),
+  officialMiddleName: v.optional(v.nullable(v.string())),
 });
 
 export const getManyOfficialResponsibilitySchema = v.array(

@@ -1,4 +1,4 @@
-import type { UseModalFormReturnType } from "@refinedev/antd";
+import type { UseModalFormReturnType } from "@/core/refine-antd";
 
 export type UserRecord = {
   id: string;

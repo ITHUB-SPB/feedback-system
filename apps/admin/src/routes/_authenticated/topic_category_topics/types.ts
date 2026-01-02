@@ -2,8 +2,8 @@ import type {
   UseModalFormReturnType,
   UseSelectReturnType,
   useTableReturnType,
-} from "@refinedev/antd";
-import type { useMany } from "@refinedev/core";
+} from "@/core/refine-antd";
+import type { useMany } from "@/core/refine-core";
 
 export type ITopicCategoryTopic = {
   topic_category_id: number;

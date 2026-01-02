@@ -1,12 +1,11 @@
-import { useMany } from "@refinedev/core";
-
-import { useTable, useSelect, useModalForm } from "@refinedev/antd";
+import { useMany } from "@/core/refine-core";
+import { useTable, useSelect, useModalForm } from "@/core/refine-antd";
 
 import type { ITopicCategoryTopic } from "./types";
 
 export function useTopicCategoryTopic() {
   const { tableProps, sorters, filters } = useTable({
-    pagination: { currentPage: 1, pageSize: 12 },
+    pagination: { currentPage: 1, pageSize: 24, mode: "server" },
     sorters: {
       initial: [{ field: "topic_category_id", order: "asc" }],
     },
@@ -29,6 +28,7 @@ export function useTopicCategoryTopic() {
     resource: "topics",
     pagination: {
       pageSize: 48,
+      mode: "server"
     },
   });
 
@@ -36,6 +36,7 @@ export function useTopicCategoryTopic() {
     resource: "topic_categories",
     pagination: {
       pageSize: 48,
+      mode: "server"
     },
   });
 

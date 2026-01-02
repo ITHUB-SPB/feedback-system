@@ -1,21 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { useMany, useExport } from "@refinedev/core";
+import Table from "antd/es/table";
+import Space from "antd/es/space";
+import Select from "antd/es/select";
+
+import { useMany, useExport } from "@/core/refine-core";
 import {
   useTable,
   getDefaultSortOrder,
   getDefaultFilter,
   FilterDropdown,
   useSelect,
-} from "@refinedev/antd";
+  DeleteButton,
+  ExportButton,
+  List
+} from "@/core/refine-antd";
 
-import { DeleteButton } from "../../../components/buttons/delete";
-import { ExportButton } from "../../../components/buttons/export";
-import { List } from "../../../components/crud/list";
-
-import Table from "antd/es/table";
-import Space from "antd/es/space";
-import Select from "antd/es/select";
 
 export const Route = createFileRoute("/_authenticated/voting_votes/")({
   component: ListVotingVotes,
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/_authenticated/voting_votes/")({
 
 function ListVotingVotes() {
   const { tableProps, sorters, filters } = useTable({
-    pagination: { currentPage: 1, pageSize: 24 },
+    pagination: { currentPage: 1, pageSize: 24, mode: "server" },
     sorters: {
       initial: [{ field: "created_at", order: "desc" }],
     },
@@ -38,6 +38,7 @@ function ListVotingVotes() {
     resource: "voting_units",
     pagination: {
       pageSize: 48,
+      mode: "server"
     },
     sorters: [{ field: "title", order: "asc" }],
     defaultValue: getDefaultFilter("voting_unit_id", filters, "eq"),
@@ -61,7 +62,6 @@ function ListVotingVotes() {
   return (
     <List
       title="Голосование / Результаты"
-      breadcrumb={null}
       headerButtons={() => (
         <Space>
           <ExportButton

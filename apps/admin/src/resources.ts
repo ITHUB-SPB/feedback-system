@@ -55,11 +55,4 @@ export const resources = [
       label: "Участники",
     },
   },
-  {
-    name: "voting_regions",
-    list: "/voting_regions",
-    meta: {
-      hide: true,
-    },
-  },
 ];

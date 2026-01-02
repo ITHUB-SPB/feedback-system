@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useList, useMany, useCreate } from "@refinedev/core";
 
-import { useEditableTable, useSelect, useModalForm } from "@refinedev/antd";
+import { useList, useMany, useCreate } from "@/core/refine-core";
+import { useEditableTable, useSelect, useModalForm } from "@/core/refine-antd";
 
 import type { IResponsibility, PersonRecord } from "./types";
 
@@ -59,7 +59,7 @@ export function useAdministrativeUnitsTable() {
     editButtonProps,
   } = useEditableTable({
     resource: "administrative_units",
-    pagination: { currentPage: 1, pageSize: 24 },
+    pagination: { currentPage: 1, pageSize: 24, mode: "server" },
     sorters: {
       initial: [
         {
@@ -74,6 +74,7 @@ export function useAdministrativeUnitsTable() {
     useList<IResponsibility>({
       resource: "official_responsibilities",
       pagination: {
+        mode: "server",
         pageSize: 48,
       },
       filters: [
@@ -123,6 +124,7 @@ export function useOfficials() {
     resource: "auth/admin/list-users",
     pagination: {
       pageSize: 48,
+      mode: "server"
     },
     filters: [
       {
@@ -141,6 +143,7 @@ export function useAdministrativeUnits() {
     resource: "administrative_units",
     pagination: {
       pageSize: 48,
+      mode: "server"
     },
   });
 
