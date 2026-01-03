@@ -1,10 +1,8 @@
 export type {
   RefineButtonCommonProps,
   RefineButtonDataProps,
-  RefineButtonLinkingProps,
   RefineButtonResourceProps,
   RefineButtonSingleProps,
-  RefineCloneButtonProps,
   RefineCreateButtonProps,
   RefineDeleteButtonProps,
   RefineEditButtonProps,
@@ -19,7 +17,6 @@ export type {
   RefineCrudEditProps,
   RefineCrudListProps,
   RefineCrudShowProps,
-  ActionButtonRenderer,
 } from "./types/index.js";
 
 export type {

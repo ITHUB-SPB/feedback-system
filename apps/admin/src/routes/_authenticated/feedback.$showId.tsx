@@ -1,29 +1,63 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { dataProvider } from "@/providers/data-provider";
-import FeedbackShowPage from "@/pages/feedback-show";
-import type { FeedbackContract } from "@/types";
+import Tag from "antd/es/tag";
+import Flex from "antd/es/flex";
 
-type FeedbackRecord = FeedbackContract["outputs"]["one"]
+import { Show } from "@/components/layouts";
+import { ActionButtons } from "@/components/buttons";
+import FeedbackModerator from "@/components/views/feedback-moderator";
+import FeedbackOfficial from "@/components/views/feedback-official";
+import { getStatusColor } from "@/components/lib/statusColor";
+import useUpdateStatus from "@/components/hooks/use-feedback-status-update";
+import { useFeedbackOne } from "@/components/hooks/use-feedback";
 
 export const Route = createFileRoute("/_authenticated/feedback/$showId")({
+  params: {
+    parse: (p) => ({
+      showId: Number(p.showId),
+    }),
+  },
   loader: async ({ context, params }) => {
-    const { data: feedback } = await context.queryClient.ensureQueryData({
-      queryKey: ["default", "feedback", "one", params.showId],
-      queryFn: () =>
-        dataProvider.getOne<FeedbackRecord>({
-          resource: "feedback",
-          id: Number(params.showId),
-        }),
-    });
-
-    const { data: session } = await context.authClient.getSession();
-
-    return { feedback, user: session?.user };
+    context.queryClient.ensureQueryData(
+      context.orpcClient.feedback.one.queryOptions({
+        input: {
+          id: params.showId
+        }
+      })
+    )
   },
   component: () => {
-    const { feedback, user } = Route.useLoaderData();
+    const { showId } = Route.useParams()
+    const { context: { session } } = Route.parentRoute.useLoaderData()
 
-    return <FeedbackShowPage feedback={feedback} user={user} />;
+    const { data: feedback } = useFeedbackOne(showId)
+    const updateStatus = useUpdateStatus(showId);
+
+    return (
+      <Show
+        resource="feedback"
+        recordItemId={showId}
+        title={
+          <Flex align="center" gap={18}>
+            Обращение №{feedback.id}
+            <Tag color={getStatusColor(feedback.status.title)}>
+              {feedback.status.translation}
+            </Tag>
+          </Flex>
+        }
+        footerButtons={
+          <ActionButtons
+            updateStatus={updateStatus}
+            availableActions={feedback.availableActions}
+          />
+        }
+      >
+        {session.role === "official" ? (
+          <FeedbackOfficial feedback={feedback} />
+        ) : (
+          <FeedbackModerator feedback={feedback} />
+        )}
+      </Show>
+    );
   },
 });

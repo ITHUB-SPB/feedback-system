@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "@tanstack/react-router";
 
-import Layout from 'antd/es/layout'
+import Layout from "antd/es/layout";
 import Button from "antd/es/button";
 import Space from "antd/es/space";
 import theme from "antd/es/theme";
@@ -46,9 +46,7 @@ export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
   }
 
   const handleLogout = async () => {
-    const confirm = window.confirm(
-      "Уверены, что хотите выйти из системы?",
-    );
+    const confirm = window.confirm("Уверены, что хотите выйти из системы?");
 
     if (confirm) {
       await authClient.signOut();

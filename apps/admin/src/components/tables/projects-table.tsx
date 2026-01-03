@@ -1,0 +1,92 @@
+import { Link } from "@tanstack/react-router";
+
+import {
+    getDefaultSortOrder,
+    getDefaultFilter,
+    FilterDropdown,
+} from "@/core/refine-antd";
+
+import Table from "antd/es/table";
+import Select from "antd/es/select";
+import Space from "antd/es/space";
+
+import { EditButton, ShowButton } from "@/components/buttons";
+import useProjectsTable from "../hooks/projects-table";
+import { useAdministrativeUnits } from "../hooks/administrative-units";
+import { Typography } from "antd";
+
+export default function ProjectsTable() {
+    const table = useProjectsTable();
+    const administrativeUnits = useAdministrativeUnits()
+
+    return (
+        <Table
+            {...table.tableProps}
+            rowKey="id"
+            pagination={{
+                ...table.tableProps.pagination,
+                hideOnSinglePage: true,
+                pageSizeOptions: [12, 24, 48],
+            }}
+            sticky
+        >
+            <Table.Column
+                dataIndex="title"
+                title="Название"
+                sorter
+                defaultSortOrder={getDefaultSortOrder("title", table.sorters)}
+            />
+            <Table.Column
+                dataIndex="administrative_unit_id"
+                title="Поселение"
+                width={190}
+                sorter
+                render={(value) =>
+                    administrativeUnits.data?.find(({ id }) => id == value)?.title
+                }
+                filterDropdown={(props) => (
+                    <FilterDropdown
+                        {...props}
+                        mapValue={(selectedKey) => {
+                            if (Array.isArray(selectedKey)) return undefined;
+                            return selectedKey && selectedKey !== ""
+                                ? Number(selectedKey)
+                                : undefined;
+                        }}
+                    >
+                        <Select style={{ minWidth: 200 }} {...administrativeUnits.selectProps} />
+                    </FilterDropdown>
+                )}
+            />
+            <Table.Column
+                dataIndex="year_of_completion"
+                title="Год"
+                width={80}
+                sorter
+                defaultSortOrder={getDefaultSortOrder(
+                    "year_of_completion",
+                    table.sorters,
+                )}
+            />
+            <Table.Column dataIndex="latitude" title="Широта" width={110}
+                render={(value) => <Typography.Text>{Number(value).toFixed(6)}</Typography.Text>}
+            />
+            <Table.Column dataIndex="longitude" title="Долгота" width={110}
+                render={(value) => <Typography.Text>{Number(value).toFixed(6)}</Typography.Text>}
+            />
+            <Table.Column
+                width={90}
+                render={(_, record) => (
+                    <Space>
+                        <Link to="/projects/$showId" params={{ showId: record.id }}>
+                            <ShowButton hideText size="small" />
+                        </Link>
+                        <Link to="/projects/$editId/edit" params={{ editId: record.id }}>
+                            <EditButton resource="projects" hideText size="small" recordItemId={record.id} />
+                        </Link>
+                    </Space>
+                )}
+            />
+        </Table>
+    );
+}

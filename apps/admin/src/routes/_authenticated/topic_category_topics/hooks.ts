@@ -28,7 +28,7 @@ export function useTopicCategoryTopic() {
     resource: "topics",
     pagination: {
       pageSize: 48,
-      mode: "server"
+      mode: "server",
     },
   });
 
@@ -36,7 +36,7 @@ export function useTopicCategoryTopic() {
     resource: "topic_categories",
     pagination: {
       pageSize: 48,
-      mode: "server"
+      mode: "server",
     },
   });
 

@@ -20,15 +20,7 @@ export type RefineButtonResourceProps = {
    * Resource name for API data interactions. `identifier` of the resource can be used instead of the `name` of the resource.
    * @default Inferred resource name from the route
    */
-  resource?: string;
-  /**
-   * Access Control configuration for the button
-   * @default `{ enabled: true }`
-   */
-  accessControl?: {
-    enabled?: boolean;
-    hideIfUnauthorized?: boolean;
-  };
+  resource: string;
 };
 
 export type RefineButtonSingleProps = {
@@ -49,16 +41,6 @@ export type RefineButtonURLProps = {
 export type RefineButtonDataProps = {
   dataProviderName?: string;
 };
-
-export type RefineCloneButtonProps<
-  TComponentProps extends {} = Record<string, unknown>,
-  TExtraProps extends {} = {},
-> = RefineButtonCommonProps &
-  RefineButtonResourceProps &
-  RefineButtonSingleProps &
-  RefineButtonURLProps &
-  TComponentProps &
-  TExtraProps & {};
 
 export type RefineCreateButtonProps<
   TComponentProps extends {} = Record<string, unknown>,
@@ -152,13 +134,9 @@ export type RefineListButtonProps<
 export type RefineSaveButtonProps<
   TComponentProps extends {} = Record<string, unknown>,
   TExtraProps extends {} = {},
-> = RefineButtonCommonProps &
-  TComponentProps &
-  TExtraProps & {};
+> = RefineButtonCommonProps & TComponentProps & TExtraProps & {};
 
 export type RefineShowButtonProps<
   TComponentProps extends {} = Record<string, unknown>,
   TExtraProps extends {} = {},
-> = RefineButtonCommonProps &
-  TComponentProps &
-  TExtraProps & {};
+> = RefineButtonCommonProps & TComponentProps & TExtraProps & {};

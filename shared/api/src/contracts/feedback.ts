@@ -188,7 +188,7 @@ const feedbackContract = oc
         summary: "Обновление обращения",
       })
       .input(updateFeedbackSchema)
-      .output(v.object({}))
+      .output(v.object({})),
   });
 
 export default feedbackContract;

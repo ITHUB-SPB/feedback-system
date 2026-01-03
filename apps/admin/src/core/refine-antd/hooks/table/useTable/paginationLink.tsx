@@ -7,11 +7,5 @@ interface PaginationLinkProps {
 }
 
 export const PaginationLink = ({ to, element }: PaginationLinkProps) => {
-  return (
-    <Link
-      to={to}
-    >
-      {element}
-    </Link>
-  );
+  return <Link to={to}>{element}</Link>;
 };

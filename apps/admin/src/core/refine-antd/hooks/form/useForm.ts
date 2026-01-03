@@ -68,9 +68,9 @@ export type UseFormReturnType<
     values?: TVariables,
   ) => Promise<CreateResponse<TResponse> | UpdateResponse<TResponse> | void>;
 } & Pick<
-  ReturnType<typeof useFormSF<TResponse, TVariables>>,
-  "defaultFormValuesLoading"
->;
+    ReturnType<typeof useFormSF<TResponse, TVariables>>,
+    "defaultFormValuesLoading"
+  >;
 
 /**
  * `useForm` is used to manage forms. It uses Ant Design {@link https://ant.design/components/form/ Form} data scope management under the hood and returns the required props for managing the form actions.
@@ -199,7 +199,7 @@ export const useForm = <
         }
 
         if (typeof fieldError === "object" && "key" in fieldError) {
-          const translatedMessage = fieldError.message
+          const translatedMessage = fieldError.message;
 
           newError = [translatedMessage];
         }
@@ -234,8 +234,7 @@ export const useForm = <
     optimisticUpdateMap,
   });
 
-  const { formLoading, onFinish, query, id } =
-    useFormCoreResult;
+  const { formLoading, onFinish, query, id } = useFormCoreResult;
 
   // populate form with data when query is ready or id changes
   // form populated via initialValues prop

@@ -1,19 +1,33 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { dataProvider } from "@/providers/data-provider";
-import ListProjects from "@/pages/project-list";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { CreateButton } from "@/components/buttons/create";
+import { PageHeader } from "@/components/pageHeader";
+import ProjectsTable from "@/components/tables/projects-table";
 
 export const Route = createFileRoute("/_authenticated/projects/")({
   loader: async ({ context }) => {
-    const { data: administrativeUnits } = await context.queryClient.ensureQueryData({
-      queryKey: ["default", "administrative_units", "many"],
-      queryFn: () =>
-        dataProvider.getList({
-          resource: "administrative_units",
-        }),
-    });
-
-    return { administrativeUnits };
+    context.queryClient.ensureQueryData(
+      context.orpcClient.administrativeUnit.all.queryOptions({
+        input: {},
+      }),
+    );
   },
   component: ListProjects,
 });
+
+function ListProjects() {
+  return (
+    <PageHeader
+      title="Реализованные проекты"
+      extra={
+        <Link to="/projects/create">
+          <CreateButton resource="projects" iconPlacement="end" size="middle">
+            Добавить
+          </CreateButton>
+        </Link>
+      }
+    >
+      <ProjectsTable />
+    </PageHeader>
+  );
+}

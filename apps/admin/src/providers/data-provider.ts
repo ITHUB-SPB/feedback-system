@@ -1,7 +1,10 @@
-import type { DataProvider } from "../core/refine-core";
+import { QueryClient } from "@tanstack/react-query";
+import type { DataProvider } from "@refinedev/core";
 import type { authClient } from "../auth-client";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL! + "/api";
+
+export const queryClient = new QueryClient();
 
 const fetcher = async (url: string, options?: RequestInit) => {
   return fetch(url, {
@@ -196,20 +199,23 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   deleteOne: async ({ resource, id }) => {
-    const fetcherProps: [string, RequestInit] = resource === "officials" ?
-      [
-        `${API_URL}/auth/admin/remove-user`, {
-          method: "POST",
-          body: JSON.stringify({
-            userId: id
-          })
-        }
-      ] :
-      [
-        `${API_URL}/${resource}/${id}`, {
-          method: "DELETE",
-        }
-      ];
+    const fetcherProps: [string, RequestInit] =
+      resource === "officials"
+        ? [
+          `${API_URL}/auth/admin/remove-user`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              userId: id,
+            }),
+          },
+        ]
+        : [
+          `${API_URL}/${resource}/${id}`,
+          {
+            method: "DELETE",
+          },
+        ];
 
     const response = await fetcher(...fetcherProps);
 

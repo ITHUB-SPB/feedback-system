@@ -20,10 +20,10 @@ import { Route as AuthenticatedProjectsIndexRouteImport } from './routes/_authen
 import { Route as AuthenticatedFeedbackIndexRouteImport } from './routes/_authenticated/feedback.index'
 import { Route as AuthenticatedCitizensIndexRouteImport } from './routes/_authenticated/citizens/index'
 import { Route as AuthenticatedAdministrative_unitsIndexRouteImport } from './routes/_authenticated/administrative_units/index'
-import { Route as AuthenticatedProjectsCreateRouteImport } from './routes/_authenticated/projects/create'
-import { Route as AuthenticatedProjectsShowIdRouteImport } from './routes/_authenticated/projects/$showId'
+import { Route as AuthenticatedProjectsCreateRouteImport } from './routes/_authenticated/projects.create'
+import { Route as AuthenticatedProjectsShowIdRouteImport } from './routes/_authenticated/projects.$showId'
 import { Route as AuthenticatedFeedbackShowIdRouteImport } from './routes/_authenticated/feedback.$showId'
-import { Route as AuthenticatedProjectsEditIdEditRouteImport } from './routes/_authenticated/projects/$editId.edit'
+import { Route as AuthenticatedProjectsEditIdEditRouteImport } from './routes/_authenticated/projects.$editId.edit'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',

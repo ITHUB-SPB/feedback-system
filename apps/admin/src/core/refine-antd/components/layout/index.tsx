@@ -2,17 +2,13 @@ import React from "react";
 import Grid from "antd/es/grid";
 import AntdLayout from "antd/es/layout";
 
-import {
-  ThemedLayoutContextProvider,
-} from "@/core/refine-antd";
+import { ThemedLayoutContextProvider } from "@/core/refine-antd";
 
-import {
-  type RefineThemedLayoutProps
-} from "./types"
+import { type RefineThemedLayoutProps } from "./types";
 
 export { ThemedHeader } from "./header";
-export { ThemedSider } from './sider'
-export { ThemedTitle } from './title'
+export { ThemedSider } from "./sider";
+export { ThemedTitle } from "./title";
 
 export const ThemedLayout: React.FC<RefineThemedLayoutProps> = ({
   children,

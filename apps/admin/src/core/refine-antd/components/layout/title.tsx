@@ -4,7 +4,6 @@ import Typography from "antd/es/typography";
 import theme from "antd/es/theme";
 import Space from "antd/es/space";
 
-
 import type { RefineLayoutThemedTitleProps } from "./types";
 
 export const ThemedTitle: React.FC<RefineLayoutThemedTitleProps> = ({

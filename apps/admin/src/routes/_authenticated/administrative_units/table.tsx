@@ -7,7 +7,11 @@ import Form from "antd/es/form";
 import Button from "antd/es/button";
 import Input from "antd/es/input";
 
-import { TextField, EditButton, DeleteButton, SaveButton } from "@/core/refine-antd";
+import {
+  TextField,
+} from "@/core/refine-antd";
+
+import { EditButton, DeleteButton, SaveButton } from "@/components/buttons";
 
 import type { AdministrativeUnitRecord } from "./types";
 import { useAdministrativeUnitsTable } from "./hooks";
@@ -98,7 +102,9 @@ export default function AdministrativeUnitsTable() {
                     hideText
                     size="small"
                   />
-                  <Button {...table.cancelButtonProps} size="small">↩</Button>
+                  <Button {...table.cancelButtonProps} size="small">
+                    ↩
+                  </Button>
                 </Space>
               );
             }
@@ -106,6 +112,8 @@ export default function AdministrativeUnitsTable() {
             return (
               <Space>
                 <EditButton
+                  resource="administrative_units"
+                  recordItemId={record.id}
                   {...table.editButtonProps(record.id)}
                   onClick={() => {
                     table.setId(record.id);
@@ -127,7 +135,7 @@ export default function AdministrativeUnitsTable() {
                   errorNotification={{
                     message: "Ошибка",
                     description: "Не удалось удалить поселение",
-                    type: "error"
+                    type: "error",
                   }}
                 />
               </Space>

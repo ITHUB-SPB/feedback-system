@@ -40,8 +40,7 @@ export type UseDrawerFormProps<
     TResponse,
     TResponseError
   > &
-  UseDrawerFormConfig &
-  {
+  UseDrawerFormConfig & {
     defaultVisible?: boolean;
     autoSubmitClose?: boolean;
     autoResetForm?: boolean;
@@ -138,8 +137,7 @@ export const useDrawerForm = <
     ...rest,
   });
 
-  const { form, formProps, formLoading, id, setId, onFinish } =
-    useFormProps;
+  const { form, formProps, formLoading, id, setId, onFinish } = useFormProps;
 
   const saveButtonProps = {
     disabled: formLoading,

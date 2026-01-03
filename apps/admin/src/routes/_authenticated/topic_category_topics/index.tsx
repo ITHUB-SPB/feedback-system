@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import Button from "antd/es/button";
 import Space from "antd/es/space";
 
-import { List } from "../../../components/crud/list";
+import { List } from "@/components/layouts";
 import { useTopicCategoryTopic } from "./hooks";
 import ModalForm from "./modal-form";
 import CategoryTopicsTable from "./table";
@@ -19,9 +19,6 @@ function ListTopicCategoryTopics() {
     <>
       <List
         title="Категории"
-        createButtonProps={{
-          hidden: true,
-        }}
         headerButtons={() => (
           <Space>
             <Button

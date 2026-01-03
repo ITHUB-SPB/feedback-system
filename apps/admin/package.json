@@ -8,12 +8,12 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@shared/auth": "workspace:*",
     "@shared/api": "workspace:*",
+    "@shared/auth": "workspace:*",
     "@ant-design/icons": "^6.1.0",
     "@ant-design/pro-layout": "^7.22.7",
     "@dotenvx/dotenvx": "catalog:",
-    "@refinedev/antd": "catalog:",
+    "@orpc/tanstack-query": "^1.13.2",
     "@refinedev/cli": "catalog:",
     "@refinedev/core": "catalog:",
     "@tanstack/react-devtools": "^0.7.0",
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@tanstack/devtools-vite": "^0.3.11",
+    "@tanstack/react-query-devtools": "^5.91.2",
     "@types/lodash": "^4.17.21",
     "@types/node": "^22.10.2",
     "@types/papaparse": "^5.5.2",

@@ -1,6 +1,11 @@
 import { createFileRoute, redirect, Outlet } from "@tanstack/react-router";
 
-import { ThemedLayout, ThemedSider, ThemedHeader, ThemedTitle } from "@/core/refine-antd";
+import {
+  ThemedLayout,
+  ThemedSider,
+  ThemedHeader,
+  ThemedTitle,
+} from "@/core/refine-antd";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ context, location }) => {

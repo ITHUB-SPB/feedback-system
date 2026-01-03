@@ -29,8 +29,9 @@ export const ErrorComponent: React.FC<RefineErrorPageProps> = () => {
               </Tooltip>
             )}
           </Space>
-          <Button type="primary"
-          // onClick={() => go({ to: "/" })}
+          <Button
+            type="primary"
+            // onClick={() => go({ to: "/" })}
           >
             Back Home
           </Button>

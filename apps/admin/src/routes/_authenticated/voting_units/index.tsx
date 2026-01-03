@@ -12,16 +12,15 @@ import Flex from "antd/es/flex";
 import { useMany } from "@refinedev/core";
 
 import {
-  EditButton,
   getDefaultSortOrder,
-  List,
   useSelect,
   useEditableTable,
   TextField,
-  SaveButton,
-  DeleteButton,
   useModalForm,
 } from "@/core/refine-antd";
+
+import { EditButton, SaveButton, DeleteButton } from "@/components/buttons";
+import { List } from "@/components/layouts";
 
 type UnitRecord = {
   id: number;
@@ -98,7 +97,7 @@ function ListVotingUnits() {
     resource: "voting_regions",
     pagination: {
       pageSize: 48,
-      mode: "server"
+      mode: "server",
     },
   });
 
@@ -106,10 +105,6 @@ function ListVotingUnits() {
     <>
       <List
         title="Голосование / Участники"
-        breadcrumb={null}
-        createButtonProps={{
-          hidden: true,
-        }}
         headerButtons={() => (
           <Space>
             <Button

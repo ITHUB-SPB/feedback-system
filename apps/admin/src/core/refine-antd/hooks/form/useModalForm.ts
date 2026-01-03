@@ -75,8 +75,7 @@ export type UseModalFormProps<
     TResponse,
     TResponseError
   > &
-  useModalFormConfig &
-  {
+  useModalFormConfig & {
     defaultVisible?: boolean;
     autoSubmitClose?: boolean;
     autoResetForm?: boolean;
@@ -142,8 +141,7 @@ export const useModalForm = <
     ...rest,
   });
 
-  const { form, formProps, id, setId, formLoading, onFinish } =
-    useFormProps;
+  const { form, formProps, id, setId, formLoading, onFinish } = useFormProps;
 
   const { show, close, modalProps } = useModal({
     modalProps: {
@@ -153,20 +151,20 @@ export const useModalForm = <
 
   const visible = modalProps.open || false;
   const sunflowerUseModal: useModalFormFromSFReturnType<TResponse, TVariables> =
-  {
-    modalProps,
-    form,
-    formLoading,
-    formProps,
-    formResult: undefined,
-    formValues: form.getFieldsValue,
-    defaultFormValuesLoading: false,
-    initialValues: {},
-    submit: onFinish as any,
-    close,
-    open: modalProps.open || false,
-    show,
-  };
+    {
+      modalProps,
+      form,
+      formLoading,
+      formProps,
+      formResult: undefined,
+      formValues: form.getFieldsValue,
+      defaultFormValuesLoading: false,
+      initialValues: {},
+      submit: onFinish as any,
+      close,
+      open: modalProps.open || false,
+      show,
+    };
 
   const saveButtonPropsSF = {
     disabled: formLoading,
@@ -182,7 +180,7 @@ export const useModalForm = <
     );
 
     if (!warnWhenConfirm) {
-      return
+      return;
     }
 
     setId?.(undefined);

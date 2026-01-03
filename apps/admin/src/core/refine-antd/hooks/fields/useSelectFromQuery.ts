@@ -4,25 +4,21 @@ import get from "lodash/get";
 
 import type { SelectProps } from "antd/lib/select";
 
-import {
-  type BaseRecord,
-  type BaseOption,
-} from "@refinedev/core";
+import { type BaseRecord, type BaseOption } from "@refinedev/core";
 
 export type UseSelectFromQueryProps<TData> = {
-  data: TData[],
+  data: TData[];
   optionLabel?:
-  | (keyof TData extends string ? keyof TData : never)
-  | ((item: TData) => string);
+    | (keyof TData extends string ? keyof TData : never)
+    | ((item: TData) => string);
   /**
    * Set the option's value
    * @default `"id"`
    */
   optionValue?:
-  | (keyof TData extends string ? keyof TData : never)
-  | ((item: TData) => string);
+    | (keyof TData extends string ? keyof TData : never)
+    | ((item: TData) => string);
 };
-
 
 export type UseSelectFromQueryReturnType<
   TOption extends BaseOption = BaseOption,
@@ -33,14 +29,10 @@ export type UseSelectFromQueryReturnType<
 export const useSelectFromQuery = <
   TData extends BaseRecord,
   TOption extends BaseOption = BaseOption,
->(props: UseSelectFromQueryProps<TData>)
-  : UseSelectFromQueryReturnType<TOption> => {
-
-  const {
-    data,
-    optionLabel = "title",
-    optionValue = "id",
-  } = props;
+>(
+  props: UseSelectFromQueryProps<TData>,
+): UseSelectFromQueryReturnType<TOption> => {
+  const { data, optionLabel = "title", optionValue = "id" } = props;
 
   const getOptionLabel = useCallback(
     (item: TData) => {
@@ -64,7 +56,6 @@ export const useSelectFromQuery = <
     [optionValue],
   );
 
-
   return {
     selectProps: {
       options: data.map(
@@ -76,7 +67,7 @@ export const useSelectFromQuery = <
       ),
       onSearch: undefined,
       filterOption: true,
-      optionFilterProp: "label"
+      optionFilterProp: "label",
     },
   };
 };

@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Table from "antd/es/table";
 
-import { TextField, List, getDefaultSortOrder, useTable } from "@/core/refine-antd";
+import {
+  TextField,
+  getDefaultSortOrder,
+  useTable,
+} from "@/core/refine-antd";
+
+import { List } from "@/components/layouts";
 
 export const Route = createFileRoute("/_authenticated/citizens/")({
   component: ListCitizens,

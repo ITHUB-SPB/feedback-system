@@ -124,7 +124,7 @@ export function useOfficials() {
     resource: "auth/admin/list-users",
     pagination: {
       pageSize: 48,
-      mode: "server"
+      mode: "server",
     },
     filters: [
       {
@@ -143,7 +143,7 @@ export function useAdministrativeUnits() {
     resource: "administrative_units",
     pagination: {
       pageSize: 48,
-      mode: "server"
+      mode: "server",
     },
   });
 

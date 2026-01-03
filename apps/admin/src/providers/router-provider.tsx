@@ -31,38 +31,34 @@ export const routerProvider: RouterProvider = {
         options: { keepQuery, keepHash } = {},
       }: GoConfig) => {
         /** Construct query params */
-        const urlQuery: Record<string, string> = {
-          ...(keepQuery && existingSearch),
-          ...query,
-        };
+        // const urlQuery: Record<string, string> = {
+        //   ...(keepQuery && existingSearch),
+        //   ...query,
+        // };
 
-        if (urlQuery.to) {
-          urlQuery.to = encodeURIComponent(`${urlQuery.to}`);
-        }
+        // if (urlQuery.to) {
+        //   urlQuery.to = encodeURIComponent(`${urlQuery.to}`);
+        // }
 
-        const hasUrlQuery = Object.keys(urlQuery).length > 0;
+        // const hasUrlQuery = false && Object.keys(urlQuery).length > 0;
 
         /** Get hash */
-        const urlHash = `#${(hash || (keepHash && existingHash) || "").replace(
-          /^#/,
-          "",
-        )}`;
+        // const urlHash = `#${(hash || (keepHash && existingHash) || "").replace(
+        //   /^#/,
+        //   "",
+        // )}`;
 
-        const hasUrlHash = urlHash.length > 1;
+        // const hasUrlHash = urlHash.length > 1;
 
         const urlTo = to || "";
 
-        const fullPath = `${urlTo}?${
-          hasUrlQuery ? stringifyQuery(urlQuery) : ""
-        }${hasUrlHash ? urlHash : ""}`;
-
         if (type === "path") {
-          return fullPath;
+          return urlTo;
         }
 
         /** Navigate to the url */
         navigate({
-          to: fullPath,
+          to: urlTo,
           replace: type === "replace",
         });
 
@@ -143,6 +139,7 @@ export function parse({ resources, params, pathname, search }: ParseInput) {
     pathname,
     resources,
   );
+
   const combinedParams: Record<string, any> = {
     ...params,
     ...search,

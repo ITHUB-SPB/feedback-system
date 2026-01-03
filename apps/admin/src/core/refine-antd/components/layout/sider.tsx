@@ -1,7 +1,15 @@
-import React, { useState, type CSSProperties } from "react";
-import { useNavigate, useLocation, Link } from "@tanstack/react-router";
+import React, { useContext, type CSSProperties } from "react";
+import { useNavigate } from "@tanstack/react-router";
+
+import {
+  type TreeMenuItem,
+  useMenu,
+  useLink,
+  useWarnAboutChange,
+} from "@refinedev/core";
 
 import { BarsOutlined } from "@ant-design/icons";
+
 import Layout from "antd/es/layout";
 import Menu from "antd/es/menu";
 import Grid from "antd/es/grid";
@@ -9,16 +17,17 @@ import Drawer from "antd/es/drawer";
 import Button from "antd/es/button";
 import Tabs from "antd/es/tabs";
 import theme from "antd/es/theme";
+import ConfigProvider from "antd/es/config-provider";
 import Typography from "antd/es/typography";
 
-import { authClient } from "@/auth-client";
-
-import { ThemedTitle } from "./title";
-import type { RefineThemedLayoutSiderProps } from './types'
-
 import {
+  ThemedTitle,
   useThemedLayoutContext,
 } from "@/core/refine-antd";
+
+import type { RefineThemedLayoutSiderProps } from "./types";
+
+import { authClient } from "@/auth-client";
 
 const drawerButtonStyles: CSSProperties = {
   borderStartStartRadius: 0,
@@ -28,40 +37,26 @@ const drawerButtonStyles: CSSProperties = {
   zIndex: 999,
 };
 
-type TreeMenuItem = {
-  key: string,
-  name: string,
-  icon: React.ReactNode,
-  link: string
-}
-
-const menuItems = [
-  { key: "/feedback", name: "Предложения", icon: null, link: "/feedback" },
-  { key: "/projects", name: "Проекты", icon: null, link: "/projects" },
-  { key: "/citizens", name: "Респонденты", icon: null, link: "/citizens" },
-  { key: "/officials", name: "Администрация", icon: null, link: "/officials" },
-  { key: "/topic_category_topics", name: "Категории", icon: null, link: "/topic_category_topics" },
-  { key: "/administrative_units", name: "Поселения", icon: null, link: "/administrative_units" },
-  { key: "/voting_votes", name: "Результаты", icon: null, link: "/voting_votes" },
-  { key: "/voting_units", name: "Участники", icon: null, link: "/voting_units" },
-]
-
 export const ThemedSider: React.FC<
   RefineThemedLayoutSiderProps & { user: typeof authClient.$Infer.Session.user }
 > = ({
   Title: TitleFromProps,
+  render,
+  meta,
   fixed,
   activeItemDisabled = false,
   siderItemsAreCollapsed = true,
   user,
 }) => {
     const { token } = theme.useToken();
-
     const redirect = useNavigate();
-    const location = useLocation()
 
     const { mobileSiderOpen, setMobileSiderOpen } = useThemedLayoutContext();
 
+    const direction = useContext(ConfigProvider.ConfigContext)?.direction;
+    const Link = useLink();
+    const { warnWhen, setWarnWhen } = useWarnAboutChange();
+    const { menuItems, selectedKey, defaultOpenKeys } = useMenu({ meta });
     const breakpoint = Grid.useBreakpoint();
 
     const isMobile =
@@ -69,12 +64,47 @@ export const ThemedSider: React.FC<
 
     const RenderToTitle = TitleFromProps ?? ThemedTitle;
 
-    const handleLogout = async () => {
-      const confirm = window.confirm(
-        "Уверены, что хотите выйти из системы?",
-      );
+    const renderTreeView = (tree: TreeMenuItem[], selectedKey?: string) => {
+      return tree.map((item: TreeMenuItem) => {
+        const { key, name, children, meta, list } = item;
+        const parentName = meta?.parent;
+        const label = item?.label ?? meta?.label ?? name;
+        const icon = meta?.icon;
+        const route = list;
 
-      if (confirm) {
+        const isSelected = key === selectedKey;
+        const isRoute = !(parentName !== undefined && children.length === 0);
+
+        const linkStyle: React.CSSProperties =
+          activeItemDisabled && isSelected ? { pointerEvents: "none" } : {};
+
+        return (
+          <Menu.Item
+            key={item.key}
+            icon={icon ?? (isRoute && null)}
+            style={linkStyle}
+          >
+            <Link to={route ?? ""} style={linkStyle}>
+              {label}
+            </Link>
+            {isSelected && <div className="ant-menu-tree-arrow" />}
+          </Menu.Item>
+        );
+      });
+    };
+
+    const handleLogout = async () => {
+      if (warnWhen) {
+        const confirm = window.confirm(
+          "Уверены, что хотите выйти из системы? Несохраненные изменения будут утеряны",
+        );
+
+        if (confirm) {
+          setWarnWhen(false);
+          await authClient.signOut();
+          redirect({ to: "/login", search: { redirect: "feedback" } });
+        }
+      } else {
         await authClient.signOut();
         redirect({ to: "/login", search: { redirect: "feedback" } });
       }
@@ -101,52 +131,66 @@ export const ThemedSider: React.FC<
       return menuItems.map(({ key }) => key);
     })();
 
-    const MenuFeedback = () => {
-      const linkStyle: React.CSSProperties =
-        activeItemDisabled ? { pointerEvents: "none" } : {};
+    const items = renderTreeView(menuItems, selectedKey);
+
+    const renderSider = (availableItems: string[]) => {
+      const itemsToRender = items.filter(
+        (item) => item.key && availableItems.includes(item.key),
+      );
+      if (render) {
+        return render({
+          items: itemsToRender,
+          logout,
+          collapsed: false,
+        });
+      }
+      return [...itemsToRender, logout].filter(Boolean);
+    };
+
+    const renderMenu = (tab: "feedback" | "voting") => {
+      const tabsMapping = {
+        voting: ["/voting_votes", "/voting_units", "/citizens"],
+        feedback: [
+          "/feedback",
+          "/projects",
+          "/topic_category_topics",
+          "/officials",
+          "/administrative_units",
+          "/citizens",
+        ],
+      } as const;
 
       return (
-        <Menu
-          selectedKeys={[location.pathname]}
-          defaultOpenKeys={[...defaultExpandMenuItems]}
-          mode="inline"
-          style={{
-            paddingTop: "8px",
-            border: "none",
-            overflow: "auto",
-            height: "calc(100dvh - 130px)",
-            display: "flex",
-            flexDirection: "column",
-          }}
-          onClick={() => {
-            setMobileSiderOpen(false);
-          }}
-        >
-          <Menu.Item
-            key="/feedback"
-            style={linkStyle}
+        <>
+          <Menu
+            selectedKeys={selectedKey ? [selectedKey] : []}
+            defaultOpenKeys={[...defaultOpenKeys, ...defaultExpandMenuItems]}
+            mode="inline"
+            style={{
+              paddingTop: "8px",
+              border: "none",
+              overflow: "auto",
+              height: "calc(100dvh - 130px)",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            onClick={() => {
+              setMobileSiderOpen(false);
+            }}
           >
-            <Link to="/feedback" style={linkStyle}>Предложения</Link>
-          </Menu.Item>
-          <Menu.Item
-            key="/projects"
-            style={linkStyle}
-          >
-            <Link to="/projects" style={linkStyle}>Проекты</Link>
-          </Menu.Item>
+            {renderSider(tabsMapping[tab])}
+          </Menu>
+        </>
+      );
+    };
 
-          {logout}
-        </Menu>
-      )
-    }
-
-    if (isMobile) {
+    const renderDrawerSider = () => {
       return (
         <>
           <Drawer
             open={mobileSiderOpen}
             onClose={() => setMobileSiderOpen(false)}
-            placement="left"
+            placement={direction === "rtl" ? "right" : "left"}
             closable={false}
             width={200}
             styles={{
@@ -187,19 +231,18 @@ export const ThemedSider: React.FC<
                     {
                       label: `Предложения`,
                       key: "feedback",
-                      children: <MenuFeedback />,
+                      children: renderMenu("feedback"),
                     },
                     {
                       label: `Голосование`,
                       key: "voting",
-                      children: <MenuFeedback />,
+                      children: renderMenu("voting"),
                     },
                   ]}
                 />
               </Layout.Sider>
             </Layout>
           </Drawer>
-
           <Button
             style={drawerButtonStyles}
             size="large"
@@ -208,6 +251,10 @@ export const ThemedSider: React.FC<
           />
         </>
       );
+    };
+
+    if (isMobile) {
+      return renderDrawerSider();
     }
 
     const siderStyles: React.CSSProperties = {
@@ -260,16 +307,16 @@ export const ThemedSider: React.FC<
               {
                 label: `Предложения`,
                 key: "feedback",
-                children: <MenuFeedback />,
+                children: renderMenu("feedback"),
               },
               {
                 label: `Голосование`,
                 key: "voting",
-                children: <MenuFeedback />,
+                children: renderMenu("voting"),
               },
             ]}
           />
         </Layout.Sider>
       </div>
     );
-  }
+  };

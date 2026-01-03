@@ -8,5 +8,7 @@ export {
   requireModeratorProcedure,
 } from "./context";
 
+export type { RouterClient } from "@orpc/server";
+
 export { createAPIClient, type RouterOutput, type RouterInput } from "./client";
 export { onErrorInterceptor } from "./interceptors";

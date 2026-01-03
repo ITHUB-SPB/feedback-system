@@ -54,6 +54,7 @@ body {
   margin: 0;
   font-family:
     "MuseoSansCyrl", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-y: hidden;
 }
 
 #root {

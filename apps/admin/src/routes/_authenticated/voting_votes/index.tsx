@@ -11,11 +11,10 @@ import {
   getDefaultFilter,
   FilterDropdown,
   useSelect,
-  DeleteButton,
-  ExportButton,
-  List
 } from "@/core/refine-antd";
 
+import { ExportButton, DeleteButton } from "@/components/buttons";
+import { List } from "@/components/layouts";
 
 export const Route = createFileRoute("/_authenticated/voting_votes/")({
   component: ListVotingVotes,
@@ -38,7 +37,7 @@ function ListVotingVotes() {
     resource: "voting_units",
     pagination: {
       pageSize: 48,
-      mode: "server"
+      mode: "server",
     },
     sorters: [{ field: "title", order: "asc" }],
     defaultValue: getDefaultFilter("voting_unit_id", filters, "eq"),
@@ -154,7 +153,7 @@ function ListVotingVotes() {
           width={120}
           render={(_, record) => (
             <Space>
-              <DeleteButton hideText size="small" recordItemId={record.id} />
+              <DeleteButton resource="voting_votes" hideText size="small" recordItemId={record.id} />
             </Space>
           )}
         />
