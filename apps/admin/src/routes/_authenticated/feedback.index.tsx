@@ -7,23 +7,21 @@ export const Route = createFileRoute("/_authenticated/feedback/")({
   loader: async ({ context }) => {
     context.queryClient.ensureQueryData(
       context.orpcClient.feedbackType.all.queryOptions({
-        input: {}
-      })
-    )
+        input: {},
+      }),
+    );
 
     context.queryClient.ensureQueryData(
       context.orpcClient.feedbackStatus.all.queryOptions({
-        input: {}
-      })
-    )
+        input: {},
+      }),
+    );
   },
   component: () => {
     return (
-      <PageHeader
-        title="Предложения граждан"
-      >
+      <PageHeader title="Предложения граждан">
         <FeedbackTable />
       </PageHeader>
-    )
-  }
+    );
+  },
 });

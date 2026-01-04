@@ -5,7 +5,7 @@ import { topicCategoryTopicSchema } from "@shared/database/models/topic_category
 import { topicCategorySchema } from "@shared/database/models/topic_category";
 import { topicSchema } from "@shared/database/models/topic";
 
-import { baseInputAll } from "./_inputs";
+import { baseInputAll, baseInputOne } from "./_inputs";
 
 const getTopicCategoryTopicSchema = v.object({
   ...topicCategoryTopicSchema.entries,
@@ -36,6 +36,14 @@ const topicCategoryTopicContract = oc
         v.pick(topicCategoryTopicSchema, ["topic_id", "topic_category_id"]),
       )
       .output(getTopicCategoryTopicSchema),
+
+    delete: oc
+      .route({
+        method: "DELETE",
+        path: "/{id}",
+        summary: "Удаление пары Топик-Категория",
+      })
+      .input(baseInputOne),
   });
 
 export default topicCategoryTopicContract;

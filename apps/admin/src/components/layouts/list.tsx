@@ -1,10 +1,9 @@
 import React from "react";
 import Space from "antd/es/space";
 
-import { CreateButton, type CreateButtonProps, } from "../buttons";
+import { CreateButton, type CreateButtonProps } from "../buttons";
 import { PageHeader } from "../pageHeader";
 import type { ListProps } from "./types";
-
 
 export const List: React.FC<ListProps> = ({
   children,
@@ -29,9 +28,7 @@ export const List: React.FC<ListProps> = ({
       title={title ?? ""}
       extra={
         headerButtons ? (
-          <Space wrap>
-            {headerButtons}
-          </Space>
+          <Space wrap>{headerButtons}</Space>
         ) : (
           defaultHeaderButtons
         )

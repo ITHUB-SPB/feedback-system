@@ -1,9 +1,9 @@
 import { createRouter } from "@tanstack/react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 
-import { authClient } from "./auth-client";
+import { authClient } from "./providers/auth-client";
 import { queryClient } from "./providers/data-provider";
-import { orpcClient } from "./providers/orpc-provider";
+import { orpcClient } from "./providers/orpc-client";
 
 import { routeTree } from "./routeTree.gen";
 

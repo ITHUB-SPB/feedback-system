@@ -7,7 +7,7 @@ import Space from "antd/es/space";
 import theme from "antd/es/theme";
 import Typography from "antd/es/typography";
 
-import { authClient } from "@/auth-client";
+import { authClient } from "@/providers/auth-client";
 import { ThemedTitle } from "./title";
 
 export type RefineThemedLayoutHeaderProps = {
@@ -23,10 +23,9 @@ export const ThemedHeader: React.FC<RefineThemedLayoutHeaderProps> = ({
   user,
 }) => {
   const { token } = theme.useToken();
-  const { data: session } = authClient.useSession();
   const redirect = useNavigate();
 
-  if (!session?.user.name) {
+  if (!user.name) {
     return null;
   }
 

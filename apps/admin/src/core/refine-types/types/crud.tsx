@@ -3,17 +3,15 @@ import type { PropsWithChildren } from "react";
 import type { BaseKey, MutationMode } from "@refinedev/core";
 import type React from "react";
 
-
 export type RefineCrudListProps<
   TCreateButtonProps extends {} = Record<keyof any, unknown>,
 > = PropsWithChildren<{
   resource: string;
   title?: React.ReactNode;
-  headerButtons?: React.ReactNode | React.ReactNode[]
+  headerButtons?: React.ReactNode | React.ReactNode[];
   canCreate?: boolean;
   createButtonProps?: TCreateButtonProps;
 }>;
-
 
 export type RefineCrudCreateProps<
   TSaveButtonProps extends {} = Record<keyof any, unknown>,
@@ -24,7 +22,7 @@ export type RefineCrudCreateProps<
   footerButtons?: React.ReactNode | React.ReactNode[];
   isLoading?: boolean;
   saveButtonProps?: TSaveButtonProps;
-}>
+}>;
 
 export type RefineCrudEditProps<
   TSaveButtonProps extends {} = Record<keyof any, unknown>,

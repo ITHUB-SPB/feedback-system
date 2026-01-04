@@ -122,15 +122,6 @@ export type RefineExportButtonProps<
     loading?: boolean;
   };
 
-export type RefineListButtonProps<
-  TComponentProps extends {} = Record<string, unknown>,
-  TExtraProps extends {} = {},
-> = RefineButtonCommonProps &
-  RefineButtonResourceProps &
-  RefineButtonURLProps &
-  TComponentProps &
-  TExtraProps & {};
-
 export type RefineSaveButtonProps<
   TComponentProps extends {} = Record<string, unknown>,
   TExtraProps extends {} = {},

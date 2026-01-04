@@ -12,14 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as AuthenticatedVoting_votesRouteImport } from './routes/_authenticated/voting_votes'
+import { Route as AuthenticatedVoting_unitsRouteImport } from './routes/_authenticated/voting_units'
+import { Route as AuthenticatedTopic_category_topicsRouteImport } from './routes/_authenticated/topic_category_topics'
 import { Route as AuthenticatedOfficialsRouteImport } from './routes/_authenticated/officials'
-import { Route as AuthenticatedVoting_votesIndexRouteImport } from './routes/_authenticated/voting_votes/index'
-import { Route as AuthenticatedVoting_unitsIndexRouteImport } from './routes/_authenticated/voting_units/index'
-import { Route as AuthenticatedTopic_category_topicsIndexRouteImport } from './routes/_authenticated/topic_category_topics/index'
+import { Route as AuthenticatedCitizensRouteImport } from './routes/_authenticated/citizens'
+import { Route as AuthenticatedAdministrative_unitsRouteImport } from './routes/_authenticated/administrative_units'
 import { Route as AuthenticatedProjectsIndexRouteImport } from './routes/_authenticated/projects.index'
 import { Route as AuthenticatedFeedbackIndexRouteImport } from './routes/_authenticated/feedback.index'
-import { Route as AuthenticatedCitizensIndexRouteImport } from './routes/_authenticated/citizens/index'
-import { Route as AuthenticatedAdministrative_unitsIndexRouteImport } from './routes/_authenticated/administrative_units/index'
 import { Route as AuthenticatedProjectsCreateRouteImport } from './routes/_authenticated/projects.create'
 import { Route as AuthenticatedProjectsShowIdRouteImport } from './routes/_authenticated/projects.$showId'
 import { Route as AuthenticatedFeedbackShowIdRouteImport } from './routes/_authenticated/feedback.$showId'
@@ -39,27 +39,38 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedVoting_votesRoute =
+  AuthenticatedVoting_votesRouteImport.update({
+    id: '/voting_votes',
+    path: '/voting_votes',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedVoting_unitsRoute =
+  AuthenticatedVoting_unitsRouteImport.update({
+    id: '/voting_units',
+    path: '/voting_units',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedTopic_category_topicsRoute =
+  AuthenticatedTopic_category_topicsRouteImport.update({
+    id: '/topic_category_topics',
+    path: '/topic_category_topics',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedOfficialsRoute = AuthenticatedOfficialsRouteImport.update({
   id: '/officials',
   path: '/officials',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const AuthenticatedVoting_votesIndexRoute =
-  AuthenticatedVoting_votesIndexRouteImport.update({
-    id: '/voting_votes/',
-    path: '/voting_votes/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedVoting_unitsIndexRoute =
-  AuthenticatedVoting_unitsIndexRouteImport.update({
-    id: '/voting_units/',
-    path: '/voting_units/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedTopic_category_topicsIndexRoute =
-  AuthenticatedTopic_category_topicsIndexRouteImport.update({
-    id: '/topic_category_topics/',
-    path: '/topic_category_topics/',
+const AuthenticatedCitizensRoute = AuthenticatedCitizensRouteImport.update({
+  id: '/citizens',
+  path: '/citizens',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedAdministrative_unitsRoute =
+  AuthenticatedAdministrative_unitsRouteImport.update({
+    id: '/administrative_units',
+    path: '/administrative_units',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedProjectsIndexRoute =
@@ -72,18 +83,6 @@ const AuthenticatedFeedbackIndexRoute =
   AuthenticatedFeedbackIndexRouteImport.update({
     id: '/feedback/',
     path: '/feedback/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedCitizensIndexRoute =
-  AuthenticatedCitizensIndexRouteImport.update({
-    id: '/citizens/',
-    path: '/citizens/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedAdministrative_unitsIndexRoute =
-  AuthenticatedAdministrative_unitsIndexRouteImport.update({
-    id: '/administrative_units/',
-    path: '/administrative_units/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedProjectsCreateRoute =
@@ -113,103 +112,103 @@ const AuthenticatedProjectsEditIdEditRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/administrative_units': typeof AuthenticatedAdministrative_unitsRoute
+  '/citizens': typeof AuthenticatedCitizensRoute
   '/officials': typeof AuthenticatedOfficialsRoute
+  '/topic_category_topics': typeof AuthenticatedTopic_category_topicsRoute
+  '/voting_units': typeof AuthenticatedVoting_unitsRoute
+  '/voting_votes': typeof AuthenticatedVoting_votesRoute
   '/login': typeof LoginIndexRoute
   '/feedback/$showId': typeof AuthenticatedFeedbackShowIdRoute
   '/projects/$showId': typeof AuthenticatedProjectsShowIdRoute
   '/projects/create': typeof AuthenticatedProjectsCreateRoute
-  '/administrative_units': typeof AuthenticatedAdministrative_unitsIndexRoute
-  '/citizens': typeof AuthenticatedCitizensIndexRoute
   '/feedback': typeof AuthenticatedFeedbackIndexRoute
   '/projects': typeof AuthenticatedProjectsIndexRoute
-  '/topic_category_topics': typeof AuthenticatedTopic_category_topicsIndexRoute
-  '/voting_units': typeof AuthenticatedVoting_unitsIndexRoute
-  '/voting_votes': typeof AuthenticatedVoting_votesIndexRoute
   '/projects/$editId/edit': typeof AuthenticatedProjectsEditIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/administrative_units': typeof AuthenticatedAdministrative_unitsRoute
+  '/citizens': typeof AuthenticatedCitizensRoute
   '/officials': typeof AuthenticatedOfficialsRoute
+  '/topic_category_topics': typeof AuthenticatedTopic_category_topicsRoute
+  '/voting_units': typeof AuthenticatedVoting_unitsRoute
+  '/voting_votes': typeof AuthenticatedVoting_votesRoute
   '/login': typeof LoginIndexRoute
   '/feedback/$showId': typeof AuthenticatedFeedbackShowIdRoute
   '/projects/$showId': typeof AuthenticatedProjectsShowIdRoute
   '/projects/create': typeof AuthenticatedProjectsCreateRoute
-  '/administrative_units': typeof AuthenticatedAdministrative_unitsIndexRoute
-  '/citizens': typeof AuthenticatedCitizensIndexRoute
   '/feedback': typeof AuthenticatedFeedbackIndexRoute
   '/projects': typeof AuthenticatedProjectsIndexRoute
-  '/topic_category_topics': typeof AuthenticatedTopic_category_topicsIndexRoute
-  '/voting_units': typeof AuthenticatedVoting_unitsIndexRoute
-  '/voting_votes': typeof AuthenticatedVoting_votesIndexRoute
   '/projects/$editId/edit': typeof AuthenticatedProjectsEditIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_authenticated/administrative_units': typeof AuthenticatedAdministrative_unitsRoute
+  '/_authenticated/citizens': typeof AuthenticatedCitizensRoute
   '/_authenticated/officials': typeof AuthenticatedOfficialsRoute
+  '/_authenticated/topic_category_topics': typeof AuthenticatedTopic_category_topicsRoute
+  '/_authenticated/voting_units': typeof AuthenticatedVoting_unitsRoute
+  '/_authenticated/voting_votes': typeof AuthenticatedVoting_votesRoute
   '/login/': typeof LoginIndexRoute
   '/_authenticated/feedback/$showId': typeof AuthenticatedFeedbackShowIdRoute
   '/_authenticated/projects/$showId': typeof AuthenticatedProjectsShowIdRoute
   '/_authenticated/projects/create': typeof AuthenticatedProjectsCreateRoute
-  '/_authenticated/administrative_units/': typeof AuthenticatedAdministrative_unitsIndexRoute
-  '/_authenticated/citizens/': typeof AuthenticatedCitizensIndexRoute
   '/_authenticated/feedback/': typeof AuthenticatedFeedbackIndexRoute
   '/_authenticated/projects/': typeof AuthenticatedProjectsIndexRoute
-  '/_authenticated/topic_category_topics/': typeof AuthenticatedTopic_category_topicsIndexRoute
-  '/_authenticated/voting_units/': typeof AuthenticatedVoting_unitsIndexRoute
-  '/_authenticated/voting_votes/': typeof AuthenticatedVoting_votesIndexRoute
   '/_authenticated/projects/$editId/edit': typeof AuthenticatedProjectsEditIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/administrative_units'
+    | '/citizens'
     | '/officials'
+    | '/topic_category_topics'
+    | '/voting_units'
+    | '/voting_votes'
     | '/login'
     | '/feedback/$showId'
     | '/projects/$showId'
     | '/projects/create'
-    | '/administrative_units'
-    | '/citizens'
     | '/feedback'
     | '/projects'
-    | '/topic_category_topics'
-    | '/voting_units'
-    | '/voting_votes'
     | '/projects/$editId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/administrative_units'
+    | '/citizens'
     | '/officials'
+    | '/topic_category_topics'
+    | '/voting_units'
+    | '/voting_votes'
     | '/login'
     | '/feedback/$showId'
     | '/projects/$showId'
     | '/projects/create'
-    | '/administrative_units'
-    | '/citizens'
     | '/feedback'
     | '/projects'
-    | '/topic_category_topics'
-    | '/voting_units'
-    | '/voting_votes'
     | '/projects/$editId/edit'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/_authenticated/administrative_units'
+    | '/_authenticated/citizens'
     | '/_authenticated/officials'
+    | '/_authenticated/topic_category_topics'
+    | '/_authenticated/voting_units'
+    | '/_authenticated/voting_votes'
     | '/login/'
     | '/_authenticated/feedback/$showId'
     | '/_authenticated/projects/$showId'
     | '/_authenticated/projects/create'
-    | '/_authenticated/administrative_units/'
-    | '/_authenticated/citizens/'
     | '/_authenticated/feedback/'
     | '/_authenticated/projects/'
-    | '/_authenticated/topic_category_topics/'
-    | '/_authenticated/voting_units/'
-    | '/_authenticated/voting_votes/'
     | '/_authenticated/projects/$editId/edit'
   fileRoutesById: FileRoutesById
 }
@@ -242,6 +241,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/voting_votes': {
+      id: '/_authenticated/voting_votes'
+      path: '/voting_votes'
+      fullPath: '/voting_votes'
+      preLoaderRoute: typeof AuthenticatedVoting_votesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/voting_units': {
+      id: '/_authenticated/voting_units'
+      path: '/voting_units'
+      fullPath: '/voting_units'
+      preLoaderRoute: typeof AuthenticatedVoting_unitsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/topic_category_topics': {
+      id: '/_authenticated/topic_category_topics'
+      path: '/topic_category_topics'
+      fullPath: '/topic_category_topics'
+      preLoaderRoute: typeof AuthenticatedTopic_category_topicsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/officials': {
       id: '/_authenticated/officials'
       path: '/officials'
@@ -249,25 +269,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOfficialsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/voting_votes/': {
-      id: '/_authenticated/voting_votes/'
-      path: '/voting_votes'
-      fullPath: '/voting_votes'
-      preLoaderRoute: typeof AuthenticatedVoting_votesIndexRouteImport
+    '/_authenticated/citizens': {
+      id: '/_authenticated/citizens'
+      path: '/citizens'
+      fullPath: '/citizens'
+      preLoaderRoute: typeof AuthenticatedCitizensRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/voting_units/': {
-      id: '/_authenticated/voting_units/'
-      path: '/voting_units'
-      fullPath: '/voting_units'
-      preLoaderRoute: typeof AuthenticatedVoting_unitsIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/topic_category_topics/': {
-      id: '/_authenticated/topic_category_topics/'
-      path: '/topic_category_topics'
-      fullPath: '/topic_category_topics'
-      preLoaderRoute: typeof AuthenticatedTopic_category_topicsIndexRouteImport
+    '/_authenticated/administrative_units': {
+      id: '/_authenticated/administrative_units'
+      path: '/administrative_units'
+      fullPath: '/administrative_units'
+      preLoaderRoute: typeof AuthenticatedAdministrative_unitsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/projects/': {
@@ -282,20 +295,6 @@ declare module '@tanstack/react-router' {
       path: '/feedback'
       fullPath: '/feedback'
       preLoaderRoute: typeof AuthenticatedFeedbackIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/citizens/': {
-      id: '/_authenticated/citizens/'
-      path: '/citizens'
-      fullPath: '/citizens'
-      preLoaderRoute: typeof AuthenticatedCitizensIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/administrative_units/': {
-      id: '/_authenticated/administrative_units/'
-      path: '/administrative_units'
-      fullPath: '/administrative_units'
-      preLoaderRoute: typeof AuthenticatedAdministrative_unitsIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/projects/create': {
@@ -330,34 +329,34 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedAdministrative_unitsRoute: typeof AuthenticatedAdministrative_unitsRoute
+  AuthenticatedCitizensRoute: typeof AuthenticatedCitizensRoute
   AuthenticatedOfficialsRoute: typeof AuthenticatedOfficialsRoute
+  AuthenticatedTopic_category_topicsRoute: typeof AuthenticatedTopic_category_topicsRoute
+  AuthenticatedVoting_unitsRoute: typeof AuthenticatedVoting_unitsRoute
+  AuthenticatedVoting_votesRoute: typeof AuthenticatedVoting_votesRoute
   AuthenticatedFeedbackShowIdRoute: typeof AuthenticatedFeedbackShowIdRoute
   AuthenticatedProjectsShowIdRoute: typeof AuthenticatedProjectsShowIdRoute
   AuthenticatedProjectsCreateRoute: typeof AuthenticatedProjectsCreateRoute
-  AuthenticatedAdministrative_unitsIndexRoute: typeof AuthenticatedAdministrative_unitsIndexRoute
-  AuthenticatedCitizensIndexRoute: typeof AuthenticatedCitizensIndexRoute
   AuthenticatedFeedbackIndexRoute: typeof AuthenticatedFeedbackIndexRoute
   AuthenticatedProjectsIndexRoute: typeof AuthenticatedProjectsIndexRoute
-  AuthenticatedTopic_category_topicsIndexRoute: typeof AuthenticatedTopic_category_topicsIndexRoute
-  AuthenticatedVoting_unitsIndexRoute: typeof AuthenticatedVoting_unitsIndexRoute
-  AuthenticatedVoting_votesIndexRoute: typeof AuthenticatedVoting_votesIndexRoute
   AuthenticatedProjectsEditIdEditRoute: typeof AuthenticatedProjectsEditIdEditRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdministrative_unitsRoute:
+    AuthenticatedAdministrative_unitsRoute,
+  AuthenticatedCitizensRoute: AuthenticatedCitizensRoute,
   AuthenticatedOfficialsRoute: AuthenticatedOfficialsRoute,
+  AuthenticatedTopic_category_topicsRoute:
+    AuthenticatedTopic_category_topicsRoute,
+  AuthenticatedVoting_unitsRoute: AuthenticatedVoting_unitsRoute,
+  AuthenticatedVoting_votesRoute: AuthenticatedVoting_votesRoute,
   AuthenticatedFeedbackShowIdRoute: AuthenticatedFeedbackShowIdRoute,
   AuthenticatedProjectsShowIdRoute: AuthenticatedProjectsShowIdRoute,
   AuthenticatedProjectsCreateRoute: AuthenticatedProjectsCreateRoute,
-  AuthenticatedAdministrative_unitsIndexRoute:
-    AuthenticatedAdministrative_unitsIndexRoute,
-  AuthenticatedCitizensIndexRoute: AuthenticatedCitizensIndexRoute,
   AuthenticatedFeedbackIndexRoute: AuthenticatedFeedbackIndexRoute,
   AuthenticatedProjectsIndexRoute: AuthenticatedProjectsIndexRoute,
-  AuthenticatedTopic_category_topicsIndexRoute:
-    AuthenticatedTopic_category_topicsIndexRoute,
-  AuthenticatedVoting_unitsIndexRoute: AuthenticatedVoting_unitsIndexRoute,
-  AuthenticatedVoting_votesIndexRoute: AuthenticatedVoting_votesIndexRoute,
   AuthenticatedProjectsEditIdEditRoute: AuthenticatedProjectsEditIdEditRoute,
 }
 

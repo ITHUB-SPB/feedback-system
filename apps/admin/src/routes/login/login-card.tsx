@@ -1,6 +1,6 @@
 import React from "react";
 import { type LoginPageProps, type LoginFormTypes } from "@refinedev/core";
-import { authClient } from "@/auth-client";
+import { authClient } from "@/providers/auth-client";
 
 import {
   bodyStyles,

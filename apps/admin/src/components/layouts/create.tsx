@@ -25,17 +25,13 @@ export const Create: React.FC<CreateProps> = ({
     htmlType: "submit",
   };
 
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <PageHeader
       onBack={() => router.history.back()}
       title={title ?? "Новая запись"}
-      extra={
-        headerButtons 
-          ? <Space wrap>{headerButtons}</Space>
-          : null
-      }
+      extra={headerButtons ? <Space wrap>{headerButtons}</Space> : null}
     >
       <Spin spinning={isLoading}>
         <Card
@@ -46,7 +42,7 @@ export const Create: React.FC<CreateProps> = ({
               style={{ float: "right", marginRight: 24 }}
             >
               {footerButtons ?? <SaveButton {...saveButtonProps} />}
-            </Space>
+            </Space>,
           ]}
         >
           {children}

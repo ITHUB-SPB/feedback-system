@@ -36,5 +36,7 @@ export type AdministrativeUnitTypeContract =
   RouterOutput["administrativeUnitType"];
 export type OfficialResponsibilityContract =
   RouterOutput["officialResponsibility"];
+export type VotingUnitContract = RouterOutput["votingUnit"];
+export type VotingRegionContract = RouterOutput["votingRegion"];
 
 export type FeedbackStatusEnum = FeedbackStatusContract["all"][0]["title"];

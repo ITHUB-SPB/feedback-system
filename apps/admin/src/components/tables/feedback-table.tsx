@@ -12,16 +12,16 @@ import {
   FilterDropdown,
 } from "@/core/refine-antd";
 
-import useFeedbackType from "../hooks/feedback-type";
-import useFeedbackStatus from "../hooks/feedback-status";
-import useFeedbackTable from "@/components/hooks/feedback-table";
+import useFeedbackType from "../hooks/use-feedback-type";
+import useFeedbackStatus from "../hooks/use-feedback-status";
+import useFeedbackTable from "@/components/hooks/use-feedback-table";
 import { ShowButton } from "@/components/buttons";
 import { getStatusColor } from "@/components/lib/statusColor";
 
 export default function FeedbackTable() {
   const table = useFeedbackTable();
-  const feedbackType = useFeedbackType()
-  const feedbackStatus = useFeedbackStatus()
+  const feedbackType = useFeedbackType();
+  const feedbackStatus = useFeedbackStatus();
 
   return (
     <Table
@@ -87,7 +87,11 @@ export default function FeedbackTable() {
                 : undefined;
             }}
           >
-            <Select style={{ minWidth: 200 }} {...feedbackType.selectProps} loading={feedbackType.isLoading} />
+            <Select
+              style={{ minWidth: 200 }}
+              {...feedbackType.selectProps}
+              loading={feedbackType.isLoading}
+            />
           </FilterDropdown>
         )}
         defaultFilteredValue={getDefaultFilter(

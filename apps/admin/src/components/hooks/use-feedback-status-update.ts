@@ -1,7 +1,7 @@
 import { useUpdate, type HttpError } from "@refinedev/core";
 import type { FeedbackContract } from "@/types";
 
-export default function useUpdateStatus(feedbackId: number) {
+export default function useUpdateFeedackStatus(feedbackId: number) {
   const { mutate: updateStatus } = useUpdate<
     {},
     HttpError,

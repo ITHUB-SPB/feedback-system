@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { orpcClient } from "@/providers/orpc-provider";
+import { orpcClient } from "@/providers/orpc-client";
 import { useSelectFromQuery } from "@/core/refine-antd";
 
 export function useResponsibilities() {
@@ -17,6 +17,6 @@ export function useResponsibilities() {
     data,
     isLoading,
     isError,
-    selectProps
+    selectProps,
   };
 }

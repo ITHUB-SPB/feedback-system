@@ -5,8 +5,6 @@ import Button, { type ButtonProps } from "antd/es/button";
 import Input from "antd/es/input";
 import Popconfirm, { type PopconfirmProps } from "antd/es/popconfirm";
 
-import { RefineButtonClassNames } from "@/core/refine-types";
-
 type HandleConfirmProp = {
   handleConfirm: (
     event: MouseEventHandler<HTMLButtonElement>,
@@ -46,7 +44,6 @@ export const DeclineButton: React.FC<
         variant={variant}
         // loading={loading}
         icon={<DeleteOutlined />}
-        className={RefineButtonClassNames.DeleteButton}
       >
         {children}
       </Button>

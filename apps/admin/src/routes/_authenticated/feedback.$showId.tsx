@@ -8,7 +8,7 @@ import { ActionButtons } from "@/components/buttons";
 import FeedbackModerator from "@/components/views/feedback-moderator";
 import FeedbackOfficial from "@/components/views/feedback-official";
 import { getStatusColor } from "@/components/lib/statusColor";
-import useUpdateStatus from "@/components/hooks/use-feedback-status-update";
+import useUpdateFeedackStatus from "@/components/hooks/use-feedback-status-update";
 import { useFeedbackOne } from "@/components/hooks/use-feedback";
 
 export const Route = createFileRoute("/_authenticated/feedback/$showId")({
@@ -21,17 +21,19 @@ export const Route = createFileRoute("/_authenticated/feedback/$showId")({
     context.queryClient.ensureQueryData(
       context.orpcClient.feedback.one.queryOptions({
         input: {
-          id: params.showId
-        }
-      })
-    )
+          id: params.showId,
+        },
+      }),
+    );
   },
   component: () => {
-    const { showId } = Route.useParams()
-    const { context: { session } } = Route.parentRoute.useLoaderData()
+    const { showId } = Route.useParams();
+    const {
+      context: { session },
+    } = Route.parentRoute.useLoaderData();
 
-    const { data: feedback } = useFeedbackOne(showId)
-    const updateStatus = useUpdateStatus(showId);
+    const { data: feedback } = useFeedbackOne(showId);
+    const updateStatus = useUpdateFeedackStatus(showId);
 
     return (
       <Show

@@ -19,10 +19,10 @@ import { useNotificationProvider } from "@/core/refine-antd";
 
 import "antd/dist/reset.css";
 
-import { authClient } from "@/auth-client";
+import { authClient } from "@/providers/auth-client";
 import { dataProvider } from "@/providers/data-provider";
 import { routerProvider } from "@/providers/router-provider";
-import { orpcClient } from "@/providers/orpc-provider";
+import { orpcClient } from "@/providers/orpc-client";
 import { resources } from "@/resources";
 
 interface RouterContext {
@@ -59,9 +59,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
               section: {
                 maxHeight: "calc(100dvh - 160px)",
                 overflowY: "auto",
-                overflowX: "hidden"
+                overflowX: "hidden",
               },
-            }
+            },
           }}
         >
           <AntdApp>
@@ -81,7 +81,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
               </ScrollToTop>
             </Refine>
           </AntdApp>
-        </ConfigProvider >
+        </ConfigProvider>
         <TanStackDevtools
           config={{
             position: "bottom-right",

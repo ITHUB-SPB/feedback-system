@@ -1,0 +1,112 @@
+import Table from "antd/es/table";
+import Select from "antd/es/select";
+
+import {
+  getDefaultSortOrder,
+  getDefaultFilter,
+  FilterDropdown,
+} from "@/core/refine-antd";
+
+import { DeleteButton } from "../buttons";
+import useTopics from "../hooks/use-topics";
+import useTopicCategories from "../hooks/use-topic-categories";
+import useTopicCategoryTopicsTable from "../hooks/use-topic-category-topics-table";
+
+export default function TopicCategoryTopicsTable() {
+  const table = useTopicCategoryTopicsTable();
+  const topics = useTopics();
+  const topicCategories = useTopicCategories();
+
+  return (
+    <Table
+      {...table.tableProps}
+      rowKey="id"
+      sticky={true}
+      pagination={{
+        ...table.tableProps.pagination,
+        pageSizeOptions: [12, 24, 48],
+      }}
+      size="middle"
+    >
+      <Table.Column
+        dataIndex="topic_category_id"
+        title="Категория"
+        sorter
+        width="48%"
+        defaultSortOrder={getDefaultSortOrder("topic_category", table.sorters)}
+        render={(value) => {
+          if (topicCategories.isLoading) {
+            return "Загрузка...";
+          }
+
+          return topicCategories?.data?.find((unit) => unit.id == value)?.title;
+        }}
+        filterDropdown={(props) => (
+          <FilterDropdown
+            {...props}
+            mapValue={(selectedKey) => {
+              if (Array.isArray(selectedKey)) return undefined;
+              return selectedKey && selectedKey !== ""
+                ? Number(selectedKey)
+                : undefined;
+            }}
+          >
+            <Select
+              style={{ minWidth: 200 }}
+              {...topicCategories.selectProps}
+            />
+          </FilterDropdown>
+        )}
+        defaultFilteredValue={getDefaultFilter("topic_category", table.filters)}
+      />
+
+      <Table.Column
+        dataIndex="topic_id"
+        title="Топик"
+        width="48%"
+        sorter
+        defaultSortOrder={getDefaultSortOrder("topic", table.sorters)}
+        render={(value) => {
+          if (topics.isLoading) {
+            return "Загрузка...";
+          }
+
+          return topics.data?.find((unit) => unit.id == value)?.title;
+        }}
+        filterDropdown={(props) => (
+          <FilterDropdown
+            {...props}
+            mapValue={(selectedKey) => {
+              if (Array.isArray(selectedKey)) return undefined;
+              return selectedKey && selectedKey !== ""
+                ? Number(selectedKey)
+                : undefined;
+            }}
+          >
+            <Select style={{ minWidth: 200 }} {...topics.selectProps} />
+          </FilterDropdown>
+        )}
+      />
+      <Table.Column
+        render={(_, record) => (
+          <DeleteButton
+            hideText
+            size="small"
+            recordItemId={record.id}
+            resource="topic_category_topics"
+            successNotification={{
+              message: "Пара удалена",
+              description: "Успешно",
+              type: "success",
+            }}
+            errorNotification={{
+              message: "Не удалось удалить пару",
+              description: "Ошибка",
+              type: "error",
+            }}
+          />
+        )}
+      />
+    </Table>
+  );
+}

@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import type { DataProvider } from "@refinedev/core";
-import type { authClient } from "../auth-client";
+import type { authClient } from "./auth-client";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL! + "/api";
 
@@ -35,12 +35,12 @@ export const dataProvider: DataProvider = {
     const updateOptions =
       resource === "officials"
         ? {
-          method: "POST",
-          body: JSON.stringify({
-            userId: id,
-            data: variables,
-          }),
-        }
+            method: "POST",
+            body: JSON.stringify({
+              userId: id,
+              data: variables,
+            }),
+          }
         : { method: "PATCH", body: JSON.stringify(variables) };
 
     const url =
@@ -202,20 +202,20 @@ export const dataProvider: DataProvider = {
     const fetcherProps: [string, RequestInit] =
       resource === "officials"
         ? [
-          `${API_URL}/auth/admin/remove-user`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              userId: id,
-            }),
-          },
-        ]
+            `${API_URL}/auth/admin/remove-user`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                userId: id,
+              }),
+            },
+          ]
         : [
-          `${API_URL}/${resource}/${id}`,
-          {
-            method: "DELETE",
-          },
-        ];
+            `${API_URL}/${resource}/${id}`,
+            {
+              method: "DELETE",
+            },
+          ];
 
     const response = await fetcher(...fetcherProps);
 

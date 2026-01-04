@@ -90,10 +90,21 @@ export const useEditableTable = <
     successNotification: undefined,
     errorNotification: undefined,
   });
+
   const edit = useForm<TQueryFnData, TError, TVariables>({
     ...props,
     action: "edit",
     redirect: false,
+    successNotification: {
+      message: "Запись обновлена",
+      description: "Успешно",
+      type: "success",
+    },
+    errorNotification: {
+      message: "Не удалось обновить запись",
+      description: "Ошибка",
+      type: "error",
+    },
   });
 
   const { id: editId, setId, saveButtonProps } = edit;

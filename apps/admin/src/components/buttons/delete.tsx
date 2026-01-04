@@ -3,7 +3,6 @@ import { Button, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useDeleteButton } from "@refinedev/core";
-import { RefineButtonClassNames } from "@/core/refine-types";
 
 import type { DeleteButtonProps } from "./types";
 
@@ -16,7 +15,6 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
   successNotification,
   errorNotification,
   hideText = false,
-  accessControl,
   meta,
   dataProviderName,
   confirmTitle,
@@ -35,7 +33,6 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
     mutationMode,
     errorNotification,
     successNotification,
-    accessControl,
   });
 
   const isDisabled = disabled || rest.disabled;
@@ -60,7 +57,6 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
         icon={<DeleteOutlined />}
         title={title}
         disabled={isDisabled}
-        className={RefineButtonClassNames.DeleteButton}
         {...rest}
       >
         {!hideText && (children ?? "Удалить")}

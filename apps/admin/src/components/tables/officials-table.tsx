@@ -8,25 +8,21 @@ import Button from "antd/es/button";
 import Select from "antd/es/select";
 
 import { useInvalidate } from "@refinedev/core";
-import {
-  getDefaultSortOrder,
-  TextField,
-} from "@/core/refine-antd";
+import { getDefaultSortOrder, TextField } from "@/core/refine-antd";
 
 import { SaveButton, DeleteButton, EditButton } from "@/components/buttons";
 import { type User } from "@/types";
 
-import { useAdministrativeUnits } from "../hooks/administrative-units";
+import { useAdministrativeUnits } from "../hooks/use-administrative-units";
 import { useResponsibilities } from "../hooks/use-responsibilities";
-import useOfficialsTable from "../hooks/officials-table";
-import { useOfficialAttach } from "../hooks/official-attach";
-
+import useOfficialsTable from "../hooks/use-officials-table";
+import { useOfficialAttach } from "../hooks/use-official-attach";
 
 export default function OfficialsTable() {
   const administrativeUnits = useAdministrativeUnits({
-    filter: "administrative_unit_type.title[eq]town"
-  })
-  const responsibilities = useResponsibilities()
+    filter: "administrative_unit_type.title[eq]town",
+  });
+  const responsibilities = useResponsibilities();
   const table = useOfficialsTable();
 
   const {

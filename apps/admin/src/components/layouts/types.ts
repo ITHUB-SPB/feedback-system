@@ -13,17 +13,10 @@ import type {
   RefineCrudShowProps,
 } from "@/core/refine-types";
 
-export type CreateProps = RefineCrudCreateProps<
-  SaveButtonProps
->;
+export type CreateProps = RefineCrudCreateProps<SaveButtonProps>;
 
-export type EditProps = RefineCrudEditProps<
-  SaveButtonProps,
-  DeleteButtonProps
->;
+export type EditProps = RefineCrudEditProps<SaveButtonProps, DeleteButtonProps>;
 
-export type ListProps = RefineCrudListProps<
-  CreateButtonProps
->;
+export type ListProps = RefineCrudListProps<CreateButtonProps>;
 
 export type ShowProps = RefineCrudShowProps<CardProps>;

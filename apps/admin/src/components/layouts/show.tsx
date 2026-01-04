@@ -7,7 +7,12 @@ import Spin from "antd/es/spin";
 
 import type { ShowProps } from "./types";
 import { PageHeader } from "../pageHeader";
-import { EditButton, DeleteButton, type EditButtonProps, type DeleteButtonProps } from "../buttons";
+import {
+  EditButton,
+  DeleteButton,
+  type EditButtonProps,
+  type DeleteButtonProps,
+} from "../buttons";
 
 export const Show: React.FC<ShowProps> = ({
   title,

@@ -3,7 +3,7 @@ import Typography from "antd/es/typography";
 
 import { TextField, NumberField } from "@/core/refine-antd";
 import { Show } from "@/components/layouts";
-import { useProjectShow } from "@/components/hooks/project-show";
+import { useProjectShow } from "@/components/hooks/use-project-show";
 
 export const Route = createFileRoute("/_authenticated/projects/$showId")({
   params: {
@@ -54,6 +54,6 @@ export const Route = createFileRoute("/_authenticated/projects/$showId")({
         <Typography.Title level={5}>Долгота</Typography.Title>
         <NumberField value={project?.longitude} />
       </Show>
-    )
+    );
   },
 });
