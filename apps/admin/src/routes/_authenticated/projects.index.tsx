@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { CreateButton } from "@/components/buttons/create";
-import { PageHeader } from "@/components/pageHeader";
-import ProjectsTable from "@/components/tables/projects-table";
+import { PageHeader } from "@/components/page-header";
+import ProjectsTable from "@/tables/projects-table";
 
 export const Route = createFileRoute("/_authenticated/projects/")({
   loader: async ({ context }) => {

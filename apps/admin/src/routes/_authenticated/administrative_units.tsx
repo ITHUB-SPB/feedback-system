@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import Button from "antd/es/button";
 
-import { PageHeader } from "@/components/pageHeader";
-import AdministrativeUnitsTable from "@/components/tables/administrative-units-table";
-import OfficialAssignModalForm from "@/components/forms/official-assign-form";
-import useOfficialAssignForm from "@/components/hooks/use-official-assign-form";
+import { PageHeader } from "@/components/page-header";
+import AdministrativeUnitsTable from "@/tables/administrative-units-table";
+import OfficialAssignModalForm from "@/forms/official-assign-form";
+import useOfficialAssignForm from "@/hooks/use-official-assign-form";
 
 export const Route = createFileRoute("/_authenticated/administrative_units")({
   loader: async ({ context }) => {

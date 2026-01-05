@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Form from "antd/es/form";
 
-import { Create } from "@/components/layouts";
-import CreateProjectForm from "@/components/forms/project-create-form";
-import { useCreateProject } from "@/components/hooks/use-project-create";
+import { Create } from "@/components/crud";
+import CreateProjectForm from "@/forms/project-create-form";
+import { useCreateProject } from "@/hooks/use-project-create";
 
 export const Route = createFileRoute("/_authenticated/projects/create")({
   loader: ({ context }) => {

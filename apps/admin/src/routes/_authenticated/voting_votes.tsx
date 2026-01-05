@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ExportButton } from "@/components/buttons";
-import { PageHeader } from "@/components/pageHeader";
-import VotingVotesTable from "@/components/tables/voting-votes-table";
-import useVotingVotesExport from "@/components/hooks/use-voting-votes-export";
+import { PageHeader } from "@/components/page-header";
+import VotingVotesTable from "@/tables/voting-votes-table";
+import useVotingVotesExport from "@/hooks/use-voting-votes-export";
 
 export const Route = createFileRoute("/_authenticated/voting_votes")({
   component: ListVotingVotes,

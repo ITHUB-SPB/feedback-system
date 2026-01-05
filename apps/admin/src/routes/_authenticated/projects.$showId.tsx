@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Typography from "antd/es/typography";
 
-import { TextField, NumberField } from "@/core/refine-antd";
-import { Show } from "@/components/layouts";
-import { useProjectShow } from "@/components/hooks/use-project-show";
+import { TextField, NumberField } from "@/components/fields";
+import { Show } from "@/components/crud";
+import { useProjectShow } from "@/hooks/use-project-show";
 
 export const Route = createFileRoute("/_authenticated/projects/$showId")({
   params: {

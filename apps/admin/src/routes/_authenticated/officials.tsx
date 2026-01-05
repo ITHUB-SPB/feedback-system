@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Button from "antd/es/button";
 
-import { PageHeader } from "@/components/pageHeader";
-import useOfficialCreate from "@/components/hooks/use-official-create";
-import OfficialCreateModalForm from "@/components/forms/official-create-form";
-import OfficialsTable from "@/components/tables/officials-table";
+import { PageHeader } from "@/components/page-header";
+import useOfficialCreate from "@/hooks/use-official-create";
+import OfficialCreateModalForm from "@/forms/official-create-form";
+import OfficialsTable from "@/tables/officials-table";
 
 export const Route = createFileRoute("/_authenticated/officials")({
   loader: async ({ context }) => {

@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Form from "antd/es/form";
 
-import { Edit } from "@/components/layouts";
-import EditProjectForm from "@/components/forms/project-edit-form";
-import { useProjectEdit } from "@/components/hooks/use-project-edit";
+import { Edit } from "@/components/crud";
+import EditProjectForm from "@/forms/project-edit-form";
+import { useProjectEdit } from "@/hooks/use-project-edit";
 
 export const Route = createFileRoute("/_authenticated/projects/$editId/edit")({
   params: {

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { PageHeader } from "@/components/pageHeader";
-import FeedbackTable from "@/components/tables/feedback-table";
+import { PageHeader } from "@/components/page-header";
+import FeedbackTable from "@/tables/feedback-table";
 
 export const Route = createFileRoute("/_authenticated/feedback/")({
   loader: async ({ context }) => {

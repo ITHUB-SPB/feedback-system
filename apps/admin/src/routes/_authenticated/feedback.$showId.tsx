@@ -3,13 +3,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import Tag from "antd/es/tag";
 import Flex from "antd/es/flex";
 
-import { Show } from "@/components/layouts";
+import { Show } from "@/components/crud";
 import { ActionButtons } from "@/components/buttons";
 import FeedbackModerator from "@/components/views/feedback-moderator";
 import FeedbackOfficial from "@/components/views/feedback-official";
-import { getStatusColor } from "@/components/lib/statusColor";
-import useUpdateFeedackStatus from "@/components/hooks/use-feedback-status-update";
-import { useFeedbackOne } from "@/components/hooks/use-feedback";
+import { getStatusColor } from "@/lib/statusColor";
+import useUpdateFeedackStatus from "@/hooks/use-feedback-status-update";
+import { useFeedbackOne } from "@/hooks/use-feedback";
 
 export const Route = createFileRoute("/_authenticated/feedback/$showId")({
   params: {

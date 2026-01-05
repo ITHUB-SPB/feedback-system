@@ -4,7 +4,7 @@ import Divider from "antd/es/divider";
 import Flex from "antd/es/flex";
 import Image from "antd/es/image";
 
-import { TextField } from "@/core/refine-antd";
+import { TextField } from "@/components/fields";
 import type { FeedbackContract } from "@/types";
 
 type ContentProps = {

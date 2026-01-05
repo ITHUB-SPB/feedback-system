@@ -5,6 +5,7 @@ import {
   Outlet,
   useLocation,
 } from "@tanstack/react-router";
+
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
@@ -15,14 +16,14 @@ import { Refine } from "@refinedev/core";
 import AntdApp from "antd/es/app";
 import ConfigProvider from "antd/es/config-provider";
 
-import { useNotificationProvider } from "@/core/refine-antd";
-
 import "antd/dist/reset.css";
 
 import { authClient } from "@/providers/auth-client";
 import { dataProvider } from "@/providers/data-provider";
 import { routerProvider } from "@/providers/router-provider";
 import { orpcClient } from "@/providers/orpc-client";
+import { useNotificationProvider } from "@/providers/notification-provider";
+
 import { resources } from "@/resources";
 
 interface RouterContext {

@@ -3,13 +3,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import Space from "antd/es/space";
 import Button from "antd/es/button";
 
-import { PageHeader } from "@/components/pageHeader";
-import VotingUnitsTable from "@/components/tables/voting-units-table";
-import VotingUnitCreateForm from "@/components/forms/voting-unit-create-form";
-import VotingRegionCreateForm from "@/components/forms/voting-region-create-form";
+import { PageHeader } from "@/components/page-header";
+import VotingUnitsTable from "@/tables/voting-units-table";
+import VotingUnitCreateForm from "@/forms/voting-unit-create-form";
+import VotingRegionCreateForm from "@/forms/voting-region-create-form";
 
-import useVotingRegionCreate from "@/components/hooks/use-voting-region-create";
-import useVotingUnitCreate from "@/components/hooks/use-voting-unit-create";
+import useVotingRegionCreate from "@/hooks/use-voting-region-create";
+import useVotingUnitCreate from "@/hooks/use-voting-unit-create";
 
 export const Route = createFileRoute("/_authenticated/voting_units")({
   component: ListVotingUnits,

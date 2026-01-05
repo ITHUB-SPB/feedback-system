@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { PageHeader } from "@/components/pageHeader";
-import CitizensTable from "@/components/tables/citizens-table";
+import { PageHeader } from "@/components/page-header";
+import CitizensTable from "@/tables/citizens-table";
 
 export const Route = createFileRoute("/_authenticated/citizens")({
   component: () => {

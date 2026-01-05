@@ -5,7 +5,7 @@ import {
   ThemedSider,
   ThemedHeader,
   ThemedTitle,
-} from "@/core/refine-antd";
+} from "@/components/themed-layout";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ context, location }) => {
