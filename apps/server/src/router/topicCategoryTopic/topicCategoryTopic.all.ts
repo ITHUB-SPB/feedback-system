@@ -1,10 +1,19 @@
 import { publicProcedure } from "@shared/api";
 import { type Tables } from "@shared/database";
 
+const mapOperatorsToSql = {
+  eq: "=",
+  ne: "!=",
+  lt: "<",
+  gt: ">",
+  in: "in",
+} as const;
+
 const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
   async ({ context, input, errors }) => {
     try {
-      const { filter, sort, limit, offset } = input;
+      const { filter, sort } = input;
+      console.log(filter, sort)
 
       let query = context.db
         .selectFrom("topic_category_topic")
@@ -23,25 +32,10 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
         ]);
 
       if (filter?.length) {
-        const mapOperatorsToSql = {
-          eq: "=",
-          ne: "!=",
-          lt: "<",
-          gt: ">",
-          in: "in",
-        } as const;
-
         type WhereValue = string | number | string[] | number[];
 
-        for (const filterExpression of filter) {
-          const matchResult =
-            decodeURI(filterExpression).match(/(.*)\[(.*)\](.*)/);
-
-          if (matchResult === null) {
-            continue;
-          }
-
-          let column = matchResult[1] as
+        for (const filterObject of filter) {
+          let column = filterObject.field as
             | keyof Tables["topic_category_topic"]
             | keyof Tables["topic"]
             | keyof Tables["topic_category"];
@@ -51,11 +45,11 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
               "topic_category_topic.id" as keyof Tables["topic_category_topic"];
           }
 
-          const operator = matchResult[2] as keyof typeof mapOperatorsToSql;
+          const operator = filterObject.operator as keyof typeof mapOperatorsToSql;
 
-          let value: WhereValue = Number.isFinite(+matchResult[3])
-            ? +matchResult[3]
-            : matchResult[3];
+          let value: WhereValue = Number.isFinite(+filterObject.value)
+            ? +filterObject.value
+            : filterObject.value;
 
           if (operator === "in" && typeof value === "string") {
             const items = value.split(",");
@@ -75,15 +69,14 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
       }
 
       if (sort !== undefined) {
-        for (const sortExpression of sort) {
-          let [field, order] = sortExpression.split(".");
+        for (const { field, order } of sort) {
           if (field === "topic_id") {
-            query = query.orderBy("topic.title", order as "desc" | "asc");
+            query = query.orderBy("topic.title", order);
           }
           if (field === "topic_category_id") {
             query = query.orderBy(
               "topic_category.title",
-              order as "desc" | "asc",
+              order,
             );
           }
         }
@@ -91,14 +84,6 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
 
       const total = (await query.execute()).length;
       context.resHeaders?.set("x-total-count", String(total));
-
-      if (limit !== undefined) {
-        query = query.limit(limit);
-      }
-
-      if (offset !== undefined) {
-        query = query.offset(offset);
-      }
 
       return await query.execute();
     } catch (error) {

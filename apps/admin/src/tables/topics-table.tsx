@@ -1,3 +1,5 @@
+import type { CrudFilter, CrudSort } from "@refinedev/core";
+
 import Table from "antd/es/table";
 import Select from "antd/es/select";
 
@@ -5,26 +7,54 @@ import {
   getDefaultSortOrder,
   getDefaultFilter,
 } from "@/components/table/definition";
+
 import { FilterDropdown } from '@/components/filter-dropdown'
 import { DeleteButton } from "@/components/buttons";
 import useTopics from "@/hooks/use-topics";
 import useTopicCategories from "@/hooks/use-topic-categories";
-import useTopicCategoryTopicsTable from "@/hooks/use-topic-category-topics-table";
+
+import { useTableFromQuery } from '@/components/table/use-table-from-query';
+import { useQueryClient } from "@tanstack/react-query";
+import { orpcClient } from "@/providers/orpc-client";
 
 export default function TopicCategoryTopicsTable() {
-  const table = useTopicCategoryTopicsTable();
+  const queryClient = useQueryClient()
+
   const topics = useTopics();
   const topicCategories = useTopicCategories();
+
+  const queryOptions = ({
+    sorters,
+    filters
+  }: {
+    sorters?: CrudSort[] | undefined,
+    filters?: CrudFilter[] | undefined
+  }) => orpcClient.topicCategoryTopic.all.queryOptions({
+    input: {
+      sort: sorters,
+      filter: filters
+    }
+  })
+
+  const table = useTableFromQuery({
+    queryOptions,
+    sorters: {
+      initial: [
+        {
+          field: "topic_category_id",
+          order: "asc"
+        }
+      ]
+    }
+  })
+
 
   return (
     <Table
       {...table.tableProps}
       rowKey="id"
       sticky={true}
-      pagination={{
-        ...table.tableProps.pagination,
-        pageSizeOptions: [12, 24, 48],
-      }}
+      scroll={{ x: true }}
       size="middle"
     >
       <Table.Column
@@ -32,7 +62,6 @@ export default function TopicCategoryTopicsTable() {
         title="Категория"
         sorter
         width="48%"
-        defaultSortOrder={getDefaultSortOrder("topic_category", table.sorters)}
         render={(value) => {
           if (topicCategories.isLoading) {
             return "Загрузка...";
@@ -102,6 +131,14 @@ export default function TopicCategoryTopicsTable() {
               message: "Не удалось удалить пару",
               description: "Ошибка",
               type: "error",
+            }}
+            onSuccess={() => {
+              queryClient.invalidateQueries(
+                {
+                  queryKey: [["topicCategoryTopic", "all"]],
+                  refetchType: "all"
+                }
+              )
             }}
           />
         )}

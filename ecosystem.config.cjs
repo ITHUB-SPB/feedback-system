@@ -5,7 +5,7 @@ module.exports = {
       script: "serve",
       env: {
         PM2_SERVE_PATH: "./apps/web/dist",
-        PM2_SERVE_PORT: 5173,
+        PM2_SERVE_PORT: 5175,
       },
     },
     {

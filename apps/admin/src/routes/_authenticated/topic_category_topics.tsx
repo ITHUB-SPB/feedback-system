@@ -19,6 +19,17 @@ export const Route = createFileRoute("/_authenticated/topic_category_topics")({
         input: {},
       }),
     );
+
+    context.queryClient.ensureQueryData(
+      context.orpcClient.topicCategoryTopic.all.queryOptions({
+        input: {
+          sort: [{
+            field: "topic_category_id",
+            order: "asc"
+          }]
+        }
+      })
+    );
   },
   component: ListTopicCategoryTopics,
 });

@@ -92,10 +92,10 @@ export const FilterDropdown: React.FC<FilterDropdownProps> = (props) => {
     >
       <div style={{ marginBottom: 15 }}>{childrenWithProps}</div>
       <Space>
-        <Button type="primary" size="small" onClick={() => onFilter()}>
+        <Button type="primary" size="small" onClick={onFilter}>
           <FilterOutlined /> Filter
         </Button>
-        <Button danger size="small" onClick={() => clearFilter()}>
+        <Button danger size="small" onClick={clearFilter}>
           Clear
         </Button>
       </Space>

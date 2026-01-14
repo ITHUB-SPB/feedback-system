@@ -70,7 +70,7 @@ services:
       - "traefik.http.routers.web.entrypoints=web-secure"
       - "traefik.http.routers.web.tls.certresolver=tlsresolver"
       - "traefik.http.routers.web.middlewares=chain-no-auth@file"
-      - "traefik.http.services.web.loadbalancer.server.port=5173"
+      - "traefik.http.services.web.loadbalancer.server.port=5175"
 
 volumes:
   letsencrypt:

@@ -2,11 +2,11 @@ import { apiClient } from "./api-client";
 import * as types from "./types";
 
 export default class State {
-  public projects: types.Project[] = [];
-  public cities: types.AdministrativeUnit[] = [];
-  public feedbackTypes: types.FeedbackType[] = [];
-  public issuesByProject: types.FeedbackIn[] = [];
-  public categories: types.TopicCategory[] = [];
+  public projects: types.ProjectContract["output"]["one"][] = [];
+  public cities: types.AdministrativeUnitContract["output"]["one"][] = [];
+  public feedbackTypes: types.FeedbackTypeContract["output"]["all"] = [];
+  public issuesByProject: types.FeedbackContract["output"]["all"] = [];
+  public categories: types.TopicCategoryContract["output"]["all"] = [];
 
   public async init() {
     this.projects = await apiClient.project.all({
@@ -22,15 +22,21 @@ export default class State {
 
   public async loadIssues(
     categoryId: number | string,
-  ): Promise<types.TopicCategoryTopic[]> {
+  ): Promise<types.TopicCategoryTopicContract["output"]["all"]> {
     return await apiClient.topicCategoryTopic.all({
-      filter: `topic_category_id[eq]${categoryId}`,
+      filter: [
+        {
+          field: "topic_category_id",
+          operator: "eq",
+          value: String(categoryId)
+        }
+      ]
     });
   }
 
   public async loadIssuesByProject(projectId: number | string): Promise<any[]> {
     this.issuesByProject = await apiClient.feedback.all({
-      filter: `project_id[eq]${projectId}&feedback_type_id[eq]2&feedback_status_id[in]1,4`,
+      filter: `project_id[eq]${projectId}&feedback_type_id[eq]2&feedback_status_id[in]1,2,4,6`,
     });
     return this.issuesByProject;
   }

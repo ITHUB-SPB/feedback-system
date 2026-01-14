@@ -10,12 +10,14 @@ import {
   getCoreRowModel,
 } from "@tanstack/table-core";
 
-import type { FeedbackIn } from "./types";
+import type { FeedbackContract } from "./types";
 import type State from "./state";
 
 type TableManagerProperties = {
   state: State;
 };
+
+type FeedbackIn = FeedbackContract["output"]["one"]
 
 const flexRender = <TProps extends object>(comp: any, props: TProps) => {
   if (typeof comp === "function") {
@@ -26,8 +28,8 @@ const flexRender = <TProps extends object>(comp: any, props: TProps) => {
 
 const useTable = <TData extends RowData>(options: TableOptions<TData>) => {
   const resolvedOptions: TableOptionsResolved<TData> = {
-    state: {}, // Dummy state
-    onStateChange: () => {}, // noop
+    state: {},
+    onStateChange: () => { },
     renderFallbackValue: null,
     ...options,
   };
@@ -44,7 +46,6 @@ const useTable = <TData extends RowData>(options: TableOptions<TData>) => {
         ...currentState,
         ...options.state,
       },
-      // Similarly, we'll maintain both our internal state and any user-provided state
       onStateChange: (updater) => {
         if (typeof updater === "function") {
           const newState = updater(currentState);
@@ -61,11 +62,6 @@ const useTable = <TData extends RowData>(options: TableOptions<TData>) => {
 };
 
 export class TableFeedbackManager {
-  private statuses = {
-    pending: "На рассмотрении",
-    approved: "Утверждено",
-    completed: "Завершено",
-  } as const;
   private state: State;
   private columnHelper: ColumnHelper<FeedbackIn>;
   private columns;
@@ -81,18 +77,21 @@ export class TableFeedbackManager {
       this.columnHelper.accessor("description", {
         header: "Описание",
       }),
-      this.columnHelper.accessor("feedback_status", {
+      this.columnHelper.accessor("status", {
         header: "Статус",
         cell: (info) => {
-          const value = info.getValue() as keyof typeof this.statuses;
-          return this.statuses[value];
-        },
+          console.log(info.row.original)
+          if (info.row.original.feedback_status_comment) {
+            return `${info.getValue()["translation"]}<br/>(${info.row.original.feedback_status_comment})`
+          }
+          return info.getValue()["translation"]
+        }
       }),
       this.columnHelper.accessor("created_at", {
         header: "Дата",
         cell: (info) => new Date(info.getValue()).toLocaleString("ru"),
       }),
-    ];
+    ]
   }
 
   public renderTable() {

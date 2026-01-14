@@ -88,6 +88,8 @@ const allFeedback = publicProcedure.feedback.all.handler(
         query = query.offset(offset);
       }
 
+      console.log(await query.execute())
+
       const results = (await query.execute()).map((result) => ({
         ...result,
         created_at: new Date(result.created_at).toISOString(),
@@ -96,12 +98,13 @@ const allFeedback = publicProcedure.feedback.all.handler(
       const publicFieldsOnly = !context.session?.user?.role;
 
       return publicFieldsOnly
-        ? results.map(({ created_at, description, feedback_type, status }) => ({
-            created_at,
-            description,
-            feedback_type,
-            status,
-          }))
+        ? results.map(({ created_at, description, feedback_type, status, feedback_status_comment }) => ({
+          created_at,
+          description,
+          feedback_type,
+          status,
+          feedback_status_comment
+        }))
         : results;
     } catch (error) {
       console.error(error);

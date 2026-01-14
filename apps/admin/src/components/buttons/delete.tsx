@@ -1,44 +1,55 @@
 import React from "react";
 import { Button, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-
-import { useDeleteButton } from "@refinedev/core";
+import { useResourceParams } from "@refinedev/core";
 
 import type { DeleteButtonProps } from "./types";
+import { useDelete } from "../core/use-delete";
 
 export const DeleteButton: React.FC<DeleteButtonProps> = ({
   resource,
   recordItemId,
   onSuccess,
-  mutationMode,
   children,
   successNotification,
   errorNotification,
   hideText = false,
-  meta,
-  dataProviderName,
   confirmTitle,
   confirmOkText,
   confirmCancelText,
   invalidates,
   ...rest
 }) => {
-  const { title, hidden, disabled, loading, onConfirm } = useDeleteButton({
+  const {
+    mutation: { mutate, isPending, variables },
+  } = useDelete();
+
+  const { id, identifier } = useResourceParams({
     resource,
     id: recordItemId,
-    dataProviderName,
-    invalidates,
-    meta,
-    onSuccess,
-    mutationMode,
-    errorNotification,
-    successNotification,
   });
 
-  const isDisabled = disabled || rest.disabled;
-  const isHidden = hidden || rest.hidden;
+  const loading = id === variables?.id && isPending;
 
-  if (isHidden) return null;
+  const onConfirm = () => {
+    if (!id || !identifier) {
+      return
+    }
+    mutate(
+      {
+        id,
+        resource: identifier,
+        successNotification,
+        errorNotification,
+        invalidates,
+      },
+      {
+        onSuccess,
+      },
+    );
+  };
+
+  if (rest.hidden) return null;
 
   return (
     <Popconfirm
@@ -49,14 +60,13 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
       cancelText={confirmCancelText ?? "Отменить"}
       okButtonProps={{ disabled: loading }}
       onConfirm={onConfirm}
-      disabled={isDisabled}
+      disabled={rest.disabled}
     >
       <Button
         danger
         loading={loading}
         icon={<DeleteOutlined />}
-        title={title}
-        disabled={isDisabled}
+        disabled={rest.disabled}
         {...rest}
       >
         {!hideText && (children ?? "Удалить")}

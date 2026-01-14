@@ -1,4 +1,4 @@
-import { useLayoutEffect, type FC, type PropsWithChildren } from "react";
+import { useLayoutEffect, type FC, type PropsWithChildren, useMemo } from "react";
 
 import {
   createRootRouteWithContext,
@@ -22,7 +22,7 @@ import { authClient } from "@/providers/auth-client";
 import { dataProvider } from "@/providers/data-provider";
 import { routerProvider } from "@/providers/router-provider";
 import { orpcClient } from "@/providers/orpc-client";
-import { useNotificationProvider } from "@/providers/notification-provider";
+import { useNotificationProvider, NotificationContextProvider } from "@/providers/notification-provider";
 
 import { resources } from "@/resources";
 
@@ -46,6 +46,15 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   loader: ({ context }) => ({ context }),
   component: () => {
     const { context } = Route.useLoaderData();
+
+    const useNotificationProviderValues = useMemo(() => {
+      return typeof useNotificationProvider === "function"
+        ? useNotificationProvider
+        : () => useNotificationProvider;
+    }, [useNotificationProvider]);
+
+    const notificationProviderContextValues = useNotificationProviderValues();
+
     return (
       <>
         <ConfigProvider
@@ -69,7 +78,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             <Refine
               dataProvider={dataProvider}
               routerProvider={routerProvider}
-              notificationProvider={useNotificationProvider}
               resources={resources}
               options={{
                 reactQuery: {
@@ -77,9 +85,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                 },
               }}
             >
-              <ScrollToTop>
-                <Outlet />
-              </ScrollToTop>
+              <NotificationContextProvider {...notificationProviderContextValues}>
+                <ScrollToTop>
+                  <Outlet />
+                </ScrollToTop>
+              </NotificationContextProvider>
             </Refine>
           </AntdApp>
         </ConfigProvider>

@@ -75,8 +75,8 @@ services:
       dockerfile: ./Dockerfile.platform
       target: prod-web
     ports:
-      - 5173:5173
-    command: --brotli --port 5173
+      - 5175:5175
+    command: --brotli --port 5175
     container_name: feedback-web-staging
     restart: unless-stopped
     depends_on:

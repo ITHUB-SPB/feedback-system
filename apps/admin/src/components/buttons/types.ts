@@ -102,7 +102,7 @@ type RefineDeleteButtonProps<
      * Query keys to be invalidated after the delete action is successful
      * @default `["list", "many"]`
      */
-    invalidates?: Array<keyof IQueryKeys>;
+    invalidates?: Array<keyof IQueryKeys | string>;
   };
 
 type RefineEditButtonProps<
@@ -144,6 +144,18 @@ export type DeleteButtonProps = RefineDeleteButtonProps<ButtonProps>;
 export type EditButtonProps = RefineEditButtonProps<ButtonProps>;
 export type ExportButtonProps = RefineExportButtonProps<ButtonProps>;
 export type SaveButtonProps = RefineSaveButtonProps<ButtonProps>;
+
+export type DeleteButtonValues = {
+  label: string;
+  title: string;
+  hidden: boolean;
+  loading: boolean;
+  disabled: boolean;
+  confirmOkLabel: string;
+  cancelLabel: string;
+  confirmTitle: string;
+  onConfirm: () => void;
+};
 
 export type ActionButtonProps = Record<
   Exclude<FeedbackStatusEnum, "pending">,

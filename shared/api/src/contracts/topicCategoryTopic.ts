@@ -5,7 +5,7 @@ import { topicCategoryTopicSchema } from "@shared/database/models/topic_category
 import { topicCategorySchema } from "@shared/database/models/topic_category";
 import { topicSchema } from "@shared/database/models/topic";
 
-import { baseInputAll, baseInputOne } from "./_inputs";
+import { baseInputAll, baseInputOne, structuredInputAll } from "./_inputs";
 
 const getTopicCategoryTopicSchema = v.object({
   ...topicCategoryTopicSchema.entries,
@@ -23,7 +23,7 @@ const topicCategoryTopicContract = oc
         path: "/",
         summary: "Список пар Топик-Категория",
       })
-      .input(baseInputAll)
+      .input(structuredInputAll)
       .output(v.array(getTopicCategoryTopicSchema)),
 
     create: oc

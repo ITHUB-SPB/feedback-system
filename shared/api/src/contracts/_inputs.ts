@@ -66,11 +66,32 @@ export const baseInputOne = v.object({
   ]),
 });
 
+const structuredSortInput = v.array(
+  v.object({
+    field: v.string(),
+    order: v.picklist(["asc", "desc"])
+  })
+)
+
+const structuredFilterInput = v.array(
+  v.object({
+    field: v.string(),
+    operator: v.picklist(["eq", "ne", "gt", "lt", "in"]),
+    value: v.union([v.pipe(v.string(), v.transform(Number), v.integer()), v.string()])
+  })
+)
+
 export const baseInputAll = v.object({
   ...basePaginationInput.entries,
   sort: baseSortInput,
   filter: baseFilterInput,
   export: v.optional(v.string()),
 });
+
+export const structuredInputAll = v.object({
+  ...basePaginationInput.entries, // TODO
+  sort: v.optional(structuredSortInput),
+  filter: v.optional(structuredFilterInput)
+})
 
 export type BaseInputAll = v.InferOutput<typeof baseInputAll>;

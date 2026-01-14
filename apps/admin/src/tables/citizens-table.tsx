@@ -1,27 +1,40 @@
 import Table from "antd/es/table";
+import { useQuery } from "@tanstack/react-query";
+import type { CrudFilter, CrudSort } from "@refinedev/core";
 
 import { TextField } from '@/components/fields'
-import { getDefaultSortOrder } from "@/components/table/definition";
-import useCitizensTable from "@/hooks/use-citizens-table";
+import { authClient } from "@/providers/auth-client";
 
-export default function CitizensTable() {
-  const table = useCitizensTable();
+export default async function CitizensTable() {
+  const { data, isLoading, isError } = useQuery({
+    queryFn: () => authClient.admin.listUsers({
+      fetchOptions: {
+        credentials: "include",
+      },
+      query: {
+        filterField: "role",
+        filterOperator: "eq",
+        filterValue: "citizen",
+        sortBy: "lastName",
+        sortDirection: "asc",
+      }
+    }),
+    queryKey: ["users", "citizen"]
+  })
 
   return (
     <Table
-      {...table.tableProps}
+      dataSource={data?.data?.users || []}
+      loading={isLoading}
+      // loading: queryResult.query?.isLoading,
       rowKey="id"
-      pagination={{
-        ...table.tableProps.pagination,
-        hideOnSinglePage: true,
-        pageSizeOptions: [12, 24, 48],
-      }}
+      sticky
+      pagination={false}
     >
       <Table.Column
         dataIndex="lastName"
         title="Фамилия"
         sorter
-        defaultSortOrder={getDefaultSortOrder("lastName", table.sorters)}
         render={(value: string) => (
           <TextField value={value || "—"} style={{ cursor: "pointer" }} />
         )}
@@ -31,7 +44,6 @@ export default function CitizensTable() {
         dataIndex="firstName"
         title="Имя"
         sorter
-        defaultSortOrder={getDefaultSortOrder("first_name", table.sorters)}
         render={(value: string) => (
           <TextField value={value || "—"} style={{ cursor: "pointer" }} />
         )}
@@ -40,8 +52,6 @@ export default function CitizensTable() {
       <Table.Column
         dataIndex="middleName"
         title="Отчество"
-        sorter
-        defaultSortOrder={getDefaultSortOrder("middleName", table.sorters)}
         render={(value: string) => (
           <TextField value={value || "—"} style={{ cursor: "pointer" }} />
         )}
@@ -50,8 +60,6 @@ export default function CitizensTable() {
       <Table.Column
         dataIndex="phone"
         title="Телефон"
-        sorter
-        defaultSortOrder={getDefaultSortOrder("phone", table.sorters)}
         render={(value: string) => (
           <TextField value={value || "—"} style={{ cursor: "pointer" }} />
         )}
@@ -61,7 +69,6 @@ export default function CitizensTable() {
         dataIndex="email"
         title="Почта"
         sorter
-        defaultSortOrder={getDefaultSortOrder("email", table.sorters)}
         render={(value: string) => (
           <TextField value={value || "—"} style={{ cursor: "pointer" }} />
         )}

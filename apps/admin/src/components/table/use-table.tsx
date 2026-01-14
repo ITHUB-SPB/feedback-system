@@ -142,7 +142,7 @@ export const useTable = <
 
     if (isPaginationEnabled) {
       setCurrentPage?.(paginationState.current || 1);
-      setPageSize?.(paginationState.pageSize || 10);
+      setPageSize?.(paginationState.pageSize || 12);
     }
   };
 
@@ -157,57 +157,44 @@ export const useTable = <
     }
   };
 
-  const antdPagination = (): false | TablePaginationConfig => {
-    if (isPaginationEnabled) {
-      return {
-        itemRender: (page, type, element) => {
-          const link = createLinkForSyncWithLocation({
-            pagination: {
-              pageSize,
-              currentPage: page,
-            },
-            sorters,
-            filters,
-          });
-
-          if (type === "page") {
-            return createElement(PaginationLink, {
-              to: link,
-              element: `${page}`,
-            });
-          }
-          if (type === "next" || type === "prev") {
-            return createElement(PaginationLink, {
-              to: link,
-              element: element,
-            });
-          }
-
-          if (type === "jump-next" || type === "jump-prev") {
-            const elementChildren = (element as React.ReactElement<any>)?.props
-              ?.children;
-
-            return createElement(PaginationLink, {
-              to: link,
-              element:
-                Children.count(elementChildren) > 1
-                  ? createElement(Fragment, {}, elementChildren)
-                  : elementChildren,
-            });
-          }
-
-          return element;
+  const antdPagination = (): TablePaginationConfig => ({
+    itemRender: (page, type, element) => {
+      const link = createLinkForSyncWithLocation({
+        pagination: {
+          pageSize,
+          currentPage: page,
         },
-        pageSize,
-        current: currentPage,
-        simple: !breakpoint.sm,
-        position: !breakpoint.sm ? ["bottomCenter"] : ["bottomRight"],
-        total: data?.total,
-      };
-    }
+        sorters,
+        filters,
+      });
 
-    return false;
-  };
+      if (type === "page") {
+        return <Link to={link}>{page}</Link>
+      }
+
+      if (type === "next" || type === "prev") {
+        return <Link to={link}>{element}</Link>
+      }
+
+      if (type === "jump-next" || type === "jump-prev") {
+        const elementChildren = (element as React.ReactElement<any>)?.props
+          ?.children;
+
+        return <Link to={link}>{
+          Children.count(elementChildren) > 1
+            ? createElement(Fragment, {}, elementChildren)
+            : elementChildren
+        }</Link>
+      }
+
+      return element;
+    },
+    pageSize,
+    current: currentPage,
+    simple: !breakpoint.sm,
+    position: !breakpoint.sm ? ["bottomCenter"] : ["bottomRight"],
+    total: data?.total,
+  })
 
   return {
     searchFormProps: {
@@ -218,7 +205,10 @@ export const useTable = <
       dataSource: data?.data,
       loading: isLoading,
       onChange,
-      pagination: antdPagination(),
+      pagination:
+        isPaginationEnabled
+          ? antdPagination()
+          : false,
       scroll: { x: true },
     },
     tableQuery,

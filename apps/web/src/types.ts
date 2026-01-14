@@ -1,16 +1,39 @@
+import type { RouterOutput, RouterInput } from "@shared/api";
+
+
 export interface AlertManagerInterface {
   showAlert: (message: string, type?: "success" | "warning") => void;
   closeAlert: () => void;
 }
 
-export interface Project {
-  id: number;
-  title: string;
-  latitude: number;
-  longitude: number;
-  year_of_completion: number;
-  administrative_unit_id: number;
-  administrative_unit: string;
+export type ProjectContract = {
+  input: RouterInput["project"],
+  output: RouterOutput["project"];
+}
+
+export type AdministrativeUnitContract = {
+  input: RouterInput["administrativeUnit"],
+  output: RouterOutput["administrativeUnit"];
+}
+
+export type FeedbackContract = {
+  input: RouterInput["feedback"],
+  output: RouterOutput["feedback"];
+}
+
+export type FeedbackTypeContract = {
+  input: RouterInput["feedbackType"],
+  output: RouterOutput["feedbackType"];
+}
+
+export type TopicCategoryContract = {
+  input: RouterInput["topicCategory"],
+  output: RouterOutput["topicCategory"];
+}
+
+export type TopicCategoryTopicContract = {
+  input: RouterInput["topicCategoryTopic"],
+  output: RouterOutput["topicCategoryTopic"];
 }
 
 export interface Person {
@@ -21,46 +44,3 @@ export interface Person {
   person_type_id: number;
   person_type: "citizen" | "official" | "moderator";
 }
-
-export interface AdministrativeUnit {
-  id: number;
-  title: string;
-  unit_type: string;
-}
-
-export interface TopicCategory {
-  id: number;
-  title: string;
-}
-
-export interface FeedbackType {
-  id: number;
-  title: string;
-}
-
-export interface TopicCategoryTopic {
-  id: number;
-  topic: string;
-  topic_category: string;
-}
-
-export interface Feedback {
-  project_id: number;
-  description: string;
-  feedback_type_id: number;
-  topic_category_topic_id?: number;
-  last_name: string;
-  first_name: string;
-  middle_name: string;
-  email: string;
-  phone?: string;
-  files?: File[];
-}
-
-export type FeedbackIn = {
-  project_id: number;
-  description: string;
-  feedback_type: string;
-  feedback_status: string;
-  created_at: string;
-};
