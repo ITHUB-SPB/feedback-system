@@ -1,32 +1,29 @@
 import { render } from "@react-email/components";
 
-import * as emailTemplates from "./templates";
+import { CitizenApprovalEmail } from './templates/citizen-approval-html.jsx'
+import { citizenApprovalText } from './templates/citizen-approval-text.js'
+import { CitizenRejectionEmail } from './templates/citizen-rejection-html.jsx'
+import { citizenRejectionText } from './templates/citizen-rejection-text.js'
+import { CitizenCompletedEmail } from './templates/citizen-completed-html.jsx'
+import { citizenCompletedText } from './templates/citizen-completed-text.js'
 
 import { env } from "./env";
 import { mailClient } from "./client";
 import { logger } from "./logger";
+
 import type {
   MailJobData,
-  MailCitizenJobData,
-  MailOfficialJobData,
-  OfficialRequest,
 } from "./types";
 
-export type {
-  MailJobData,
-  OfficialRequest,
-  MailCitizenJobData,
-  MailOfficialJobData,
-};
 
 async function buildMail(options: MailJobData) {
   if (options.type === "citizen-approved") {
     return {
       to: options.to,
       subject: "Вместе47. Информация по вашему обращению",
-      text: emailTemplates.citizenApprovalText,
+      text: citizenApprovalText,
       html: await render(
-        emailTemplates.CitizenApprovalEmail({ name: options.name }),
+        CitizenApprovalEmail({ name: options.name }),
       ),
     };
   }
@@ -35,9 +32,9 @@ async function buildMail(options: MailJobData) {
     return {
       to: options.to,
       subject: "Вместе47. Информация по вашему обращению",
-      text: emailTemplates.citizenRejectionText,
+      text: citizenRejectionText,
       html: await render(
-        emailTemplates.CitizenRejectionEmail({ name: options.name }),
+        CitizenRejectionEmail({ name: options.name }),
       ),
     };
   }
@@ -46,37 +43,37 @@ async function buildMail(options: MailJobData) {
     return {
       to: options.to,
       subject: "Вместе47. Информация по вашему обращению",
-      text: emailTemplates.citizenCompletedText,
+      text: citizenCompletedText,
       html: await render(
-        emailTemplates.CitizenCompletedEmail({ name: options.name }),
+        CitizenCompletedEmail({ name: options.name }),
       ),
     };
   }
 
-  if (options.type === "official-request") {
-    const { officialName, description, createdAt, categoryTopic, files } =
-      options;
+  // if (options.type === "official-request") {
+  //   const { officialName, description, createdAt, categoryTopic, files } =
+  //     options;
 
-    return {
-      to: options.to,
-      subject: "Вместе47. Зарегистрировано новое предложение от жителя",
-      text: emailTemplates.officialRequestText({
-        officialName,
-        description,
-        createdAt,
-        categoryTopic,
-      }),
-      html: await render(
-        emailTemplates.OfficialRequestEmail({
-          officialName,
-          description,
-          createdAt,
-          categoryTopic,
-          files: files ?? [],
-        }),
-      ),
-    };
-  }
+  //   return {
+  //     to: options.to,
+  //     subject: "Вместе47. Зарегистрировано новое предложение от жителя",
+  //     text: templates.officialRequestText({
+  //       officialName,
+  //       description,
+  //       createdAt,
+  //       categoryTopic,
+  //     }),
+  //     html: await render(
+  //       templates.OfficialRequestEmail({
+  //         officialName,
+  //         description,
+  //         createdAt,
+  //         categoryTopic,
+  //         files: files ?? [],
+  //       }),
+  //     ),
+  //   };
+  // }
 }
 
 export async function sendMail(options: MailJobData) {

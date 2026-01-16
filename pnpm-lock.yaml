@@ -257,6 +257,9 @@ importers:
       '@scalar/hono-api-reference':
         specifier: ^0.9.30
         version: 0.9.30(hono@4.11.1)
+      '@shared/mail':
+        specifier: workspace:*
+        version: link:../../shared/mail
       '@sidequest/postgres-backend':
         specifier: ^1.13.1
         version: 1.13.1
@@ -291,9 +294,6 @@ importers:
       '@shared/logger':
         specifier: workspace:*
         version: link:../../shared/logger
-      '@shared/mail':
-        specifier: workspace:*
-        version: link:../../shared/mail
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../shared/typescript-config
@@ -473,9 +473,6 @@ importers:
       '@react-email/components':
         specifier: 'catalog:'
         version: 0.5.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@react-email/preview-server':
-        specifier: 'catalog:'
-        version: 4.3.2(postcss@8.1.0)
       '@shared/logger':
         specifier: workspace:*
         version: link:../logger
@@ -501,6 +498,9 @@ importers:
         specifier: 'catalog:'
         version: 1.2.0(typescript@5.9.3)
     devDependencies:
+      '@react-email/preview-server':
+        specifier: 'catalog:'
+        version: 4.3.2(postcss@8.1.0)
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

@@ -1,7 +1,5 @@
-const citizenCompletedText = `Уважаемый житель!
+export const citizenCompletedText = `Уважаемый житель!
 
 Работы по Вашему предложению проведены. Благодарим Вас за вклад в благоустройство Ленинградской области!
 
 С наилучшими пожеланиями, команда Вместе47`;
-
-export default citizenCompletedText;

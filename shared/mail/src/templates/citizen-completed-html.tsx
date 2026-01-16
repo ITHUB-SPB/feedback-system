@@ -18,7 +18,7 @@ interface Props {
   name: string;
 }
 
-const CitizenCompletedEmail = ({ name }: Props) => {
+export const CitizenCompletedEmail = ({ name }: Props) => {
   return (
     <Html dir="ltr" lang="ru">
       <Tailwind>
@@ -66,5 +66,3 @@ const CitizenCompletedEmail = ({ name }: Props) => {
 CitizenCompletedEmail.PreviewProps = {
   name: "Антонина Юрьевна",
 };
-
-export default CitizenCompletedEmail;

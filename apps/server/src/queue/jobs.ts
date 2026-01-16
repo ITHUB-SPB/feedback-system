@@ -1,5 +1,5 @@
 import { Job, logger } from "sidequest";
-import type { MailCitizenJobData, MailOfficialJobData } from "@shared/mail";
+import type { MailCitizenJobData, MailOfficialJobData } from "@shared/mail/types";
 import { sendMail } from "@shared/mail";
 
 export class MailCitizenJob extends Job {

@@ -1,6 +1,6 @@
 import type { OfficialRequest } from "../types";
 
-const officialRequestText = ({
+export const officialRequestText = ({
   officialName,
   description,
   categoryTopic,
@@ -20,5 +20,3 @@ ${categoryText}
 
 С наилучшими пожеланиями, команда Вместе47`;
 };
-
-export default officialRequestText;

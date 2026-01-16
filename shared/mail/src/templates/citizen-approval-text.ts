@@ -1,7 +1,5 @@
-const citizenApprovalText = `Уважаемый житель!
+export const citizenApprovalText = `Уважаемый житель!
 
 Ваше предложение принято в работу. Благодарим Вас за вклад в благоустройство Ленинградской области!
 
 С наилучшими пожеланиями, команда Вместе47`;
-
-export default citizenApprovalText;

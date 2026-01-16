@@ -5,11 +5,11 @@ import { env } from "../env";
 export default function getSidequestConfig(): SidequestConfig {
   const baseConfig = {
     queues: [{ name: "mail.citizen" }, { name: "mail.official" }],
-    jobsFilePath: "./jobs.ts",
-    manualJobResolution: true,
     dashboard: {
       enabled: true,
     },
+    manualJobResolution: true,
+    jobsFilePath: "./jobs.ts",
   };
 
   if (env.ENV === "development") {

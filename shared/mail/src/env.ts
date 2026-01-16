@@ -23,4 +23,5 @@ export const envSchema = v.object({
 });
 
 export const env = v.parse(envSchema, process.env);
+console.log(env)
 export type Env = v.InferOutput<typeof envSchema>;

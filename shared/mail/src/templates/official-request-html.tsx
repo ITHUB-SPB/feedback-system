@@ -18,7 +18,7 @@ import {
   Link,
 } from "@react-email/components";
 
-const OfficialRequestEmail = ({
+export const OfficialRequestEmail = ({
   officialName,
   description,
   createdAt,
@@ -122,5 +122,3 @@ OfficialRequestEmail.PreviewProps = {
     topic: "Ремонт покрытия",
   },
 };
-
-export default OfficialRequestEmail;

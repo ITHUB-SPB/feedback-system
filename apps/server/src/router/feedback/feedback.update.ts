@@ -21,7 +21,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
         .innerJoin("user", "feedback.person_id", "user.id")
         .executeTakeFirstOrThrow();
 
-      if (body.feedback_status_id) {
+      if (body.feedback_status_id && result.status.title !== "pending" && result.status.title !== "archived") {
         const citizen = await context.db
           .selectFrom("user")
           .select(["email", "firstName", "lastName", "middleName"])
@@ -31,11 +31,12 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
           ? `${citizen.firstName} ${citizen.middleName}`
           : `${citizen.firstName}`;
 
-        // await sendCitizenEmail(
-        //   citizen.email,
-        //   citizenFullName,
-        //   result.feedback_status,
-        // );
+        await sendCitizenEmail(
+          citizen.email,
+          citizenFullName,
+          result.status.title,
+          result.feedback_status_comment
+        );
       }
 
       return {};
