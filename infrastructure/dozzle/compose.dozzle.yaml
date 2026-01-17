@@ -1,5 +1,5 @@
 services:
-  dozzle:
+  feedback-dozzle:
     image: amir20/dozzle:latest
     container_name: feedback-dozzle
     restart: unless-stopped

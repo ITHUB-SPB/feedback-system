@@ -88,8 +88,6 @@ const allFeedback = publicProcedure.feedback.all.handler(
         query = query.offset(offset);
       }
 
-      console.log(await query.execute());
-
       const results = (await query.execute()).map((result) => ({
         ...result,
         created_at: new Date(result.created_at).toISOString(),

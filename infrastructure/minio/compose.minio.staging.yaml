@@ -1,8 +1,9 @@
 services:
-  minio:
+  feedback-minio:
     extends:
       file: compose.minio.development.yaml
-      service: minio
+      service: feedback-minio
+    container_name: feedback-minio--staging
     labels:
       - traefik.enable=true
       - traefik.http.routers.minio.entrypoints=web-secure

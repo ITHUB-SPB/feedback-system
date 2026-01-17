@@ -6,7 +6,7 @@ include:
   - ./infrastructure/postgres/compose.postgres.production.yaml
   - ./infrastructure/minio/compose.minio.production.yaml
   - ./infrastructure/redis/compose.redis.production.yaml
-  - ./infrastructure/arena/compose.arena.production.yaml
+  - ./infrastructure/bullboard/compose.bullboard.production.yaml
 
 services:
   feedback-server:

@@ -7,7 +7,7 @@ services:
     image: feedback-postgres-staging
     build:
       context: .
-    container_name: feedback-postgres-staging
+    container_name: feedback-postgres--staging
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -32,7 +32,7 @@ services:
       file: compose.postgres.development.yaml
       service: feedback-pgadmin
 
-    container_name: feedback-pgadmin-staging
+    container_name: feedback-pgadmin--staging
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pgadmin.entrypoints=web-secure"

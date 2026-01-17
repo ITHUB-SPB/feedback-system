@@ -20,6 +20,8 @@
         "dev:auth:generate": "pnpm -F @shared/auth dev:auth:generate",
         "dev:auth:migrate": "pnpm -F @shared/auth dev:auth:migrate",
         "dev:auth:seed": "pnpm -F @shared/auth dev:auth:seed",
+        "dev:workers": "pnpm -F @shared/mq dev:workers",
+        "staging:workers": "pnpm -F @shared/mq staging:workers",
         "staging:admin": "pnpm -F admin staging",
         "staging:web": "pnpm -F web staging",
         "staging:server": "pnpm -F server staging",

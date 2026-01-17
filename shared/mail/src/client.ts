@@ -7,7 +7,6 @@ interface ClientProps {
 }
 
 async function createMailClient({ env }: ClientProps) {
-  logger.info(env);
   try {
     return nodemailer.createTransport({
       host: env.SMTP_HOST,

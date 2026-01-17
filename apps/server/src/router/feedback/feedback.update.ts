@@ -59,7 +59,6 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
         });
       }
 
-
       return {};
     } catch (error) {
       console.error(error);

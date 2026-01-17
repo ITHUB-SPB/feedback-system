@@ -19,7 +19,7 @@ http:
       # - chain-no-auth
       service: "server-internal"
     admin:
-      rule: Host(`admin.localhost`)
+      rule: Host(`xn--j1ab.localhost`)
       entryPoints:
         - "web-secure"
       # tls:

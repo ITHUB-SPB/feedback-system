@@ -72,5 +72,6 @@ export async function sendMail(options: MailJobData) {
     });
   } catch (error) {
     logger.error("Error on send mail" + error);
+    throw error;
   }
 }

@@ -6,7 +6,9 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "dev:workers": "dotenvx run -f .env.development -- tsx src/run.ts",
+    "staging:workers": "dotenvx run -f .env.staging -- tsx src/run.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "catalog:",

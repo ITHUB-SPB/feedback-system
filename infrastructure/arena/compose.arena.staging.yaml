@@ -1,5 +1,0 @@
-services:
-  feedback-arena:
-    extends:
-      file: compose.arena.development.yaml
-      service: feedback-arena

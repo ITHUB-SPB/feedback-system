@@ -7,8 +7,9 @@ http:
         accessControlAllowOriginList:
           - https://api.localhost
           - https://localhost
-          - https://admin.localhost
+          - https://xn--j1ab.localhost
           - https://minio.localhost
+          - https://bullboard.localhost
         addVaryHeader: true
         accessControlAllowCredentials: true
         sslProxyHeaders:

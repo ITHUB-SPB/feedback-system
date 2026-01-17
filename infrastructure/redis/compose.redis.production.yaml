@@ -3,11 +3,11 @@ services:
     extends:
       file: compose.redis.development.yaml
       service: feedback-redis
+    container_name: feedback-redis--production
     volumes:
       - ./data:/data
       - ./config/redis.production.conf:/usr/local/etc/redis/redis.conf
     environment:
-      REDIS_HOST: redis
       REDIS_USER: /run/secrets/redis_user
       REDIS_PASSWORD: /run/secrets/redis_password
     secrets:

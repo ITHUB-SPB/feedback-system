@@ -13,7 +13,6 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
   async ({ context, input, errors }) => {
     try {
       const { filter, sort } = input;
-      console.log(filter, sort);
 
       let query = context.db
         .selectFrom("topic_category_topic")

@@ -1,8 +1,9 @@
 services:
-  minio:
+  feedback-minio:
     extends:
       file: compose.minio.development.yaml
-      service: minio
+      service: feedback-minio
+    container_name: feedback-minio--production
     environment:
       MINIO_ROOT_USER_FILE: /run/secrets/minio_access_key
       MINIO_ROOT_PASSWORD_FILE: /run/secrets/minio_secret_key
@@ -11,6 +12,7 @@ services:
       - minio_secret_key
     labels:
       - traefik.enable=true
+
       - traefik.http.routers.minio.entrypoints=web-secure
       - traefik.http.routers.minio.rule=Host(`minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)
       - traefik.http.routers.minio.tls.certresolver=tlsresolver

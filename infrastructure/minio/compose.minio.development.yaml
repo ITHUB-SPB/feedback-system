@@ -1,7 +1,7 @@
 services:
-  minio:
+  feedback-minio:
     image: minio/minio:RELEASE.2025-04-22T22-12-26Z
-    container_name: feedback-minio
+    container_name: feedback-minio--development
     restart: unless-stopped
     command: server --console-address ":9001" /data
     ports:

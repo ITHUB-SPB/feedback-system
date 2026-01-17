@@ -80,7 +80,6 @@ export class TableFeedbackManager {
       this.columnHelper.accessor("status", {
         header: "Статус",
         cell: (info) => {
-          console.log(info.row.original);
           if (info.row.original.feedback_status_comment) {
             return `${info.getValue()["translation"]}<br/>(${info.row.original.feedback_status_comment})`;
           }
