@@ -1,8 +1,14 @@
 services:
   feedback-bullboard:
-    extends:
-      file: compose.bullboard.development.yaml
-      service: feedback-bullboard
+    image: venatum/bull-board
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 256M
     container_name: feedback-bullboard--production
     labels:
       - traefik.enable=true
@@ -11,19 +17,11 @@ services:
       - traefik.http.routers.bullboard.middlewares=chain-authelia@file
       - traefik.http.routers.bullboard.tls.certresolver=tlsresolver
       - traefik.http.routers.bullboard.service=bullboard
-      - traefik.http.services.bullboard.loadbalancer.server.port=3007
-    secrets:
-      - redis_user
-      - redis_password
+      - traefik.http.services.bullboard.loadbalancer.server.port=3000
     environment:
       REDIS_HOST: feedback-redis
       REDIS_DB: 0
-      REDIS_USE_TLS: true
-      REDIS_USER: /run/secrets/redis_user
-      REDIS_PASSWORD: /run/secrets/redis_password
-
-secrets:
-  redis_user:
-    file: ../secrets/redis_user
-  redis_password:
-    file: ../secrets/redis_password
+      REDIS_USE_TLS: false
+      REDIS_PASSWORD: HAUOScya784hgiiuadpi09812jiuHQP**&@QEghdaxkjkhj
+    depends_on:
+      - feedback-redis

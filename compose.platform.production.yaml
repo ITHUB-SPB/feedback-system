@@ -27,7 +27,7 @@ services:
       retries: 3
       test: [ "CMD-SHELL", "wget --quiet --spider http://$$SERVER_HOST:$$SERVER_PORT/healthcheck" ]
     depends_on:
-      - postgres
+      - feedback-postgres
     labels:
       - "traefik.enable=true"
 
@@ -97,7 +97,6 @@ services:
 
 volumes:
   letsencrypt:
-
 
 secrets:
   authelia_jwt_secret:

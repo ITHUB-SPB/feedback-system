@@ -10,10 +10,9 @@ services:
       - traefik.http.routers.bullboard.rule=Host(`bullboard.localhost`)
       - traefik.http.routers.bullboard.tls=true
       - traefik.http.routers.bullboard.service=bullboard
-      - traefik.http.services.bullboard.loadbalancer.server.port=3007
+      - traefik.http.services.bullboard.loadbalancer.server.port=3000
     environment:
       REDIS_HOST: feedback-redis
       REDIS_DB: 0
       REDIS_USE_TLS: false
-      REDIS_USER: mostsecretuser
       REDIS_PASSWORD: mostsecretpassword

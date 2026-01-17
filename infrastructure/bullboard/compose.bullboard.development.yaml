@@ -3,24 +3,17 @@ services:
     container_name: feedback-bullboard--development
     image: venatum/bull-board
     restart: unless-stopped
-    pull_policy: always
     ports:
-      - "3007:3000"
+      - "3000:3000"
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 256M
-        reservations:
           cpus: '0.1'
-          memory: 128M
+          memory: 256M
     environment:
       REDIS_HOST: feedback-redis
       REDIS_DB: 0
       REDIS_USE_TLS: false
-      REDIS_USER: mostsecretuser
       REDIS_PASSWORD: mostsecretpassword
-      # USER_LOGIN: ${BULL_BOARD_AUTH_USER}
-      # USER_PASSWORD: ${BULL_BOARD_AUTH_PASSWORD}
     depends_on:
       - feedback-redis

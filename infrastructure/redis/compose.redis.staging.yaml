@@ -4,6 +4,3 @@ services:
       file: compose.redis.development.yaml
       service: feedback-redis
     container_name: feedback-redis--staging
-    environment:
-      REDIS_USER: mostsecretuser
-      REDIS_PASSWORD: mostsecretpassword

@@ -7,7 +7,6 @@ export default function getConnection() {
   return new IORedis({
     host: env.REDIS_HOST,
     port: 6379,
-    username: env.REDIS_USER,
     password: env.REDIS_PASSWORD,
     maxRetriesPerRequest: null,
   });

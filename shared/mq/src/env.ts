@@ -5,7 +5,6 @@ import dotenv from "@dotenvx/dotenvx";
 export const envSchema = v.union([
   v.object({
     ENV: v.picklist(["development", "production", "staging"]),
-    REDIS_USER: v.pipe(v.string(), v.nonEmpty()),
     REDIS_HOST: v.pipe(v.string(), v.nonEmpty()),
     REDIS_PASSWORD: v.pipe(v.string(), v.nonEmpty()),
   }),

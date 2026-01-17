@@ -1,21 +1,34 @@
 services:
   feedback-redis:
-    extends:
-      file: compose.redis.development.yaml
-      service: feedback-redis
+    image: redis:8.4-alpine
     container_name: feedback-redis--production
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    ports:
+      - "6379:6379"
     volumes:
       - ./data:/data
       - ./config/redis.production.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf"]
     environment:
-      REDIS_USER: /run/secrets/redis_user
-      REDIS_PASSWORD: /run/secrets/redis_password
+      REDIS_PASSWORD_FILE: /run/secrets/redis_password
     secrets:
-      - redis_user
       - redis_password
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "redis-cli -a $${REDIS_PASSWORD} --sni --tls ping"
+      interval: 15s
+      timeout: 20s
+      retries: 10
 
 secrets:
-  redis_user:
-    file: ../secrets/redis_user
   redis_password:
     file: ../secrets/redis_password

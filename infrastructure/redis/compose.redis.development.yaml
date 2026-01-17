@@ -9,16 +9,15 @@ services:
           cpus: '0.50'
           memory: 512M
         reservations:
-          cpus: '0.25'
+          cpus: '0.2'
           memory: 256M
     ports:
       - "6379:6379"
     volumes:
       - ./data:/data
       - ./config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--requirepass", "${REDIS_PASSWORD}" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf"]
     environment:
-      REDIS_USER: mostsecretuser
       REDIS_PASSWORD: mostsecretpassword
     healthcheck:
       test:
