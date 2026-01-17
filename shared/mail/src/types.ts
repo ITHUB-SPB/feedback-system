@@ -1,3 +1,27 @@
+export type MailCitizenStatusWithCommentJobData = {
+  to: string;
+  name: string;
+  attachments?: string[];
+  status: "declined";
+  comment: string;
+};
+
+export type MailCitizenStatusJobData = {
+  to: string;
+  name: string;
+  status: "banned" | "approved" | "proceeding" | "completed";
+};
+
+export type MailOfficialJobData = {
+  to: string;
+  officialName: string;
+  type: "official-request";
+  description: string;
+  categoryTopic: string | undefined;
+  createdAt: string;
+  files?: string[];
+};
+
 export type OfficialRequest = {
   email: string;
   officialName: string;
@@ -7,22 +31,7 @@ export type OfficialRequest = {
   files: string[];
 };
 
-export type MailCitizenJobData = {
-  to: string;
-  type: "citizen-approved" | "citizen-completed" | "citizen-declined" | "citizen-proceeding" | "citizen-banned";
-  comment: string | null,
-  name: string;
-  attachments?: string[];
-};
-
-export type MailOfficialJobData = {
-  to: string;
-  type: "official-request";
-  officialName: string;
-  description: string;
-  categoryTopic: string | undefined;
-  createdAt: string;
-  files?: string[];
-};
-
-export type MailJobData = MailCitizenJobData | MailOfficialJobData;
+export type MailJobData =
+  | MailCitizenStatusJobData
+  | MailCitizenStatusWithCommentJobData
+  | MailOfficialJobData;

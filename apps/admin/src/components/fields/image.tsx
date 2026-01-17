@@ -3,7 +3,6 @@ import Image, { type ImageProps } from "antd/es/image";
 
 import type { RefineFieldImageProps } from "./types";
 
-
 export type ImageFieldProps = RefineFieldImageProps<
   string | undefined,
   ImageProps,

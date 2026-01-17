@@ -1,4 +1,29 @@
-export const citizenRejectionText = `Уважаемый житель!
+import type {
+  MailCitizenStatusJobData,
+  MailCitizenStatusWithCommentJobData,
+} from "../types";
+
+const citizenStatusApprovalText = `Уважаемый житель!
+
+Ваше предложение передано в работу АМО. Благодарим Вас за вклад в благоустройство Ленинградской области!
+
+С наилучшими пожеланиями, команда Вместе47`;
+
+const citizenStatusCompletedText = `Уважаемый житель!
+
+Работы по Вашему предложению проведены. Благодарим Вас за вклад в благоустройство Ленинградской области!
+
+С наилучшими пожеланиями, команда Вместе47`;
+
+const citizenStatusDeclinedText = (comment: string) => `Уважаемый житель!
+
+Ваше предложение было отклонено АМО. 
+
+Причина отклонения: ${comment}
+
+С наилучшими пожеланиями, команда Вместе47`;
+
+const citizenStatusBannedText = `Уважаемый житель!
             
 К сожалению, Ваше обращение было отклонено нашими модераторами по причине несоответствия требованиям. Пожалуйста, ознакомьтесь с требованиями, указанными ниже
 
@@ -10,3 +35,20 @@ export const citizenRejectionText = `Уважаемый житель!
   • описание предложения максимально подробно, избегая общих фраз («У нас всё плохо», «Сделайте красиво», «Здесь некомфортно» и т.п.).
 
 С наилучшими пожеланиями, команда Вместе47`;
+
+export const getCitizenStatusText = (
+  props:
+    | Pick<MailCitizenStatusJobData, "status">
+    | Pick<MailCitizenStatusWithCommentJobData, "status" | "comment">,
+) => {
+  switch (props.status) {
+    case "approved":
+      return citizenStatusApprovalText;
+    case "banned":
+      return citizenStatusBannedText;
+    case "completed":
+      return citizenStatusCompletedText;
+    case "declined":
+      return citizenStatusDeclinedText(props.comment);
+  }
+};

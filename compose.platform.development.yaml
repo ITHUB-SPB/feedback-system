@@ -1,3 +1,5 @@
 include:
   - ./infrastructure/postgres/compose.postgres.development.yaml
   - ./infrastructure/minio/compose.minio.development.yaml
+  - ./infrastructure/redis/compose.redis.development.yaml
+  - ./infrastructure/arena/compose.arena.development.yaml

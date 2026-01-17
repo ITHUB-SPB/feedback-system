@@ -1,5 +1,5 @@
 import type { QueryObserverResult } from "@tanstack/react-query";
-import { type CheckboxGroupProps } from 'antd/es/checkbox'
+import { type CheckboxGroupProps } from "antd/es/checkbox";
 
 import {
   type BaseRecord,
@@ -16,10 +16,7 @@ export type UseCheckboxGroupReturnType<
   TOption extends BaseOption = BaseOption,
   TError extends HttpError = HttpError,
 > = {
-  checkboxGroupProps: Omit<
-    CheckboxGroupProps,
-    "options"
-  > & {
+  checkboxGroupProps: Omit<CheckboxGroupProps, "options"> & {
     options: TOption[];
   };
   query: QueryObserverResult<GetListResponse<TData>, TError>;

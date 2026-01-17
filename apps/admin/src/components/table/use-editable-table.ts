@@ -7,7 +7,11 @@ import type {
   UseFormProps,
 } from "@refinedev/core";
 
-import { useTable, type useTableProps, type useTableReturnType } from "./use-table";
+import {
+  useTable,
+  type useTableProps,
+  type useTableReturnType,
+} from "./use-table";
 import { type UseFormReturnType, useForm } from "../forms/use-form";
 
 export type useEditableTableReturnType<

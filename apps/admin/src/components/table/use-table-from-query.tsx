@@ -12,7 +12,7 @@ import {
   setInitialSorters,
   unionFilters,
   unionSorters,
-} from '@refinedev/core'
+} from "@refinedev/core";
 
 import type {
   BaseRecord,
@@ -32,9 +32,8 @@ import {
   mapAntdSorterToCrudSorting,
   mapAntdFilterToCrudFilter,
   type FilterValue,
-  type SorterResult
+  type SorterResult,
 } from "./definition";
-
 
 export type BaseListProps = {
   sorters?: CrudSort[];
@@ -80,10 +79,10 @@ export type useTableFromQueryProps<TQueryFnData, TError, TData> = {
    */
   queryOptions: ({
     filters,
-    sorters
+    sorters,
   }: {
-    filters?: CrudFilter[] | undefined,
-    sorters?: CrudSort[] | undefined
+    filters?: CrudFilter[] | undefined;
+    sorters?: CrudSort[] | undefined;
   }) => UseQueryOptions<
     GetListResponse<TQueryFnData>,
     TError,
@@ -105,14 +104,14 @@ export type useTableFromQueryReturnType<
   setSorters: (sorter: CrudSort[]) => void;
   filters: CrudFilter[];
   setFilters: ((filters: CrudFilter[]) => void) &
-  ((setter: (prevFilters: CrudFilter[]) => CrudFilter[]) => void);
+    ((setter: (prevFilters: CrudFilter[]) => CrudFilter[]) => void);
   result: {
     data: TData[];
     total: number | undefined;
   };
 } & UseLoadingOvertimeReturnType & {
-  tableProps: TableProps<TData>;
-}
+    tableProps: TableProps<TData>;
+  };
 
 const defaultPermanentFilter: CrudFilter[] = [];
 const defaultPermanentSorter: CrudSort[] = [];
@@ -142,7 +141,6 @@ export const useTableFromQuery = <
   TError,
   TData
 >): useTableFromQueryReturnType<TData, TError> => {
-
   const isServerSideFilteringEnabled =
     (filtersFromProp?.mode || "server") === "server";
   const isServerSideSortingEnabled =
@@ -196,13 +194,14 @@ export const useTableFromQuery = <
   );
 
   const setFiltersFn: useTableFromQueryReturnType<TQueryFnData>["setFilters"] =
-    useCallback((setterOrFilters) => {
-      if (typeof setterOrFilters === "function") {
-        setFiltersWithSetter(setterOrFilters);
-      } else {
-        setFiltersAsMerge(setterOrFilters);
-      }
-    },
+    useCallback(
+      (setterOrFilters) => {
+        if (typeof setterOrFilters === "function") {
+          setFiltersWithSetter(setterOrFilters);
+        } else {
+          setFiltersAsMerge(setterOrFilters);
+        }
+      },
       [setFiltersWithSetter, setFiltersAsMerge],
     );
 
@@ -220,11 +219,13 @@ export const useTableFromQuery = <
   ) => {
     if (tableFilters && Object.keys(tableFilters).length > 0) {
       // Map Antd:Filter -> refine:CrudFilter
-      setFiltersFn(mapAntdFilterToCrudFilter(
-        tableFilters,
-        filters,
-        preferredInitialFilters,
-      ));
+      setFiltersFn(
+        mapAntdFilterToCrudFilter(
+          tableFilters,
+          filters,
+          preferredInitialFilters,
+        ),
+      );
     }
 
     if (sorter && Object.keys(sorter).length > 0) {
@@ -247,6 +248,6 @@ export const useTableFromQuery = <
     setSorters: setSortWithUnion,
     setFilters: setFiltersFn,
     overtime: queryResult.overtime,
-    result: queryResult.result
+    result: queryResult.result,
   };
 };

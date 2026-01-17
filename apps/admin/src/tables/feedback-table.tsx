@@ -6,8 +6,11 @@ import Space from "antd/es/space";
 import Select from "antd/es/select";
 import Typography from "antd/es/typography";
 
-import { getDefaultSortOrder, getDefaultFilter } from "@/components/table/definition";
-import { FilterDropdown } from '@/components/filter-dropdown'
+import {
+  getDefaultSortOrder,
+  getDefaultFilter,
+} from "@/components/table/definition";
+import { FilterDropdown } from "@/components/filter-dropdown";
 import { ShowButton } from "@/components/buttons";
 import useFeedbackType from "@/hooks/use-feedback-type";
 import useFeedbackStatus from "@/hooks/use-feedback-status";

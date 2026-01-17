@@ -2,7 +2,6 @@ import { useLoaderData } from "@tanstack/react-router";
 import { useTable } from "@/components/table/use-table";
 import type { FeedbackContract } from "@/types";
 
-
 export default function useFeedbackTable() {
   const { context } = useLoaderData({ from: "/_authenticated" });
   const { user } = context.session;

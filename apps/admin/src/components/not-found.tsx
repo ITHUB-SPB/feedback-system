@@ -1,13 +1,15 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
 
-import Result from 'antd/es/result'
-import Typography from 'antd/es/typography'
-import Space from 'antd/es/space'
-import Tooltip from 'antd/es/tooltip'
+import Result from "antd/es/result";
+import Typography from "antd/es/typography";
+import Space from "antd/es/space";
+import Tooltip from "antd/es/tooltip";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
-export const NotFound: React.FC<{ errorMessage?: string }> = ({ errorMessage }) => (
+export const NotFound: React.FC<{ errorMessage?: string }> = ({
+  errorMessage,
+}) => (
   <Result
     status="404"
     title="404"

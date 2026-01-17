@@ -1,0 +1,17 @@
+services:
+  feedback-arena:
+    image: mixmaxhq/arena
+    container_name: feedback-arena
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    ports:
+      - "4567:4567"
+    volumes:
+      - ./config/index.json:/opt/arena/index.json

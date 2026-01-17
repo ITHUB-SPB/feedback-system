@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
 
-import { type FilterDropdownProps, type MapValueEvent } from "@/components/filter-dropdown";
+import {
+  type FilterDropdownProps,
+  type MapValueEvent,
+} from "@/components/filter-dropdown";
 
 /**
  * It is a mapper function for the <DatePicker.RangePicker /> filter.

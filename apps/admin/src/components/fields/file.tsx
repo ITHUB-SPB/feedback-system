@@ -5,7 +5,6 @@ import type { LinkProps } from "antd/lib/typography/Link";
 import { UrlField } from "./url";
 import type { RefineFieldFileProps } from "./types";
 
-
 export type FileFieldProps = RefineFieldFileProps<LinkProps>;
 
 export const FileField: React.FC<FileFieldProps> = ({

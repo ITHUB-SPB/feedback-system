@@ -10,7 +10,7 @@ import {
   // getDefaultFilter,
 } from "@/components/table/definition";
 
-import { FilterDropdown } from '@/components/filter-dropdown'
+import { FilterDropdown } from "@/components/filter-dropdown";
 import { EditButton, ShowButton } from "@/components/buttons";
 import useProjectsTable from "@/hooks/use-projects-table";
 import { useAdministrativeUnits } from "@/hooks/use-administrative-units";

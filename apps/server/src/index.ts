@@ -14,7 +14,6 @@ Hono
 - internal server url: http://localhost:3001
 - external server url: ${env.PUBLIC_SERVER_URL}
 - api & auth reference: ${env.PUBLIC_SERVER_URL}/docs
-- internal sidequest dashboard: http://localhost:8678
     `);
   },
 );

@@ -2,3 +2,5 @@ include:
   - ./infrastructure/traefik/compose.traefik.staging.yaml
   - ./infrastructure/postgres/compose.postgres.staging.yaml
   - ./infrastructure/minio/compose.minio.staging.yaml
+  - ./infrastructure/redis/compose.redis.staging.yaml
+  - ./infrastructure/arena/compose.arena.staging.yaml

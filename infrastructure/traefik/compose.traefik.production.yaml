@@ -1,7 +1,7 @@
 services:
-  traefik:
+  feedback-traefik:
     image: traefik:v3.6.2
-    container_name: traefik
+    container_name: feedback-traefik
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true

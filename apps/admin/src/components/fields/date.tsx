@@ -7,7 +7,6 @@ import type { ConfigType } from "dayjs";
 import type { TextProps } from "antd/lib/typography/Text";
 import type { RefineFieldDateProps } from "./types";
 
-
 export type DateFieldProps = RefineFieldDateProps<ConfigType, TextProps>;
 
 export const DateField: React.FC<DateFieldProps> = ({

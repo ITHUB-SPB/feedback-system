@@ -1,8 +1,9 @@
 services:
-  redis:
+  feedback-redis:
     extends:
       file: compose.redis.development.yaml
-      service: redis
+      service: feedback-redis
     environment:
       REDIS_HOST: redis
+      REDIS_USER: mostsecretuser
       REDIS_PASSWORD: mostsecretpassword

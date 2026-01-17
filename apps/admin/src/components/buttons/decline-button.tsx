@@ -8,7 +8,7 @@ import Popconfirm, { type PopconfirmProps } from "antd/es/popconfirm";
 type HandleConfirmProp = {
   handleConfirm: (
     event: MouseEventHandler<HTMLButtonElement>,
-    { feedback_status_comment }: { feedback_status_comment: string | null },
+    { feedback_status_comment }: { feedback_status_comment: string },
   ) => void;
 };
 

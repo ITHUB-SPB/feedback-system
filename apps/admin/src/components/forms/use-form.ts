@@ -1,7 +1,7 @@
 import React from "react";
 
-import Form, { type FormInstance, type FormProps } from 'antd/es/form'
-import type { ButtonProps } from 'antd/es/button'
+import Form, { type FormInstance, type FormProps } from "antd/es/form";
+import type { ButtonProps } from "antd/es/button";
 import { useForm as useFormSF, type UseFormConfig } from "sunflower-antd";
 
 import {

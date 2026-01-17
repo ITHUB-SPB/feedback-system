@@ -13,7 +13,7 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
   async ({ context, input, errors }) => {
     try {
       const { filter, sort } = input;
-      console.log(filter, sort)
+      console.log(filter, sort);
 
       let query = context.db
         .selectFrom("topic_category_topic")
@@ -45,7 +45,8 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
               "topic_category_topic.id" as keyof Tables["topic_category_topic"];
           }
 
-          const operator = filterObject.operator as keyof typeof mapOperatorsToSql;
+          const operator =
+            filterObject.operator as keyof typeof mapOperatorsToSql;
 
           let value: WhereValue = Number.isFinite(+filterObject.value)
             ? +filterObject.value
@@ -74,10 +75,7 @@ const allTopicCategoryTopics = publicProcedure.topicCategoryTopic.all.handler(
             query = query.orderBy("topic.title", order);
           }
           if (field === "topic_category_id") {
-            query = query.orderBy(
-              "topic_category.title",
-              order,
-            );
+            query = query.orderBy("topic_category.title", order);
           }
         }
       }

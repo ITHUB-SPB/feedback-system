@@ -1,8 +1,13 @@
-import React, { Children, createElement, Fragment, type ReactNode } from "react";
+import React, {
+  Children,
+  createElement,
+  Fragment,
+  type ReactNode,
+} from "react";
 import { Link } from "@tanstack/react-router";
 
-import Grid from 'antd/es/grid'
-import Form, { type FormProps } from 'antd/es/form'
+import Grid from "antd/es/grid";
+import Form, { type FormProps } from "antd/es/form";
 import type { TablePaginationConfig, TableProps } from "antd/es/table";
 
 import { useForm as useFormSF } from "sunflower-antd";
@@ -20,7 +25,7 @@ import {
   mapAntdSorterToCrudSorting,
   mapAntdFilterToCrudFilter,
   type FilterValue,
-  type SorterResult
+  type SorterResult,
 } from "./definition";
 
 export type useTableProps<TQueryFnData, TError, TSearchVariables, TData> =
@@ -38,15 +43,13 @@ export type useTableReturnType<
 };
 
 export type PaginationLinkProps = {
-  to: string,
-  element: ReactNode
+  to: string;
+  element: ReactNode;
 };
 
 export function PaginationLink({ to, element }: PaginationLinkProps) {
-  return (
-    <Link to={to}>{element}</Link>
-  )
-};
+  return <Link to={to}>{element}</Link>;
+}
 
 /**
  * By using useTable, you are able to get properties that are compatible with
@@ -169,22 +172,24 @@ export const useTable = <
       });
 
       if (type === "page") {
-        return <Link to={link}>{page}</Link>
+        return <Link to={link}>{page}</Link>;
       }
 
       if (type === "next" || type === "prev") {
-        return <Link to={link}>{element}</Link>
+        return <Link to={link}>{element}</Link>;
       }
 
       if (type === "jump-next" || type === "jump-prev") {
         const elementChildren = (element as React.ReactElement<any>)?.props
           ?.children;
 
-        return <Link to={link}>{
-          Children.count(elementChildren) > 1
-            ? createElement(Fragment, {}, elementChildren)
-            : elementChildren
-        }</Link>
+        return (
+          <Link to={link}>
+            {Children.count(elementChildren) > 1
+              ? createElement(Fragment, {}, elementChildren)
+              : elementChildren}
+          </Link>
+        );
       }
 
       return element;
@@ -194,7 +199,7 @@ export const useTable = <
     simple: !breakpoint.sm,
     position: !breakpoint.sm ? ["bottomCenter"] : ["bottomRight"],
     total: data?.total,
-  })
+  });
 
   return {
     searchFormProps: {
@@ -205,10 +210,7 @@ export const useTable = <
       dataSource: data?.data,
       loading: isLoading,
       onChange,
-      pagination:
-        isPaginationEnabled
-          ? antdPagination()
-          : false,
+      pagination: isPaginationEnabled ? antdPagination() : false,
       scroll: { x: true },
     },
     tableQuery,

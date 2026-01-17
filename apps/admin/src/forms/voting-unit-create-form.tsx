@@ -22,7 +22,7 @@ export default function VotingUnitCreateForm({
   const votingRegions = useVotingRegions();
 
   return (
-    <Modal {...modalProps} title="Добавление поселения" width={420} >
+    <Modal {...modalProps} title="Добавление поселения" width={420}>
       <Form {...formProps} layout="vertical" style={{ marginTop: 24 }}>
         <Flex orientation="vertical">
           <Form.Item

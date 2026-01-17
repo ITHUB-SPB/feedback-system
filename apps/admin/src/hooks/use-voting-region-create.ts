@@ -3,7 +3,7 @@ import { useModalForm } from "@/components/forms/use-modal-form";
 import type { VotingRegionContract } from "@/types";
 
 export default function useVotingRegionCreate() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const { modalProps, formProps, show } = useModalForm<
     Pick<VotingRegionContract["create"], "title">
@@ -14,19 +14,19 @@ export default function useVotingRegionCreate() {
     successNotification: {
       type: "success",
       description: "Успешно",
-      message: "Район добавлен"
+      message: "Район добавлен",
     },
     errorNotification: {
       type: "error",
       description: "Ошибка",
-      message: "Не удалось добавить район"
+      message: "Не удалось добавить район",
     },
     onMutationSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["votingRegion"],
-        refetchType: "all"
-      })
-    }
+        refetchType: "all",
+      });
+    },
   });
 
   return {

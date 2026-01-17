@@ -1,4 +1,4 @@
-import type { FormInstance, FormProps } from 'antd/es/form'
+import type { FormInstance, FormProps } from "antd/es/form";
 import {
   useStepsForm as useStepsFormSF,
   type UseStepsFormConfig,
@@ -10,7 +10,11 @@ import type {
   BaseRecord,
 } from "@refinedev/core";
 
-import { useForm, type UseFormProps, type UseFormReturnType } from "../forms/use-form";
+import {
+  useForm,
+  type UseFormProps,
+  type UseFormReturnType,
+} from "../forms/use-form";
 
 export type UseStepsFormFromSFReturnType<TResponse, TVariables> = {
   current: number;

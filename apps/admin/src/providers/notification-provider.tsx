@@ -1,7 +1,7 @@
 import React, { createContext, type PropsWithChildren } from "react";
 
-import App from 'antd/es/app'
-import staticNotification from 'antd/es/notification'
+import App from "antd/es/app";
+import staticNotification from "antd/es/notification";
 
 export type OpenNotificationParams = {
   key?: string;
@@ -38,12 +38,7 @@ export const useNotificationProvider = (): NotificationProvider => {
       : staticNotification;
 
   const notificationProvider: NotificationProvider = {
-    open: ({
-      key,
-      message,
-      description,
-      type,
-    }) => {
+    open: ({ key, message, description, type }) => {
       notification.open({
         key,
         description: message,

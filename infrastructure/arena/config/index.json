@@ -1,0 +1,63 @@
+{
+    "queues": [
+        {
+            "name": "amon-applications",
+            "host": "redis.local",
+            "hostId": "Local"
+        },
+        {
+            "name": "tasks",
+            "hostId": "Tasks Queue",
+            "type": "bee",
+            "redis": {
+                "url": "redis://redis:6379"
+            }
+        },
+        {
+            "name": "vote",
+            "port": 6379,
+            "host": "redis",
+            "hostId": "[voteapp] Docker Redis"
+        },
+        {
+            "name": "background-data",
+            "hostId": "x",
+            "redis": {
+                "port": 6379,
+                "host": "redis"
+            }
+        },
+        {
+            "type": "bull",
+            "hostId": "prodbp",
+            "name": "transfer",
+            "redis": {
+                "host": "1.15.0.42",
+                "password": "xxx",
+                "port": 6379,
+                "db": 3
+            }
+        },
+        {
+            "type": "bull",
+            "hostId": "local",
+            "name": "transfer",
+            "redis": {
+                "host": "localhost",
+                "port": 6379,
+                "db": 3
+            }
+        },
+        {
+            "type": "bee",
+            "name": "my-awesome-queue",
+            "hostId": "serverTest",
+            "redis": {
+                "host": "redis",
+                "port": 6379,
+                "db": 0,
+                "options": {}
+            }
+        }
+    ]
+}

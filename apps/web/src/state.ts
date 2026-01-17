@@ -28,9 +28,9 @@ export default class State {
         {
           field: "topic_category_id",
           operator: "eq",
-          value: String(categoryId)
-        }
-      ]
+          value: String(categoryId),
+        },
+      ],
     });
   }
 

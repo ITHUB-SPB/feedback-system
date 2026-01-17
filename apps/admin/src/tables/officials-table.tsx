@@ -9,7 +9,7 @@ import Select from "antd/es/select";
 
 import { useInvalidate } from "@refinedev/core";
 
-import { TextField } from '@/components/fields'
+import { TextField } from "@/components/fields";
 import { getDefaultSortOrder } from "@/components/table/definition";
 import { SaveButton, DeleteButton, EditButton } from "@/components/buttons";
 import { type User } from "@/types";

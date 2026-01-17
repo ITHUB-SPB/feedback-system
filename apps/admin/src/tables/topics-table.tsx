@@ -8,33 +8,34 @@ import {
   getDefaultFilter,
 } from "@/components/table/definition";
 
-import { FilterDropdown } from '@/components/filter-dropdown'
+import { FilterDropdown } from "@/components/filter-dropdown";
 import { DeleteButton } from "@/components/buttons";
 import useTopics from "@/hooks/use-topics";
 import useTopicCategories from "@/hooks/use-topic-categories";
 
-import { useTableFromQuery } from '@/components/table/use-table-from-query';
+import { useTableFromQuery } from "@/components/table/use-table-from-query";
 import { useQueryClient } from "@tanstack/react-query";
 import { orpcClient } from "@/providers/orpc-client";
 
 export default function TopicCategoryTopicsTable() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const topics = useTopics();
   const topicCategories = useTopicCategories();
 
   const queryOptions = ({
     sorters,
-    filters
+    filters,
   }: {
-    sorters?: CrudSort[] | undefined,
-    filters?: CrudFilter[] | undefined
-  }) => orpcClient.topicCategoryTopic.all.queryOptions({
-    input: {
-      sort: sorters,
-      filter: filters
-    }
-  })
+    sorters?: CrudSort[] | undefined;
+    filters?: CrudFilter[] | undefined;
+  }) =>
+    orpcClient.topicCategoryTopic.all.queryOptions({
+      input: {
+        sort: sorters,
+        filter: filters,
+      },
+    });
 
   const table = useTableFromQuery({
     queryOptions,
@@ -42,12 +43,11 @@ export default function TopicCategoryTopicsTable() {
       initial: [
         {
           field: "topic_category_id",
-          order: "asc"
-        }
-      ]
-    }
-  })
-
+          order: "asc",
+        },
+      ],
+    },
+  });
 
   return (
     <Table
@@ -133,12 +133,10 @@ export default function TopicCategoryTopicsTable() {
               type: "error",
             }}
             onSuccess={() => {
-              queryClient.invalidateQueries(
-                {
-                  queryKey: [["topicCategoryTopic", "all"]],
-                  refetchType: "all"
-                }
-              )
+              queryClient.invalidateQueries({
+                queryKey: [["topicCategoryTopic", "all"]],
+                refetchType: "all",
+              });
             }}
           />
         )}

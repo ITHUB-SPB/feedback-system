@@ -2,9 +2,12 @@ import Table from "antd/es/table";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
 
-import { getDefaultSortOrder, getDefaultFilter } from "@/components/table/definition";
+import {
+  getDefaultSortOrder,
+  getDefaultFilter,
+} from "@/components/table/definition";
 
-import { FilterDropdown } from '@/components/filter-dropdown'
+import { FilterDropdown } from "@/components/filter-dropdown";
 import { DeleteButton } from "@/components/buttons";
 import useVotingUnits from "@/hooks/use-voting-units";
 import useVotingVotesTable from "@/hooks/use-voting-votes-table";

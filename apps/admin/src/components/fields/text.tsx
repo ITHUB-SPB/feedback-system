@@ -5,7 +5,6 @@ import type { TextProps } from "antd/lib/typography/Text";
 
 import type { RefineFieldTextProps } from "./types";
 
-
 export type TextFieldProps = RefineFieldTextProps<ReactNode, TextProps>;
 
 export const TextField: React.FC<TextFieldProps> = ({ value, ...rest }) => {

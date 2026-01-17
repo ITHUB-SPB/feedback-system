@@ -31,6 +31,8 @@ infrastructure/authelia/config
 !infrastructure/postgres/data/pg_hba.conf
 !infrastructure/postgres/data/postgresql.conf
 
+infrastructure/redis/config/redis.production.conf
+
 pglite
 *.sqlite
 *.sqlite3

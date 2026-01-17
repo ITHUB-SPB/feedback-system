@@ -115,12 +115,12 @@ export default function VotingUnitsTable() {
                   successNotification={{
                     type: "success",
                     description: "Успешно",
-                    message: "Участник удален"
+                    message: "Участник удален",
                   }}
                   errorNotification={{
                     type: "error",
                     description: "Ошибка",
-                    message: "Не удалось удалить участника"
+                    message: "Не удалось удалить участника",
                   }}
                 />
               </Space>

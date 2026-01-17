@@ -18,7 +18,7 @@ catalog:
   '@refinedev/cli': ^2.16.50
   '@refinedev/core': ^5.0.7
   '@refinedev/react-router': ^2.0.3
-  '@types/node': ^22.19.3
+  '@types/node': 22.19.3
   '@types/nodemailer': ^7.0.4
   '@types/pg': ^8.16.0
   '@types/react': ^19.2.3
@@ -26,10 +26,11 @@ catalog:
   '@vitejs/plugin-react': ^5.1.2
   antd: ^6.0.0
   better-auth: ^1.4.9
+  bullmq: ^5.66.5
   class-variance-authority: ^0.7.1
   globals: ^16.4.0
   hono: ^4.11.1
-  ioredis: ^5.8.0
+  ioredis: 5.9.1
   kysely: ^0.28.9
   minio: ^8.0.6
   nodemailer: ^7.0.12
@@ -56,8 +57,7 @@ onlyBuiltDependencies:
 overrides:
   brace-expansion@<=2.0.1: 2.0.2
   esbuild@<=0.24.2: '>=0.25.0'
-  use-sync-external-store: ">=1.6.0"
-
+  use-sync-external-store: '>=1.6.0'
 
 syncInjectedDepsAfterScripts:
   - build

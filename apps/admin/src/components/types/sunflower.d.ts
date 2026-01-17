@@ -33,17 +33,17 @@ declare module "sunflower-antd" {
   ) => {
     form: FormInstance<TVariables>;
     formProps:
-    | {
-      form: FormInstance<TVariables>;
-      onFinish: (formValue: TVariables) => Promise<TData>;
-      initialValues: {};
-    }
-    | {
-      onSubmit(e: any): void;
-      form?: undefined;
-      onFinish?: undefined;
-      initialValues?: undefined;
-    };
+      | {
+          form: FormInstance<TVariables>;
+          onFinish: (formValue: TVariables) => Promise<TData>;
+          initialValues: {};
+        }
+      | {
+          onSubmit(e: any): void;
+          form?: undefined;
+          onFinish?: undefined;
+          initialValues?: undefined;
+        };
     defaultFormValuesLoading: boolean;
     formValues: {};
     initialValues: {};

@@ -1,5 +1,5 @@
 import type { QueryObserverResult } from "@tanstack/react-query";
-import type { RadioGroupProps } from 'antd/es/radio'
+import type { RadioGroupProps } from "antd/es/radio";
 
 import {
   type BaseKey,

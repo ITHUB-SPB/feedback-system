@@ -33,7 +33,7 @@ export const DeleteButton: React.FC<DeleteButtonProps> = ({
 
   const onConfirm = () => {
     if (!id || !identifier) {
-      return
+      return;
     }
     mutate(
       {

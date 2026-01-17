@@ -7,4 +7,4 @@ export * from "./date";
 export * from "./file";
 export * from "./url";
 export * from "./number";
-export * from './types'
+export * from "./types";

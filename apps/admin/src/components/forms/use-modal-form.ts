@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
-import type { FormInstance, FormProps } from 'antd/es/form'
-import type { ModalProps } from 'antd/es/modal'
+import type { FormInstance, FormProps } from "antd/es/form";
+import type { ModalProps } from "antd/es/modal";
 
 import {
   type HttpError,
@@ -11,7 +11,11 @@ import {
   useUserFriendlyName,
 } from "@refinedev/core";
 
-import { useForm, type UseFormProps, type UseFormReturnType } from "../forms/use-form";
+import {
+  useForm,
+  type UseFormProps,
+  type UseFormReturnType,
+} from "../forms/use-form";
 import { useModal } from "../use-modal";
 
 export type useModalFormFromSFReturnType<TResponse, TVariables> = {
@@ -151,20 +155,20 @@ export const useModalForm = <
 
   const visible = modalProps.open || false;
   const sunflowerUseModal: useModalFormFromSFReturnType<TResponse, TVariables> =
-  {
-    modalProps,
-    form,
-    formLoading,
-    formProps,
-    formResult: undefined,
-    formValues: form.getFieldsValue,
-    defaultFormValuesLoading: false,
-    initialValues: {},
-    submit: onFinish as any,
-    close,
-    open: modalProps.open || false,
-    show,
-  };
+    {
+      modalProps,
+      form,
+      formLoading,
+      formProps,
+      formResult: undefined,
+      formValues: form.getFieldsValue,
+      defaultFormValuesLoading: false,
+      initialValues: {},
+      submit: onFinish as any,
+      close,
+      open: modalProps.open || false,
+      show,
+    };
 
   const saveButtonPropsSF = {
     disabled: formLoading,

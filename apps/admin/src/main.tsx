@@ -24,7 +24,7 @@ const router = createRouter({
   ),
   defaultPreload: "intent",
   defaultNotFoundComponent: () => {
-    return <NotFound />
+    return <NotFound />;
   },
 });
 

@@ -1,4 +1,9 @@
-import { useLayoutEffect, type FC, type PropsWithChildren, useMemo } from "react";
+import {
+  useLayoutEffect,
+  type FC,
+  type PropsWithChildren,
+  useMemo,
+} from "react";
 
 import {
   createRootRouteWithContext,
@@ -22,7 +27,10 @@ import { authClient } from "@/providers/auth-client";
 import { dataProvider } from "@/providers/data-provider";
 import { routerProvider } from "@/providers/router-provider";
 import { orpcClient } from "@/providers/orpc-client";
-import { useNotificationProvider, NotificationContextProvider } from "@/providers/notification-provider";
+import {
+  useNotificationProvider,
+  NotificationContextProvider,
+} from "@/providers/notification-provider";
 
 import { resources } from "@/resources";
 
@@ -85,7 +93,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                 },
               }}
             >
-              <NotificationContextProvider {...notificationProviderContextValues}>
+              <NotificationContextProvider
+                {...notificationProviderContextValues}
+              >
                 <ScrollToTop>
                   <Outlet />
                 </ScrollToTop>

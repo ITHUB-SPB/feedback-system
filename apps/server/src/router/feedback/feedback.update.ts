@@ -1,5 +1,8 @@
 import { requireOfficialProcedure } from "@shared/api";
-import { sendCitizenEmail, sendOfficialEmail } from "../../queue";
+import {
+  citizenStatusEmailQueue,
+  citizenStatusWithCommentEmailQueue,
+} from "@shared/mq";
 import _baseSelect from "./_baseSelect";
 
 const updateFeedback = requireOfficialProcedure.feedback.update.handler(
@@ -21,23 +24,41 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
         .innerJoin("user", "feedback.person_id", "user.id")
         .executeTakeFirstOrThrow();
 
-      if (body.feedback_status_id && result.status.title !== "pending" && result.status.title !== "archived") {
-        const citizen = await context.db
-          .selectFrom("user")
-          .select(["email", "firstName", "lastName", "middleName"])
-          .executeTakeFirstOrThrow();
-
-        const citizenFullName = citizen.middleName
-          ? `${citizen.firstName} ${citizen.middleName}`
-          : `${citizen.firstName}`;
-
-        await sendCitizenEmail(
-          citizen.email,
-          citizenFullName,
-          result.status.title,
-          result.feedback_status_comment
-        );
+      if (
+        !body.feedback_status_id ||
+        result.status.title === "pending" ||
+        result.status.title === "archived"
+      ) {
+        return {};
       }
+
+      const { email, firstName, ...rest } = await context.db
+        .selectFrom("user")
+        .select(["email", "firstName", "lastName", "middleName"])
+        .executeTakeFirstOrThrow();
+
+      const name = rest.middleName
+        ? `${firstName} ${rest.middleName}`
+        : firstName;
+
+      if (result.status.title === "declined") {
+        await citizenStatusWithCommentEmailQueue.add(
+          "citizen-status-declined",
+          {
+            to: email,
+            name,
+            status: "declined",
+            comment: result.feedback_status_comment as string,
+          },
+        );
+      } else {
+        await citizenStatusEmailQueue.add(`citizen-status-${result.status}`, {
+          to: email,
+          name,
+          status: result.status.title,
+        });
+      }
+
 
       return {};
     } catch (error) {

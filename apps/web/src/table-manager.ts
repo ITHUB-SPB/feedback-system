@@ -17,7 +17,7 @@ type TableManagerProperties = {
   state: State;
 };
 
-type FeedbackIn = FeedbackContract["output"]["one"]
+type FeedbackIn = FeedbackContract["output"]["one"];
 
 const flexRender = <TProps extends object>(comp: any, props: TProps) => {
   if (typeof comp === "function") {
@@ -29,7 +29,7 @@ const flexRender = <TProps extends object>(comp: any, props: TProps) => {
 const useTable = <TData extends RowData>(options: TableOptions<TData>) => {
   const resolvedOptions: TableOptionsResolved<TData> = {
     state: {},
-    onStateChange: () => { },
+    onStateChange: () => {},
     renderFallbackValue: null,
     ...options,
   };
@@ -80,18 +80,18 @@ export class TableFeedbackManager {
       this.columnHelper.accessor("status", {
         header: "Статус",
         cell: (info) => {
-          console.log(info.row.original)
+          console.log(info.row.original);
           if (info.row.original.feedback_status_comment) {
-            return `${info.getValue()["translation"]}<br/>(${info.row.original.feedback_status_comment})`
+            return `${info.getValue()["translation"]}<br/>(${info.row.original.feedback_status_comment})`;
           }
-          return info.getValue()["translation"]
-        }
+          return info.getValue()["translation"];
+        },
       }),
       this.columnHelper.accessor("created_at", {
         header: "Дата",
         cell: (info) => new Date(info.getValue()).toLocaleString("ru"),
       }),
-    ]
+    ];
   }
 
   public renderTable() {

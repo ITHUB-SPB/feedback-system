@@ -6,15 +6,15 @@ import { type BaseRecord, type BaseOption } from "@refinedev/core";
 export type UseSelectFromQueryProps<TData> = {
   data: TData[];
   optionLabel?:
-  | (keyof TData extends string ? keyof TData : never)
-  | ((item: TData) => string);
+    | (keyof TData extends string ? keyof TData : never)
+    | ((item: TData) => string);
   /**
    * Set the option's value
    * @default `"id"`
    */
   optionValue?:
-  | (keyof TData extends string ? keyof TData : never)
-  | ((item: TData) => string);
+    | (keyof TData extends string ? keyof TData : never)
+    | ((item: TData) => string);
 };
 
 export type UseSelectFromQueryReturnType<

@@ -12,7 +12,6 @@ import type {
 
 import type { FeedbackStatusEnum, FeedbackContract } from "@/types";
 
-
 type RefineButtonCommonProps = PropsWithChildren<{
   /**
    * Whether should hide the text and show only the icon or not.
@@ -136,7 +135,6 @@ type RefineShowButtonProps<
   TComponentProps extends {} = Record<string, unknown>,
   TExtraProps extends {} = {},
 > = RefineButtonCommonProps & TComponentProps & TExtraProps & {};
-
 
 export type ShowButtonProps = RefineShowButtonProps<ButtonProps>;
 export type CreateButtonProps = RefineCreateButtonProps<ButtonProps>;

@@ -5,7 +5,6 @@ import type { TextProps } from "antd/lib/typography/Text";
 
 import type { RefineFieldNumberProps } from "./types";
 
-
 function toLocaleStringSupportsOptions() {
   return !!(
     typeof Intl === "object" &&

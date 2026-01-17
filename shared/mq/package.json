@@ -1,0 +1,25 @@
+{
+  "name": "@shared/mq",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "catalog:",
+    "@shared/mail": "workspace:*",
+    "@shared/logger": "workspace:*",
+    "bullmq": "catalog:",
+    "ioredis": "catalog:",
+    "tsx": "catalog:",
+    "valibot": "catalog:"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

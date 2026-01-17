@@ -4,10 +4,7 @@ import type { PropsWithChildren } from "react";
 import type { BaseKey, MutationMode } from "@refinedev/core";
 import type { CardProps } from "antd";
 
-import type {
-  DeleteButtonProps,
-  SaveButtonProps,
-} from "@/components/buttons";
+import type { DeleteButtonProps, SaveButtonProps } from "@/components/buttons";
 
 type RefineCrudCreateProps<
   TSaveButtonProps extends {} = Record<keyof any, unknown>,

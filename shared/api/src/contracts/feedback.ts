@@ -48,7 +48,7 @@ const getManyPublicFeedbackSchema = v.array(
     "feedback_type",
     "status",
     "created_at",
-    "feedback_status_comment"
+    "feedback_status_comment",
   ]),
 );
 

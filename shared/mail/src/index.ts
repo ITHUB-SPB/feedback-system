@@ -1,11 +1,7 @@
 import { render } from "@react-email/components";
 
-import { CitizenApprovalEmail } from './templates/citizen-approval-html.jsx'
-import { citizenApprovalText } from './templates/citizen-approval-text.js'
-import { CitizenRejectionEmail } from './templates/citizen-rejection-html.jsx'
-import { citizenRejectionText } from './templates/citizen-rejection-text.js'
-import { CitizenCompletedEmail } from './templates/citizen-completed-html.jsx'
-import { citizenCompletedText } from './templates/citizen-completed-text.js'
+import { getCitizenStatusHtml } from "./templates/citizen-status-html.js";
+import { getCitizenStatusText } from "./templates/citizen-status-text.js";
 
 import { env } from "./env";
 import { mailClient } from "./client";
@@ -13,39 +9,29 @@ import { logger } from "./logger";
 
 import type {
   MailJobData,
+  MailCitizenStatusJobData,
+  MailCitizenStatusWithCommentJobData,
 } from "./types";
 
-
 async function buildMail(options: MailJobData) {
-  if (options.type === "citizen-approved") {
-    return {
-      to: options.to,
-      subject: "Вместе47. Информация по вашему обращению",
-      text: citizenApprovalText,
-      html: await render(
-        CitizenApprovalEmail({ name: options.name }),
-      ),
+  if ("status" in options) {
+    const commonProps = {
+      status: options.status,
+      ...(options.status === "declined" ? { comment: options.comment } : {}),
     };
-  }
 
-  if (options.type === "citizen-declined") {
     return {
-      to: options.to,
       subject: "Вместе47. Информация по вашему обращению",
-      text: citizenRejectionText,
-      html: await render(
-        CitizenRejectionEmail({ name: options.name }),
+      to: options.to,
+      text: getCitizenStatusText(
+        commonProps as
+          | MailCitizenStatusJobData
+          | MailCitizenStatusWithCommentJobData,
       ),
-    };
-  }
-
-  if (options.type === "citizen-completed") {
-    return {
-      to: options.to,
-      subject: "Вместе47. Информация по вашему обращению",
-      text: citizenCompletedText,
       html: await render(
-        CitizenCompletedEmail({ name: options.name }),
+        getCitizenStatusHtml({ ...commonProps, name: options.name } as
+          | MailCitizenStatusJobData
+          | MailCitizenStatusWithCommentJobData),
       ),
     };
   }
@@ -82,10 +68,7 @@ export async function sendMail(options: MailJobData) {
 
     return await mailClient?.sendMail({
       from: `"Вместе47" <${env.SMTP_USER}>`,
-      to: mail?.to,
-      subject: mail?.subject,
-      text: mail?.text,
-      html: mail?.html,
+      ...mail,
     });
   } catch (error) {
     logger.error("Error on send mail" + error);

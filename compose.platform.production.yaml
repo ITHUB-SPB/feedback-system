@@ -5,6 +5,8 @@ include:
   - ./infrastructure/traefik/compose.traefik.production.yaml
   - ./infrastructure/postgres/compose.postgres.production.yaml
   - ./infrastructure/minio/compose.minio.production.yaml
+  - ./infrastructure/redis/compose.redis.production.yaml
+  - ./infrastructure/arena/compose.arena.production.yaml
 
 services:
   feedback-server:
@@ -23,11 +25,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      test:
-        [
-          "CMD-SHELL",
-          "wget --quiet --spider http://$$SERVER_HOST:$$SERVER_PORT/healthcheck",
-        ]
+      test: [ "CMD-SHELL", "wget --quiet --spider http://$$SERVER_HOST:$$SERVER_PORT/healthcheck" ]
     depends_on:
       - postgres
     labels:
@@ -42,7 +40,7 @@ services:
       - "traefik.http.routers.server-internal.rule=Host(`api.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`)"
       - "traefik.http.routers.server-internal.entrypoints=web-secure"
       - "traefik.http.routers.server-internal.tls.certresolver=tlsresolver"
-      # 
+      #
       - "traefik.http.routers.server-internal.middlewares=chain-no-auth@file"
       - "traefik.http.routers.server-internal.service=server-internal"
 
@@ -99,6 +97,7 @@ services:
 
 volumes:
   letsencrypt:
+
 
 secrets:
   authelia_jwt_secret:

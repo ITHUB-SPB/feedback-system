@@ -8,8 +8,7 @@ import { type RefineThemedLayoutProps } from "./types";
 export { ThemedHeader } from "./header";
 export { ThemedSider } from "./sider";
 export { ThemedTitle } from "./title";
-export * from './context'
-
+export * from "./context";
 
 export const ThemedLayout: React.FC<RefineThemedLayoutProps> = ({
   children,

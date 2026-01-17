@@ -1,6 +1,5 @@
 import React, { type ReactNode, useState, useContext } from "react";
 
-
 export interface IThemedLayoutContext {
   siderCollapsed: boolean;
   setSiderCollapsed: (visible: boolean) => void;
@@ -62,4 +61,3 @@ export const useThemedLayoutContext = (): IThemedLayoutContext => {
     setSiderCollapsed,
   };
 };
-

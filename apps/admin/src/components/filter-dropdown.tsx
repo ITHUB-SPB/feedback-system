@@ -1,8 +1,8 @@
 import React, { type ReactNode } from "react";
 import dayjs from "dayjs";
-import Button from 'antd/es/button'
-import Space from 'antd/es/space'
-import type { ColumnProps } from 'antd/es/table'
+import Button from "antd/es/button";
+import Space from "antd/es/space";
+import type { ColumnProps } from "antd/es/table";
 import { FilterOutlined } from "@ant-design/icons";
 
 type AntdFilterDropdownProps = React.ComponentProps<

@@ -1,10 +1,21 @@
 services:
-  redis:
+  feedback-redis:
     extends:
       file: compose.redis.development.yaml
-      service: redis
+      service: feedback-redis
+    volumes:
+      - ./data:/data
+      - ./config/redis.production.conf:/usr/local/etc/redis/redis.conf
     environment:
       REDIS_HOST: redis
+      REDIS_USER: /run/secrets/redis_user
       REDIS_PASSWORD: /run/secrets/redis_password
     secrets:
+      - redis_user
       - redis_password
+
+secrets:
+  redis_user:
+    file: ../secrets/redis_user
+  redis_password:
+    file: ../secrets/redis_password
