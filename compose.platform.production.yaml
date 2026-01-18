@@ -47,6 +47,19 @@ services:
       - "traefik.http.services.server-external.loadbalancer.server.port=3001"
       - "traefik.http.services.server-internal.loadbalancer.server.port=3001"
 
+  feedback-workers:
+    container_name: feedback-workers
+    build:
+      context: .
+      dockerfile: ./Dockerfile.platform
+      target: prod-workers
+    # env_file:
+    #   - ./apps/server/.env
+    command: pnpm production:workers
+    restart: unless-stopped
+    depends_on:
+      - feedback-server
+
   feedback-admin:
     container_name: feedback-admin
     build:

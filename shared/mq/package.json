@@ -8,7 +8,8 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "dev:workers": "dotenvx run -f .env.development -- tsx src/run.ts",
-    "staging:workers": "dotenvx run -f .env.staging -- tsx src/run.ts"
+    "staging:workers": "dotenvx run -f .env.staging -- tsx src/run.ts",
+    "production:workers": "dotenvx run -f .env.production -- tsx src/run.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "catalog:",

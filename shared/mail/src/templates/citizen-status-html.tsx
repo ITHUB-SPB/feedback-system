@@ -42,7 +42,7 @@ const CitizenStatusEmail = ({
             <Img
               alt="логотип"
               className="mx-auto h-auto w-full max-w-[120px]"
-              src="https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/photos/2025-10-01T03:27:09.294Z_logo.png"
+              src="https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/photos/logo.png"
             />
           </Section>
           {ContentComponent}
@@ -126,7 +126,7 @@ const CitizenStatusDeclinedEmail = ({
       </Heading>
 
       <Text className="mb-[24px] text-[#0b0917] text-[16px]">
-        Ваше предложение было отклонено АМО. Причина отклонения: ${comment}
+        Ваше предложение было отклонено АМО. Причина отклонения: {comment}
       </Text>
     </Section>
   );

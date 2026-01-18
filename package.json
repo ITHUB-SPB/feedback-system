@@ -32,6 +32,7 @@
         "staging:auth:generate": "pnpm -F @shared/auth staging:auth:generate",
         "staging:auth:migrate": "pnpm -F @shared/auth staging:auth:migrate",
         "staging:auth:seed": "pnpm -F @shared/auth staging:auth:seed",
+        "production:workers": "pnpm -F @shared/mq production:workers",
         "production:db:reset": "pnpm -F @shared/database production:db:reset",
         "production:db:seed": "pnpm -F @shared/database production:db:seed",
         "production:db:check": "pnpm -F @shared/database production:db:check",
