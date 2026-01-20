@@ -1,6 +1,6 @@
 services:
   feedback-postgres:
-    image: "postgres:17.6-bookworm"
+    # image: "postgres:17.6-bookworm"
     build:
       context: .
     container_name: feedback-postgres--production
@@ -13,20 +13,19 @@ services:
       PGUSER_FILE: /run/secrets/postgres_user
       DATA_PATH: ./data
       LOGS_PATH: ./logs
+      WALG_LIBSODIUM_KEY: 366e6507d61c1c2aaf9fe1bc2abba8be85ce114122758eeba9938233862677fb
       WALG_AUTOMATED_BACKUPS: true
       WALG_RETENTION_DAYS: 30
-      WALG_LIBSODIUM_KEY: /run/secrets/walg_libsodium_key
       AWS_ACCESS_KEY_ID: /run/secrets/minio_access_key
       AWS_SECRET_ACCESS_KEY: /run/secrets/minio_secret_key
       AWS_ENDPOINT: https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
-      WALG_S3_PREFIX: s3://backup/postgres-backups
+      WALG_S3_PREFIX: s3://backup/pg
       LC_LANG: ru_RU.UTF-8
     secrets:
       - postgres_user
       - postgres_password
       - minio_access_key
       - minio_secret_key
-      - walg_libsodium_key
     deploy:
       resources:
         limits:
@@ -38,7 +37,7 @@ services:
       - ./data:/var/lib/postgresql/data
       - ./logs:/var/log/wal-g
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d feedback -U `cat $$PGUSER_FILE`"]
+      test: ["CMD-SHELL", "pg_isready -q -d feedback -U `cat $$POSTGRES_USER_FILE`"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -72,3 +71,11 @@ secrets:
     file: ../secrets/pgadmin_default_email
   pgadmin_default_password:
     file: ../secrets/pgadmin_default_password
+  postgres_user:
+    file: ../secrets/postgres_user
+  postgres_password:
+    file: ../secrets/postgres_password
+  # minio_access_key:
+  #   external: true
+  # minio_secret_key:
+  #   external: true

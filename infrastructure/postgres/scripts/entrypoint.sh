@@ -62,7 +62,7 @@ POSTGRES_PID=$!
 
 check_postgres_ready() {
     for i in {1..60}; do
-        if pg_isready -U "${POSTGRES_USER}" >/dev/null 2>&1; then
+        if pg_isready -d "${POSTGRES_DB}" -U `cat ${POSTGRES_USER_FILE}` >/dev/null 2>&1; then
             return 0
         fi
         sleep 2
@@ -73,10 +73,9 @@ check_postgres_ready() {
 create_initial_backup() {
     log_message "Creating initial backup..."
     
-    DB_NAME="${POSTGRES_DB}"
-    DB_SIZE=$(psql -U "${POSTGRES_USER}" -d "$DB_NAME" -t -c "SELECT pg_size_pretty(pg_database_size('$DB_NAME'));" 2>/dev/null | xargs || echo "Unknown")
+    DB_SIZE=$(psql -U `cat ${POSTGRES_USER_FILE}` -d "${POSTGRES_DB}" -t -c "SELECT pg_size_pretty(pg_database_size('${POSTGRES_DB}'));" 2>/dev/null | xargs || echo "Unknown")
     
-    log_message "Database: $DB_NAME"
+    log_message "Database: ${POSTGRES_DB}"
     log_message "Database size: $DB_SIZE"
     
     BACKUP_START_TIME=$(date '+%Y-%m-%d %H:%M:%S')

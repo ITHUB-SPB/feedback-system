@@ -11,7 +11,7 @@ log_message() {
 
 check_postgres() {
     for i in {1..30}; do
-        if pg_isready -U "${POSTGRES_USER:-postgres}" >/dev/null 2>&1; then
+        if pg_isready -d "${POSTGRES_DB}" -U `cat ${POSTGRES_USER_FILE}` >/dev/null 2>&1; then
             return 0
         fi
         sleep 2
@@ -26,12 +26,12 @@ if ! check_postgres; then
     exit 1
 fi
 
-DB_SIZE=$(psql -U "${POSTGRES_USER:-postgres}" -d "${POSTGRES_DB:-postgres}" -t -c "SELECT pg_size_pretty(pg_database_size('${POSTGRES_DB:-postgres}'));" 2>/dev/null | xargs || echo "Unknown")
+DB_SIZE=$(psql -U `cat ${POSTGRES_USER_FILE}` -d "${POSTGRES_DB}" -t -c "SELECT pg_size_pretty(pg_database_size('${POSTGRES_DB}'));" 2>/dev/null | xargs || echo "Unknown")
 
 BACKUP_START_TIME=$(date '+%Y-%m-%d %H:%M:%S')
 BACKUP_START_EPOCH=$(date +%s)
 
-log_message "Database: ${POSTGRES_DB:-postgres}"
+log_message "Database: ${POSTGRES_DB}"
 log_message "Database size: $DB_SIZE"
 log_message "Backup type: $BACKUP_TYPE"
 
@@ -61,7 +61,7 @@ if eval "$BACKUP_COMMAND" 2>> "$LOG_FILE"; then
     log_message "$BACKUP_TYPE backup completed successfully in ${BACKUP_DURATION} seconds
 
 Details:
-- Database: ${POSTGRES_DB:-postgres}
+- Database: ${POSTGRES_DB}
 - Size: $DB_SIZE
 - Duration: ${BACKUP_DURATION} seconds
 - Backup: $LATEST_BACKUP
@@ -75,7 +75,7 @@ Details:
     
 else
     BACKUP_END_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-    log_message "ERROR: $BACKUP_TYPE backup failed for database ${POSTGRES_DB:-postgres}
+    log_message "ERROR: $BACKUP_TYPE backup failed for database ${POSTGRES_DB}
 
 Details:
 - Started: $BACKUP_START_TIME

@@ -17,11 +17,11 @@ services:
       LOGS_PATH: ./logs
       WALG_AUTOMATED_BACKUPS: true
       WALG_RETENTION_DAYS: 30
-      WALG_LIBSODIUM_KEY: 11ff11dd11ff1111ecedd0e11111cb4ea1d3f975f4211db40611348ae8e437af
+      WALG_LIBSODIUM_KEY: 366e6507d61c1c2aaf9fe1bc2abba8be85ce114122758eeba9938233862677fb
       AWS_ACCESS_KEY_ID: mostsecretminiokey
       AWS_SECRET_ACCESS_KEY: mostsecretminiokey
       AWS_ENDPOINT: https://minio.localhost
-      WALG_S3_PREFIX: s3://backup/postgres-backups
+      WALG_S3_PREFIX: s3://backup/pg
       LC_LANG: ru_RU.UTF-8
     volumes:
       - ./data:/var/lib/postgresql/data

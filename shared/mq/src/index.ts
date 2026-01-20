@@ -14,16 +14,3 @@ export const citizenStatusWithCommentEmailQueue =
     "citizen-status-with-comment-email-queue",
     connection,
   );
-
-citizenStatusEmailQueue.add("test", {
-  name: "test",
-  status: "completed",
-  to: "daslef93@gmail.com",
-});
-
-citizenStatusWithCommentEmailQueue.add("test", {
-  name: "test",
-  status: "declined",
-  comment: "Не актуально.",
-  to: "daslef93@gmail.com",
-});

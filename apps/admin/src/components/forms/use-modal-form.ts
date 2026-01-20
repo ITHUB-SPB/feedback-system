@@ -179,13 +179,13 @@ export const useModalForm = <
   };
 
   const handleClose = useCallback(() => {
-    const warnWhenConfirm = window.confirm(
-      "Are you sure you want to leave? You have unsaved changes.",
-    );
+    // const warnWhenConfirm = window.confirm(
+    //   "Are you sure you want to leave? You have unsaved changes.",
+    // );
 
-    if (!warnWhenConfirm) {
-      return;
-    }
+    // if (!warnWhenConfirm) {
+    //   return;
+    // }
 
     setId?.(undefined);
     sunflowerUseModal.close();
@@ -223,7 +223,7 @@ export const useModalForm = <
       ...useFormProps.formProps,
       onValuesChange: formProps?.onValuesChange,
       onKeyUp: formProps?.onKeyUp,
-      onFinish: async (values) => {
+      onFinish: async (values: TVariables) => {
         await onFinish(values);
 
         if (autoSubmitClose) {
@@ -243,8 +243,8 @@ export const useModalForm = <
         `${rest.action} ${rest.resource ?? ""}`,
         "singular",
       )}`,
-      okText: "Save",
-      cancelText: "Cancel",
+      okText: "Сохранить",
+      cancelText: "Отменить",
       onCancel: handleClose,
       forceRender: true,
     },

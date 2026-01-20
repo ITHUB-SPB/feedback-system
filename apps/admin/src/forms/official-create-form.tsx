@@ -1,3 +1,5 @@
+import type { ChangeEvent } from "react";
+
 import Form from "antd/es/form";
 import Input from "antd/es/input";
 import Modal from "antd/es/modal";
@@ -82,7 +84,7 @@ export default function OfficialCreateModalForm({
           >
             <Input
               type="email"
-              onChange={(event) => {
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 form?.setFieldValue("name", event.target.value);
               }}
             />

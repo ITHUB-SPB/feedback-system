@@ -1,15 +1,14 @@
 #!/bin/bash
 set -e
 
-
 mkdir -p /var/log/wal-g
 chown postgres:postgres /var/log/wal-g
 
 echo '/var/run/postgresql' > /etc/wal-g/env/PGHOST
 echo '5432' > /etc/wal-g/env/PGPORT
-echo "${POSTGRES_USER}" > /etc/wal-g/env/PGUSER
+echo `cat ${POSTGRES_USER_FILE}` > /etc/wal-g/env/PGUSER
+echo `cat ${POSTGRES_PASSWORD_FILE}` > /etc/wal-g/env/PGPASSWORD
 echo "${POSTGRES_DB}" > /etc/wal-g/env/PGDATABASE
-echo "${POSTGRES_PASSWORD}" > /etc/wal-g/env/PGPASSWORD
 
 echo "${AWS_ACCESS_KEY_ID}" > /etc/wal-g/env/AWS_ACCESS_KEY_ID
 echo "${AWS_SECRET_ACCESS_KEY}" > /etc/wal-g/env/AWS_SECRET_ACCESS_KEY
