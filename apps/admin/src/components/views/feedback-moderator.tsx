@@ -105,7 +105,7 @@ export default function FeedbackModerator({ feedback }: ContentProps) {
         ) : null}
 
         {feedback?.email ? (
-          <Typography.Paragraph>feedback.email</Typography.Paragraph>
+          <Typography.Paragraph>{feedback.email}</Typography.Paragraph>
         ) : null}
 
         {feedback?.person_phone ? (

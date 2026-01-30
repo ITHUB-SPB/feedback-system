@@ -328,9 +328,6 @@ importers:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../shared/typescript-config
-      '@yandex/ymaps3-types':
-        specifier: ^1.0.18540164
-        version: 1.0.18540164(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -3659,20 +3656,6 @@ packages:
 
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
-
-  '@yandex/ymaps3-types@1.0.18540164':
-    resolution: {integrity: sha512-AJMY4zzVP1lRkwTU45Uu08Sm2Ng1HJ6Cx6XMGPOvIzV84CF08BVqxWPYZEK1e3CobHspIGvYresAvl29XzvQNA==}
-    peerDependencies:
-      '@types/react': ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      '@types/react-dom': ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      '@vue/runtime-core': '3'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-      '@vue/runtime-core':
-        optional: true
 
   '@zxing/text-encoding@0.9.0':
     resolution: {integrity: sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==}
@@ -10639,7 +10622,7 @@ snapshots:
     optionalDependencies:
       '@tanstack/react-router': 1.143.11(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       vite: 7.3.0(@types/node@22.19.3)(jiti@2.6.1)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2)
-      webpack: 5.104.1(esbuild@0.25.10)
+      webpack: 5.104.1
     transitivePeerDependencies:
       - supports-color
 
@@ -10867,11 +10850,6 @@ snapshots:
   '@xtuc/ieee754@1.2.0': {}
 
   '@xtuc/long@4.2.2': {}
-
-  '@yandex/ymaps3-types@1.0.18540164(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)':
-    optionalDependencies:
-      '@types/react': 19.2.7
-      '@types/react-dom': 19.2.3(@types/react@19.2.7)
 
   '@zxing/text-encoding@0.9.0':
     optional: true
@@ -14118,6 +14096,16 @@ snapshots:
     optionalDependencies:
       esbuild: 0.25.10
 
+  terser-webpack-plugin@5.3.16(webpack@5.104.1):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.31
+      jest-worker: 27.5.1
+      schema-utils: 4.3.3
+      serialize-javascript: 6.0.2
+      terser: 5.44.1
+      webpack: 5.104.1
+    optional: true
+
   terser@5.44.1:
     dependencies:
       '@jridgewell/source-map': 0.3.11
@@ -14340,6 +14328,39 @@ snapshots:
   webpack-sources@3.3.3: {}
 
   webpack-virtual-modules@0.6.2: {}
+
+  webpack@5.104.1:
+    dependencies:
+      '@types/eslint-scope': 3.7.7
+      '@types/estree': 1.0.8
+      '@types/json-schema': 7.0.15
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/wasm-edit': 1.14.1
+      '@webassemblyjs/wasm-parser': 1.14.1
+      acorn: 8.15.0
+      acorn-import-phases: 1.0.4(acorn@8.15.0)
+      browserslist: 4.28.1
+      chrome-trace-event: 1.0.4
+      enhanced-resolve: 5.18.4
+      es-module-lexer: 2.0.0
+      eslint-scope: 5.1.1
+      events: 3.3.0
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+      json-parse-even-better-errors: 2.3.1
+      loader-runner: 4.3.1
+      mime-types: 2.1.35
+      neo-async: 2.6.2
+      schema-utils: 4.3.3
+      tapable: 2.3.0
+      terser-webpack-plugin: 5.3.16(webpack@5.104.1)
+      watchpack: 2.5.0
+      webpack-sources: 3.3.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
+    optional: true
 
   webpack@5.104.1(esbuild@0.25.10):
     dependencies:

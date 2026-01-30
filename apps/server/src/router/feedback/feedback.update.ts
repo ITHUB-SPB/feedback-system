@@ -35,6 +35,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
       const { email, firstName, ...rest } = await context.db
         .selectFrom("user")
         .select(["email", "firstName", "lastName", "middleName"])
+        .where("user.id", "=", result.person_id)
         .executeTakeFirstOrThrow();
 
       const name = rest.middleName
@@ -52,7 +53,7 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
           },
         );
       } else {
-        await citizenStatusEmailQueue.add(`citizen-status-${result.status}`, {
+        await citizenStatusEmailQueue.add(`citizen-status-${result.status.title}`, {
           to: email,
           name,
           status: result.status.title,

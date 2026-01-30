@@ -201,21 +201,25 @@
 
           <div class="issue-row">
             <div class="form-block" id="categoryBlock">
-              <div class="form-block-title regular-text fw-600">Категория<span class="form-block-required">*</span></div>
+              <div class="form-block-title regular-text fw-600">Категория<span class="form-block-required">*</span>
+              </div>
               <div class="input-block">
-                <select name="topic_category_id" class="object-location" id="categorySelect">
+                <select name="topic_category_id" class="object-location" id="categorySelect" required>
                   <option value="">Выберите категорию</option>
                 </select>
               </div>
+              <span class="form-block-error">Заполните поле</span>
+
             </div>
 
             <div class="form-block" id="issueBlock">
               <div class="form-block-title regular-text fw-600">Проблема<span class="form-block-required">*</span></div>
               <div class="input-block">
-                <select name="topic_category_topic_id" class="object-location" id="issueSelect">
+                <select name="topic_category_topic_id" class="object-location" id="issueSelect" required>
                   <option value="">Сначала выберите категорию</option>
                 </select>
               </div>
+              <span class="form-block-error">Заполните поле</span>
             </div>
           </div>
 
@@ -227,6 +231,7 @@
               <textarea name="description" class="object-name" placeholder="Ваше пожелание или замечание"
                 maxlength="1000" rows="6" required></textarea>
             </div>
+            <span class="form-block-error">Заполните поле</span>
           </div>
 
           <div class="fio-row">
@@ -235,12 +240,14 @@
               <div class="input-block">
                 <input type="text" name="last_name" class="object-name" placeholder="Фамилия" required />
               </div>
+              <span class="form-block-error">Заполните поле</span>
             </div>
             <div class="form-block">
               <div class="form-block-title regular-text fw-600">Имя<span class="form-block-required">*</span></div>
               <div class="input-block">
                 <input type="text" name="first_name" class="object-name" placeholder="Имя" required />
               </div>
+              <span class="form-block-error">Заполните поле</span>
             </div>
             <div class="form-block">
               <div class="form-block-title regular-text fw-600">Отчество</div>
@@ -256,6 +263,7 @@
               <div class="input-block">
                 <input type="email" name="email" class="object-name" placeholder="Email" required />
               </div>
+              <span class="form-block-error">Заполните поле</span>
             </div>
 
             <div class="form-block" style="flex: 1;">
@@ -277,7 +285,7 @@
                     Перетащите или
                     <span class="file-input-trigger">выберите файлы</span>
                   </p>
-                  <input type="file" id="fileInput" multiple style="display: none" />
+                  <input type="file" id="fileInput" multiple style="display: none" required />
                 </div>
                 <div class="file-list" id="fileList"></div>
               </div>
@@ -289,7 +297,7 @@
             <div class="checkbox-block">
               <div class="custom-checkbox">
                 <label>
-                  <input type="checkbox" name="personal_data_agreement" data-required="1" />
+                  <input type="checkbox" name="personal_data_agreement" data-required="1"/>
                   <span class="input-title regular-text fw-600">Согласие на обработку персональных данных в
                     соответствии с
                     <a href="/policy/" target="_blank">политикой</a>
