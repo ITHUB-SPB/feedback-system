@@ -2,6 +2,7 @@ import { Job, type RedisClient, Worker, type Processor } from "bullmq";
 import type {
   MailCitizenStatusJobData,
   MailCitizenStatusWithCommentJobData,
+  MailOfficialWelcomeJobData
 } from "@shared/mail/types";
 import { sendMail } from "@shared/mail";
 import { logger } from "./logger";
@@ -73,6 +74,23 @@ export function buildCitizenStatusWithCommentEmailWorker(
   return buildWorker(
     "citizen-status-with-comment-email-queue",
     sendCitizenStatusWithCommentEmail,
+    connection,
+  );
+}
+
+export function buildOfficialWelcomeEmailWorker(
+  connection: RedisConnection,
+) {
+  const sendOfficialWelcomeEmail = async (
+    job: Job<MailOfficialWelcomeJobData>,
+  ): Promise<string | undefined> => {
+    await sendMail(job.data);
+    return job.id;
+  };
+
+  return buildWorker(
+    "official-welcome-email-queue",
+    sendOfficialWelcomeEmail,
     connection,
   );
 }

@@ -1,7 +1,7 @@
 import type {
   MailCitizenStatusJobData,
   MailCitizenStatusWithCommentJobData,
-  MailOfficialJobData,
+  MailOfficialWelcomeJobData,
 } from "@shared/mail/types";
 
 export enum JobType {
@@ -27,9 +27,5 @@ export type JobData = {
     type: string;
     message: string;
   };
-  [JobType.OfficialWelcomeEmail]: {
-    userId: string;
-    type: string;
-    message: string;
-  };
+  [JobType.OfficialWelcomeEmail]: MailOfficialWelcomeJobData;
 };

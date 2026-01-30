@@ -12,6 +12,12 @@ export type MailCitizenStatusJobData = {
   status: "banned" | "approved" | "proceeding" | "completed";
 };
 
+export type MailOfficialWelcomeJobData = {
+  to: string;
+  officialName: string;
+  password: string;
+};
+
 export type MailOfficialJobData = {
   to: string;
   officialName: string;
@@ -34,4 +40,5 @@ export type OfficialRequest = {
 export type MailJobData =
   | MailCitizenStatusJobData
   | MailCitizenStatusWithCommentJobData
+  | MailOfficialWelcomeJobData
   | MailOfficialJobData;

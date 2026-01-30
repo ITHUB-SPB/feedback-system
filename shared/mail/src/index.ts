@@ -2,6 +2,8 @@ import { render } from "@react-email/components";
 
 import { getCitizenStatusHtml } from "./templates/citizen-status-html.js";
 import { getCitizenStatusText } from "./templates/citizen-status-text.js";
+import { OfficialWelcomeEmail } from "./templates/official-welcome-html.js";
+import { getOfficialWelcomeText } from "./templates/official-welcome-text.js";
 
 import { env } from "./env";
 import { mailClient } from "./client";
@@ -11,6 +13,7 @@ import type {
   MailJobData,
   MailCitizenStatusJobData,
   MailCitizenStatusWithCommentJobData,
+  MailOfficialWelcomeJobData
 } from "./types";
 
 async function buildMail(options: MailJobData) {
@@ -32,6 +35,17 @@ async function buildMail(options: MailJobData) {
         getCitizenStatusHtml({ ...commonProps, name: options.name } as
           | MailCitizenStatusJobData
           | MailCitizenStatusWithCommentJobData),
+      ),
+    };
+  }
+
+  if ("password" in options) {
+    return {
+      subject: "Вместе47. Информация по вашему обращению",
+      to: options.to,
+      text: getOfficialWelcomeText(options),
+      html: await render(
+        getOfficialWelcomeText(options),
       ),
     };
   }
