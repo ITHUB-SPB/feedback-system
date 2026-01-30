@@ -1020,6 +1020,11 @@ select:disabled {
   display: none !important;
 }
 
+.add-proposals-form:has(:invalid:required) button[type=submit] {
+  opacity: 0.4;
+  user-select: none;
+}
+
 @media screen and (max-width: 1279px) {
   .container {
     max-width: 980px;

@@ -187,6 +187,8 @@ export default class FormManager {
         this.issueContainer.style.display = "none";
         this.categorySelect.value = "";
         this.issueSelect.value = "";
+        this.categorySelect.removeAttribute("required");
+        this.issueSelect.removeAttribute("required");
         this.dragAndDrop.fileInput.removeAttribute("required");
       }
     });
@@ -250,6 +252,9 @@ export default class FormManager {
         this.form.reset();
         this.dragAndDrop.reset();
       })
+      .then(() => setTimeout(() => {
+        window.location.reload()
+      }, 2_000))
       .catch((error) => {
         console.error(error);
         this.alertManager.showAlert("Ошибка при отправке", "warning");

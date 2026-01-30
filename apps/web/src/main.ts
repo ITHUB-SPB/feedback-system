@@ -26,3 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   selectOnMapButton.addEventListener("click", () => mapsManager.open());
 });
+
+window.addEventListener("unload", () => {
+  window.scrollTo(0, 0)
+})
