@@ -6,12 +6,12 @@ import Modal from "antd/es/modal";
 import Flex from "antd/es/flex";
 import Divider from "antd/es/divider";
 
-import type { UseModalFormReturnType } from "@/components/forms/use-modal-form";
+import type { UseModalFormFromQueryReturnType } from "@/components/forms/use-modal-form-from-query";
 import type { User } from "@/types";
 
 type OfficialCreateModalFormProps = {
-  officialCreateModalProps: UseModalFormReturnType<User>["modalProps"];
-  officialCreateFormProps: UseModalFormReturnType<User>["formProps"];
+  officialCreateModalProps: UseModalFormFromQueryReturnType<User>["modalProps"];
+  officialCreateFormProps: UseModalFormFromQueryReturnType<User>["formProps"];
 };
 
 export default function OfficialCreateModalForm({
@@ -31,7 +31,7 @@ export default function OfficialCreateModalForm({
         <Flex gap={16}>
           <Form.Item
             label="Фамилия"
-            name={["data", "lastName"]}
+            name="lastName"
             rules={[
               {
                 required: true,
@@ -44,7 +44,7 @@ export default function OfficialCreateModalForm({
           </Form.Item>
           <Form.Item
             label="Имя"
-            name={["data", "firstName"]}
+            name="firstName"
             rules={[
               {
                 required: true,
@@ -57,7 +57,7 @@ export default function OfficialCreateModalForm({
           </Form.Item>
           <Form.Item
             label="Отчество"
-            name={["data", "middleName"]}
+            name="middleName"
             rules={[
               {
                 required: true,
@@ -69,7 +69,7 @@ export default function OfficialCreateModalForm({
           </Form.Item>
         </Flex>
 
-        <Divider titlePlacement="start">Аккаунт</Divider>
+        <Divider titlePlacement="start">Контакты</Divider>
         <Flex gap={16}>
           <Form.Item
             label="Почта"
@@ -90,67 +90,14 @@ export default function OfficialCreateModalForm({
             />
           </Form.Item>
           <Form.Item
-            label="Имя"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: "Заполните поле",
-              },
-            ]}
-            hidden
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Пароль"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Заполните поле",
-              },
-            ]}
-            style={{ flex: 1 }}
-          >
-            <Input />
-          </Form.Item>
-        </Flex>
-
-        <Divider titlePlacement="start">Контакты</Divider>
-        <Flex gap={16}>
-          <Form.Item
             label="Телефон"
-            name={["data", "phone"]}
+            name="phone"
             rules={[
               {
                 required: false,
               },
             ]}
             style={{ flex: 1 }}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Соцсеть"
-            name={["data", "social"]}
-            rules={[
-              {
-                required: false,
-              },
-            ]}
-            style={{ flex: 1 }}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="role"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-            hidden
           >
             <Input />
           </Form.Item>

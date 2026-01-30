@@ -1,20 +1,31 @@
+import { useCallback, useState } from "react";
 import type { ModalProps } from "antd/es/modal";
 
-import {
-  useModal as useCoreModal,
-  type useModalReturnType as useCoreModelReturnType,
-} from "@refinedev/core";
+type useCoreModalReturnType = {
+  visible: boolean;
+  show: () => void;
+  close: () => void;
+};
+
+const useCoreModal = ({
+  defaultVisible = false,
+}: {
+  defaultVisible?: boolean;
+} = {}): useCoreModalReturnType => {
+  const [visible, setVisible] = useState(defaultVisible);
+  const show = useCallback(() => setVisible(true), [visible]);
+  const close = useCallback(() => setVisible(false), [visible]);
+
+  return {
+    visible,
+    show,
+    close,
+  };
+};
 
 export type useModalReturnType = {
   modalProps: ModalProps;
-} & Omit<useCoreModelReturnType, "visible">;
-
-export type useModalProps = {
-  /**
-   * Default props for Ant Design {@link https://ant.design/components/modal/ `<Modal>`} component.
-   */
-  modalProps?: ModalProps;
-};
+} & Omit<useCoreModalReturnType, "visible">;
 
 /**
  * By using `useModal` you get props for your records from API in accordance with Ant Design {@link https://ant.design/components/modal/ `<Modal>`} component.
@@ -23,7 +34,9 @@ export type useModalProps = {
  */
 export const useModal = ({
   modalProps = {},
-}: useModalProps = {}): useModalReturnType => {
+}: {
+  modalProps?: ModalProps;
+} = {}): useModalReturnType => {
   const { show, close, visible } = useCoreModal({
     defaultVisible: modalProps.open,
   });

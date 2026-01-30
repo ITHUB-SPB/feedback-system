@@ -18,7 +18,7 @@ const fetcher = async (url: string, options?: RequestInit) => {
 };
 
 export const dataProvider: DataProvider = {
-  getOne: async ({ resource, id, meta }) => {
+  getOne: async ({ resource, id }) => {
     const url =
       resource === "officials"
         ? `${API_URL}/auth/admin/get-user?id=${id}`
@@ -179,10 +179,7 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   create: async ({ resource, variables }) => {
-    const url =
-      resource === "officials"
-        ? `${API_URL}/auth/admin/create-user`
-        : `${API_URL}/${resource}`;
+    const url = `${API_URL}/${resource}`;
 
     const response = await fetcher(url, {
       method: "POST",

@@ -75,9 +75,13 @@ export const Route = createRootRouteWithContext<RouterContext>()({
           table={{
             styles: {
               section: {
-                maxHeight: "calc(100dvh - 160px)",
+                maxHeight: "calc(100dvh - 150px)",
                 overflowY: "auto",
-                overflowX: "hidden",
+              },
+              body: {
+                wrapper: {
+                  overflow: "auto !important",
+                },
               },
             },
           }}

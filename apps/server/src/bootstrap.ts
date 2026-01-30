@@ -60,11 +60,10 @@ export default function createApp(env: Env) {
       authentication: {
         preferredSecurityScheme: "apiKeyHeader",
         securitySchemes: {
-          apiKeyHeader: {
-            type: "apiKey",
+          securitySchemes: {
             in: "cookie",
-            name: "apiKeyCookie",
-            description: "session.token",
+            name: "__Secure-better-auth.session_token",
+            description: "Session token cookie for authentication",
           },
         },
       },

@@ -30,7 +30,7 @@ export const NotificationContextProvider: React.FC<
 };
 
 export const useNotificationProvider = (): NotificationProvider => {
-  const { notification: notificationFromContext } = App.useApp();
+  const { message: notificationFromContext } = App.useApp();
 
   const notification =
     "open" in notificationFromContext
@@ -41,8 +41,7 @@ export const useNotificationProvider = (): NotificationProvider => {
     open: ({ key, message, description, type }) => {
       notification.open({
         key,
-        description: message,
-        message: description ?? null,
+        content: message ?? null,
         type,
       });
     },

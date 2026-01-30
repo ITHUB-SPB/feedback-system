@@ -5,8 +5,8 @@ export type User = {
   firstName: string;
   lastName: string | null | undefined;
   middleName: string | null | undefined;
-  phone: string | null | undefined;
-  social: string | null | undefined;
+  phone?: string | null | undefined;
+  social?: string | null | undefined;
   id: string;
   createdAt: Date;
   updatedAt: Date;
@@ -19,7 +19,19 @@ export type User = {
   banExpires?: Date | null | undefined;
 };
 
-export type NewUserRecord = Omit<User, "name" | "id" | "created_at">;
+export type Official = Omit<User, "role" | "banned"> & {
+  lastName: string;
+  middleName: string;
+};
+
+export type NewUserRecord = Pick<
+  User,
+  "firstName" | "lastName" | "middleName" | "phone" | "email"
+>;
+export type NewOfficialRecord = Pick<
+  Official,
+  "firstName" | "lastName" | "middleName" | "phone" | "email"
+>;
 
 export type ProjectContract = RouterOutput["project"];
 export type FeedbackContract = {

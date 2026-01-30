@@ -10,7 +10,7 @@ import {
   getCoreRowModel,
 } from "@tanstack/table-core";
 
-import type { FeedbackContract } from "./types";
+import type { FeedbackContract, ProjectContract } from "./types";
 import type State from "./state";
 
 type TableManagerProperties = {
@@ -65,6 +65,18 @@ export class TableFeedbackManager {
   private state: State;
   private columnHelper: ColumnHelper<FeedbackIn>;
   private columns;
+  private modalElement = document.querySelector(
+    ".table-popup-content",
+  ) as HTMLDialogElement;
+  private wrapperElement = document.querySelector(
+    ".table-popup-table-wrapper",
+  ) as HTMLDialogElement;
+  private tableHeaderSelectedCity = document.querySelector(
+    ".table-selection-info .selected-city",
+  ) as HTMLParagraphElement;
+  private tableHeaderSelectedProject = document.querySelector(
+    ".table-selection-info .selected-project",
+  ) as HTMLParagraphElement;
 
   constructor({ state }: TableManagerProperties) {
     this.state = state;
@@ -93,7 +105,14 @@ export class TableFeedbackManager {
     ];
   }
 
-  public renderTable() {
+  public renderTable(project: ProjectContract["output"]["all"][0] | null) {
+    if (project === null) {
+      return;
+    }
+
+    this.tableHeaderSelectedCity.textContent = project.administrative_unit;
+    this.tableHeaderSelectedProject.textContent = project.title;
+
     const tableElement = document.createElement("table");
     tableElement.className = "table-popup-table";
     const theadElement = document.createElement("thead");
@@ -105,7 +124,7 @@ export class TableFeedbackManager {
     tableElement.appendChild(tbodyElement);
 
     const table = useTable({
-      data: this.state.issuesByProject,
+      data: this.state.issuesByAllProjects[project.id] ?? [],
       columns: this.columns,
       getCoreRowModel: getCoreRowModel(),
     });
@@ -148,16 +167,9 @@ export class TableFeedbackManager {
       tbodyElement.appendChild(trElement);
     });
 
-    const modalElement = document.querySelector(
-      ".table-popup-content",
-    ) as HTMLDialogElement;
-    const wrapperElement = modalElement.querySelector(
-      ".table-popup-table-wrapper",
-    ) as HTMLDialogElement;
+    this.wrapperElement.innerHTML = "";
+    this.wrapperElement.appendChild(tableElement);
 
-    wrapperElement.innerHTML = "";
-    wrapperElement.appendChild(tableElement);
-
-    modalElement.showModal();
+    this.modalElement.showModal();
   }
 }

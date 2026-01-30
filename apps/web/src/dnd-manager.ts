@@ -1,8 +1,11 @@
+import AlertManager from "./alert-manager";
+
 export default class DragAndDropManager {
   private dragDropArea: HTMLElement;
   private dragDropContent: HTMLElement;
-  public fileInput: HTMLInputElement;
   private fileList: HTMLElement;
+  private alertManager: AlertManager;
+  public fileInput: HTMLInputElement;
   public selectedFiles: File[] = [];
 
   constructor() {
@@ -13,6 +16,7 @@ export default class DragAndDropManager {
 
     this.fileInput = document.getElementById("fileInput") as HTMLInputElement;
     this.fileList = document.getElementById("fileList") as HTMLElement;
+    this.alertManager = new AlertManager();
     this.setupEventListeners();
   }
 
@@ -76,12 +80,12 @@ export default class DragAndDropManager {
       }
     });
 
-    // if (invalidFiles.length) {
-    //   const message = `Неподдерживаемый формат файлов: ${invalidFiles.join(
-    //     ", ",
-    //   )}. Пожалуйста, загружайте только изображения (JPG, PNG, WebP).`;
-    //   this.showAlert(message);
-    // }
+    if (invalidFiles.length) {
+      const message = `Неподдерживаемый формат файлов: ${invalidFiles.join(
+        ", ",
+      )}. Пожалуйста, загружайте только изображения (JPG, PNG, WebP).`;
+      this.alertManager.showAlert(message, "warning");
+    }
 
     this.updateFileList();
   }
@@ -107,11 +111,18 @@ export default class DragAndDropManager {
 
     this.fileList.querySelectorAll(".file-remove").forEach((btn) => {
       btn.addEventListener("click", (e) => {
+        e.stopImmediatePropagation();
         const target = e.target as HTMLElement;
         const index = parseInt(target.getAttribute("data-index") || "0");
         this.selectedFiles.splice(index, 1);
         this.updateFileList();
       });
     });
+  }
+
+  public reset(): void {
+    this.selectedFiles = [];
+    this.fileInput.value = "";
+    this.updateFileList();
   }
 }

@@ -374,3 +374,11 @@ body {
 .slick-arrow.slick-next {
   color: black;
 }
+
+.ant-table-fixed-header .ant-table-scroll .ant-table-header {
+  overflow: hidden !important;
+  margin-bottom: 0px !important;
+}
+
+.ant-table-body {
+}

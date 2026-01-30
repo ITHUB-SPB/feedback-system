@@ -12,8 +12,6 @@ export interface AuthOptions {
   db: typeof db;
 }
 
-export type AuthInstance = ReturnType<typeof createAuth>;
-
 export const getBaseOptions = (databaseInstance: typeof db) =>
   ({
     database: { db: databaseInstance },
@@ -84,11 +82,11 @@ export const createAuth = ({
     session: {
       expiresIn: 60 * 60 * 24 * 7,
       updateAge: 60 * 60 * 24,
-    },
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60,
-      strategy: "compact",
+      cookieCache: {
+        enabled: true,
+        maxAge: 5 * 60,
+        strategy: "compact",
+      },
     },
     emailAndPassword: {
       enabled: true,
@@ -143,3 +141,4 @@ export const createAuth = ({
 };
 
 export type CreateAuth = typeof createAuth;
+export type AuthInstance = ReturnType<typeof createAuth>;

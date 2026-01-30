@@ -174,11 +174,6 @@ export const useDelete = <
         dataProviderName: "default",
         invalidates,
       });
-
-      // notificationDispatch({
-      //     type: ActionTypes.REMOVE,
-      //     payload: { id, resource: identifier },
-      // });
     },
     onSuccess: (_data, { id, resource: resourceName, successNotification }) => {
       const { resource, identifier } = select(resourceName);

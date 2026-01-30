@@ -12,6 +12,7 @@ import administrativeUnitContract from "./administrativeUnit";
 import administrativeUnitTypeContract from "./administrativeUnitType";
 
 import officialResponsibilityContract from "./officialResponsibility";
+import officialContract from "./official";
 
 import projectContract from "./project";
 
@@ -62,6 +63,7 @@ const apiContract = oc
     project: projectContract,
 
     officialResponsibility: officialResponsibilityContract,
+    official: officialContract,
 
     votingUnit: votingUnitContract,
     votingRegion: votingRegionContract,

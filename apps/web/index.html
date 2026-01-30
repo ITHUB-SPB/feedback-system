@@ -38,15 +38,20 @@
 </head>
 
 <body class="proposals-page">
+
   <dialog class="table-popup-content">
     <header class="table-popup-header">
-      <h3>Принятые предложения</h3>
+      <div class="table-selection-info">
+        <p class="selected-city"></p>
+        <p class="selected-project"></p>
+      </div>
       <form method="dialog">
         <button class="table-popup-close">×</button>
       </form>
     </header>
     <div class="table-popup-table-wrapper"></div>
   </dialog>
+
   <section id="customAlert" class="custom-alert">
     <div class="alert-content">
       <span class="alert-icon">⚠️</span>
@@ -54,34 +59,23 @@
       <button class="alert-close">×</button>
     </div>
   </section>
+
   <div id="mapPopup" class="map-popup">
     <div class="map-popup-overlay"></div>
     <article class="map-popup-content">
       <header class="map-popup-header">
-        <h3>Выберите проект на карте</h3>
+        <div class="map-selection-info">
+          <p class="selected-city" id="selectedCityName">Выберите проект на карте</p>
+          <p class="selected-project" id="selectedProjectName">Проект не выбран</p>
+        </div>
+        <button class="map-popup-apply">
+          Выбрать
+        </button>
         <button class="map-popup-close">×</button>
       </header>
       <div class="map-popup-body">
         <div id="yandexMap" class="yandex-map"></div>
-        <div class="map-selection-info">
-          <div class="selected-project">
-            <strong>Проект:</strong>
-            <span id="selectedProjectName">Не выбран</span>
-          </div>
-          <div class="selected-city">
-            <strong>Город:</strong>
-            <span id="selectedCityName">Не выбран</span>
-          </div>
-        </div>
       </div>
-      <footer class="map-popup-footer">
-        <button class="btn btn-regular btn-green">
-          Применить выбор
-        </button>
-        <button class="btn btn-regular btn-white">
-          Отмена
-        </button>
-      </footer>
     </article>
   </div>
 
@@ -189,14 +183,13 @@
                   Сначала выберите город
                 </option>
               </select>
-              <!-- <button type="button" id="viewIssues" class="view_issues" style="visibility: hidden;"></button> -->
             </div>
             <span class="form-block-error">Заполните поле</span>
           </div>
 
           <div class="form-block">
             <div class="form-block-title regular-text fw-600">
-              Тип запроса
+              Тип запроса<span class="form-block-required">*</span>
             </div>
             <div class="input-block">
               <select name="feedback_type_id" class="object-location" id="requestTypeSelect" required>
@@ -206,21 +199,23 @@
             <span class="form-block-error">Заполните поле</span>
           </div>
 
-          <div class="form-block" id="categoryBlock" style="display: none">
-            <div class="form-block-title regular-text fw-600">Категория</div>
-            <div class="input-block">
-              <select name="topic_category_id" class="object-location" id="categorySelect">
-                <option value="">Выберите категорию</option>
-              </select>
+          <div class="issue-row">
+            <div class="form-block" id="categoryBlock">
+              <div class="form-block-title regular-text fw-600">Категория<span class="form-block-required">*</span></div>
+              <div class="input-block">
+                <select name="topic_category_id" class="object-location" id="categorySelect">
+                  <option value="">Выберите категорию</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <div class="form-block" id="issueBlock" style="display: none">
-            <div class="form-block-title regular-text fw-600">Проблема</div>
-            <div class="input-block">
-              <select name="topic_category_topic_id" class="object-location" id="issueSelect">
-                <option value="">Сначала выберите категорию</option>
-              </select>
+            <div class="form-block" id="issueBlock">
+              <div class="form-block-title regular-text fw-600">Проблема<span class="form-block-required">*</span></div>
+              <div class="input-block">
+                <select name="topic_category_topic_id" class="object-location" id="issueSelect">
+                  <option value="">Сначала выберите категорию</option>
+                </select>
+              </div>
             </div>
           </div>
 

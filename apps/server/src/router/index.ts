@@ -4,7 +4,9 @@ import topicRouter from "./topic";
 import topicCategoryRouter from "./topicCategory";
 import topicCategoryTopicRouter from "./topicCategoryTopic";
 import feedbackRouter from "./feedback";
+
 import officialResponsibilityRouter from "./officialResponsibility";
+import officialRouter from "./official";
 
 import votingRegionRouter from "./votingRegion";
 import votingUnitRouter from "./votingUnit";
@@ -25,6 +27,7 @@ const apiRouter = {
   topicCategoryTopic: topicCategoryTopicRouter,
   feedback: feedbackRouter,
   officialResponsibility: officialResponsibilityRouter,
+  official: officialRouter,
   votingRegion: votingRegionRouter,
   votingUnit: votingUnitRouter,
   votingVote: votingVoteRouter,

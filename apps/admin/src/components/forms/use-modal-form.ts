@@ -108,7 +108,6 @@ export const useModalForm = <
   defaultVisible = false,
   autoSubmitClose = true,
   autoResetForm = true,
-  autoResetFormWhenClose = true,
   invalidates,
   ...rest
 }: UseModalFormProps<
@@ -126,8 +125,6 @@ export const useModalForm = <
   TResponse,
   TResponseError
 > => {
-  const getUserFriendlyName = useUserFriendlyName();
-
   const action = rest.action ?? "";
 
   const useFormProps = useForm<
@@ -179,20 +176,12 @@ export const useModalForm = <
   };
 
   const handleClose = useCallback(() => {
-    // const warnWhenConfirm = window.confirm(
-    //   "Are you sure you want to leave? You have unsaved changes.",
-    // );
-
-    // if (!warnWhenConfirm) {
-    //   return;
-    // }
-
     setId?.(undefined);
     sunflowerUseModal.close();
 
-    if (autoResetFormWhenClose) {
-      form.resetFields();
-    }
+    // if (autoResetFormWhenClose) {
+    //   form.resetFields();
+    // }
   }, []);
 
   const handleShow = useCallback(
@@ -239,10 +228,6 @@ export const useModalForm = <
       ...newModalProps,
       width: "1000px",
       okButtonProps: saveButtonPropsSF,
-      title: `${getUserFriendlyName(
-        `${rest.action} ${rest.resource ?? ""}`,
-        "singular",
-      )}`,
       okText: "Сохранить",
       cancelText: "Отменить",
       onCancel: handleClose,

@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   await state.init();
 
   const formManager = new FormManager({ state });
-  const mapsManager = new MapsManager({ state });
   const tableFeedbackManager = new TableFeedbackManager({ state });
+  const mapsManager = new MapsManager({ state, table: tableFeedbackManager });
 
   const selectOnMapButton = document.getElementById(
     "selectOnMap",
@@ -21,13 +21,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   ) as HTMLButtonElement;
 
   renderTableButton.addEventListener("click", () => {
-    tableFeedbackManager.renderTable();
+    tableFeedbackManager.renderTable(state.selectedProject);
   });
 
-  selectOnMapButton.addEventListener("click", () => {
-    mapsManager.open({
-      selectedTownId: formManager.citySelect.value || null,
-      selectedProjectId: formManager.projectSelect.value || null,
-    });
-  });
+  selectOnMapButton.addEventListener("click", () => mapsManager.open());
 });

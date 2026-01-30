@@ -44,6 +44,7 @@ const getManyAuthorizedFeedbackSchema = v.array(
 
 const getManyPublicFeedbackSchema = v.array(
   v.pick(getFeedbackSchema, [
+    "project_id",
     "description",
     "feedback_type",
     "status",

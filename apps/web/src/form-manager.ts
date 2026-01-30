@@ -106,8 +106,8 @@ export default class FormManager {
       return;
     }
 
-    const issuesByProject = await this.state.loadIssuesByProject(projectId);
-    const issuesCount = issuesByProject.length;
+    const issuesByProject = this.state.issuesByAllProjects[Number(projectId)];
+    const issuesCount = issuesByProject?.length ?? 0;
     if (issuesCount) {
       this.issueCounter.textContent = `${issuesCount.toString()} ${declOfNum(issuesCount)}`;
     }
@@ -134,8 +134,10 @@ export default class FormManager {
       feedbackTypeOption.textContent = title;
       feedbackTypeOption.dataset.title = title;
       feedbackTypeOption.value = String(id);
-      this.requestTypeSelect.appendChild(feedbackTypeOption);
+      this.requestTypeSelect.prepend(feedbackTypeOption);
     });
+    this.requestTypeSelect.value =
+      this.requestTypeSelect.querySelector("option")?.value ?? "";
   }
 
   private renderProjectsForCity(cityId: string): void {
@@ -163,6 +165,9 @@ export default class FormManager {
     this.citySelect.addEventListener("input", (e) => {
       const target = e.target as HTMLSelectElement;
       if (target.value) {
+        this.state.selectedTown =
+          this.state.cities.find((city) => city.id === Number(target.value)) ??
+          null;
         this.renderProjectsForCity(target.value);
       } else {
         this.projectSelect.innerHTML =
@@ -197,6 +202,10 @@ export default class FormManager {
     });
 
     this.projectSelect.addEventListener("input", () => {
+      this.state.selectedProject =
+        this.state.projects.find(
+          (project) => project.id === Number(this.projectSelect.value),
+        ) ?? null;
       this.renderIssueQuantity(this.projectSelect.value ?? null);
     });
 
@@ -230,7 +239,7 @@ export default class FormManager {
         return { ...acc, [key]: value };
       },
       {},
-    ) as types.Feedback;
+    ) as types.FeedbackContract["input"]["create"]["body"];
 
     formDataObject.files = this.dragAndDrop.selectedFiles; // .fileInput
 
@@ -239,6 +248,7 @@ export default class FormManager {
       .then(() => {
         this.alertManager.showAlert("Обращение принято", "success");
         this.form.reset();
+        this.dragAndDrop.reset();
       })
       .catch((error) => {
         console.error(error);

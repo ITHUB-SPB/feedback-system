@@ -55,7 +55,7 @@ export const ThemedSider: React.FC<
   const breakpoint = Grid.useBreakpoint();
 
   const isMobile =
-    typeof breakpoint.xl === "undefined" ? false : !breakpoint.xl;
+    typeof breakpoint.xxl === "undefined" ? false : !breakpoint.xxl;
 
   const RenderToTitle = TitleFromProps ?? ThemedTitle;
 

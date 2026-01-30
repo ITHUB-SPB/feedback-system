@@ -4,11 +4,9 @@ import Table from "antd/es/table";
 import Select from "antd/es/select";
 import Space from "antd/es/space";
 import Typography from "antd/es/typography";
+import Skeleton from "antd/es/skeleton";
 
-import {
-  getDefaultSortOrder,
-  // getDefaultFilter,
-} from "@/components/table/definition";
+import { getDefaultSortOrder } from "@/components/table/definition";
 
 import { FilterDropdown } from "@/components/filter-dropdown";
 import { EditButton, ShowButton } from "@/components/buttons";
@@ -22,6 +20,10 @@ export default function ProjectsTable() {
   return (
     <Table
       {...table.tableProps}
+      dataSource={
+        table.tableProps.dataSource ??
+        Array.from({ length: 12 }).map((_, index) => ({ id: index }))
+      }
       rowKey="id"
       pagination={{
         ...table.tableProps.pagination,
@@ -35,6 +37,13 @@ export default function ProjectsTable() {
         title="Название"
         sorter
         defaultSortOrder={getDefaultSortOrder("title", table.sorters)}
+        render={(value) =>
+          table.tableProps.loading ? (
+            <Skeleton key={"title"} title active={true} paragraph={false} />
+          ) : (
+            value
+          )
+        }
       />
       <Table.Column
         dataIndex="administrative_unit_id"
@@ -42,7 +51,16 @@ export default function ProjectsTable() {
         width={190}
         sorter
         render={(value) =>
-          administrativeUnits.data?.find(({ id }) => id == value)?.title
+          table.tableProps.loading ? (
+            <Skeleton
+              key={"administrative_unit_id"}
+              title
+              active={true}
+              paragraph={false}
+            />
+          ) : (
+            administrativeUnits.data?.find(({ id }) => id == value)?.title
+          )
         }
         filterDropdown={(props) => (
           <FilterDropdown
@@ -66,6 +84,18 @@ export default function ProjectsTable() {
         title="Год"
         width={80}
         sorter
+        render={(value) =>
+          table.tableProps.loading ? (
+            <Skeleton
+              key={"year_of_completion"}
+              title
+              active={true}
+              paragraph={false}
+            />
+          ) : (
+            value
+          )
+        }
         defaultSortOrder={getDefaultSortOrder(
           "year_of_completion",
           table.sorters,
@@ -75,17 +105,25 @@ export default function ProjectsTable() {
         dataIndex="latitude"
         title="Широта"
         width={110}
-        render={(value) => (
-          <Typography.Text>{Number(value).toFixed(6)}</Typography.Text>
-        )}
+        render={(value) =>
+          table.tableProps.loading ? (
+            <Skeleton key={"latitude"} title active={true} paragraph={false} />
+          ) : (
+            <Typography.Text>{Number(value).toFixed(6)}</Typography.Text>
+          )
+        }
       />
       <Table.Column
         dataIndex="longitude"
         title="Долгота"
         width={110}
-        render={(value) => (
-          <Typography.Text>{Number(value).toFixed(6)}</Typography.Text>
-        )}
+        render={(value) =>
+          table.tableProps.loading ? (
+            <Skeleton key={"longitude"} title active={true} paragraph={false} />
+          ) : (
+            <Typography.Text>{Number(value).toFixed(6)}</Typography.Text>
+          )
+        }
       />
       <Table.Column
         width={90}

@@ -45,6 +45,7 @@ export default function OfficialsTable() {
       <Table
         {...table.tableProps}
         rowKey="id"
+        sticky={true}
         pagination={{
           ...table.tableProps.pagination,
           hideOnSinglePage: true,
@@ -122,6 +123,7 @@ export default function OfficialsTable() {
         <Table.Column
           dataIndex="email"
           title="Почта"
+          width={180}
           sorter
           defaultSortOrder={getDefaultSortOrder("email", table.sorters)}
           render={(value: string, record: User) => {
@@ -138,7 +140,7 @@ export default function OfficialsTable() {
         <Table.Column
           title="Поселение"
           sorter
-          width={300}
+          width={280}
           render={(_, record: User) => {
             if (isAttaching && attachingOfficialId === record.id) {
               return (

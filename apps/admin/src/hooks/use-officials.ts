@@ -1,24 +1,25 @@
-import { useSelect } from "@/components/fields/use-select";
-import type { User } from "@/types";
+import { useSelectFromQuery } from "@/components/fields/use-select-from-query";
+import { useQuery } from "@tanstack/react-query";
+import { orpcClient } from "@/providers/orpc-client";
 
 export default function useOfficials() {
-  const { selectProps } = useSelect<User>({
+  const { data, isLoading, isError } = useQuery(
+    orpcClient.official.all.queryOptions({
+      input: {},
+    }),
+  );
+
+  const { selectProps } = useSelectFromQuery({
+    data: data?.data ?? [],
     optionLabel: (item) =>
       `${item.lastName} ${item.firstName} ${item?.middleName ?? ""}`,
     optionValue: (item) => String(item.id),
-    resource: "officials",
-    pagination: {
-      pageSize: 48,
-      mode: "server",
-    },
-    filters: [
-      {
-        field: "role",
-        operator: "eq",
-        value: "official",
-      },
-    ],
   });
 
-  return { selectProps };
+  return {
+    data,
+    isLoading,
+    isError,
+    selectProps,
+  };
 }
