@@ -38,25 +38,19 @@ export const getOneFeedbackSchema = v.object({
   ),
 });
 
-const getManyAuthorizedFeedbackSchema = v.array(
-  v.omit(getFeedbackSchema, ["image_links"]),
-);
-
-const getManyPublicFeedbackSchema = v.array(
-  v.pick(getFeedbackSchema, [
-    "project_id",
-    "description",
-    "feedback_type",
-    "status",
-    "created_at",
-    "feedback_status_comment",
-  ]),
-);
-
-export const getManyFeedbackSchema = v.union([
-  getManyAuthorizedFeedbackSchema,
-  getManyPublicFeedbackSchema,
-]);
+export const getManyFeedbackSchema = v.array(
+  v.union([
+    v.omit(getFeedbackSchema, ["image_links"]),
+    v.pick(getFeedbackSchema, [
+      "project_id",
+      "description",
+      "feedback_type",
+      "status",
+      "created_at",
+      "feedback_status_comment",
+    ]),
+  ])
+)
 
 export const updateFeedbackSchema = v.object({
   params: baseInputOne,

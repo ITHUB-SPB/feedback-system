@@ -6,7 +6,7 @@ export const getOfficialWelcomeText = ({
   password
 }: MailOfficialWelcomeJobData) => {
 
-  return `Уважаемый ${officialName}! Создан аккаунт на платформу вместе47предложения.рф.
+  return `Уважаемый ${officialName}! Создан аккаунт на платформе лк.вместе47предложения.рф.
 
 Логин: ${to}
 

@@ -97,22 +97,22 @@ const allFeedback = publicProcedure.feedback.all.handler(
 
       return publicFieldsOnly
         ? results.map(
-            ({
-              project_id,
-              created_at,
-              description,
-              feedback_type,
-              status,
-              feedback_status_comment,
-            }) => ({
-              project_id,
-              created_at,
-              description,
-              feedback_type,
-              status,
-              feedback_status_comment,
-            }),
-          )
+          ({
+            project_id,
+            created_at,
+            description,
+            feedback_type,
+            status,
+            feedback_status_comment,
+          }) => ({
+            project_id,
+            created_at,
+            description,
+            feedback_type,
+            status,
+            feedback_status_comment,
+          }),
+        )
         : results;
     } catch (error) {
       console.error(error);

@@ -28,8 +28,7 @@ export const OfficialWelcomeEmail = ({
       <Tailwind>
         <Head />
         <Preview>
-          Уважаемый {officialName}! На платформу вместе47.рф поступило новое
-          предложение.
+          Уважаемый {officialName}! Создан аккаунт на платформе вместе47предложения.рф
         </Preview>
         <Body className="bg-[#f2f2fa] py-[40px] font-sans">
           <Container className="mx-auto max-w-[720px] rounded-[8px] bg-white px-[40px] py-[40px]">
@@ -37,13 +36,13 @@ export const OfficialWelcomeEmail = ({
               <Img
                 alt="логотип"
                 className="mx-auto h-auto w-full max-w-[120px]"
-                src="https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/photos/2025-10-01T03:27:09.294Z_logo.png"
+                src="https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/photos/logo.png"
               />
             </Section>
 
             <Section>
               <Heading className="mb-[24px] text-center text-[#0b0917] text-[18px]">
-                Уважаемый {officialName}! Создан аккаунт на платформе <Link href="https://xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/">вместе47предложения.рф</Link>. 
+                Уважаемый {officialName}! Создан аккаунт на платформе <Link href="https://xn--j1ab.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/">вместе47предложения.рф</Link>.
               </Heading>
 
               <Section className="mb-[24px] rounded-[0px] border-[#e6e6f0] border-[1px] border-solid bg-[#f8f8ff] p-[18px]">

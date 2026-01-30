@@ -13,7 +13,6 @@ import type {
   MailJobData,
   MailCitizenStatusJobData,
   MailCitizenStatusWithCommentJobData,
-  MailOfficialWelcomeJobData
 } from "./types";
 
 async function buildMail(options: MailJobData) {
@@ -45,7 +44,7 @@ async function buildMail(options: MailJobData) {
       to: options.to,
       text: getOfficialWelcomeText(options),
       html: await render(
-        getOfficialWelcomeText(options),
+        OfficialWelcomeEmail(options),
       ),
     };
   }
