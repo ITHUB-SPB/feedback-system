@@ -48,10 +48,6 @@ body {
   color: #34404c;
 }
 
-body:has(dialog[open]) {
-  overflow: hidden;
-}
-
 html.lock {
   overflow: hidden;
 }
@@ -72,7 +68,7 @@ body {
   -webkit-box-pack: start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 body.hide-overflow {
@@ -797,23 +793,32 @@ select:disabled {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.map-popup {
+.map-popup, 
+.table-popup {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10000;
+  width: 100dvw;
+  height: 100dvh;
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.map-popup.show {
+.map-popup.show,
+.table-popup.show {
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 1;
+}
+
+.map-popup.show {
+  z-index: 10000;
+}
+
+.table-popup.show {
+  z-index: 10010;
 }
 
 .map-popup-overlay,
@@ -831,8 +836,7 @@ select:disabled {
 }
 
 .map-popup-content,
-.table-popup-content[open] {
-  position: absolute;
+.table-popup-content {
   background-color: #ffffff;
   border-radius: 12px;
   border-color: transparent;
@@ -846,19 +850,12 @@ select:disabled {
   flex-direction: column;
   overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior: contain;
 }
 
 .map-popup-content {
   z-index: 2;
-}
-
-.table-popup-content[open] {
-  z-index: 10001;
-}
-
-.table-popup-content {
-  margin-top: calc((100dvh - 700px) / 2);
+  position: absolute;
+  overscroll-behavior: contain;
 }
 
 .map-popup-header,
@@ -1221,17 +1218,13 @@ select:disabled {
   }
 
   .map-popup-content,
-  .table-popup-content[open] {
-    max-width: 100%;
+  .table-popup-content {
+    max-width: 100dvw;
     max-height: 100dvh;
-    width: 100%;
+    width: 100dvw;
     height: 100dvh;
     border-radius: 0;
     margin: 0;
-  }
-
-  .table-popup-content {
-    margin-top: 0;
   }
 
   .map-popup-header,
@@ -1239,6 +1232,7 @@ select:disabled {
     padding: 15px 20px;
   }
 
+  .table-popup-close,
   .map-popup-close {
     font-size: 18px;
     min-width: 28px;

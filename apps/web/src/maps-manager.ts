@@ -201,7 +201,6 @@ export default class MapsManager {
   }
 
   public open() {
-    console.log(this.popupElement);
     this.popupElement.classList.add("show");
     document.body.style.overflow = "hidden";
 
