@@ -29,7 +29,7 @@ const flexRender = <TProps extends object>(comp: any, props: TProps) => {
 const useTable = <TData extends RowData>(options: TableOptions<TData>) => {
   const resolvedOptions: TableOptionsResolved<TData> = {
     state: {},
-    onStateChange: () => {},
+    onStateChange: () => { },
     renderFallbackValue: null,
     ...options,
   };
@@ -66,8 +66,11 @@ export class TableFeedbackManager {
   private columnHelper: ColumnHelper<FeedbackIn>;
   private columns;
   private modalElement = document.querySelector(
-    ".table-popup-content",
-  ) as HTMLDialogElement;
+    ".table-popup",
+  ) as HTMLDivElement;
+  private modalCloseElement = document.querySelector(
+    ".table-popup-close",
+  ) as HTMLButtonElement;
   private wrapperElement = document.querySelector(
     ".table-popup-table-wrapper",
   ) as HTMLDialogElement;
@@ -82,6 +85,7 @@ export class TableFeedbackManager {
     this.state = state;
     this.columnHelper = createColumnHelper<FeedbackIn>();
     this.columns = this.getColumns();
+    this.modalCloseElement.addEventListener("click", () => this.close());
   }
 
   private getColumns() {
@@ -103,6 +107,11 @@ export class TableFeedbackManager {
         cell: (info) => new Date(info.getValue()).toLocaleString("ru"),
       }),
     ];
+  }
+
+  public close() {
+    this.modalElement.classList.remove("show");
+    // document.body.style.overflow = "";
   }
 
   public renderTable(project: ProjectContract["output"]["all"][0] | null) {
@@ -170,6 +179,7 @@ export class TableFeedbackManager {
     this.wrapperElement.innerHTML = "";
     this.wrapperElement.appendChild(tableElement);
 
-    this.modalElement.showModal();
+    this.modalElement.classList.add("show");
+    // document.body.style.overflow = "hidden";
   }
 }
