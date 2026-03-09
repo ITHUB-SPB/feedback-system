@@ -66,14 +66,14 @@ export const baseInputOne = v.object({
   ]),
 });
 
-const structuredSortInput = v.array(
+export const structuredSortInput = v.array(
   v.object({
     field: v.string(),
     order: v.picklist(["asc", "desc"]),
   }),
 );
 
-const structuredFilterInput = v.array(
+export const structuredFilterInput = v.array(
   v.object({
     field: v.string(),
     operator: v.picklist(["eq", "ne", "gt", "lt", "in"]),
@@ -98,3 +98,4 @@ export const structuredInputAll = v.object({
 });
 
 export type BaseInputAll = v.InferOutput<typeof baseInputAll>;
+export type StructuredInputAll = v.InferOutput<typeof structuredInputAll>;

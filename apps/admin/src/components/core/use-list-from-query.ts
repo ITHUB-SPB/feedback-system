@@ -14,7 +14,7 @@ import {
 
 import type {
   BaseRecord,
-  CrudFilter,
+  LogicalFilter as CrudFilter,
   CrudSort,
   GetListResponse,
   HttpError,
@@ -30,9 +30,6 @@ export type BaseListProps = {
 };
 
 export type UseListFromQueryProps<TQueryFnData, TError, TData> = {
-  /**
-   * Tanstack Query's [useQuery](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery) options
-   */
   queryOptions: ({
     filters,
     sorters,

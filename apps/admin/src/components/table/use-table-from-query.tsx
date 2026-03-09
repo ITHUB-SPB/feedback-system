@@ -7,33 +7,23 @@ import type {
 
 import type { TablePaginationConfig, TableProps } from "antd/es/table";
 
-import {
-  setInitialFilters,
-  setInitialSorters,
-  unionFilters,
-  unionSorters,
-} from "@refinedev/core";
+import differenceWith from "lodash/differenceWith";
+import unionWith from "lodash/unionWith";
 
-import type {
-  BaseRecord,
-  HttpError,
-  CrudFilter,
-  CrudSort,
-  GetListResponse,
-  Prettify,
-  SuccessErrorNotification,
-  UseLoadingOvertimeOptionsProps,
-  UseLoadingOvertimeReturnType,
+import {
+  type BaseRecord,
+  type HttpError,
+  type LogicalFilter as CrudFilter,
+  type CrudSort,
+  type GetListResponse,
+  type Prettify,
+  type SuccessErrorNotification,
+  type UseLoadingOvertimeOptionsProps,
+  type UseLoadingOvertimeReturnType,
+  type CrudOperators,
 } from "@refinedev/core";
 
 import { useListFromQuery } from "../core/use-list-from-query";
-
-import {
-  mapAntdSorterToCrudSorting,
-  mapAntdFilterToCrudFilter,
-  type FilterValue,
-  type SorterResult,
-} from "./definition";
 
 export type BaseListProps = {
   sorters?: CrudSort[];
@@ -104,18 +94,195 @@ export type useTableFromQueryReturnType<
   setSorters: (sorter: CrudSort[]) => void;
   filters: CrudFilter[];
   setFilters: ((filters: CrudFilter[]) => void) &
-    ((setter: (prevFilters: CrudFilter[]) => CrudFilter[]) => void);
+  ((setter: (prevFilters: CrudFilter[]) => CrudFilter[]) => void);
   result: {
     data: TData[];
     total: number | undefined;
   };
 } & UseLoadingOvertimeReturnType & {
-    tableProps: TableProps<TData>;
-  };
+  tableProps: TableProps<TData>;
+};
 
-const defaultPermanentFilter: CrudFilter[] = [];
-const defaultPermanentSorter: CrudSort[] = [];
-const EMPTY_ARRAY = Object.freeze([]) as [];
+export type FilterValue = Parameters<
+  NonNullable<TableProps["onChange"]>
+>[1][string];
+
+export type SortOrder = NonNullable<TableProps["sortDirections"]>[number];
+
+export type SorterResult = Exclude<
+  Parameters<NonNullable<TableProps["onChange"]>>[2],
+  any[]
+>;
+
+export const unionFilters = (
+  permanentFilter: CrudFilter[],
+  newFilters: CrudFilter[],
+  prevFilters: CrudFilter[] = [],
+): CrudFilter[] => unionWith(
+  permanentFilter,
+  newFilters,
+  prevFilters,
+  compareFilters,
+).filter(
+  (crudFilter) => crudFilter.value !== undefined && crudFilter.value !== null
+)
+
+export const unionSorters = (
+  permanentSorter: CrudSort[],
+  newSorters: CrudSort[],
+): CrudSort[] => unionWith(
+  permanentSorter,
+  newSorters,
+  compareSorters
+).filter(
+  (crudSorter) => crudSorter.order !== undefined && crudSorter.order !== null
+);
+
+
+export const compareFilters = (
+  left: CrudFilter,
+  right: CrudFilter,
+): boolean => {
+  return (
+    ("field" in left ? left.field : undefined) ===
+    ("field" in right ? right.field : undefined) &&
+    left.operator === right.operator
+  );
+};
+
+export const compareSorters = (left: CrudSort, right: CrudSort): boolean =>
+  left.field === right.field;
+
+
+// Prioritize filters in the permanentFilter and put it at the end of result array
+export const setInitialFilters = (
+  permanentFilter: CrudFilter[],
+  defaultFilter: CrudFilter[],
+): CrudFilter[] => [
+    ...differenceWith(defaultFilter, permanentFilter, compareFilters),
+    ...permanentFilter,
+  ];
+
+export const setInitialSorters = (
+  permanentSorter: CrudSort[],
+  defaultSorter: CrudSort[],
+): CrudSort[] => [
+    ...differenceWith(defaultSorter, permanentSorter, compareSorters),
+    ...permanentSorter,
+  ];
+
+
+export const getDefaultSortOrder = (
+  columnName: string,
+  sorter?: CrudSort[],
+): SortOrder | undefined => {
+  if (!sorter) {
+    return undefined;
+  }
+
+  const sortItem = sorter.find((item) => item.field === columnName);
+  const sort = sortItem?.order ?? undefined;
+
+  return sort ? `${sort}end` : undefined
+};
+
+export const getDefaultFilter = (
+  columnName: string,
+  filters?: CrudFilter[],
+  operatorType: Exclude<CrudOperators, "or" | "and"> = "eq",
+): CrudFilter["value"] | undefined => {
+  const filter = filters?.find((filter) => {
+    return filter.field === columnName && filter.operator === operatorType;
+  });
+
+  if (filter) {
+    return filter.value || [];
+  }
+
+  return undefined;
+};
+
+export const mapAntdSorterToCrudSorting = (
+  sorter: SorterResult | SorterResult[],
+): CrudSort[] => {
+  if (Array.isArray(sorter)) {
+    return sorter
+      .sort((a, b) => {
+        return ((a.column?.sorter as { multiple?: number }).multiple ?? 0) <
+          ((b.column?.sorter as { multiple?: number }).multiple ?? 0)
+          ? -1
+          : 0;
+      })
+      .filter(item => item.field && item.order)
+      .map((item) => {
+        const field = Array.isArray(item.field)
+          ? item.field.join(".")
+          : `${item.field}`;
+
+        const order = item.order?.replace("end", "") || "asc"
+
+        return {
+          field: `${item.columnKey ?? field}`,
+          order: order as "asc" | "desc",
+        }
+      });
+  }
+
+  if (!sorter.field || !sorter.order) {
+    return []
+  }
+
+  const field = Array.isArray(sorter.field)
+    ? sorter.field.join(".")
+    : sorter.field;
+
+  return [
+    {
+      field: `${sorter.columnKey ?? field}`,
+      order: sorter.order.replace("end", "") as "asc" | "desc",
+
+    }
+  ]
+};
+
+export const mapAntdFilterToCrudFilter = (
+  tableFilters: Record<
+    string,
+    | FilterValue
+    | (string | number | boolean)
+    | (string | number | boolean)[]
+    | null
+  >,
+  prevFilters: CrudFilter[],
+  initialFilters?: CrudFilter[],
+): CrudFilter[] => {
+
+  const crudFilters: CrudFilter[] = [];
+
+  const mapInitialFilter: Record<string, CrudFilter> = (
+    initialFilters ?? []
+  ).reduce((acc, item) => {
+    const field = item.field;
+    return { ...acc, [field]: item };
+  }, {});
+
+  Object.keys(tableFilters).map((field) => {
+    const value = tableFilters[field];
+
+    const operator =
+      prevFilters.find((p: any) => p.field === field)?.operator ||
+      mapInitialFilter[field]?.operator;
+
+    crudFilters.push({
+      field,
+      operator: operator ?? (Array.isArray(value) ? "in" : "eq"),
+      value,
+    });
+  });
+
+  return crudFilters;
+};
+
 
 /**
  *
@@ -148,11 +315,11 @@ export const useTableFromQuery = <
 
   const preferredInitialFilters = filtersFromProp?.initial;
   const preferredPermanentFilters =
-    filtersFromProp?.permanent ?? defaultPermanentFilter;
+    filtersFromProp?.permanent ?? [];
 
   const preferredInitialSorters = sortersFromProp?.initial;
   const preferredPermanentSorters =
-    sortersFromProp?.permanent ?? defaultPermanentSorter;
+    sortersFromProp?.permanent ?? [];
 
   const [sorters, setSorters] = useState<CrudSort[]>(
     setInitialSorters(preferredPermanentSorters, preferredInitialSorters ?? []),
@@ -236,7 +403,7 @@ export const useTableFromQuery = <
 
   return {
     tableProps: {
-      dataSource: queryResult.result?.data || EMPTY_ARRAY,
+      dataSource: queryResult.result?.data || [],
       loading: queryResult.query?.isLoading,
       onChange,
       pagination: false,

@@ -1,4 +1,4 @@
-import type { CrudFilter, CrudSort } from "@refinedev/core";
+import type { LogicalFilter as CrudFilter, CrudSort } from "@refinedev/core";
 
 import Table from "antd/es/table";
 import Select from "antd/es/select";
