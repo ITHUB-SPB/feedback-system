@@ -1,5 +1,6 @@
 declare const ymaps: any;
 
+import type { IssuesCounter } from "./components/issues-counter";
 import type State from "./state";
 import type { TableFeedbackManager } from "./table-manager";
 import * as types from "./types";
@@ -29,6 +30,7 @@ export default class MapsManager {
   private projectSelectElement = document.getElementById(
     "projectSelect",
   ) as HTMLSelectElement;
+  private issueCounterElement = document.querySelector('#mapPopup issues-counter') as IssuesCounter
 
   private table: TableFeedbackManager;
   private state: State;
@@ -155,6 +157,7 @@ export default class MapsManager {
       const coords = [project.latitude, project.longitude];
       const issuesQuantity =
         this.state.issuesByAllProjects[project.id]?.length ?? 0;
+
       const marker = new ymaps.Placemark(
         coords,
         {
@@ -171,9 +174,8 @@ export default class MapsManager {
         this.selectedProjectElement.textContent = `${project.title} (${project.year_of_completion})`;
         this.selectedCityElement.textContent = project.administrative_unit;
 
-        if (issuesQuantity) {
-          this.table.renderTable(project);
-        }
+        console.log(this.issueCounterElement)
+        this.issueCounterElement.setAttribute("projectid", String(project.id))
       });
 
       clusterer.add(marker);
@@ -196,6 +198,8 @@ export default class MapsManager {
 
     this.projectSelectElement.value = String(this.state.selectedProject?.id);
     this.projectSelectElement.dispatchEvent(new Event("input"));
+
+
 
     this.close();
   }
@@ -223,6 +227,9 @@ export default class MapsManager {
   private setupEventListeners() {
     this.mapApplyElement.addEventListener("click", () => this.apply());
     this.mapPopupCloseElement.addEventListener("click", () => this.close());
+    this.issueCounterElement.addEventListener('click', () => {
+      this.table.renderTable(this.selectedProject);
+    })
 
     window.addEventListener("resize", () => {
       this.map.container.fitToViewport();

@@ -25,10 +25,11 @@
 
   <title>«вМесте47.рф» — Предложения</title>
 
-  <meta name="description" content="Лучшие проекты благоустройства Ленинградской области" />
+  <meta name="description" content="Предложения по проектам благоустройства Ленинградской области" />
   <meta name="keywords" content="" />
 
   <link rel="stylesheet" href="/proposals.css" />
+  <link rel="stylesheet" href="/proposals-dialog.css" />
 
   <meta name="yandex-verification" content="b072c9b5cade00c7" />
 
@@ -68,6 +69,9 @@
           <p class="selected-city" id="selectedCityName">Выберите проект на карте</p>
           <p class="selected-project" id="selectedProjectName">Проект не выбран</p>
         </div>
+
+        <issues-counter></issues-counter>
+
         <button class="map-popup-apply">
           Выбрать
         </button>
@@ -79,243 +83,146 @@
     </article>
   </div>
 
-  <section class="instruction">
-    <div class="container">
-      <h1>Предложения</h1>
-
-      <div class="instruction-list">
-        <div class="decorative-line"></div>
-
-        <div class="instruction-item">
-          <div class="instruction-item-description">
-            <span class="instruction-item-number decorative-text-small fw-600">1</span>
-            <div class="instruction-item-text medium-text fw-600">
-              Пожалуйста, выберите общественную территорию и проект на карте или из списка
-            </div>
-          </div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-item-description">
-            <span class="instruction-item-number decorative-text-small fw-600">2</span>
-            <div class="instruction-item-text medium-text fw-600">
-              Выберите один из вариантов
-              <p>"Пожелание" — чтобы предложить улучшение или дополнение,</p>
-              <p>"Замечание" — если хотите указать на недочёт.</p>
-            </div>
-          </div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-item-description">
-            <span class="instruction-item-number decorative-text-small fw-600">3</span>
-            <div class="instruction-item-text medium-text fw-600">
-              Предложение или пожелание по улучшению территории можно заполнить в свободной форме
-              <p>Например: "Хотелось бы добавить больше скамеек и урн."</p>
-            </div>
-          </div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-item-description">
-            <span class="instruction-item-number decorative-text-small fw-600">4</span>
-            <div class="instruction-item-text medium-text fw-600">
-              Для того, чтобы отправить замечание, выберите категорию проблемы и уточните проблемный элемент
-              благоустройства
-            </div>
-          </div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-item-description">
-            <span class="instruction-item-number decorative-text-small fw-600">5</span>
-            <div class="instruction-item-text medium-text fw-600">
-              Опишите проблему
-              <p>Пример: "На территории сломанная скамейка."</p>
-            </div>
-          </div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-item-description">
-            <span class="instruction-item-number decorative-text-small fw-600">6</span>
-            <div class="instruction-item-text medium-text fw-600">
-              Чтобы заявка была принята к рассмотрению, прикрепите фотографии, на которых видна проблема
-              <p>Можно прикрепить до трёх файлов.</p>
-            </div>
-          </div>
-        </div>
-        <div class="instruction-item">
-          <div class="instruction-item-description">
-            <span class="instruction-item-number decorative-text-small fw-600">7</span>
-            <div class="instruction-item-text medium-text fw-600">
-              Чтобы быть в курсе статуса вашей заявки, пожалуйста, укажите Ваш адрес электронной почты.
-              <p>Пример: cc.lenreg@sreda47.ru</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="proposals" id="proposals">
-    <div class="container">
-      <h2>Заполните форму</h2>
-      <form class="apply-form add-proposals-form">
-        <div class="info-list">
-          <div class="form-block city-map-block">
-            <div class="form-block-title regular-text fw-600">Город<span class="form-block-required">*</span></div>
-            <div class="form-block city-map-inputs">
-              <select name="city" class="object-settlement city-select" id="citySelect" required>
-                <option value="">Выберите город</option>
-              </select>
-              <button type="button" class="btn btn-regular btn-green map-button" id="selectOnMap">
-                Выбрать на карте
-              </button>
-            </div>
-            <span class="form-block-error">Заполните поле</span>
-          </div>
+    <h1 class="proposals-heading">Предложения</h1>
 
-          <div class="form-block">
-            <div class="form-block-title regular-text fw-600" style="display: flex">
-              Проект
-              <span class="form-block-required">*</span>
-              <button type="button" id="viewIssues" class="view_issues" style="visibility: hidden;">...</button>
-            </div>
-            <div class="input-block">
-              <select name="project_id" class="object-location" id="projectSelect" required>
-                <option value="">
-                  Сначала выберите город
-                </option>
-              </select>
-            </div>
-            <span class="form-block-error">Заполните поле</span>
-          </div>
+    <form class="proposals_form">
+      <section class="proposals_form__block">
+        <p class="form-block-title">Город<span class="form-required">*</span></p>
+        <select name="city" class="form-select city-select" id="citySelect" required>
+          <option value="">Выберите город</option>
+        </select>
+        <span class="form-error">Некорректно заполнено поле</span>
+      </section>
 
-          <div class="form-block">
-            <div class="form-block-title regular-text fw-600">
-              Тип запроса<span class="form-block-required">*</span>
-            </div>
-            <div class="input-block">
-              <select name="feedback_type_id" class="object-location" id="requestTypeSelect" required>
-                <option value="">Загрузка...</option>
-              </select>
-            </div>
-            <span class="form-block-error">Заполните поле</span>
-          </div>
-
-          <div class="issue-row">
-            <div class="form-block" id="categoryBlock">
-              <div class="form-block-title regular-text fw-600">Категория<span class="form-block-required">*</span>
-              </div>
-              <div class="input-block">
-                <select name="topic_category_id" class="object-location" id="categorySelect" required>
-                  <option value="">Выберите категорию</option>
-                </select>
-              </div>
-              <span class="form-block-error">Заполните поле</span>
-            </div>
-
-            <div class="form-block" id="issueBlock">
-              <div class="form-block-title regular-text fw-600">Проблема<span class="form-block-required">*</span></div>
-              <div class="input-block">
-                <select name="topic_category_topic_id" class="object-location" id="issueSelect" required>
-                  <option value="">Сначала выберите категорию</option>
-                </select>
-              </div>
-              <span class="form-block-error">Заполните поле</span>
-            </div>
-          </div>
-
-          <div class="form-block">
-            <div class="form-block-title regular-text fw-600">
-              Текстовое пояснение<span class="form-block-required">*</span>
-            </div>
-            <div class="input-block">
-              <textarea name="description" class="object-name" placeholder="Ваше пожелание или замечание"
-                maxlength="1000" rows="6" required></textarea>
-            </div>
-            <span class="form-block-error">Заполните поле</span>
-          </div>
-
-          <div class="fio-row">
-            <div class="form-block">
-              <div class="form-block-title regular-text fw-600">Фамилия<span class="form-block-required">*</span></div>
-              <div class="input-block">
-                <input type="text" name="last_name" class="object-name" placeholder="Фамилия" required />
-              </div>
-              <span class="form-block-error">Заполните поле</span>
-            </div>
-            <div class="form-block">
-              <div class="form-block-title regular-text fw-600">Имя<span class="form-block-required">*</span></div>
-              <div class="input-block">
-                <input type="text" name="first_name" class="object-name" placeholder="Имя" required />
-              </div>
-              <span class="form-block-error">Заполните поле</span>
-            </div>
-            <div class="form-block">
-              <div class="form-block-title regular-text fw-600">Отчество</div>
-              <div class="input-block">
-                <input type="text" name="middle_name" class="object-name" placeholder="Отчество" />
-              </div>
-            </div>
-          </div>
-
-          <div class="form-contacts">
-            <div class="form-block" style="flex: 1;">
-              <div class="form-block-title regular-text fw-600">Email<span class="form-block-required">*</span></div>
-              <div class="input-block">
-                <input type="email" name="email" class="object-name" placeholder="Email" required />
-              </div>
-              <span class="form-block-error">Заполните поле</span>
-            </div>
-
-            <div class="form-block" style="flex: 1;">
-              <div class="form-block-title regular-text fw-600">Телефон</div>
-              <div class="input-block">
-                <input type="tel" name="phone" class="object-name" placeholder="Номер телефона" />
-              </div>
-            </div>
-          </div>
-
-          <section class="form-block">
-            <div class="form-block-title regular-text fw-600">
-              Фотографии<span class="form-block-required">*</span>
-            </div>
-            <div class="input-block">
-              <div class="drag-drop-area" id="dragDropArea">
-                <div class="drag-drop-content">
-                  <p>
-                    Перетащите или
-                    <span class="file-input-trigger">выберите файлы</span>
-                  </p>
-                  <input type="file" id="fileInput" multiple style="display: none" required />
-                </div>
-                <div class="file-list" id="fileList"></div>
-              </div>
-            </div>
-            <span class="form-block-error">Заполните поле</span>
-          </section>
-
-          <section class="form-block">
-            <div class="checkbox-block">
-              <div class="custom-checkbox">
-                <label>
-                  <input type="checkbox" name="personal_data_agreement" data-required="1" required/>
-                  <span class="input-title regular-text fw-600">Согласие на обработку персональных данных в
-                    соответствии с
-                    <a href="/policy/" target="_blank">политикой</a>
-                  </span>
-                </label>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div class="form-footer">
-          <button type="submit" class="submit-apply btn btn-regular btn-blue">
-            Отправить
+      <section class="proposals_form__block">
+        <p class="form-block-title" style="display: flex">
+          Проект
+          <span class="form-required">*</span>
+          <issues-counter></issues-counter>
+        </p>
+        <div class="relative project-map-inputs">
+          <select name="project_id" class="form-select location-select" id="projectSelect" required>
+            <option value="">
+              Сначала выберите город
+            </option>
+          </select>
+          <button type="button" class="map-button" id="selectOnMap">
+            На карте
           </button>
         </div>
+        <span class="form-error">Некорректно заполнено поле</span>
+      </section>
 
-        <div class="form-message" data-block="formMessage"></div>
-      </form>
-    </div>
+      <section class="proposals_form__block">
+        <div class="form-block-title">
+          Тип запроса<span class="form-required">*</span>
+          <button type="button" class="form-info-button" aria-describedby="tooltip">
+            <img src="/icons/info.svg" alt="info" class="form-info-icon">
+          </button>
+          <div class="form-info-tooltip" id="form-info-tooltip" role="tooltip">
+            <div class="form-info-text">
+              Чтобы предложить улучшение или дополнение, выберите "Пожелание". Если хотите указать на недочёт —
+              выберите "Замечание"
+            </div>
+          </div>
+        </div>
+        <select name="feedback_type_id" class="form-select object-type" id="requestTypeSelect" required>
+          <option value="">Загрузка...</option>
+        </select>
+        <span class="form-error">Некорректно заполнено поле</span>
+      </section>
+
+      <div class="row">
+        <section class="proposals_form__block" id="categoryBlock">
+          <p class="form-block-title">Категория<span class="form-required">*</span></p>
+          <select name="topic_category_id" class="relative form-select object-category" id="categorySelect" required>
+            <option value="">Выберите категорию</option>
+          </select>
+          <span class="form-error">Некорректно заполнено поле</span>
+        </section>
+
+        <section class="proposals_form__block" id="issueBlock">
+          <p class="form-block-title">Проблема<span class="form-required">*</span></p>
+          <select name="topic_category_topic_id" class="relative form-select object-location" id="issueSelect" required>
+            <option value="">Сначала выберите категорию</option>
+          </select>
+          <span class="form-error">Некорректно заполнено поле</span>
+        </section>
+      </div>
+
+      <section class="proposals_form__block">
+        <p class="form-block-title">
+          Текстовое пояснение<span class="form-required">*</span>
+        </p>
+        <textarea name="description" class="relative object-description" placeholder="Ваше пожелание или замечание"
+          maxlength="1000" rows="6" required></textarea>
+        <span class="form-error">Некорректно заполнено поле</span>
+      </section>
+
+      <div class="row">
+        <section class="proposals_form__block">
+          <p class="form-block-title">Фамилия<span class="form-required">*</span></p>
+          <input type="text" name="last_name" class="relative" placeholder="Фамилия" required />
+          <span class="form-error">Некорректно заполнено поле</span>
+        </section>
+
+        <section class="proposals_form__block">
+          <p class="form-block-title">Имя<span class="form-required">*</span></p>
+          <input type="text" name="first_name" class="relative" placeholder="Имя" required />
+          <span class="form-error">Некорректно заполнено поле</span>
+        </section>
+
+        <section class="proposals_form__block">
+          <p class="form-block-title">Отчество</p>
+          <input type="text" name="middle_name" class="relative" placeholder="Отчество" />
+          <span class="form-error">Некорректно заполнено поле</span>
+        </section>
+      </div>
+
+      <div class="row">
+        <section class="proposals_form__block">
+          <p class="form-block-title">Email<span class="form-required">*</span></p>
+          <input type="email" name="email" class="relative" placeholder="Email" required />
+          <span class="form-error">Некорректно заполнено поле</span>
+        </section>
+
+        <section class="proposals_form__block">
+          <p class="form-block-title">Телефон<span class="form-required">*</span></p>
+          <input type="tel" name="phone" class="relative" placeholder="Номер телефона" />
+          <span class="form-error">Некорректно заполнено поле</span>
+        </section>
+      </div>
+
+      <section class="proposals_form__block">
+        <div class="form-block-title">
+          Фотографии<span class="form-required">*</span>
+          <button type="button" class="form-info-button" aria-describedby="tooltip">
+            <img src="/icons/info.svg" alt="info" class="form-info-icon">
+          </button>
+          <div class="form-info-tooltip" id="form-info-tooltip" role="tooltip">
+            <div class="form-info-text">
+              Прикрепите фотографии (до трёх файлов), на которых видна проблема
+            </div>
+          </div>
+        </div>
+        <image-uploader maxfiles="3" required></image-uploader>
+        <span class="form-error">Некорректно заполнено поле</span>
+      </section>
+
+      <label class="custom-checkbox">
+        <input type="checkbox" name="personal_data_agreement" required />
+        <span class="input-title fw-600">Согласие на обработку персональных данных в
+          соответствии с
+          <a href="/policy/" target="_blank">политикой</a>
+        </span>
+      </label>
+
+      <button type="submit" class="submit-apply">
+        Отправить
+      </button>
+    </form>
   </section>
 
   <script type="module" src="./src/main.ts"></script>

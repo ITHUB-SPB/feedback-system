@@ -1,8 +1,9 @@
-import DragAndDropManager from "./dnd-manager";
 import AlertManager from "./alert-manager";
 import { apiClient } from "./api-client";
 import * as types from "./types";
 import type State from "./state";
+import { IssuesCounter } from "./components/issues-counter";
+import { ImageUploader } from "./components/image-uploader";
 
 type FormManagerProperties = {
   state: State;
@@ -14,12 +15,12 @@ export default class FormManager {
   private requestTypeSelect: HTMLSelectElement;
   private categorySelect: HTMLSelectElement;
   private issueSelect: HTMLSelectElement;
-  private issueCounter: HTMLButtonElement;
+  private issueCounters: NodeListOf<IssuesCounter>;
 
   private categoryContainer: HTMLDivElement;
   private issueContainer: HTMLDivElement;
 
-  private dragAndDrop: DragAndDropManager;
+  private dragAndDrop: ImageUploader;
   private alertManager: AlertManager;
   private form: HTMLFormElement;
   private state: State;
@@ -40,9 +41,9 @@ export default class FormManager {
     this.issueSelect = document.getElementById(
       "issueSelect",
     ) as HTMLSelectElement;
-    this.issueCounter = document.querySelector(
-      ".view_issues",
-    ) as HTMLButtonElement;
+    this.issueCounters = document.querySelectorAll(
+      "issues-counter",
+    ) as NodeListOf<IssuesCounter>;
     this.categoryContainer = document.getElementById(
       "categoryBlock",
     ) as HTMLDivElement;
@@ -50,8 +51,8 @@ export default class FormManager {
       "issueBlock",
     ) as HTMLDivElement;
 
-    this.form = document.querySelector(".apply-form") as HTMLFormElement;
-    this.dragAndDrop = new DragAndDropManager();
+    this.form = document.querySelector(".proposals_form") as HTMLFormElement;
+    this.dragAndDrop = document.querySelector('image-uploader') as ImageUploader
     this.state = state;
     this.alertManager = new AlertManager();
     this.init();
@@ -86,40 +87,12 @@ export default class FormManager {
     });
   }
 
-  private async renderIssueQuantity(projectId: number | string | null) {
-    function declOfNum(number: number) {
-      const cases = [2, 0, 1, 1, 1, 2] as const;
-      const titles = ["предложение", "предложения", "предложений"] as const;
-
-      if (number % 100 > 4 && number % 100 < 20) {
-        return titles[2];
-      } else if (number % 10 < 5) {
-        const titleIx = cases[number % 10] as number;
-        return titles[titleIx];
-      } else {
-        return titles[cases[5]];
-      }
-    }
-
-    if (!projectId) {
-      this.issueCounter.style.visibility = "hidden";
-      return;
-    }
-
-    const issuesByProject = this.state.issuesByAllProjects[Number(projectId)];
-    const issuesCount = issuesByProject?.length ?? 0;
-    if (issuesCount) {
-      this.issueCounter.textContent = `${issuesCount.toString()} ${declOfNum(issuesCount)}`;
-    }
-    this.issueCounter.style.visibility = issuesCount ? "visible" : "hidden";
-  }
-
   private async renderIssues(categoryId: number | string) {
     this.issueSelect.innerHTML = '<option value="">Выберите проблему</option>';
 
     const issues = await this.state.loadIssues(categoryId);
 
-    issues.forEach((issue: any) => {
+    issues.forEach((issue) => {
       const option = document.createElement("option");
       option.value = issue.id.toString();
       option.textContent = issue.topic;
@@ -129,6 +102,7 @@ export default class FormManager {
 
   private async loadTypes(): Promise<void> {
     this.requestTypeSelect.innerHTML = "";
+
     this.state.feedbackTypes.forEach(({ id, title }) => {
       const feedbackTypeOption = document.createElement("option");
       feedbackTypeOption.textContent = title;
@@ -136,6 +110,7 @@ export default class FormManager {
       feedbackTypeOption.value = String(id);
       this.requestTypeSelect.prepend(feedbackTypeOption);
     });
+
     this.requestTypeSelect.value =
       this.requestTypeSelect.querySelector("option")?.value ?? "";
   }
@@ -173,7 +148,10 @@ export default class FormManager {
         this.projectSelect.innerHTML =
           '<option value="">Сначала выберите город</option>';
       }
-      this.renderIssueQuantity(null);
+
+      for (const issueCounter of this.issueCounters) {
+        issueCounter.setAttribute('projectId', "")
+      }
     });
 
     this.requestTypeSelect.addEventListener("input", () => {
@@ -181,7 +159,7 @@ export default class FormManager {
       if (selectedOption?.dataset.title === "Замечание") {
         this.categoryContainer.style.display = "block";
         this.issueContainer.style.display = "block";
-        this.dragAndDrop.fileInput.setAttribute("required", "required");
+        this.dragAndDrop.setAttribute("required", "required");
       } else {
         this.categoryContainer.style.display = "none";
         this.issueContainer.style.display = "none";
@@ -189,7 +167,7 @@ export default class FormManager {
         this.issueSelect.value = "";
         this.categorySelect.removeAttribute("required");
         this.issueSelect.removeAttribute("required");
-        this.dragAndDrop.fileInput.removeAttribute("required");
+        this.dragAndDrop.removeAttribute("required");
       }
     });
 
@@ -208,8 +186,15 @@ export default class FormManager {
         this.state.projects.find(
           (project) => project.id === Number(this.projectSelect.value),
         ) ?? null;
-      this.renderIssueQuantity(this.projectSelect.value ?? null);
+
+      for (const issueCounter of this.issueCounters) {
+        issueCounter.setAttribute('projectId', this.projectSelect.value ?? "")
+      }
     });
+
+    this.form.addEventListener('image-uploader:error', (event: CustomEventInit<string>) => {
+      this.alertManager.showAlert(event.detail ?? "Ошибка при загрузке изображения", "warning");
+    })
 
     this.form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -243,7 +228,9 @@ export default class FormManager {
       {},
     ) as types.FeedbackContract["input"]["create"]["body"];
 
-    formDataObject.files = this.dragAndDrop.selectedFiles; // .fileInput
+    formDataObject.files = this.dragAndDrop.selectedFiles;
+    return;
+
 
     apiClient.feedback
       .create({ body: formDataObject })
