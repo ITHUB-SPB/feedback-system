@@ -9,16 +9,16 @@ import { ImageUploader } from "./components/image-uploader";
 const state = new State();
 
 document.addEventListener("DOMContentLoaded", async function () {
-  initTooltips()
+  initTooltips();
 
   await state.init();
 
-  if (!customElements.get('issues-counter')) {
-    customElements.define('issues-counter', IssuesCounter)
+  if (!customElements.get("issues-counter")) {
+    customElements.define("issues-counter", IssuesCounter);
   }
 
-  if (!customElements.get('image-uploader')) {
-    customElements.define('image-uploader', ImageUploader)
+  if (!customElements.get("image-uploader")) {
+    customElements.define("image-uploader", ImageUploader);
   }
 
   const formManager = new FormManager({ state });
@@ -29,10 +29,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     "selectOnMap",
   ) as HTMLButtonElement;
 
-  const issueCounters = document.querySelectorAll('issues-counter') as NodeListOf<IssuesCounter>
+  const issueCounters = document.querySelectorAll(
+    "issues-counter",
+  ) as NodeListOf<IssuesCounter>;
 
   for (const issueCounter of issueCounters) {
-    issueCounter.connectState(state)
+    issueCounter.connectState(state);
     issueCounter.addEventListener("click", () => {
       tableFeedbackManager.renderTable(state.selectedProject);
     });
@@ -42,5 +44,5 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 window.addEventListener("unload", () => {
-  window.scrollTo(0, 0)
-})
+  window.scrollTo(0, 0);
+});

@@ -1,4 +1,4 @@
-const template = document.createElement('template')
+const template = document.createElement("template");
 
 template.innerHTML = `
 <style>
@@ -132,275 +132,296 @@ host * {
 />
 <span class="input-visible">Загрузить</span>
 </label>
-`
+`;
 
 enum Events {
-    IMAGE_ADDED = 'fileUploadWithPreview:imagesAdded',
-    IMAGE_DELETED = 'fileUploadWithPreview:imageDeleted',
-    IMAGE_MULTI_ITEM_CLICKED = 'fileUploadWithPreview:imageMultiItemClicked',
+  IMAGE_ADDED = "fileUploadWithPreview:imagesAdded",
+  IMAGE_DELETED = "fileUploadWithPreview:imageDeleted",
+  IMAGE_MULTI_ITEM_CLICKED = "fileUploadWithPreview:imageMultiItemClicked",
 }
 
 const DEFAULT_BASE_IMAGE =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAiQAAAD6CAMAAACmhqw0AAAA+VBMVEUAAAD29u3u7unt7ent7enu7uju7uihoqCio6Gio6KjpKOkpaSmpqSmp6WoqKaqq6mqq6qrq6qsrautrauur62wsa6xsa+xsrCys7GztLK0tbK1trS2t7S3t7W4uba5ure6u7e7vLm8vbu9vrvAwL3Awb3DxMHFxcPGxsPHx8TIycXLzMjLzMnMzMnNzsrPz8vP0MzQ0M3S0s/U1NDV1dLX19TY2NTY2NXZ2dba2tXb29bc3Nfc3Njc3dnd3dre3tre39vg4Nvh4dzi4t3i4t7j497k5N/k5ODl5eDl5eHl5uLm5uHn5+Lo6OPp6eTq6uXr6+bs7Oft7eh54KxIAAAAB3RSTlMAHKbl5uztvql9swAABA1JREFUeNrt3VlT01AYgOG0oEEE910URNzFBVFcqCgKirLU/P8fI3QYbEOSdtrMyJzzvHfMlFx833NBQuY0SRrN8UwqabzZSJLGaYNQVacaSdMUVF0zGTMEVTeWmIH6BYkgESSCRJAIEkEiSCRIBIkgESSCRJAIEkEiQSJIBIkgESSCRJAIEgkSQSJIBIkgESSCRJBIkAgSQSJIBIkgESSCRIJEkAgSQSJIBIkgkSARJIJEkAgSQSJIBIkEiSARJIJEkAgSQSJIJEgEiSARJIJEkAgSQSJBIkgEiSARJIJEkAgSCRJBIkgEiSARJIJEgkSQ5PvxbdS+tyEJuZVb0+noTV579geSQGs/SOvqxiYkYfYwra+rbUhC7NNEjUjSJ5CE2P06jaTnIAmxKwe7vb468t3N14WOki1IAuzMwWrf1HCh3Q6S95AEWGe1b0/WlSCBBBJIIAkdSXvt1aNXa21IICld7dJU5+epJUggKV7tzuzRA4/ZHUggKVrtfNdjsXlIIClY7XLPw9NlSCA5vtqLPUguQgLJsdX+zv0fZhsSSPKrXckhWSn5jV8zG5DEiuR1DsnrEiOX0vMbkESKZDWHZLXMSFqsBJIIkOz1vn40sVdqpFgJJDHc3dzsQXKzwkihEkhiQLI+2f3y+3qVkSIlkMSAJFvsQrJYbaRACSRRIMlenj0UcPZlPyPHlUASB5Jsc+7cwevMc5v9jRxTAkkkSPbb+riVZYMYySuBJB4kJRUYySmBJHYkhUZ6lUASOZISIz1KIIkbSamRbiWQxIZkvT2YkS4lkESGpDV9tz2YkX9KIIkLSWs6TY+U9DFypASSqJC0OicfHSrpa2T/k5BEh6R1eDpWR8kARtIZSGJD0jo6QW1fySBGIIkOSavrlL27PwcxAklsSFo9JzFOppBAkl9ta5jTOiGJCslQRiCJCslwRiCJCcmQRiCJCMmwRiCJB8mXoU+YhyQaJM9TSCCBBBJIIIEEEkgggQQSSCCJAsnyzLA9hiQWJCfnSpBAAgkkkATXxFCnPxfU7iB5B0mAXT5Y7Z3t0Y087SDZgCTA7tX6bZ5TGSQBtlwrkgVIgmy+RiMXdiEJsp3b9Rn5nEESaC/O1/P3yMJuBkm4bX94O2rvNiKbWXRIBIkgESSCRJAIEkEiQSJIBIkgESSCRJAIEgkSQSJIBIkgESSCRIJEkAgSQSJIBIkgESQSJIJEkAgSQSJIBIkgkSARJIJEkAgSQSJIBIkEiSARJIJEkAgSQSJIJEgEiSARJIJEkAgSCRJBIkgEiSARJIJEkEiQCBJBIkgEiSARJIJEgkSQCBJBIkgEiSARJBIkgkSQ6P8gGTMDVTeWNA1B1TWTxmlTUFWnGknSaI4bhMoabzaSv+4BHFVoHZzfAAAAAElFTkSuQmCC';
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAiQAAAD6CAMAAACmhqw0AAAA+VBMVEUAAAD29u3u7unt7ent7enu7uju7uihoqCio6Gio6KjpKOkpaSmpqSmp6WoqKaqq6mqq6qrq6qsrautrauur62wsa6xsa+xsrCys7GztLK0tbK1trS2t7S3t7W4uba5ure6u7e7vLm8vbu9vrvAwL3Awb3DxMHFxcPGxsPHx8TIycXLzMjLzMnMzMnNzsrPz8vP0MzQ0M3S0s/U1NDV1dLX19TY2NTY2NXZ2dba2tXb29bc3Nfc3Njc3dnd3dre3tre39vg4Nvh4dzi4t3i4t7j497k5N/k5ODl5eDl5eHl5uLm5uHn5+Lo6OPp6eTq6uXr6+bs7Oft7eh54KxIAAAAB3RSTlMAHKbl5uztvql9swAABA1JREFUeNrt3VlT01AYgOG0oEEE910URNzFBVFcqCgKirLU/P8fI3QYbEOSdtrMyJzzvHfMlFx833NBQuY0SRrN8UwqabzZSJLGaYNQVacaSdMUVF0zGTMEVTeWmIH6BYkgESSCRJAIEkEiSCRIBIkgESSCRJAIEkEiQSJIBIkgESSCRJAIEgkSQSJIBIkgESSCRJBIkAgSQSJIBIkgESSCRIJEkAgSQSJIBIkgkSARJIJEkAgSQSJIBIkEiSARJIJEkAgSQSJIJEgEiSARJIJEkAgSQSJBIkgEiSARJIJEkAgSCRJBIkgEiSARJIJEgkSQ5PvxbdS+tyEJuZVb0+noTV579geSQGs/SOvqxiYkYfYwra+rbUhC7NNEjUjSJ5CE2P06jaTnIAmxKwe7vb468t3N14WOki1IAuzMwWrf1HCh3Q6S95AEWGe1b0/WlSCBBBJIIAkdSXvt1aNXa21IICld7dJU5+epJUggKV7tzuzRA4/ZHUggKVrtfNdjsXlIIClY7XLPw9NlSCA5vtqLPUguQgLJsdX+zv0fZhsSSPKrXckhWSn5jV8zG5DEiuR1DsnrEiOX0vMbkESKZDWHZLXMSFqsBJIIkOz1vn40sVdqpFgJJDHc3dzsQXKzwkihEkhiQLI+2f3y+3qVkSIlkMSAJFvsQrJYbaRACSRRIMlenj0UcPZlPyPHlUASB5Jsc+7cwevMc5v9jRxTAkkkSPbb+riVZYMYySuBJB4kJRUYySmBJHYkhUZ6lUASOZISIz1KIIkbSamRbiWQxIZkvT2YkS4lkESGpDV9tz2YkX9KIIkLSWs6TY+U9DFypASSqJC0OicfHSrpa2T/k5BEh6R1eDpWR8kARtIZSGJD0jo6QW1fySBGIIkOSavrlL27PwcxAklsSFo9JzFOppBAkl9ta5jTOiGJCslQRiCJCslwRiCJCcmQRiCJCMmwRiCJB8mXoU+YhyQaJM9TSCCBBBJIIIEEEkgggQQSSCCJAsnyzLA9hiQWJCfnSpBAAgkkkATXxFCnPxfU7iB5B0mAXT5Y7Z3t0Y087SDZgCTA7tX6bZ5TGSQBtlwrkgVIgmy+RiMXdiEJsp3b9Rn5nEESaC/O1/P3yMJuBkm4bX94O2rvNiKbWXRIBIkgESSCRJAIEkEiQSJIBIkgESSCRJAIEgkSQSJIBIkgESSCRIJEkAgSQSJIBIkgESQSJIJEkAgSQSJIBIkgkSARJIJEkAgSQSJIBIkEiSARJIJEkAgSQSJIJEgEiSARJIJEkAgSCRJBIkgEiSARJIJEkEiQCBJBIkgEiSARJIJEgkSQCBJBIkgEiSARJBIkgkSQ6P8gGTMDVTeWNA1B1TWTxmlTUFWnGknSaI4bhMoabzaSv+4BHFVoHZzfAAAAAElFTkSuQmCC";
 
-const MULTI_ITEM_CLEAR_ANIMATION_CLASS = 'multi-item-clear-animation';
+const MULTI_ITEM_CLEAR_ANIMATION_CLASS = "multi-item-clear-animation";
 
 interface ImageAddedEvent {
-    detail: {
-        addedFilesCount: number;
-        cachedFileArray: File[];
-        files: FileList | File[];
-    };
+  detail: {
+    addedFilesCount: number;
+    cachedFileArray: File[];
+    files: FileList | File[];
+  };
 }
 
 interface ImageDeletedEvent {
-    detail: {
-        cachedFileArray: File[];
-        currentFileCount: number;
-        index: number;
-    };
+  detail: {
+    cachedFileArray: File[];
+    currentFileCount: number;
+    index: number;
+  };
 }
 
 interface Options {
-    /**
-     * Type of files to accept in your input
-     *
-     * @default 'image/*'
-     */
-    accept: HTMLInputElement['accept'];
-    /**
-     * Set a maximum number of files you'd like the component to deal with. Must be `>= 0` if set. By default there is no limit.
-     *
-     * @default 0
-     */
-    maxFiles: number;
-    /**
-     * Is field required to fill
-     *
-     * @default false
-     */
-    required: boolean;
+  /**
+   * Type of files to accept in your input
+   *
+   * @default 'image/*'
+   */
+  accept: HTMLInputElement["accept"];
+  /**
+   * Set a maximum number of files you'd like the component to deal with. Must be `>= 0` if set. By default there is no limit.
+   *
+   * @default 0
+   */
+  maxFiles: number;
+  /**
+   * Is field required to fill
+   *
+   * @default false
+   */
+  required: boolean;
 }
 
 const generateUniqueId = () => Math.random().toString(16).slice(2);
 
 export class ImageUploader extends HTMLElement {
-    static formAssociated = true;
-    private _internals: ElementInternals;
+  static formAssociated = true;
+  private _internals: ElementInternals;
 
-    private userInteracted: boolean = false;
-    private cachedFileArray: File[] = [];
-    private imagePreview: HTMLDivElement;
-    private inputHidden: HTMLInputElement;
-    private inputVisible: Element;
+  private userInteracted: boolean = false;
+  private cachedFileArray: File[] = [];
+  private imagePreview: HTMLDivElement;
+  private inputHidden: HTMLInputElement;
+  private inputVisible: Element;
 
-    private options: Options = {
-        accept: 'image/*',
-        maxFiles: 0,
-        required: false,
+  private options: Options = {
+    accept: "image/*",
+    maxFiles: 0,
+    required: false,
+  };
+
+  static observedAttributes = ["required"];
+
+  constructor() {
+    super();
+
+    this._internals = this.attachInternals();
+
+    const shadowRoot = this.attachShadow({ mode: "open" });
+    shadowRoot.appendChild(template.content.cloneNode(true));
+
+    this.cachedFileArray = [];
+    this.inputHidden = shadowRoot.querySelector(
+      ".input-hidden",
+    ) as HTMLInputElement;
+    this.inputVisible = shadowRoot.querySelector(
+      ".input-visible",
+    ) as HTMLInputElement;
+    this.imagePreview = shadowRoot.querySelector(
+      ".image-preview",
+    ) as HTMLDivElement;
+
+    this.bindEvents();
+  }
+
+  connectedCallback() {
+    this.options.maxFiles = Number(this.getAttribute("maxfiles")) || 0;
+    this.options.accept = this.getAttribute("accept") ?? "image/*";
+    this.options.required = this.hasAttribute("required");
+
+    if (this.options.maxFiles === 1) {
+      this.inputHidden.setAttribute("multiple", "multiple");
+    }
+
+    if (this.options.required) {
+      this.inputHidden.setAttribute("required", "required");
+    }
+
+    this.inputHidden.setAttribute("accept", this.options.accept);
+
+    this.updateValidity();
+  }
+
+  attributeChangedCallback(name: string, _: string, newValue: string) {
+    if (name !== "required") {
+      return;
+    }
+
+    this.options.required = newValue === "required";
+
+    if (this.options.required) {
+      this.inputHidden.setAttribute("required", "required");
+    } else {
+      this.inputHidden.removeAttribute("required");
+    }
+
+    this.updateValidity();
+  }
+
+  public get selectedFiles() {
+    return this.cachedFileArray;
+  }
+
+  public checkValidity(): boolean {
+    return !this.options.required || this.selectedFiles.length > 0;
+  }
+
+  private bindEvents() {
+    this.inputHidden.addEventListener(
+      "change",
+      (e) => {
+        this.userInteracted = true;
+        const target = e.target as HTMLInputElement;
+        if (target.files == null) return;
+
+        this.addFiles(target.files);
+        target.value = "";
+        this.updateValidity();
+      },
+      true,
+    );
+
+    this.imagePreview.addEventListener("click", (e) => {
+      const target = e.target as HTMLDivElement;
+
+      if (!target.matches(".image-preview-item-clear-icon")) return;
+
+      const fileName = target.getAttribute("data-upload-name");
+      const selectedFileIndex = this.cachedFileArray.findIndex(
+        ({ name }) => name === fileName,
+      );
+      this.deleteFileAtIndex(selectedFileIndex);
+      this.updateValidity();
+    });
+  }
+
+  private updateValidity() {
+    if (!this.checkValidity()) {
+      this._internals.setValidity(
+        {
+          valueMissing: true,
+        },
+        "Отсутствуют изображения",
+      );
+    } else {
+      this._internals.setValidity({});
+    }
+  }
+
+  private checkFiles(files: FileList | File[]) {
+    const allowedImageTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/webp",
+      "image/heic",
+    ];
+
+    type Accumulator = {
+      invalidFiles: File[];
+      validFiles: File[];
     };
 
-    static observedAttributes = ["required"]
-
-    constructor() {
-        super()
-
-        this._internals = this.attachInternals()
-
-        const shadowRoot = this.attachShadow({ mode: "open" })
-        shadowRoot.appendChild(template.content.cloneNode(true))
-
-        this.cachedFileArray = [];
-        this.inputHidden = shadowRoot.querySelector('.input-hidden') as HTMLInputElement;
-        this.inputVisible = shadowRoot.querySelector('.input-visible') as HTMLInputElement;
-        this.imagePreview = shadowRoot.querySelector('.image-preview') as HTMLDivElement;
-
-        this.bindEvents();
-    }
-
-    connectedCallback() {
-        this.options.maxFiles = Number(this.getAttribute('maxfiles')) || 0;
-        this.options.accept = this.getAttribute('accept') ?? "image/*";
-        this.options.required = this.hasAttribute('required');
-
-        if (this.options.maxFiles === 1) {
-            this.inputHidden.setAttribute("multiple", "multiple")
-        }
-
-        if (this.options.required) {
-            this.inputHidden.setAttribute("required", "required")
-        }
-
-        this.inputHidden.setAttribute("accept", this.options.accept)
-
-        this.updateValidity()
-    }
-
-    attributeChangedCallback(name: string, _: string, newValue: string) {
-        if (name !== "required") {
-            return
-        }
-
-        this.options.required = newValue === "required"
-
-        if (this.options.required) {
-            this.inputHidden.setAttribute('required', 'required')
-        } else {
-            this.inputHidden.removeAttribute('required')
-        }
-
-        this.updateValidity()
-    }
-
-    public get selectedFiles() {
-        return this.cachedFileArray
-    }
-
-    public checkValidity(): boolean {
-        return !this.userInteracted || !this.options.required || this.selectedFiles.length > 0
-    }
-
-    private bindEvents() {
-        this.inputHidden.addEventListener(
-            'change',
-            (e) => {
-                this.userInteracted = true;
-                const target = e.target as HTMLInputElement;
-                if (target.files == null) return;
-
-                this.addFiles(target.files);
-                target.value = '';
-                this.updateValidity()
-            },
-            true,
+    return Array.from(files).reduce(
+      (acc: Accumulator, file) => {
+        const isValidImageType = allowedImageTypes.includes(
+          file.type.toLowerCase(),
         );
+        const fileExtension = file.name.toLowerCase().split(".").pop();
+        const allowedExtensions = ["jpg", "jpeg", "png", "webp", "heic"];
 
-        this.imagePreview.addEventListener('click', (e) => {
-            const target = e.target as HTMLDivElement;
+        const isValidExtension =
+          fileExtension && allowedExtensions.includes(fileExtension);
 
-            if (!target.matches('.image-preview-item-clear-icon')) return;
-
-            const fileName = target.getAttribute('data-upload-name');
-            const selectedFileIndex = this.cachedFileArray.findIndex(({ name }) => name === fileName);
-            this.deleteFileAtIndex(selectedFileIndex);
-            this.updateValidity()
-        });
-    }
-
-    private updateValidity() {
-        if (!this.checkValidity()) {
-            this._internals.setValidity({
-                valueMissing: true
-            }, "Отсутствуют изображения")
-            this._internals.reportValidity()
-        } else {
-            this._internals.setValidity({})
-        }
-    }
-
-    private checkFiles(files: FileList | File[]) {
-        const allowedImageTypes = [
-            "image/jpeg",
-            "image/jpg",
-            "image/png",
-            "image/webp",
-            "image/heic",
-        ];
-
-        type Accumulator = {
-            invalidFiles: File[],
-            validFiles: File[]
-        }
-
-        return Array.from(files).reduce((acc: Accumulator, file) => {
-            const isValidImageType = allowedImageTypes.includes(
-                file.type.toLowerCase(),
-            );
-            const fileExtension = file.name.toLowerCase().split(".").pop();
-            const allowedExtensions = ["jpg", "jpeg", "png", "webp", "heic"];
-
-            const isValidExtension =
-                fileExtension && allowedExtensions.includes(fileExtension);
-
-            return !isValidImageType && !isValidExtension ? {
-                ...acc,
-                invalidFiles: [...acc.invalidFiles, file]
-            } : {
-                ...acc,
-                validFiles: [...acc.validFiles, file]
+        return !isValidImageType && !isValidExtension
+          ? {
+              ...acc,
+              invalidFiles: [...acc.invalidFiles, file],
             }
-        }, {
-            validFiles: [],
-            invalidFiles: [],
-        });
+          : {
+              ...acc,
+              validFiles: [...acc.validFiles, file],
+            };
+      },
+      {
+        validFiles: [],
+        invalidFiles: [],
+      },
+    );
+  }
+
+  private addFiles(files: FileList | File[]) {
+    if (!files.length) return;
+
+    const { validFiles, invalidFiles } = this.checkFiles(files);
+
+    if (invalidFiles.length) {
+      const invalidFileNames = invalidFiles.map(({ name }) => name).join(", ");
+      const message = `Неподдерживаемый формат файлов:\n ${invalidFileNames}.\n Пожалуйста, загружайте только изображения (JPG, PNG, WebP, HEIC).`;
+      this.dispatchEvent(
+        new CustomEvent("image-uploader:error", {
+          detail: message,
+          composed: true,
+          bubbles: true,
+        }),
+      );
     }
 
-    private addFiles(files: FileList | File[]) {
-        if (!files.length) return;
+    let fileArray = Array.from(validFiles);
 
-        const { validFiles, invalidFiles } = this.checkFiles(files)
+    if (this.options.maxFiles > 1) {
+      const totalFileCount = this.cachedFileArray.length + fileArray.length;
+      const differenceFromMax = totalFileCount - this.options.maxFiles;
 
-        if (invalidFiles.length) {
-            const invalidFileNames = invalidFiles.map(({ name }) => name).join(", ")
-            const message = (
-                `Неподдерживаемый формат файлов:\n ${invalidFileNames}.\n Пожалуйста, загружайте только изображения (JPG, PNG, WebP, HEIC).`
-            );
-            this.dispatchEvent(new CustomEvent("image-uploader:error", { detail: message, composed: true, bubbles: true }))
-        }
-
-        let fileArray = Array.from(validFiles);
-
-        if (this.options.maxFiles > 1) {
-            const totalFileCount = this.cachedFileArray.length + fileArray.length;
-            const differenceFromMax = totalFileCount - this.options.maxFiles;
-
-            if (differenceFromMax > 0) {
-                fileArray = fileArray.slice(0, fileArray.length - differenceFromMax);
-            }
-        }
-
-        if (this.options.maxFiles === 1) {
-            this.cachedFileArray = [];
-        }
-
-        fileArray.forEach((file) => {
-            const fileWithUniqueName = new File(
-                [file],
-                `${file.name || 'fallback-name'}${generateUniqueId()}`,
-                {
-                    type: file.type,
-                },
-            );
-
-            this.cachedFileArray.push(fileWithUniqueName);
-            this.addFileToPreviewPanel(fileWithUniqueName);
-        });
-
-        const eventPayload: ImageAddedEvent = {
-            detail: {
-                addedFilesCount: fileArray.length,
-                cachedFileArray: this.cachedFileArray,
-                files,
-            },
-        };
-
-        window.dispatchEvent(new CustomEvent(Events.IMAGE_ADDED, eventPayload));
+      if (differenceFromMax > 0) {
+        fileArray = fileArray.slice(0, fileArray.length - differenceFromMax);
+      }
     }
 
-    private addFileToPreviewPanel(file: File) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
+    if (this.options.maxFiles === 1) {
+      this.cachedFileArray = [];
+    }
 
-        reader.onload = () => {
-            if (this.options.maxFiles === 1) {
-                const backgroundImage = reader.result ? `url("${reader.result}")` : DEFAULT_BASE_IMAGE
-                this.imagePreview.style.backgroundImage = backgroundImage;
-                return;
-            }
+    fileArray.forEach((file) => {
+      const fileWithUniqueName = new File(
+        [file],
+        `${file.name || "fallback-name"}${generateUniqueId()}`,
+        {
+          type: file.type,
+        },
+      );
 
-            const backgroundImage = reader.result ?? DEFAULT_BASE_IMAGE
+      this.cachedFileArray.push(fileWithUniqueName);
+      this.addFileToPreviewPanel(fileWithUniqueName);
+    });
 
-            this.imagePreview.innerHTML += `
+    const eventPayload: ImageAddedEvent = {
+      detail: {
+        addedFilesCount: fileArray.length,
+        cachedFileArray: this.cachedFileArray,
+        files,
+      },
+    };
+
+    window.dispatchEvent(new CustomEvent(Events.IMAGE_ADDED, eventPayload));
+  }
+
+  private addFileToPreviewPanel(file: File) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      if (this.options.maxFiles === 1) {
+        const backgroundImage = reader.result
+          ? `url("${reader.result}")`
+          : DEFAULT_BASE_IMAGE;
+        this.imagePreview.style.backgroundImage = backgroundImage;
+        return;
+      }
+
+      const backgroundImage = reader.result ?? DEFAULT_BASE_IMAGE;
+
+      this.imagePreview.innerHTML += `
         <div
           class="image-preview-item"
           data-upload-name="${file.name}"
@@ -413,47 +434,50 @@ export class ImageUploader extends HTMLElement {
             </span>
         </div>
       `;
-        };
-    }
+    };
+  }
 
-    private deleteFileAtIndex(index: number) {
-        this.cachedFileArray.splice(index, 1)
-        this.refreshPreviewPanel();
+  private deleteFileAtIndex(index: number) {
+    this.cachedFileArray.splice(index, 1);
+    this.refreshPreviewPanel();
 
-        const eventPayload: ImageDeletedEvent = {
-            detail: {
-                cachedFileArray: this.cachedFileArray,
-                currentFileCount: this.cachedFileArray.length,
-                index,
-            },
-        };
+    const eventPayload: ImageDeletedEvent = {
+      detail: {
+        cachedFileArray: this.cachedFileArray,
+        currentFileCount: this.cachedFileArray.length,
+        index,
+      },
+    };
 
-        window.dispatchEvent(new CustomEvent(Events.IMAGE_DELETED, eventPayload));
-    }
+    window.dispatchEvent(new CustomEvent(Events.IMAGE_DELETED, eventPayload));
+  }
 
-    private refreshPreviewPanel() {
-        const imagePreviewItems = this.imagePreview.querySelectorAll('.image-preview-item');
+  private refreshPreviewPanel() {
+    const imagePreviewItems = this.imagePreview.querySelectorAll(
+      ".image-preview-item",
+    );
 
-        Array.from(imagePreviewItems)
-            .forEach((item) => item.classList.add(MULTI_ITEM_CLEAR_ANIMATION_CLASS));
+    Array.from(imagePreviewItems).forEach((item) =>
+      item.classList.add(MULTI_ITEM_CLEAR_ANIMATION_CLASS),
+    );
 
-        // Use the setTimeout to process images after the MULTI_ITEM_CLEAR_ANIMATION_CLASS is done
-        setTimeout(() => {
-            this.imagePreview.innerHTML = '';
+    // Use the setTimeout to process images after the MULTI_ITEM_CLEAR_ANIMATION_CLASS is done
+    setTimeout(() => {
+      this.imagePreview.innerHTML = "";
 
-            // Reset the panel if there are no files
-            if (!this.cachedFileArray.length) {
-                this.resetPreviewPanel();
-                return;
-            }
+      // Reset the panel if there are no files
+      if (!this.cachedFileArray.length) {
+        this.resetPreviewPanel();
+        return;
+      }
 
-            this.cachedFileArray.forEach((file) => this.addFileToPreviewPanel(file));
-        }, 200);
-    }
+      this.cachedFileArray.forEach((file) => this.addFileToPreviewPanel(file));
+    }, 200);
+  }
 
-    private resetPreviewPanel() {
-        this.inputHidden.value = '';
-        this.imagePreview.innerHTML = '';
-        this.cachedFileArray = [];
-    }
+  private resetPreviewPanel() {
+    this.inputHidden.value = "";
+    this.imagePreview.innerHTML = "";
+    this.cachedFileArray = [];
+  }
 }

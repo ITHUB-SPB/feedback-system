@@ -29,7 +29,7 @@ const flexRender = <TProps extends object>(comp: any, props: TProps) => {
 const useTable = <TData extends RowData>(options: TableOptions<TData>) => {
   const resolvedOptions: TableOptionsResolved<TData> = {
     state: {},
-    onStateChange: () => { },
+    onStateChange: () => {},
     renderFallbackValue: null,
     ...options,
   };

@@ -5,7 +5,11 @@ import { topicCategoryTopicSchema } from "@shared/database/models/topic_category
 import { topicCategorySchema } from "@shared/database/models/topic_category";
 import { topicSchema } from "@shared/database/models/topic";
 
-import { baseInputOne, structuredFilterInput, structuredSortInput } from "./_inputs";
+import {
+  baseInputOne,
+  structuredFilterInput,
+  structuredSortInput,
+} from "./_inputs";
 
 const getTopicCategoryTopicSchema = v.object({
   ...topicCategoryTopicSchema.entries,
@@ -23,10 +27,12 @@ const topicCategoryTopicContract = oc
         path: "/",
         summary: "Список пар Топик-Категория",
       })
-      .input(v.object({
-        filter: structuredFilterInput,
-        sort: structuredSortInput
-      }))
+      .input(
+        v.object({
+          filter: structuredFilterInput,
+          sort: structuredSortInput,
+        }),
+      )
       .output(v.array(getTopicCategoryTopicSchema)),
 
     create: oc

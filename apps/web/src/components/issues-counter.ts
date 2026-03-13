@@ -1,6 +1,6 @@
-import State from '../state'
+import State from "../state";
 
-const template = document.createElement('template')
+const template = document.createElement("template");
 
 template.innerHTML = `
     <style>
@@ -30,65 +30,67 @@ template.innerHTML = `
 `;
 
 export class IssuesCounter extends HTMLElement {
-    private state: State | null
-    private buttonElement: HTMLButtonElement
+  private state: State | null;
+  private buttonElement: HTMLButtonElement;
 
-    constructor() {
-        super()
+  constructor() {
+    super();
 
-        const shadowRoot = this.attachShadow({ mode: "open" })
-        shadowRoot.appendChild(template.content.cloneNode(true))
+    const shadowRoot = this.attachShadow({ mode: "open" });
+    shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.state = null;
-        this.buttonElement = shadowRoot.querySelector('button')!
+    this.state = null;
+    this.buttonElement = shadowRoot.querySelector("button")!;
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  static get observedAttributes() {
+    // (3)
+    return ["projectid"];
+  }
+
+  attributeChangedCallback(name: string) {
+    if (name === "projectid") {
+      this.render();
+    }
+  }
+
+  public connectState(state: State) {
+    this.state = state;
+  }
+
+  private render() {
+    const projectId = this.getAttribute("projectid") || "undefined";
+
+    if (projectId === "undefined" || projectId === "") {
+      this.style.visibility = "hidden";
+      return;
     }
 
-    connectedCallback() {
-        this.render()
+    const issuesByProject =
+      this.state?.issuesByAllProjects[Number(projectId)] ?? [];
+    const issuesCount = issuesByProject?.length;
+
+    if (issuesCount) {
+      this.buttonElement.textContent = `${issuesCount.toString()} ${this.declOfNum(issuesCount)}`;
     }
+    this.style.visibility = issuesCount ? "visible" : "hidden";
+  }
 
-    static get observedAttributes() { // (3)
-        return ['projectid'];
+  private declOfNum(number: number) {
+    const cases = [2, 0, 1, 1, 1, 2] as const;
+    const titles = ["предложение", "предложения", "предложений"] as const;
+
+    if (number % 100 > 4 && number % 100 < 20) {
+      return titles[2];
+    } else if (number % 10 < 5) {
+      const titleIx = cases[number % 10] as number;
+      return titles[titleIx];
+    } else {
+      return titles[cases[5]];
     }
-
-    attributeChangedCallback(name: string) {
-        if (name === "projectid") {
-            this.render();
-        }
-    }
-
-    public connectState(state: State) {
-        this.state = state;
-    }
-
-    private render() {
-        const projectId = this.getAttribute('projectid') || "undefined"
-
-        if (projectId === "undefined" || projectId === "") {
-            this.style.visibility = "hidden";
-            return;
-        }
-
-        const issuesByProject = this.state?.issuesByAllProjects[Number(projectId)] ?? [];
-        const issuesCount = issuesByProject?.length;
-
-        if (issuesCount) {
-            this.buttonElement.textContent = `${issuesCount.toString()} ${this.declOfNum(issuesCount)}`;
-        }
-        this.style.visibility = issuesCount ? "visible" : "hidden";
-    }
-
-    private declOfNum(number: number) {
-        const cases = [2, 0, 1, 1, 1, 2] as const;
-        const titles = ["предложение", "предложения", "предложений"] as const;
-
-        if (number % 100 > 4 && number % 100 < 20) {
-            return titles[2];
-        } else if (number % 10 < 5) {
-            const titleIx = cases[number % 10] as number;
-            return titles[titleIx];
-        } else {
-            return titles[cases[5]];
-        }
-    }
+  }
 }

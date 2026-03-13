@@ -49,8 +49,8 @@ export const getManyFeedbackSchema = v.array(
       "created_at",
       "feedback_status_comment",
     ]),
-  ])
-)
+  ]),
+);
 
 export const updateFeedbackSchema = v.object({
   params: baseInputOne,

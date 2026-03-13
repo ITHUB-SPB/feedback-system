@@ -21,14 +21,15 @@ import {
 export const OfficialWelcomeEmail = ({
   officialName,
   to,
-  password
+  password,
 }: MailOfficialWelcomeJobData) => {
   return (
     <Html dir="ltr" lang="ru">
       <Tailwind>
         <Head />
         <Preview>
-          Уважаемый {officialName}! Создан аккаунт на платформе вместе47предложения.рф
+          Уважаемый {officialName}! Создан аккаунт на платформе
+          вместе47предложения.рф
         </Preview>
         <Body className="bg-[#f2f2fa] py-[40px] font-sans">
           <Container className="mx-auto max-w-[720px] rounded-[8px] bg-white px-[40px] py-[40px]">
@@ -42,7 +43,11 @@ export const OfficialWelcomeEmail = ({
 
             <Section>
               <Heading className="mb-[24px] text-center text-[#0b0917] text-[18px]">
-                Уважаемый {officialName}! Создан аккаунт на платформе <Link href="https://xn--j1ab.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/">вместе47предложения.рф</Link>.
+                Уважаемый {officialName}! Создан аккаунт на платформе{" "}
+                <Link href="https://xn--j1ab.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai/">
+                  вместе47предложения.рф
+                </Link>
+                .
               </Heading>
 
               <Section className="mb-[24px] rounded-[0px] border-[#e6e6f0] border-[1px] border-solid bg-[#f8f8ff] p-[18px]">
@@ -61,9 +66,8 @@ export const OfficialWelcomeEmail = ({
               </Section>
 
               <Text className="mb-[20px] text-[#0b0917] text-[16px] leading-[24px]">
-                Официальная электронная почта Центра
-                компетенций Ленинградской области:{" "}
-                <CodeInline>cc.lenreg@sreda47.ru</CodeInline>.
+                Официальная электронная почта Центра компетенций Ленинградской
+                области: <CodeInline>cc.lenreg@sreda47.ru</CodeInline>.
               </Text>
             </Section>
 

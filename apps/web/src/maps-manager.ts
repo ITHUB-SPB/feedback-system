@@ -30,7 +30,9 @@ export default class MapsManager {
   private projectSelectElement = document.getElementById(
     "projectSelect",
   ) as HTMLSelectElement;
-  private issueCounterElement = document.querySelector('#mapPopup issues-counter') as IssuesCounter
+  private issueCounterElement = document.querySelector(
+    "#mapPopup issues-counter",
+  ) as IssuesCounter;
 
   private table: TableFeedbackManager;
   private state: State;
@@ -174,8 +176,7 @@ export default class MapsManager {
         this.selectedProjectElement.textContent = `${project.title} (${project.year_of_completion})`;
         this.selectedCityElement.textContent = project.administrative_unit;
 
-        console.log(this.issueCounterElement)
-        this.issueCounterElement.setAttribute("projectid", String(project.id))
+        this.issueCounterElement.setAttribute("projectid", String(project.id));
       });
 
       clusterer.add(marker);
@@ -194,12 +195,11 @@ export default class MapsManager {
     this.citySelectElement.value = String(
       this.state.selectedProject?.administrative_unit_id,
     );
+
     this.citySelectElement.dispatchEvent(new Event("input"));
 
     this.projectSelectElement.value = String(this.state.selectedProject?.id);
     this.projectSelectElement.dispatchEvent(new Event("input"));
-
-
 
     this.close();
   }
@@ -227,9 +227,9 @@ export default class MapsManager {
   private setupEventListeners() {
     this.mapApplyElement.addEventListener("click", () => this.apply());
     this.mapPopupCloseElement.addEventListener("click", () => this.close());
-    this.issueCounterElement.addEventListener('click', () => {
+    this.issueCounterElement.addEventListener("click", () => {
       this.table.renderTable(this.selectedProject);
-    })
+    });
 
     window.addEventListener("resize", () => {
       this.map.container.fitToViewport();

@@ -53,11 +53,14 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
           },
         );
       } else {
-        await citizenStatusEmailQueue.add(`citizen-status-${result.status.title}`, {
-          to: email,
-          name,
-          status: result.status.title,
-        });
+        await citizenStatusEmailQueue.add(
+          `citizen-status-${result.status.title}`,
+          {
+            to: email,
+            name,
+            status: result.status.title,
+          },
+        );
       }
 
       return {};

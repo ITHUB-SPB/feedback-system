@@ -30,13 +30,16 @@ export default class State {
       await apiClient.feedback.all({
         filter: `feedback_type_id[eq]2&feedback_status_id[in]1,2,4,6`,
       })
-    ).reduce(
-      (acc, { project_id, ...rest }) => ({
+    ).reduce((acc, { project_id, ...rest }) => {
+      if (!project_id) {
+        return acc;
+      }
+
+      return {
         ...acc,
         [project_id]: [...(acc[project_id] ?? []), rest],
-      }),
-      this.issuesByAllProjects,
-    );
+      };
+    }, this.issuesByAllProjects);
   }
 
   public async loadIssues(
@@ -48,6 +51,12 @@ export default class State {
           field: "topic_category_id",
           operator: "eq",
           value: String(categoryId),
+        },
+      ],
+      sort: [
+        {
+          field: "topic",
+          order: "asc",
         },
       ],
     });

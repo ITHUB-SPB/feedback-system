@@ -1,10 +1,10 @@
 import {
   buildCitizenStatusEmailWorker,
   buildCitizenStatusWithCommentEmailWorker,
-  buildOfficialWelcomeEmailWorker
+  buildOfficialWelcomeEmailWorker,
 } from "./worker";
 import getConnection from "./connection";
 
 buildCitizenStatusEmailWorker(getConnection());
 buildCitizenStatusWithCommentEmailWorker(getConnection());
-buildOfficialWelcomeEmailWorker(getConnection())
+buildOfficialWelcomeEmailWorker(getConnection());

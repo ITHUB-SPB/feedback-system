@@ -52,7 +52,9 @@ export default class FormManager {
     ) as HTMLDivElement;
 
     this.form = document.querySelector(".proposals_form") as HTMLFormElement;
-    this.dragAndDrop = document.querySelector('image-uploader') as ImageUploader
+    this.dragAndDrop = document.querySelector(
+      "image-uploader",
+    ) as ImageUploader;
     this.state = state;
     this.alertManager = new AlertManager();
     this.init();
@@ -150,7 +152,7 @@ export default class FormManager {
       }
 
       for (const issueCounter of this.issueCounters) {
-        issueCounter.setAttribute('projectId', "")
+        issueCounter.setAttribute("projectId", "");
       }
     });
 
@@ -188,13 +190,19 @@ export default class FormManager {
         ) ?? null;
 
       for (const issueCounter of this.issueCounters) {
-        issueCounter.setAttribute('projectId', this.projectSelect.value ?? "")
+        issueCounter.setAttribute("projectId", this.projectSelect.value ?? "");
       }
     });
 
-    this.form.addEventListener('image-uploader:error', (event: CustomEventInit<string>) => {
-      this.alertManager.showAlert(event.detail ?? "Ошибка при загрузке изображения", "warning");
-    })
+    this.form.addEventListener(
+      "image-uploader:error",
+      (event: CustomEventInit<string>) => {
+        this.alertManager.showAlert(
+          event.detail ?? "Ошибка при загрузке изображения",
+          "warning",
+        );
+      },
+    );
 
     this.form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -231,7 +239,6 @@ export default class FormManager {
     formDataObject.files = this.dragAndDrop.selectedFiles;
     return;
 
-
     apiClient.feedback
       .create({ body: formDataObject })
       .then(() => {
@@ -239,9 +246,11 @@ export default class FormManager {
         this.form.reset();
         this.dragAndDrop.reset();
       })
-      .then(() => setTimeout(() => {
-        window.location.reload()
-      }, 2_000))
+      .then(() =>
+        setTimeout(() => {
+          window.location.reload();
+        }, 2_000),
+      )
       .catch((error) => {
         console.error(error);
         this.alertManager.showAlert("Ошибка при отправке", "warning");

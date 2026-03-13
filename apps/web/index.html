@@ -89,19 +89,23 @@
 
     <form class="proposals_form">
       <section class="proposals_form__block">
-        <p class="form-block-title">Город<span class="form-required">*</span></p>
+        <div class="row">
+          <p class="form-block-title">Город</p>
+          <span class="proposals_form__error">Заполните поле</span>
+        </div>
         <select name="city" class="form-select city-select" id="citySelect" required>
           <option value="">Выберите город</option>
         </select>
-        <span class="form-error">Некорректно заполнено поле</span>
       </section>
 
       <section class="proposals_form__block">
-        <p class="form-block-title" style="display: flex">
-          Проект
-          <span class="form-required">*</span>
+        <div class="row">
+          <p class="form-block-title">
+            Проект
+          </p>
           <issues-counter></issues-counter>
-        </p>
+          <span class="proposals_form__error">Заполните поле</span>
+        </div>
         <div class="relative project-map-inputs">
           <select name="project_id" class="form-select location-select" id="projectSelect" required>
             <option value="">
@@ -112,12 +116,11 @@
             На карте
           </button>
         </div>
-        <span class="form-error">Некорректно заполнено поле</span>
       </section>
 
       <section class="proposals_form__block">
-        <div class="form-block-title">
-          Тип запроса<span class="form-required">*</span>
+        <div class="row">
+          <p class="form-block-title">Тип запроса</p>
           <button type="button" class="form-info-button" aria-describedby="tooltip">
             <img src="/icons/info.svg" alt="info" class="form-info-icon">
           </button>
@@ -131,73 +134,82 @@
         <select name="feedback_type_id" class="form-select object-type" id="requestTypeSelect" required>
           <option value="">Загрузка...</option>
         </select>
-        <span class="form-error">Некорректно заполнено поле</span>
       </section>
 
       <div class="row">
         <section class="proposals_form__block" id="categoryBlock">
-          <p class="form-block-title">Категория<span class="form-required">*</span></p>
+          <div class="row">
+            <p class="form-block-title">Категория</p>
+            <span class="proposals_form__error">Заполните поле</span>
+          </div>
           <select name="topic_category_id" class="relative form-select object-category" id="categorySelect" required>
             <option value="">Выберите категорию</option>
           </select>
-          <span class="form-error">Некорректно заполнено поле</span>
         </section>
 
         <section class="proposals_form__block" id="issueBlock">
-          <p class="form-block-title">Проблема<span class="form-required">*</span></p>
+          <div class="row">
+            <p class="form-block-title">Проблема</p>
+            <span class="proposals_form__error">Заполните поле</span>
+          </div>
           <select name="topic_category_topic_id" class="relative form-select object-location" id="issueSelect" required>
             <option value="">Сначала выберите категорию</option>
           </select>
-          <span class="form-error">Некорректно заполнено поле</span>
         </section>
       </div>
 
       <section class="proposals_form__block">
-        <p class="form-block-title">
-          Текстовое пояснение<span class="form-required">*</span>
-        </p>
+        <div class="row">
+          <p class="form-block-title">Текстовое пояснение</p>
+        </div>
         <textarea name="description" class="relative object-description" placeholder="Ваше пожелание или замечание"
           maxlength="1000" rows="6" required></textarea>
-        <span class="form-error">Некорректно заполнено поле</span>
       </section>
 
       <div class="row">
         <section class="proposals_form__block">
-          <p class="form-block-title">Фамилия<span class="form-required">*</span></p>
+          <div class="row">
+            <p class="form-block-title">Фамилия</p>
+            <span class="proposals_form__error">Заполните поле</span>
+          </div>
           <input type="text" name="last_name" class="relative" placeholder="Фамилия" required />
-          <span class="form-error">Некорректно заполнено поле</span>
         </section>
 
         <section class="proposals_form__block">
-          <p class="form-block-title">Имя<span class="form-required">*</span></p>
+          <div class="row">
+            <p class="form-block-title">Имя</p>
+            <span class="proposals_form__error">Заполните поле</span>
+          </div>
           <input type="text" name="first_name" class="relative" placeholder="Имя" required />
-          <span class="form-error">Некорректно заполнено поле</span>
         </section>
 
         <section class="proposals_form__block">
           <p class="form-block-title">Отчество</p>
           <input type="text" name="middle_name" class="relative" placeholder="Отчество" />
-          <span class="form-error">Некорректно заполнено поле</span>
         </section>
       </div>
 
       <div class="row">
         <section class="proposals_form__block">
-          <p class="form-block-title">Email<span class="form-required">*</span></p>
+          <div class="row">
+            <p class="form-block-title">Email</p>
+            <span class="proposals_form__error">Некорректно заполнено поле</span>
+          </div>
           <input type="email" name="email" class="relative" placeholder="Email" required />
-          <span class="form-error">Некорректно заполнено поле</span>
         </section>
 
         <section class="proposals_form__block">
-          <p class="form-block-title">Телефон<span class="form-required">*</span></p>
-          <input type="tel" name="phone" class="relative" placeholder="Номер телефона" />
-          <span class="form-error">Некорректно заполнено поле</span>
+          <div class="row">
+            <p class="form-block-title">Телефон</p>
+            <span class="proposals_form__error">Некорректно заполнено поле</span>
+          </div>
+          <input type="tel" name="phone" class="relative" placeholder="Номер телефона" required />
         </section>
       </div>
 
       <section class="proposals_form__block">
-        <div class="form-block-title">
-          Фотографии<span class="form-required">*</span>
+        <div class="row">
+          <p class="form-block-title">Фотографии</p>
           <button type="button" class="form-info-button" aria-describedby="tooltip">
             <img src="/icons/info.svg" alt="info" class="form-info-icon">
           </button>
@@ -206,9 +218,9 @@
               Прикрепите фотографии (до трёх файлов), на которых видна проблема
             </div>
           </div>
+          <span class="proposals_form__error">Некорректно заполнено поле</span>
         </div>
         <image-uploader maxfiles="3" required></image-uploader>
-        <span class="form-error">Некорректно заполнено поле</span>
       </section>
 
       <label class="custom-checkbox">

@@ -27,8 +27,8 @@ async function buildMail(options: MailJobData) {
       to: options.to,
       text: getCitizenStatusText(
         commonProps as
-        | MailCitizenStatusJobData
-        | MailCitizenStatusWithCommentJobData,
+          | MailCitizenStatusJobData
+          | MailCitizenStatusWithCommentJobData,
       ),
       html: await render(
         getCitizenStatusHtml({ ...commonProps, name: options.name } as
@@ -43,9 +43,7 @@ async function buildMail(options: MailJobData) {
       subject: "Вместе47. Информация по вашему обращению",
       to: options.to,
       text: getOfficialWelcomeText(options),
-      html: await render(
-        OfficialWelcomeEmail(options),
-      ),
+      html: await render(OfficialWelcomeEmail(options)),
     };
   }
 
@@ -79,8 +77,8 @@ export async function sendMail(options: MailJobData) {
   try {
     const mail = await buildMail(options);
 
-    logger.info(JSON.stringify(mail))
-    logger.info(JSON.stringify(options))
+    logger.info(JSON.stringify(mail));
+    logger.info(JSON.stringify(options));
 
     return await mailClient?.sendMail({
       from: `"Вместе47" <${env.SMTP_USER}>`,
