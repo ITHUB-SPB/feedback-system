@@ -298,13 +298,16 @@ input:not([type="checkbox"]):not([type="radio"])[disabled],
 .proposals_form__block {
   position: relative;
   margin-bottom: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .proposals_form .row {
   margin-bottom: 0;
   display: flex;
-  gap: 16px;
-  align-items: baseline;
+  gap: 14px;
+  align-items: center;
 }
 
 .row .proposals_form__block {
@@ -545,9 +548,8 @@ input:not([type="checkbox"]):not([type="radio"])[disabled],
   }
 
   .proposals_form .form-block-title {
-    margin-bottom: 8px;
-    font-size: 1.7rem;
-    line-height: 2.3rem;
+    font-size: 1.6rem;
+    line-height: 2rem;
   }
 
   .proposals_form .form-select {

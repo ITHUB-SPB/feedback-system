@@ -17,6 +17,7 @@ template.innerHTML = `
             color: #18a763;
             font-size: 1.2rem;
             font-weight: bold;
+            text-wrap-mode: no-wrap
         }
 
         .view_issues:hover {
