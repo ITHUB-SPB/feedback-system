@@ -9,13 +9,17 @@ export type MailCitizenStatusWithCommentJobData = {
 export type MailCitizenStatusJobData = {
   to: string;
   name: string;
-  status: "banned" | "approved" | "proceeding" | "completed";
+  status: "banned" | "approved" | "proceeding" | "completed" | "declined";
 };
 
 export type MailOfficialWelcomeJobData = {
   to: string;
   officialName: string;
   password: string;
+};
+
+export type MailInnerWelcomeJobData = Omit<MailOfficialWelcomeJobData, "to"> & {
+  email: string;
 };
 
 export type MailOfficialJobData = {
@@ -41,4 +45,5 @@ export type MailJobData =
   | MailCitizenStatusJobData
   | MailCitizenStatusWithCommentJobData
   | MailOfficialWelcomeJobData
-  | MailOfficialJobData;
+  | MailOfficialJobData
+  | MailInnerWelcomeJobData;

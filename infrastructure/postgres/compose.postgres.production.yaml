@@ -21,6 +21,9 @@ services:
       AWS_ENDPOINT: https://minio.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai
       WALG_S3_PREFIX: s3://backup/pg
       LC_LANG: ru_RU.UTF-8
+      TZ: "Europe/Moscow"
+      PGTZ: "Europe/Moscow"
+
     secrets:
       - postgres_user
       - postgres_password
@@ -37,7 +40,7 @@ services:
       - ./data:/var/lib/postgresql/data
       - ./logs:/var/log/wal-g
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -q -d feedback -U `cat $$POSTGRES_USER_FILE`"]
+      test: [ "CMD-SHELL", "pg_isready -q -d feedback -U `cat $$POSTGRES_USER_FILE`" ]
       interval: 30s
       timeout: 10s
       retries: 5

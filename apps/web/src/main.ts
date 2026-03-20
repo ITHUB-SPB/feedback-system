@@ -5,6 +5,7 @@ import { initTooltips } from "./tooltip";
 import { TableFeedbackManager } from "./table-manager";
 import { IssuesCounter } from "./components/issues-counter";
 import { ImageUploader } from "./components/image-uploader";
+import { PhoneInput } from "./components/phone-input";
 
 const state = new State();
 
@@ -21,7 +22,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     customElements.define("image-uploader", ImageUploader);
   }
 
-  const formManager = new FormManager({ state });
+  if (!customElements.get("phone-input")) {
+    customElements.define("phone-input", PhoneInput);
+  }
+
+  new FormManager({ state });
+
   const tableFeedbackManager = new TableFeedbackManager({ state });
   const mapsManager = new MapsManager({ state, table: tableFeedbackManager });
 

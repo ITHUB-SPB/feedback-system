@@ -4,6 +4,7 @@ import * as types from "./types";
 import type State from "./state";
 import { IssuesCounter } from "./components/issues-counter";
 import { ImageUploader } from "./components/image-uploader";
+import type { PhoneInput } from "./components/phone-input";
 
 type FormManagerProperties = {
   state: State;
@@ -16,11 +17,13 @@ export default class FormManager {
   private categorySelect: HTMLSelectElement;
   private issueSelect: HTMLSelectElement;
   private issueCounters: NodeListOf<IssuesCounter>;
+  private selectOnMapButton: HTMLButtonElement;
 
   private categoryContainer: HTMLDivElement;
   private issueContainer: HTMLDivElement;
 
   private dragAndDrop: ImageUploader;
+  private phoneInput: PhoneInput;
   private alertManager: AlertManager;
   private form: HTMLFormElement;
   private state: State;
@@ -50,11 +53,15 @@ export default class FormManager {
     this.issueContainer = document.getElementById(
       "issueBlock",
     ) as HTMLDivElement;
+    this.selectOnMapButton = document.getElementById(
+      "selectOnMap",
+    ) as HTMLButtonElement;
 
     this.form = document.querySelector(".proposals_form") as HTMLFormElement;
     this.dragAndDrop = document.querySelector(
       "image-uploader",
     ) as ImageUploader;
+    this.phoneInput = document.querySelector("phone-input") as PhoneInput;
     this.state = state;
     this.alertManager = new AlertManager();
     this.init();
@@ -118,15 +125,15 @@ export default class FormManager {
   }
 
   private renderProjectsForCity(cityId: string): void {
-    this.projectSelect.innerHTML = '<option value="">Выберите проект</option>';
+    this.projectSelect.innerHTML =
+      '<option value="">Выберите общественную территорию</option>';
 
     const cityProjects = this.state.projects.filter(
       (project) => project.administrative_unit_id.toString() === cityId,
     );
 
     if (!cityProjects.length) {
-      this.projectSelect.innerHTML =
-        '<option value="">Проекты не найдены</option>';
+      this.projectSelect.innerHTML = '<option value="">Не найдено</option>';
       return;
     }
 
@@ -145,10 +152,12 @@ export default class FormManager {
         this.state.selectedTown =
           this.state.cities.find((city) => city.id === Number(target.value)) ??
           null;
+        this.selectOnMapButton.removeAttribute("disabled");
         this.renderProjectsForCity(target.value);
       } else {
         this.projectSelect.innerHTML =
           '<option value="">Сначала выберите город</option>';
+        this.selectOnMapButton.setAttribute("disabled", "disabled");
       }
 
       for (const issueCounter of this.issueCounters) {
@@ -220,7 +229,6 @@ export default class FormManager {
       "last_name",
       "middle_name",
       "email",
-      "phone",
     ];
 
     const formData = new FormData(this.form);
@@ -237,14 +245,15 @@ export default class FormManager {
     ) as types.FeedbackContract["input"]["create"]["body"];
 
     formDataObject.files = this.dragAndDrop.selectedFiles;
-    return;
+    formDataObject.phone = this.phoneInput.value();
+
+    console.log(formDataObject);
 
     apiClient.feedback
       .create({ body: formDataObject })
       .then(() => {
         this.alertManager.showAlert("Обращение принято", "success");
         this.form.reset();
-        this.dragAndDrop.reset();
       })
       .then(() =>
         setTimeout(() => {

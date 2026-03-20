@@ -5,6 +5,7 @@ import Flex from "antd/es/flex";
 
 import { Show } from "@/components/crud";
 import { ActionButtons } from "@/components/buttons";
+import ReactionTime from "@/components/tags/reaction-time";
 import FeedbackModerator from "@/components/views/feedback-moderator";
 import FeedbackOfficial from "@/components/views/feedback-official";
 import { getStatusColor } from "@/lib/statusColor";
@@ -42,9 +43,17 @@ export const Route = createFileRoute("/_authenticated/feedback/$showId")({
         title={
           <Flex align="center" gap={18}>
             Обращение №{feedback.id}
-            <Tag color={getStatusColor(feedback.status.title)}>
+            <Tag
+              color={getStatusColor(feedback.status.title)}
+              variant="outlined"
+            >
               {feedback.status.translation}
             </Tag>
+            <ReactionTime
+              value={feedback.created_at}
+              status={feedback.status.title}
+              variant="outlined"
+            />
           </Flex>
         }
         footerButtons={

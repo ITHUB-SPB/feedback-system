@@ -21,13 +21,12 @@ export default function FeedbackModerator({ feedback }: ContentProps) {
         style={{ flex: 1, boxShadow: "none", gap: 24 }}
       >
         <Flex vertical>
-          <Typography.Title level={4}>
+          <Typography.Title level={4} style={{ marginBottom: 20 }}>
             {feedback?.topic
               ? `${feedback?.feedback_type} (${feedback.topic})`
               : feedback.feedback_type}{" "}
           </Typography.Title>
 
-          <Typography.Title level={5}>Описание</Typography.Title>
           <Typography.Paragraph
             ellipsis={{
               rows: 10,
@@ -82,10 +81,10 @@ export default function FeedbackModerator({ feedback }: ContentProps) {
       >
         <Typography.Title level={4}>Объект</Typography.Title>
 
-        <Typography.Title level={5}>Территория</Typography.Title>
+        <Typography.Title level={5}>Поселение</Typography.Title>
         <TextField value={feedback?.administrative_unit_title || "—"} />
 
-        <Typography.Title level={5}>Проект</Typography.Title>
+        <Typography.Title level={5}>Общественная территория</Typography.Title>
         <TextField value={feedback?.project} />
 
         <Typography.Title level={5}>Ответственный</Typography.Title>

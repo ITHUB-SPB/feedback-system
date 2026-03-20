@@ -6,7 +6,7 @@ export function useCreateProject() {
     resource: "projects",
     successNotification: {
       type: "success",
-      message: "Проект добавлен",
+      message: "Общественная территория добавлена",
       description: "Успешно",
     },
   });

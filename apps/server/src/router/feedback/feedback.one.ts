@@ -36,7 +36,7 @@ const oneFeedback = requireOfficialProcedure.feedback.one.handler(
         },
         official: {
           approved: ["proceeding", "declined"],
-          proceeding: ["completed", "declined"],
+          proceeding: ["completed"],
         },
       } as const;
 

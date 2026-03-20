@@ -75,9 +75,15 @@ export const createFeedbackSchema = v.object({
   files: v.optional(
     v.union([
       v.array(
-        v.pipe(v.file(), v.mimeType(["image/jpeg", "image/jpg", "image/png"])),
+        v.pipe(
+          v.file(),
+          v.mimeType(["image/jpeg", "image/jpg", "image/png", "image/heic"]),
+        ),
       ),
-      v.pipe(v.file(), v.mimeType(["image/jpeg", "image/jpg", "image/png"])),
+      v.pipe(
+        v.file(),
+        v.mimeType(["image/jpeg", "image/jpg", "image/png", "image/heic"]),
+      ),
     ]),
   ),
 });

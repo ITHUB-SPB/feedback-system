@@ -92,3 +92,18 @@ export function buildOfficialWelcomeEmailWorker(connection: RedisConnection) {
     connection,
   );
 }
+
+export function buildInnerWelcomeEmailWorker(connection: RedisConnection) {
+  const sendInnerWelcomeEmail = async (
+    job: Job<MailOfficialWelcomeJobData>,
+  ): Promise<string | undefined> => {
+    await sendMail(job.data);
+    return job.id;
+  };
+
+  return buildWorker(
+    "inner-welcome-email-queue",
+    sendInnerWelcomeEmail,
+    connection,
+  );
+}

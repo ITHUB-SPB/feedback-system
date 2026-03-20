@@ -9,6 +9,11 @@ export const officialEmailQueue = getQueue<JobType.OfficialWelcomeEmail>(
   connection,
 );
 
+export const innerEmailQueue = getQueue<JobType.InnerWelcomeEmail>(
+  "inner-welcome-email-queue",
+  connection,
+);
+
 export const citizenStatusEmailQueue = getQueue<JobType.CitizenStatusEmail>(
   "citizen-status-email-queue",
   connection,

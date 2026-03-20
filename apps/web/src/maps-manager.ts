@@ -37,6 +37,7 @@ export default class MapsManager {
   private table: TableFeedbackManager;
   private state: State;
   private map: any;
+  private clusterer: any;
   private selectedProject: types.ProjectContract["output"]["one"] | null = null;
 
   constructor({ state, table }: MapsManagerProperties) {
@@ -46,86 +47,64 @@ export default class MapsManager {
   }
 
   private init() {
-    const { minLatitude, minLongitude, maxLatitude, maxLongitude } =
-      this.state.projects.reduce(
-        (acc, project) => {
-          const { latitude, longitude } = project;
-          if (latitude === 0 || longitude === 0) {
-            return acc;
-          }
-          return {
-            minLatitude: Math.min(latitude, acc.minLatitude),
-            minLongitude: Math.min(longitude, acc.minLongitude),
-            maxLatitude: Math.max(latitude, acc.maxLatitude),
-            maxLongitude: Math.max(longitude, acc.maxLongitude),
-          };
-        },
-        {
-          minLatitude: 100,
-          minLongitude: 100,
-          maxLatitude: 0,
-          maxLongitude: 0,
-        },
-      );
-
     ymaps.ready(() => {
-      this.map = new ymaps.Map(
-        "yandexMap",
-        {
-          center: [59.938, 30.3],
-          zoom: 6,
-          controls: ["zoomControl", "searchControl", "geolocationControl"],
-        },
-        {
-          restrictMapArea: [
-            [minLatitude - 0.2, minLongitude - 0.5],
-            [maxLatitude + 0.2, maxLongitude + 0.5],
-          ],
-        },
-      );
-
       this.setupEventListeners();
-      this.loadProjects();
     });
   }
 
-  private async zoomToTown(townId: number) {
-    const townProjects = this.state.projects.filter(
-      (project: types.ProjectContract["output"]["one"]) =>
-        project.administrative_unit_id === Number(townId),
+  private getBounds(projects: State["projects"]) {
+    return projects.reduce(
+      (acc, project) => {
+        const { latitude, longitude } = project;
+        if (latitude === 0 || longitude === 0) {
+          return acc;
+        }
+        return {
+          minLatitude: Math.min(latitude, acc.minLatitude),
+          minLongitude: Math.min(longitude, acc.minLongitude),
+          maxLatitude: Math.max(latitude, acc.maxLatitude),
+          maxLongitude: Math.max(longitude, acc.maxLongitude),
+        };
+      },
+      {
+        minLatitude: 100,
+        minLongitude: 100,
+        maxLatitude: 0,
+        maxLongitude: 0,
+      },
     );
+  }
+
+  private async zoomToTown(townProjects: State["projects"]) {
+    if (this.state.selectedTown?.title) {
+      this.selectedCityElement.textContent = this.state.selectedTown?.title;
+    }
 
     this.selectedProjectElement.textContent = "Не выбран";
 
-    const avgLat =
-      townProjects.reduce(
-        (sum: number, p: types.ProjectContract["output"]["one"]) =>
-          sum + p.latitude,
-        0,
-      ) / townProjects.length;
+    const { minLatitude, minLongitude, maxLatitude, maxLongitude } =
+      this.getBounds(townProjects);
 
-    const avgLng =
-      townProjects.reduce(
-        (sum: number, p: types.ProjectContract["output"]["one"]) =>
-          sum + p.longitude,
-        0,
-      ) / townProjects.length;
+    await this.map.setBounds([
+      [minLatitude - 0.2, minLongitude - 0.2],
+      [maxLatitude + 0.2, maxLongitude + 0.2],
+    ]);
 
-    const coords = [avgLat, avgLng];
-    this.map.setCenter(coords, 12);
+    await this.map.setZoom(13);
   }
 
-  private async zoomToProject(projectId: number) {
+  private async zoomToProject(projectId: string | number) {
     const project = this.state.projects.find(
-      (project) => project.id === Number(projectId),
+      (project) => project.id == Number(projectId),
     )!;
+    console.log(project, projectId);
 
     this.selectedCityElement.textContent = project.administrative_unit;
     this.selectedProjectElement.textContent = `${project.title} (${project.year_of_completion})`;
     this.map.setCenter([project.latitude, project.longitude], 15);
   }
 
-  private async loadProjects() {
+  private async loadProjects(projects: State["projects"]) {
     const getIconContent = (quantity: number): string | undefined => {
       if (quantity === 0) {
         return undefined;
@@ -144,7 +123,7 @@ export default class MapsManager {
       }
     };
 
-    const clusterer = new ymaps.Clusterer({
+    this.clusterer = new ymaps.Clusterer({
       hasBalloon: false,
       hasHint: false,
       maxZoom: 13,
@@ -155,7 +134,7 @@ export default class MapsManager {
       clusterIconColor: "#18a763",
     });
 
-    this.state.projects.forEach((project) => {
+    projects.forEach((project) => {
       const coords = [project.latitude, project.longitude];
       const issuesQuantity =
         this.state.issuesByAllProjects[project.id]?.length ?? 0;
@@ -179,10 +158,10 @@ export default class MapsManager {
         this.issueCounterElement.setAttribute("projectid", String(project.id));
       });
 
-      clusterer.add(marker);
+      this.clusterer.add(marker);
     });
 
-    this.map.geoObjects.add(clusterer);
+    this.map.geoObjects.add(this.clusterer);
   }
 
   private apply() {
@@ -205,6 +184,39 @@ export default class MapsManager {
   }
 
   public open() {
+    if (this.map) {
+      this.map.destroy();
+    }
+
+    const townId = Number(this.state.selectedTown!.id);
+
+    const townProjects = this.state.projects.filter(
+      (project: types.ProjectContract["output"]["one"]) =>
+        project.administrative_unit_id === townId,
+    );
+
+    const { minLatitude, minLongitude, maxLatitude, maxLongitude } =
+      this.getBounds(townProjects);
+
+    this.map = new ymaps.Map(
+      "yandexMap",
+      {
+        center: [
+          (maxLatitude - minLatitude) / 2,
+          (maxLongitude - minLongitude) / 2,
+        ],
+        controls: ["zoomControl", "searchControl", "geolocationControl"],
+      },
+      {
+        restrictMapArea: [
+          [minLatitude - 0.2, minLongitude - 0.2],
+          [maxLatitude + 0.2, maxLongitude + 0.2],
+        ],
+      },
+    );
+
+    this.loadProjects(townProjects);
+
     this.popupElement.classList.add("show");
     document.body.style.overflow = "hidden";
 
@@ -213,9 +225,9 @@ export default class MapsManager {
     }, 100);
 
     if (this.state.selectedProject?.id) {
-      this.zoomToProject(Number(this.state.selectedProject?.id));
+      this.zoomToProject(this.state.selectedProject.id);
     } else if (this.state.selectedTown) {
-      this.zoomToTown(Number(this.state.selectedTown.id));
+      this.zoomToTown(townProjects);
     }
   }
 

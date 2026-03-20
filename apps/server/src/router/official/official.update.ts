@@ -16,7 +16,7 @@ const updateAdministrativeUnit =
       } catch (error) {
         console.error(error);
         throw errors.CONFLICT({
-          message: `Ошибка при обновлении проекта с ID ${input.params.id}`,
+          message: `Ошибка при обновлении общественной территории с ID ${input.params.id}`,
         });
       }
     },

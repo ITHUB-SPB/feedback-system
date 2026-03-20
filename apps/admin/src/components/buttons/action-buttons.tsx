@@ -27,11 +27,11 @@ export const actionButtonProps: ActionButtonProps = {
     icon: <CheckOutlined />,
   },
   approved: {
-    text: "Утвердить",
+    text: "Перенаправить в АМО",
     color: "blue",
     variant: "solid",
     successMessage: "Обращение отправлено в АМО",
-    errorMessage: "Не удалось утвердить обращение",
+    errorMessage: "Не удалось перенаправить обращение",
     commentMessage: null,
     icon: <CheckOutlined />,
   },
@@ -101,7 +101,7 @@ export function ActionButtons({
           onSuccess: () => {
             message.success(successMessage);
             setInterval(() => {
-              navigate({ reloadDocument: true });
+              navigate({ to: "/feedback" });
             }, 2000);
           },
           onError: () => {

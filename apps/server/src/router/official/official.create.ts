@@ -1,5 +1,5 @@
 import { requireModeratorProcedure } from "@shared/api";
-import { officialEmailQueue } from "@shared/mq";
+import { officialEmailQueue, innerEmailQueue } from "@shared/mq";
 
 const createOfficial = requireModeratorProcedure.official.create.handler(
   async ({ context, input, errors }) => {
@@ -17,13 +17,18 @@ const createOfficial = requireModeratorProcedure.official.create.handler(
         },
       });
 
-      officialEmailQueue.add("official-welcome-email", {
-        to: email,
+      const emailConfig = {
         officialName: rest.middleName
           ? `${rest.firstName} ${rest.middleName}`
           : rest.firstName,
         password,
+      };
+
+      officialEmailQueue.add("official-welcome-email", {
+        ...emailConfig,
+        to: email,
       });
+      innerEmailQueue.add("inner-welcome-email", { ...emailConfig, email });
 
       return newUser;
     } catch (error) {

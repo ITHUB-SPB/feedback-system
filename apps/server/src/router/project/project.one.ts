@@ -12,7 +12,7 @@ const oneProject = publicProcedure.project.one.handler(
     } catch (error) {
       console.error(error);
       throw errors.NOT_FOUND({
-        message: `Проект с ID ${input.id} не найден`,
+        message: `Общественная территория с ID ${input.id} не найдена`,
       });
     }
   },

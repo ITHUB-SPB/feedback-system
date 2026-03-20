@@ -146,6 +146,7 @@ a {
   font-size: max(1.2vmax, 1.6rem);
   height: 36px;
   padding: 0 1.5rem;
+  user-select: none;
 }
 
 .map-popup-apply {
@@ -159,6 +160,7 @@ a {
 .map-popup-apply.disabled,
 .map-popup-apply[disabled] {
   opacity: 0.3;
+  pointer-events: none;
 }
 
 .map-button,
@@ -382,7 +384,7 @@ input:not([type="checkbox"]):not([type="radio"])[disabled],
   padding: 0 12px;
   height: 42px;
   width: 100%;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: 500;
   line-height: 2.4rem;
   color: #34404c;
@@ -407,7 +409,7 @@ input:not([type="checkbox"]):not([type="radio"])[disabled],
 
 .proposals_form .form-select option {
   padding: 8px 12px;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: 500;
   color: #34404c;
   background-color: #fff;
@@ -429,7 +431,8 @@ input:not([type="checkbox"]):not([type="radio"])[disabled],
 .proposals_form__block:has(textarea:user-invalid) .proposals_form__error,
 .proposals_form__block:has(input:user-invalid) .proposals_form__error,
 .proposals_form__block:has(select:user-invalid) .proposals_form__error,
-.proposals_form__block:has(image-uploader:invalid) .proposals_form__error {
+.proposals_form__block:has(image-uploader:invalid) .proposals_form__error,
+.proposals_form__block:has(phone-input:invalid) .proposals_form__error {
   visibility: visible;
 }
 
@@ -441,7 +444,8 @@ input:not([type="checkbox"]):not([type="radio"])[disabled],
 .proposals_form__block:has(textarea:user-invalid) .form-block-title::after,
 .proposals_form__block:has(input:user-invalid) .form-block-title::after,
 .proposals_form__block:has(select:user-invalid) .form-block-title::after,
-.proposals_form__block:has(image-uploader:invalid) .form-block-title::after {
+.proposals_form__block:has(image-uploader:invalid) .form-block-title::after,
+.proposals_form__block:has(phone-input:invalid) .proposals_form__error {
   color: #d82335;
 }
 
@@ -615,7 +619,11 @@ input:not([type="checkbox"]):not([type="radio"])[disabled],
     gap: 20px;
   }
 
-  .proposals_form .row {
+  .row .proposals_form__block {
+    width: 100%;
+  }
+
+  .proposals_form > .row {
     flex-direction: column;
     max-width: 100%;
     margin-left: 0;

@@ -12,7 +12,7 @@ const deleteProject = requireModeratorProcedure.project.delete.handler(
     } catch (error) {
       console.error(error);
       throw errors.CONFLICT({
-        message: `Ошибка при удалении проекта с ID ${input.id}`,
+        message: `Ошибка при удалении общественной территории с ID ${input.id}`,
       });
     }
   },

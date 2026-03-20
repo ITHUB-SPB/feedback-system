@@ -66,11 +66,12 @@
     <article class="map-popup-content">
       <header class="map-popup-header">
         <div class="map-selection-info">
-          <p class="selected-city" id="selectedCityName">Выберите проект на карте</p>
-          <p class="selected-project" id="selectedProjectName">Проект не выбран</p>
+          <div class="row">
+            <p class="selected-city" id="selectedCityName"></p>
+            <issues-counter></issues-counter>
+          </div>
+          <p class="selected-project" id="selectedProjectName">Выберите общественную территорию на карте</p>
         </div>
-
-        <issues-counter></issues-counter>
 
         <button class="map-popup-apply">
           Выбрать
@@ -101,7 +102,7 @@
       <section class="proposals_form__block">
         <div class="row">
           <p class="form-block-title">
-            Проект
+            Общественная территория
           </p>
           <issues-counter></issues-counter>
           <span class="proposals_form__error">Заполните поле</span>
@@ -112,7 +113,7 @@
               Сначала выберите город
             </option>
           </select>
-          <button type="button" class="map-button" id="selectOnMap">
+          <button type="button" class="map-button" id="selectOnMap" disabled>
             На карте
           </button>
         </div>
@@ -201,9 +202,9 @@
         <section class="proposals_form__block">
           <div class="row">
             <p class="form-block-title">Телефон</p>
-            <span class="proposals_form__error">Некорректно заполнено поле</span>
+            <span class="proposals_form__error">Номер телефона в формате +7</span>
           </div>
-          <input type="tel" name="phone" class="relative" placeholder="Номер телефона" required />
+          <phone-input mask="+7 (###) ###-##-##" placeholder="+7 000 000 00 00" required></phone-input>
         </section>
       </div>
 

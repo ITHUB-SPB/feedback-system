@@ -23,6 +23,9 @@ services:
       AWS_ENDPOINT: https://minio.localhost
       WALG_S3_PREFIX: s3://backup/pg
       LC_LANG: ru_RU.UTF-8
+      TZ: "Europe/Moscow"
+      PGTZ: "Europe/Moscow"
+
     volumes:
       - ./data:/var/lib/postgresql/data
       - ./logs:/var/log/wal-g

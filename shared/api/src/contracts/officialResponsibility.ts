@@ -69,7 +69,7 @@ const officialResponsibilityContract = oc
         method: "DELETE",
         path: "/{id}",
         inputStructure: "detailed",
-        summary: "Удаление проекта",
+        summary: "Удаление общественной территории",
       })
       .input(deleteOfficialResponsibilitySchema),
   });

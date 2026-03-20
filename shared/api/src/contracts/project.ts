@@ -11,14 +11,14 @@ export const getProjectSchema = v.object({
 });
 
 const projectContract = oc
-  .tag("Проекты")
+  .tag("Общественные территории")
   .prefix("/projects")
   .router({
     one: oc
       .route({
         method: "GET",
         path: "/{id}",
-        summary: "Полная информация о проекте",
+        summary: "Полная информация об общественной территории",
       })
       .input(baseInputOne)
       .output(getProjectSchema),
@@ -27,7 +27,7 @@ const projectContract = oc
       .route({
         method: "PATCH",
         path: "/{id}",
-        summary: "Обновление проекта",
+        summary: "Обновление общественной территории",
         inputStructure: "detailed",
       })
       .input(
@@ -42,8 +42,8 @@ const projectContract = oc
       .route({
         method: "GET",
         path: "/",
-        summary: "Список всех проектов",
-        description: "Краткая информация по всем проектам",
+        summary: "Список всех общественных территорий",
+        description: "Краткая информация по всем общественным территориям",
         spec: (spec) => ({
           ...spec,
           parameters: [
@@ -87,7 +87,7 @@ const projectContract = oc
       .route({
         method: "POST",
         path: "/",
-        summary: "Добавление проекта",
+        summary: "Добавление общественной территории",
       })
       .input(v.omit(projectSchema, ["id", "created_at"]))
       .output(getProjectSchema),
@@ -96,7 +96,7 @@ const projectContract = oc
       .route({
         method: "DELETE",
         path: "/{id}",
-        summary: "Удаление проекта",
+        summary: "Удаление общественной территории",
       })
       .input(baseInputOne),
   });

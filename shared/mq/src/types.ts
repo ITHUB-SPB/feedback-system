@@ -2,6 +2,7 @@ import type {
   MailCitizenStatusJobData,
   MailCitizenStatusWithCommentJobData,
   MailOfficialWelcomeJobData,
+  MailInnerWelcomeJobData,
 } from "@shared/mail/types";
 
 export enum JobType {
@@ -9,13 +10,15 @@ export enum JobType {
   CitizenStatusWithCommentEmail = "citizen-status-with-comment-email",
   OfficialNotificationEmail = "official-notification-email",
   OfficialWelcomeEmail = "official-welcome-email",
+  InnerWelcomeEmail = "inner-welcome-email",
 }
 
 export type JobTypes =
   | JobType.CitizenStatusEmail
   | JobType.CitizenStatusWithCommentEmail
   | JobType.OfficialNotificationEmail
-  | JobType.OfficialWelcomeEmail;
+  | JobType.OfficialWelcomeEmail
+  | JobType.InnerWelcomeEmail;
 
 export type QueueName = `${JobTypes}-queue`;
 
@@ -28,4 +31,5 @@ export type JobData = {
     message: string;
   };
   [JobType.OfficialWelcomeEmail]: MailOfficialWelcomeJobData;
+  [JobType.InnerWelcomeEmail]: MailInnerWelcomeJobData;
 };

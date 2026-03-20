@@ -337,6 +337,7 @@ mark {
   padding: 0.2em;
   background-color: #feffe6;
 }
+
 /* end of antd/reset.css */
 
 :root {
@@ -378,7 +379,4 @@ body {
 .ant-table-fixed-header .ant-table-scroll .ant-table-header {
   overflow: hidden !important;
   margin-bottom: 0px !important;
-}
-
-.ant-table-body {
 }

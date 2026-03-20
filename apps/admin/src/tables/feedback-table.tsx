@@ -12,6 +12,7 @@ import {
 } from "@/components/table/definition";
 import { FilterDropdown } from "@/components/filter-dropdown";
 import { ShowButton } from "@/components/buttons";
+import ReactionTime from "@/components/tags/reaction-time";
 import useFeedbackType from "@/hooks/use-feedback-type";
 import useFeedbackStatus from "@/hooks/use-feedback-status";
 import useFeedbackTable from "@/hooks/use-feedback-table";
@@ -29,6 +30,7 @@ export default function FeedbackTable() {
       pagination={{
         ...table?.tableProps.pagination,
         pageSizeOptions: [12, 24, 48],
+        hideOnSinglePage: true,
       }}
       sticky
     >
@@ -38,11 +40,21 @@ export default function FeedbackTable() {
         defaultSortOrder={getDefaultSortOrder("description", table?.sorters)}
         render={(value, record) => (
           <>
-            <Typography.Paragraph strong>
-              {record.topic
-                ? `${record.feedback_type} (${record.topic})`
-                : record.feedback_type}
-            </Typography.Paragraph>
+            <Space
+              align="baseline"
+              styles={{
+                root: { justifyContent: "space-between", width: "100%" },
+              }}
+            >
+              <Typography.Paragraph strong>
+                {record.topic
+                  ? `${record.feedback_type} (${record.topic})`
+                  : record.feedback_type}
+              </Typography.Paragraph>
+              <Typography.Paragraph style={{ fontSize: "smaller" }}>
+                {new Date(record.created_at).toLocaleString("ru")}
+              </Typography.Paragraph>
+            </Space>
             <Typography.Paragraph
               ellipsis={{
                 rows: 3,
@@ -57,9 +69,9 @@ export default function FeedbackTable() {
       />
       <Table.Column
         dataIndex="project"
-        title="Проект"
+        title="Общественная территория"
         sorter
-        width={220}
+        width={240}
         render={(value, record) => {
           return (
             <>
@@ -74,6 +86,8 @@ export default function FeedbackTable() {
       <Table.Column
         dataIndex="feedback_type_id"
         title="Тип"
+        align="center"
+        width={120}
         sorter
         render={(_, record) => record.feedback_type}
         filterDropdown={(props) => (
@@ -102,6 +116,8 @@ export default function FeedbackTable() {
       <Table.Column
         dataIndex="status.id"
         title="Статус"
+        width={150}
+        align="center"
         filterResetToDefaultFilteredValue
         filterDropdownProps={{ autoAdjustOverflow: true }}
         render={(_, record) => (
@@ -116,9 +132,11 @@ export default function FeedbackTable() {
             >
               {record.status.translation}
             </Tag>
-            <Typography.Paragraph style={{ fontSize: 12 }}>
-              {record.feedback_status_comment ?? ""}
-            </Typography.Paragraph>
+            {record.feedback_status_comment && (
+              <Typography.Paragraph style={{ fontSize: 12 }}>
+                {record.feedback_status_comment}
+              </Typography.Paragraph>
+            )}
           </Space>
         )}
         filterDropdown={(props) => (
@@ -148,10 +166,14 @@ export default function FeedbackTable() {
       />
       <Table.Column
         dataIndex="created_at"
-        title="Дата создания"
+        title="Сроки ответа"
+        width={150}
+        align="center"
         sorter
         defaultSortOrder={getDefaultSortOrder("created_at", table?.sorters)}
-        render={(value) => new Date(value).toLocaleString("ru")}
+        render={(value, record) => {
+          return <ReactionTime value={value} status={record.status.title} />;
+        }}
       />
       <Table.Column
         width={60}

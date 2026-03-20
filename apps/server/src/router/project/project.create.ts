@@ -16,7 +16,7 @@ const createProject = requireModeratorProcedure.project.create.handler(
     } catch (error) {
       console.error(error);
       throw errors.CONFLICT({
-        message: "Ошибка при создании нового проекта",
+        message: "Ошибка при создании новой общественной территории",
       });
     }
   },

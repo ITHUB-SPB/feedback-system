@@ -23,6 +23,8 @@ services:
       POSTGRES_PORT: 5432
       DATA_PATH: ./data
       LC_LANG: ru_RU.UTF-8
+      TZ: "Europe/Moscow"
+      PGTZ: "Europe/Moscow"
     volumes:
       - ./data-development:/var/lib/postgresql/data
 
