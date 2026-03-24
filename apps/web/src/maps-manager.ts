@@ -97,7 +97,6 @@ export default class MapsManager {
     const project = this.state.projects.find(
       (project) => project.id == Number(projectId),
     )!;
-    console.log(project, projectId);
 
     this.selectedCityElement.textContent = project.administrative_unit;
     this.selectedProjectElement.textContent = `${project.title} (${project.year_of_completion})`;

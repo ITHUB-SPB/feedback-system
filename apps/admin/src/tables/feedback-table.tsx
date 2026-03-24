@@ -18,7 +18,11 @@ import useFeedbackStatus from "@/hooks/use-feedback-status";
 import useFeedbackTable from "@/hooks/use-feedback-table";
 import { getStatusColor } from "@/lib/statusColor";
 
-export default function FeedbackTable() {
+type FeedbackTableProps = {
+  role: string
+}
+
+export default function FeedbackTable({ role }: FeedbackTableProps) {
   const table = useFeedbackTable();
   const feedbackType = useFeedbackType();
   const feedbackStatus = useFeedbackStatus();
@@ -67,22 +71,24 @@ export default function FeedbackTable() {
           </>
         )}
       />
+
       <Table.Column
         dataIndex="project"
         title="Общественная территория"
         sorter
         width={240}
         render={(value, record) => {
-          return (
+          return role === "moderator" ? (
             <>
               <Typography.Paragraph strong>
                 {record.administrative_unit_title}
               </Typography.Paragraph>
               <Typography.Paragraph>{value}</Typography.Paragraph>
             </>
-          );
+          ) : <Typography.Paragraph>{value}</Typography.Paragraph>;
         }}
       />
+      
       <Table.Column
         dataIndex="feedback_type_id"
         title="Тип"
@@ -177,13 +183,15 @@ export default function FeedbackTable() {
       />
       <Table.Column
         width={60}
-        render={(_, record) => (
-          <Space>
-            <Link to="/feedback/$showId" params={{ showId: record.id }}>
-              <ShowButton hideText size="small" />
-            </Link>
-          </Space>
-        )}
+        render={(_, record) => {
+          return (
+            <Space>
+              <Link to="/feedback/$showId" params={{ showId: record.id }}>
+                <ShowButton hideText size="small" />
+              </Link>
+            </Space>
+          )
+        }}
       />
     </Table>
   );

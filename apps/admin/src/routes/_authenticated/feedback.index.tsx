@@ -18,9 +18,13 @@ export const Route = createFileRoute("/_authenticated/feedback/")({
     );
   },
   component: () => {
+    const {
+      context: { session },
+    } = Route.parentRoute.useLoaderData();
+
     return (
       <PageHeader title="Предложения граждан">
-        <FeedbackTable />
+        <FeedbackTable role={session.role} />
       </PageHeader>
     );
   },

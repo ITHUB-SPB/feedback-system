@@ -42,8 +42,10 @@ export const getManyFeedbackSchema = v.array(
   v.union([
     v.omit(getFeedbackSchema, ["image_links"]),
     v.pick(getFeedbackSchema, [
+      "id",
       "project_id",
       "description",
+      "project",
       "feedback_type",
       "status",
       "created_at",
