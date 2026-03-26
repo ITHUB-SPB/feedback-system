@@ -4,7 +4,7 @@ import { officialEmailQueue, innerEmailQueue } from "@shared/mq";
 const createOfficial = requireModeratorProcedure.official.create.handler(
   async ({ context, input, errors }) => {
     try {
-      const { email, ...rest } = input;
+      const { email, administrative_unit_id, ...rest } = input;
       const password = crypto.randomUUID().slice(0, 8);
 
       const { user: newUser } = await context.auth.api.createUser({
@@ -17,6 +17,14 @@ const createOfficial = requireModeratorProcedure.official.create.handler(
         },
       });
 
+      await context.db
+        .insertInto("official_responsibility")
+        .values({
+          official_id: newUser.id,
+          administrative_unit_id: administrative_unit_id,
+        })
+        .execute();
+
       const emailConfig = {
         officialName: rest.middleName
           ? `${rest.firstName} ${rest.middleName}`
@@ -28,6 +36,7 @@ const createOfficial = requireModeratorProcedure.official.create.handler(
         ...emailConfig,
         to: email,
       });
+
       innerEmailQueue.add("inner-welcome-email", { ...emailConfig, email });
 
       return newUser;

@@ -1,11 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import Button from "antd/es/button";
-
 import { PageHeader } from "@/components/page-header";
 import AdministrativeUnitsTable from "@/tables/administrative-units-table";
-import OfficialAssignModalForm from "@/forms/official-assign-form";
-import useOfficialAssignForm from "@/hooks/use-official-assign-form";
 
 export const Route = createFileRoute("/_authenticated/administrative_units")({
   loader: async ({ context }) => {
@@ -23,33 +19,9 @@ export const Route = createFileRoute("/_authenticated/administrative_units")({
       }),
     );
   },
-  component: ListAdministrativeUnits,
+  component: () => (
+    <PageHeader title="Поселения">
+      <AdministrativeUnitsTable />
+    </PageHeader>
+  ),
 });
-
-function ListAdministrativeUnits() {
-  const {
-    officialAssignModalProps,
-    officialAssignFormProps,
-    officialAssignModalShow,
-  } = useOfficialAssignForm();
-
-  return (
-    <>
-      <PageHeader
-        title="Поселения"
-        extra={
-          <Button onClick={() => officialAssignModalShow()} color="geekblue">
-            Назначить ответственного
-          </Button>
-        }
-      >
-        <AdministrativeUnitsTable />
-      </PageHeader>
-
-      <OfficialAssignModalForm
-        officialAssignModalProps={officialAssignModalProps}
-        officialAssignFormProps={officialAssignFormProps}
-      />
-    </>
-  );
-}

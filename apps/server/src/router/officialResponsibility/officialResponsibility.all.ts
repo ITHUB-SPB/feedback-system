@@ -1,5 +1,4 @@
 import { requireModeratorProcedure } from "@shared/api";
-import _baseSelect from "./_baseSelect";
 import { type Tables } from "@shared/database";
 
 const allOfficialResponsibilities =
@@ -8,7 +7,23 @@ const allOfficialResponsibilities =
       try {
         const { filter, sort, offset, limit } = input;
 
-        let query = _baseSelect(context.db);
+        let query = context.db
+          .selectFrom("official_responsibility")
+          .innerJoin(
+            "administrative_unit",
+            "administrative_unit.id",
+            "official_responsibility.administrative_unit_id",
+          )
+          .innerJoin("user", "user.id", "official_responsibility.official_id")
+          .select([
+            "official_responsibility.id",
+            "official_responsibility.official_id",
+            "official_responsibility.administrative_unit_id",
+            "administrative_unit.title as administrative_unit",
+            "user.firstName as officialFirstName",
+            "user.lastName as officialLastName",
+            "user.middleName as officialMiddleName",
+          ]);
 
         if (filter?.length) {
           const mapOperatorsToSql = {

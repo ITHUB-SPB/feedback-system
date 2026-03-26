@@ -2,15 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { orpcClient } from "@/providers/orpc-client";
 import { useSelectFromQuery } from "@/components/fields/use-select-from-query";
 
-type QueryProps = {
-  filter?: string;
-};
-
-export default function useVotingRegions(props: QueryProps = {}) {
+export default function useVotingRegions() {
   const { data, isLoading, isError } = useQuery(
-    orpcClient.votingRegion.all.queryOptions({
-      input: props,
-    }),
+    orpcClient.votingRegion.all.queryOptions({}),
   );
 
   const { selectProps } = useSelectFromQuery({

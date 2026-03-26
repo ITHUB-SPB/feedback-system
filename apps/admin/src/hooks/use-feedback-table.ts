@@ -6,7 +6,7 @@ export default function useFeedbackTable() {
   const { context } = useLoaderData({ from: "/_authenticated" });
   const { user } = context.session;
 
-  const { tableProps, sorters, filters } = useTable<
+  const { tableProps, sorters, filters, setFilters, pageSize } = useTable<
     FeedbackContract["outputs"]["all"][0]
   >({
     resource: "feedback",
@@ -39,5 +39,7 @@ export default function useFeedbackTable() {
     tableProps,
     sorters,
     filters,
+    setFilters,
+    pageSize,
   };
 }

@@ -22,13 +22,15 @@ export default function ProjectsTable() {
       {...table.tableProps}
       dataSource={
         table.tableProps.dataSource ??
-        Array.from({ length: 12 }).map((_, index) => ({ id: index }))
+        Array.from({ length: table.pageSize }).map((_, index) => ({
+          id: index,
+        }))
       }
       rowKey="id"
       pagination={{
         ...table.tableProps.pagination,
         hideOnSinglePage: true,
-        pageSizeOptions: [12, 24, 48],
+        pageSizeOptions: [24, 48],
       }}
       sticky
     >

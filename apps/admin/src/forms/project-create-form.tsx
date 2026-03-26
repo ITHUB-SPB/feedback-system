@@ -11,7 +11,16 @@ export default function CreateProjectForm() {
 
   return (
     <>
-      <Form.Item label="Название" name="title">
+      <Form.Item
+        label="Название"
+        name="title"
+        rules={[
+          {
+            required: true,
+            message: "Заполните поле",
+          },
+        ]}
+      >
         <Input minLength={2} />
       </Form.Item>
       <Flex gap="5%">
@@ -19,22 +28,57 @@ export default function CreateProjectForm() {
           label="Территория"
           name="administrative_unit_id"
           style={{ flex: 1 }}
+          rules={[
+            {
+              required: true,
+              message: "Выберите территорию",
+            },
+          ]}
         >
           <Select {...selectProps} loading={isLoading} />
         </Form.Item>
-        <Form.Item label="Год реализации" name="year_of_completion">
+        <Form.Item
+          label="Год реализации"
+          name="year_of_completion"
+          rules={[
+            {
+              required: true,
+              message: "Заполните поле",
+            },
+          ]}
+        >
           <InputNumber step="1" min={2010} max={2026} />
         </Form.Item>
       </Flex>
       <Flex gap="5%">
-        <Form.Item label="Широта" name="latitude" style={{ flex: 1 }}>
+        <Form.Item
+          label="Широта"
+          name="latitude"
+          style={{ flex: 1 }}
+          rules={[
+            {
+              required: true,
+              message: "Заполните поле",
+            },
+          ]}
+        >
           <InputNumber
             pattern="\d*\.\d*"
             step={0.001}
             style={{ width: "100%" }}
           />
         </Form.Item>
-        <Form.Item label="Долгота" name="longitude" style={{ flex: 1 }}>
+        <Form.Item
+          label="Долгота"
+          name="longitude"
+          style={{ flex: 1 }}
+          rules={[
+            {
+              required: true,
+              message: "Заполните поле",
+            },
+          ]}
+        >
           <InputNumber
             pattern="\d*\.\d*"
             step={0.001}

@@ -46,11 +46,18 @@ function OfficialsPage() {
     mutationOptions,
     onMutationSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [["official", "all"]],
+        queryKey: [
+          ["official", "all"],
+          ["official_responsibility", "all"],
+        ],
         refetchType: "all",
       });
       queryClient.invalidateQueries({
         queryKey: ["data", "default", "officials"],
+        refetchType: "all",
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["data", "default", "official_responsibility"],
         refetchType: "all",
       });
       notification.open({

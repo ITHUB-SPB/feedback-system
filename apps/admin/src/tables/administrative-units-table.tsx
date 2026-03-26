@@ -46,7 +46,16 @@ export default function AdministrativeUnitsTable() {
             record: AdministrativeUnitContract["all"][0],
           ) => {
             return table.isEditing(record.id) ? (
-              <Form.Item name="title" style={{ margin: 0 }}>
+              <Form.Item
+                name="title"
+                style={{ margin: 0 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Заполните поле",
+                  },
+                ]}
+              >
                 <Input size="small" />
               </Form.Item>
             ) : (
@@ -67,7 +76,16 @@ export default function AdministrativeUnitsTable() {
           ) => {
             if (table.isEditing(record.id)) {
               return (
-                <Form.Item name="unit_type_id" style={{ margin: 0 }}>
+                <Form.Item
+                  name="unit_type_id"
+                  style={{ margin: 0 }}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Выберите тип",
+                    },
+                  ]}
+                >
                   <Select
                     loading={unitTypes.isLoading}
                     options={unitTypes.data?.map((unitType) => ({

@@ -31,15 +31,6 @@ const administrativeUnitContract = oc
       .input(baseInputAll)
       .output(getManyAdministrativeUnitSchema),
 
-    one: oc
-      .route({
-        method: "GET",
-        path: "/{id}",
-        summary: "Информация по поселению",
-      })
-      .input(baseInputOne)
-      .output(getAdministrativeUnitSchema),
-
     update: oc
       .route({
         method: "PATCH",

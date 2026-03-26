@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as AuthenticatedVoting_votesRouteImport } from './routes/_authenticated/voting_votes'
 import { Route as AuthenticatedVoting_unitsRouteImport } from './routes/_authenticated/voting_units'
+import { Route as AuthenticatedVoting_citizensRouteImport } from './routes/_authenticated/voting_citizens'
 import { Route as AuthenticatedTopic_category_topicsRouteImport } from './routes/_authenticated/topic_category_topics'
 import { Route as AuthenticatedOfficialsRouteImport } from './routes/_authenticated/officials'
 import { Route as AuthenticatedCitizensRouteImport } from './routes/_authenticated/citizens'
@@ -49,6 +50,12 @@ const AuthenticatedVoting_unitsRoute =
   AuthenticatedVoting_unitsRouteImport.update({
     id: '/voting_units',
     path: '/voting_units',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedVoting_citizensRoute =
+  AuthenticatedVoting_citizensRouteImport.update({
+    id: '/voting_citizens',
+    path: '/voting_citizens',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedTopic_category_topicsRoute =
@@ -116,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/citizens': typeof AuthenticatedCitizensRoute
   '/officials': typeof AuthenticatedOfficialsRoute
   '/topic_category_topics': typeof AuthenticatedTopic_category_topicsRoute
+  '/voting_citizens': typeof AuthenticatedVoting_citizensRoute
   '/voting_units': typeof AuthenticatedVoting_unitsRoute
   '/voting_votes': typeof AuthenticatedVoting_votesRoute
   '/login': typeof LoginIndexRoute
@@ -132,6 +140,7 @@ export interface FileRoutesByTo {
   '/citizens': typeof AuthenticatedCitizensRoute
   '/officials': typeof AuthenticatedOfficialsRoute
   '/topic_category_topics': typeof AuthenticatedTopic_category_topicsRoute
+  '/voting_citizens': typeof AuthenticatedVoting_citizensRoute
   '/voting_units': typeof AuthenticatedVoting_unitsRoute
   '/voting_votes': typeof AuthenticatedVoting_votesRoute
   '/login': typeof LoginIndexRoute
@@ -150,6 +159,7 @@ export interface FileRoutesById {
   '/_authenticated/citizens': typeof AuthenticatedCitizensRoute
   '/_authenticated/officials': typeof AuthenticatedOfficialsRoute
   '/_authenticated/topic_category_topics': typeof AuthenticatedTopic_category_topicsRoute
+  '/_authenticated/voting_citizens': typeof AuthenticatedVoting_citizensRoute
   '/_authenticated/voting_units': typeof AuthenticatedVoting_unitsRoute
   '/_authenticated/voting_votes': typeof AuthenticatedVoting_votesRoute
   '/login/': typeof LoginIndexRoute
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/citizens'
     | '/officials'
     | '/topic_category_topics'
+    | '/voting_citizens'
     | '/voting_units'
     | '/voting_votes'
     | '/login'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/citizens'
     | '/officials'
     | '/topic_category_topics'
+    | '/voting_citizens'
     | '/voting_units'
     | '/voting_votes'
     | '/login'
@@ -201,6 +213,7 @@ export interface FileRouteTypes {
     | '/_authenticated/citizens'
     | '/_authenticated/officials'
     | '/_authenticated/topic_category_topics'
+    | '/_authenticated/voting_citizens'
     | '/_authenticated/voting_units'
     | '/_authenticated/voting_votes'
     | '/login/'
@@ -253,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/voting_units'
       fullPath: '/voting_units'
       preLoaderRoute: typeof AuthenticatedVoting_unitsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/voting_citizens': {
+      id: '/_authenticated/voting_citizens'
+      path: '/voting_citizens'
+      fullPath: '/voting_citizens'
+      preLoaderRoute: typeof AuthenticatedVoting_citizensRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/topic_category_topics': {
@@ -333,6 +353,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedCitizensRoute: typeof AuthenticatedCitizensRoute
   AuthenticatedOfficialsRoute: typeof AuthenticatedOfficialsRoute
   AuthenticatedTopic_category_topicsRoute: typeof AuthenticatedTopic_category_topicsRoute
+  AuthenticatedVoting_citizensRoute: typeof AuthenticatedVoting_citizensRoute
   AuthenticatedVoting_unitsRoute: typeof AuthenticatedVoting_unitsRoute
   AuthenticatedVoting_votesRoute: typeof AuthenticatedVoting_votesRoute
   AuthenticatedFeedbackShowIdRoute: typeof AuthenticatedFeedbackShowIdRoute
@@ -350,6 +371,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedOfficialsRoute: AuthenticatedOfficialsRoute,
   AuthenticatedTopic_category_topicsRoute:
     AuthenticatedTopic_category_topicsRoute,
+  AuthenticatedVoting_citizensRoute: AuthenticatedVoting_citizensRoute,
   AuthenticatedVoting_unitsRoute: AuthenticatedVoting_unitsRoute,
   AuthenticatedVoting_votesRoute: AuthenticatedVoting_votesRoute,
   AuthenticatedFeedbackShowIdRoute: AuthenticatedFeedbackShowIdRoute,

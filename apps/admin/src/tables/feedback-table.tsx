@@ -5,6 +5,7 @@ import Tag from "antd/es/tag";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
 import Typography from "antd/es/typography";
+import Skeleton from "antd/es/skeleton";
 
 import {
   getDefaultSortOrder,
@@ -13,23 +14,31 @@ import {
 import { FilterDropdown } from "@/components/filter-dropdown";
 import { ShowButton } from "@/components/buttons";
 import ReactionTime from "@/components/tags/reaction-time";
-import useFeedbackType from "@/hooks/use-feedback-type";
 import useFeedbackStatus from "@/hooks/use-feedback-status";
 import useFeedbackTable from "@/hooks/use-feedback-table";
+import { useAdministrativeUnits } from "@/hooks/use-administrative-units";
 import { getStatusColor } from "@/lib/statusColor";
 
 type FeedbackTableProps = {
-  role: string
+  role: string;
+  table: ReturnType<typeof useFeedbackTable>;
 }
 
-export default function FeedbackTable({ role }: FeedbackTableProps) {
-  const table = useFeedbackTable();
-  const feedbackType = useFeedbackType();
+export default function FeedbackTable({ role, table }: FeedbackTableProps) {
   const feedbackStatus = useFeedbackStatus();
+  const administrativeUnits = useAdministrativeUnits({
+    filter: "unit_type_id[eq]2",
+  });
 
   return (
     <Table
-      {...table?.tableProps}
+      {...table.tableProps}
+      dataSource={
+        table.tableProps.dataSource ??
+        Array.from({ length: table.pageSize }).map((_, index) => ({
+          id: index,
+        }))
+      }
       rowKey="id"
       pagination={{
         ...table?.tableProps.pagination,
@@ -42,43 +51,91 @@ export default function FeedbackTable({ role }: FeedbackTableProps) {
         dataIndex="description"
         title="Описание"
         defaultSortOrder={getDefaultSortOrder("description", table?.sorters)}
-        render={(value, record) => (
-          <>
-            <Space
-              align="baseline"
-              styles={{
-                root: { justifyContent: "space-between", width: "100%" },
-              }}
-            >
-              <Typography.Paragraph strong>
-                {record.topic
-                  ? `${record.feedback_type} (${record.topic})`
-                  : record.feedback_type}
+        render={(value, record) =>
+          table.tableProps.loading ? (
+            <>
+              <Skeleton
+                key={"description"}
+                title
+                active={true}
+                paragraph={true}
+              />
+            </>
+          ) : (
+            <>
+              <Space
+                align="baseline"
+                styles={{
+                  root: { justifyContent: "space-between", width: "100%" },
+                }}
+              >
+                <Typography.Paragraph strong style={{ fontSize: "small" }}>
+                  {record.topic
+                    ? `${record.feedback_type} (${record.topic})`
+                    : record.feedback_type}
+                </Typography.Paragraph>
+                <Typography.Paragraph style={{ fontSize: "smaller" }}>
+                  {new Date(record.created_at).toLocaleString("ru")}
+                </Typography.Paragraph>
+              </Space>
+              <Typography.Paragraph
+                ellipsis={{
+                  rows: 3,
+                  expandable: true,
+                  symbol: "Читать полностью",
+                }}
+              >
+                {value}
               </Typography.Paragraph>
-              <Typography.Paragraph style={{ fontSize: "smaller" }}>
-                {new Date(record.created_at).toLocaleString("ru")}
-              </Typography.Paragraph>
-            </Space>
-            <Typography.Paragraph
-              ellipsis={{
-                rows: 3,
-                expandable: true,
-                symbol: "Читать полностью",
-              }}
-            >
-              {value}
-            </Typography.Paragraph>
-          </>
-        )}
+            </>
+          )
+        }
       />
 
       <Table.Column
-        dataIndex="project"
+        dataIndex="administrative_unit.id"
         title="Общественная территория"
         sorter
         width={240}
+        filterDropdown={(props) => (
+          <FilterDropdown
+            {...props}
+            key="administrative_unit.id"
+            mapValue={(selectedKey) => {
+              if (Array.isArray(selectedKey)) return selectedKey.map(Number);
+              return selectedKey && selectedKey !== ""
+                ? Number(selectedKey)
+                : undefined;
+            }}
+          >
+            <Select
+              loading={administrativeUnits.isLoading}
+              style={{ width: 175 }}
+              {...administrativeUnits.selectProps}
+              mode="multiple"
+            />
+          </FilterDropdown>
+        )}
+        defaultFilteredValue={getDefaultFilter(
+          "administrative_unit.id",
+          table?.filters,
+          "eq",
+        )}
         render={(value, record) => {
-          return role === "moderator" ? (
+          return table.tableProps.loading ? (
+            <>
+              <Skeleton
+                key={"administrative_unit.id-skeleton1"}
+                active={true}
+                paragraph={false}
+              />
+              <Skeleton
+                key={"administrative_unit.id-skeleton2"}
+                active={true}
+                paragraph={false}
+              />
+            </>
+          ) : role === "moderator" ? (
             <>
               <Typography.Paragraph strong>
                 {record.administrative_unit_title}
@@ -88,37 +145,6 @@ export default function FeedbackTable({ role }: FeedbackTableProps) {
           ) : <Typography.Paragraph>{value}</Typography.Paragraph>;
         }}
       />
-      
-      <Table.Column
-        dataIndex="feedback_type_id"
-        title="Тип"
-        align="center"
-        width={120}
-        sorter
-        render={(_, record) => record.feedback_type}
-        filterDropdown={(props) => (
-          <FilterDropdown
-            {...props}
-            mapValue={(selectedKey) => {
-              if (Array.isArray(selectedKey)) return undefined;
-              return selectedKey && selectedKey !== ""
-                ? Number(selectedKey)
-                : undefined;
-            }}
-          >
-            <Select
-              style={{ minWidth: 200 }}
-              {...feedbackType.selectProps}
-              loading={feedbackType.isLoading}
-            />
-          </FilterDropdown>
-        )}
-        defaultFilteredValue={getDefaultFilter(
-          "feedback_type_id",
-          table?.filters,
-          "eq",
-        )}
-      />
       <Table.Column
         dataIndex="status.id"
         title="Статус"
@@ -126,34 +152,42 @@ export default function FeedbackTable({ role }: FeedbackTableProps) {
         align="center"
         filterResetToDefaultFilteredValue
         filterDropdownProps={{ autoAdjustOverflow: true }}
-        render={(_, record) => (
-          <Space
-            orientation="vertical"
-            size="middle"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <Tag
-              color={getStatusColor(record.status.title)}
-              style={{ marginInlineEnd: 0 }}
+        render={(_, record) =>
+          table.tableProps.loading ? (
+            <>
+              <Skeleton
+                key={"status.id-skeleton"}
+                active={true}
+                paragraph={false}
+              />
+            </>
+          ) : (
+            <Space
+              orientation="vertical"
+              size="middle"
+              style={{ display: "flex", alignItems: "center" }}
             >
-              {record.status.translation}
-            </Tag>
-            {record.feedback_status_comment && (
-              <Typography.Paragraph style={{ fontSize: 12 }}>
-                {record.feedback_status_comment}
-              </Typography.Paragraph>
-            )}
-          </Space>
-        )}
+              <Tag
+                color={getStatusColor(record.status.title)}
+                style={{ marginInlineEnd: 0 }}
+              >
+                {record.status.translation}
+              </Tag>
+              {record.feedback_status_comment && (
+                <Typography.Paragraph style={{ fontSize: 12 }}>
+                  {record.feedback_status_comment}
+                </Typography.Paragraph>
+              )}
+            </Space>
+          )
+        }
         filterDropdown={(props) => (
           <FilterDropdown
             {...props}
             key="status.id"
             mapValue={(selectedKey) => {
               if (Array.isArray(selectedKey)) return selectedKey.map(Number);
-              return selectedKey && selectedKey !== ""
-                ? Number(selectedKey)
-                : undefined;
+              return selectedKey !== "" ? Number(selectedKey) : undefined;
             }}
           >
             <Select
@@ -177,9 +211,19 @@ export default function FeedbackTable({ role }: FeedbackTableProps) {
         align="center"
         sorter
         defaultSortOrder={getDefaultSortOrder("created_at", table?.sorters)}
-        render={(value, record) => {
-          return <ReactionTime value={value} status={record.status.title} />;
-        }}
+        render={(value, record) =>
+          table.tableProps.loading ? (
+            <>
+              <Skeleton
+                key={"created_at-skeleton"}
+                active={true}
+                paragraph={false}
+              />
+            </>
+          ) : (
+            <ReactionTime value={value} status={record.status.title} />
+          )
+        }
       />
       <Table.Column
         width={60}

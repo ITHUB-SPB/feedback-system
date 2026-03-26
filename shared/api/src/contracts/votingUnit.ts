@@ -40,15 +40,6 @@ const votingUnitContract = oc
       .input(baseInputAll)
       .output(v.array(getVotingUnitSchema)),
 
-    one: oc
-      .route({
-        method: "GET",
-        path: "/{id}",
-        summary: "Информация о голосующем поселении",
-      })
-      .input(baseInputOne)
-      .output(getVotingUnitSchema),
-
     update: oc
       .route({
         method: "PATCH",

@@ -4,6 +4,9 @@ import Space from "antd/es/space";
 import Input from "antd/es/input";
 import Select from "antd/es/select";
 import Button from "antd/es/button";
+import message from "antd/es/message";
+
+import { useInvalidate } from "@refinedev/core";
 
 import { TextField } from "@/components/fields";
 import { getDefaultSortOrder } from "@/components/table/definition";
@@ -17,6 +20,7 @@ type VotingUnitRecord = VotingUnitContract["all"][0];
 export default function VotingUnitsTable() {
   const table = useVotingUnitsTable();
   const votingRegions = useVotingRegions();
+  const invalidate = useInvalidate();
 
   return (
     <Form {...table.formProps}>
@@ -37,7 +41,16 @@ export default function VotingUnitsTable() {
           defaultSortOrder={getDefaultSortOrder("voting_region", table.sorters)}
           render={(value: string, record: VotingUnitRecord) => {
             return table.isEditing(record.id) ? (
-              <Form.Item name="voting_region_id" style={{ margin: 0 }}>
+              <Form.Item
+                name="voting_region_id"
+                style={{ margin: 0 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Выберите район",
+                  },
+                ]}
+              >
                 <Select {...votingRegions.selectProps}>
                   {votingRegions.selectProps?.options?.map((option) => (
                     <Select.Option key={option.id} value={option.id}>
@@ -70,7 +83,16 @@ export default function VotingUnitsTable() {
           defaultSortOrder={getDefaultSortOrder("title", table.sorters)}
           render={(value: string, record: VotingUnitRecord) => {
             return table.isEditing(record.id) ? (
-              <Form.Item name="title" style={{ margin: 0 }}>
+              <Form.Item
+                name="title"
+                style={{ margin: 0 }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Заполните поле",
+                  },
+                ]}
+              >
                 <Input autoFocus size="small" defaultValue={value} />
               </Form.Item>
             ) : (
@@ -112,15 +134,15 @@ export default function VotingUnitsTable() {
                   size="small"
                   recordItemId={record.id}
                   resource="voting_units"
-                  successNotification={{
-                    type: "success",
-                    description: "Успешно",
-                    message: "Участник удален",
+                  onSuccess={() => {
+                    message.success("Поселение удалено из участников");
+                    invalidate({
+                      resource: "voting_units",
+                      invalidates: ["all"],
+                    });
                   }}
-                  errorNotification={{
-                    type: "error",
-                    description: "Ошибка",
-                    message: "Не удалось удалить участника",
+                  onError={() => {
+                    message.error("Не удалось удалить поселение");
                   }}
                 />
               </Space>

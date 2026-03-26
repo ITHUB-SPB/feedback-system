@@ -31,6 +31,7 @@ export default function VotingUnitCreateForm({
             rules={[
               {
                 required: true,
+                message: "Заполните поле",
               },
             ]}
             style={{ flex: 1 }}
@@ -44,6 +45,7 @@ export default function VotingUnitCreateForm({
             rules={[
               {
                 required: true,
+                message: "Выберите район",
               },
             ]}
             style={{ flex: 1 }}

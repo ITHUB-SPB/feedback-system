@@ -21,6 +21,13 @@ export const resources = [
     },
   },
   {
+    name: "voting_citizens",
+    list: "/voting_citizens",
+    meta: {
+      label: "Респонденты",
+    },
+  },
+  {
     name: "officials",
     list: "/officials",
     meta: {
@@ -45,14 +52,14 @@ export const resources = [
     name: "voting_votes",
     list: "/voting_votes",
     meta: {
-      label: "Результаты",
+      label: "Голоса",
     },
   },
   {
     name: "voting_units",
     list: "/voting_units",
     meta: {
-      label: "Участники",
+      label: "Поселения",
     },
   },
 ];

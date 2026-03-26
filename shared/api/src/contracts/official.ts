@@ -38,6 +38,11 @@ const createOfficialSchema = v.object({
   lastName: v.pipe(v.string(), v.nonEmpty()),
   middleName: v.pipe(v.string(), v.nonEmpty()),
   phone: v.optional(v.nullable(v.string())),
+  administrative_unit_id: v.pipe(
+    v.union([v.pipe(v.string(), v.transform(Number), v.number()), v.number()]),
+    v.integer(),
+    v.minValue(1),
+  ),
 });
 
 const updateOfficialSchema = v.object({
@@ -62,15 +67,6 @@ const officialContract = oc
       })
       .input(structuredInputAll)
       .output(getManyOfficialSchema),
-
-    one: oc
-      .route({
-        method: "GET",
-        path: "/{id}",
-        summary: "Информация по оф. лицу",
-      })
-      .input(baseInputOne)
-      .output(getOfficialSchema),
 
     update: oc
       .route({

@@ -4,7 +4,7 @@ import type { ProjectContract } from "@/types";
 export default function useProjectsTable() {
   const { tableProps, sorters, filters } = useTable<ProjectContract["all"][0]>({
     resource: "projects",
-    pagination: { currentPage: 1, pageSize: 12, mode: "server" },
+    pagination: { currentPage: 1, pageSize: 24, mode: "server" },
     sorters: {
       initial: [
         { field: "year_of_completion", order: "desc" },

@@ -1,13 +1,12 @@
 import { publicProcedure } from "@shared/api";
 import { type Tables } from "@shared/database";
-import _baseSelect from "./_baseSelect";
 
 const allVotingVotes = publicProcedure.votingVote.all.handler(
   async ({ context, input, errors }) => {
     try {
       const { offset, limit, filter, sort } = input;
 
-      let query = _baseSelect(context.db);
+      let query = context.db.selectFrom("voting_vote").selectAll();
 
       if (input.export) {
         query = query

@@ -25,6 +25,17 @@ import type { RefineThemedLayoutSiderProps } from "./types";
 
 import { authClient } from "@/providers/auth-client";
 
+type RouteLink =
+  | "/voting_votes"
+  | "/voting_units"
+  | "/voting_citizens"
+  | "/feedback"
+  | "/projects"
+  | "/topic_category_topics"
+  | "/officials"
+  | "/administrative_units"
+  | "/citizens";
+
 const drawerButtonStyles: CSSProperties = {
   borderStartStartRadius: 0,
   borderEndStartRadius: 0,
@@ -75,7 +86,7 @@ export const ThemedSider: React.FC<
 
       return (
         <Menu.Item
-          key={item.key}
+          key={item.key as RouteLink}
           icon={icon ?? (isRoute && null)}
           style={linkStyle}
         >
@@ -128,7 +139,7 @@ export const ThemedSider: React.FC<
 
   const items = renderTreeView(menuItems, selectedKey);
 
-  const renderSider = (availableItems: string[]) => {
+  const renderSider = (availableItems: RouteLink[]) => {
     const itemsToRender = items.filter(
       (item) => item.key && availableItems.includes(item.key),
     );
@@ -143,8 +154,8 @@ export const ThemedSider: React.FC<
   };
 
   const renderMenu = (tab: "feedback" | "voting") => {
-    const tabsMapping = {
-      voting: ["/voting_votes", "/voting_units", "/citizens"],
+    const tabsMapping: Record<typeof tab, RouteLink[]> = {
+      voting: ["/voting_votes", "/voting_units", "/voting_citizens"],
       feedback: [
         "/feedback",
         "/projects",
@@ -153,7 +164,7 @@ export const ThemedSider: React.FC<
         "/administrative_units",
         "/citizens",
       ],
-    } as const;
+    };
 
     return (
       <>

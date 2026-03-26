@@ -26,15 +26,6 @@ const votingVoteContract = oc
       .input(baseInputAll)
       .output(getManyVotingVoteSchema),
 
-    one: oc
-      .route({
-        method: "GET",
-        path: "/{id}",
-        summary: "Информация о записи голосования",
-      })
-      .input(baseInputOne)
-      .output(getVotingVoteSchema),
-
     create: oc
       .route({
         method: "POST",

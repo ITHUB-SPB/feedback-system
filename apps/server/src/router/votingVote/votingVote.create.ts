@@ -1,5 +1,4 @@
 import { publicProcedure } from "@shared/api";
-import _baseSelect from "./_baseSelect";
 
 const createVotingVote = publicProcedure.votingVote.create.handler(
   async ({ context, input, errors }) => {
@@ -10,7 +9,9 @@ const createVotingVote = publicProcedure.votingVote.create.handler(
         .returning("id")
         .executeTakeFirstOrThrow();
 
-      return await _baseSelect(context.db)
+      return await context.db
+        .selectFrom("voting_vote")
+        .selectAll()
         .where("voting_vote.id", "=", Number(unitId))
         .executeTakeFirstOrThrow();
     } catch (error) {

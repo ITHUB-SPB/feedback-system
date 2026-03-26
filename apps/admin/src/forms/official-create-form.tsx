@@ -5,8 +5,10 @@ import Input from "antd/es/input";
 import Modal from "antd/es/modal";
 import Flex from "antd/es/flex";
 import Divider from "antd/es/divider";
+import Select from "antd/es/select";
 
 import type { UseModalFormFromQueryReturnType } from "@/components/forms/use-modal-form-from-query";
+import { useAdministrativeUnits } from "@/hooks/use-administrative-units";
 import type { User } from "@/types";
 
 type OfficialCreateModalFormProps = {
@@ -19,6 +21,9 @@ export default function OfficialCreateModalForm({
   officialCreateFormProps,
 }: OfficialCreateModalFormProps) {
   const { form, ...formProps } = officialCreateFormProps;
+  const administrativeUnits = useAdministrativeUnits({
+    filter: "administrative_unit_type.title[eq]town",
+  });
 
   return (
     <Modal
@@ -61,6 +66,7 @@ export default function OfficialCreateModalForm({
             rules={[
               {
                 required: true,
+                message: "Заполните поле",
               },
             ]}
             style={{ flex: 1 }}
@@ -102,6 +108,28 @@ export default function OfficialCreateModalForm({
             <Input />
           </Form.Item>
         </Flex>
+        <Divider titlePlacement="start">Поселение</Divider>
+        <Form.Item
+          label="Поселение"
+          name="administrative_unit_id"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          style={{ flex: 4 }}
+        >
+          <Select
+            {...administrativeUnits.selectProps}
+            loading={administrativeUnits.isLoading}
+          >
+            {administrativeUnits.selectProps?.options?.map((option) => (
+              <Select.Option key={option.id} value={option.id}>
+                {option.title}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
       </Form>
     </Modal>
   );
