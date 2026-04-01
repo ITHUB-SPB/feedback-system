@@ -33,6 +33,13 @@ export type NewOfficialRecord = Pick<
   "firstName" | "lastName" | "middleName" | "phone" | "email"
 >;
 
+export type UsersList<T> = {
+  data: {
+    total: number,
+    users: T[]
+  },
+}
+
 export type ProjectContract = RouterOutput["project"];
 export type FeedbackContract = {
   inputs: RouterInput["feedback"];

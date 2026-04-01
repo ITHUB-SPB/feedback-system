@@ -33,7 +33,7 @@ export default function TopicCategoryTopicsTable() {
     orpcClient.topicCategoryTopic.all.queryOptions({
       input: {
         sort: sorters,
-        filter: filters,
+        filter: filters ?? [],
       },
     });
 
