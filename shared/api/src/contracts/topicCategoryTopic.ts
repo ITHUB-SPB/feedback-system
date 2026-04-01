@@ -29,7 +29,7 @@ const topicCategoryTopicContract = oc
       })
       .input(
         v.object({
-          filter: structuredFilterInput,
+          filter: v.optional(structuredFilterInput),
           sort: structuredSortInput,
         }),
       )

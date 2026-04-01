@@ -29,6 +29,7 @@ export const Route = createFileRoute("/_authenticated/topic_category_topics")({
               order: "asc",
             },
           ],
+          filter: []
         },
       }),
     );

@@ -100,7 +100,7 @@ export default function FeedbackTable({ role, table }: FeedbackTableProps) {
         filterDropdown={(props) => (
           <FilterDropdown
             {...props}
-            key="administrative_unit.id"
+            key="administrative_unit_id"
             mapValue={(selectedKey) => {
               if (Array.isArray(selectedKey)) return selectedKey.map(Number);
               return selectedKey && selectedKey !== ""
@@ -140,9 +140,9 @@ export default function FeedbackTable({ role, table }: FeedbackTableProps) {
               <Typography.Paragraph strong>
                 {record.administrative_unit_title}
               </Typography.Paragraph>
-              <Typography.Paragraph>{value}</Typography.Paragraph>
+              <Typography.Paragraph>{record.project}</Typography.Paragraph>
             </>
-          ) : <Typography.Paragraph>{value}</Typography.Paragraph>;
+          ) : <Typography.Paragraph>{record.project}</Typography.Paragraph>;
         }}
       />
       <Table.Column

@@ -1,79 +1,68 @@
 import Table from "antd/es/table";
-import { useQuery } from "@tanstack/react-query";
-import type { CrudFilter, CrudSort } from "@refinedev/core";
 
 import { TextField } from "@/components/fields";
-import { authClient } from "@/providers/auth-client";
+import type { UsersList, User } from "@/types";
 
-export default async function CitizensTable() {
-  const { data, isLoading, isError } = useQuery({
-    queryFn: () =>
-      authClient.admin.listUsers({
-        fetchOptions: {
-          credentials: "include",
-        },
-        query: {
-          filterField: "role",
-          filterOperator: "eq",
-          filterValue: "citizen",
-          sortBy: "lastName",
-          sortDirection: "asc",
-        },
-      }),
-    queryKey: ["users", "citizen"],
-  });
-
+export default function CitizensTable({ data, isLoading }: {
+  data: UsersList<User>["data"],
+  isLoading: boolean
+}) {
   return (
     <Table
-      dataSource={data?.data?.users || []}
+      dataSource={data?.users || []}
       loading={isLoading}
-      // loading: queryResult.query?.isLoading,
       rowKey="id"
       sticky
       pagination={false}
     >
-      <Table.Column
-        dataIndex="lastName"
-        title="Фамилия"
-        sorter
-        render={(value: string) => (
-          <TextField value={value || "—"} style={{ cursor: "pointer" }} />
-        )}
-      />
+      <Table.ColumnGroup
+        title="ФИО"
+        sorter={(a, b) => a.lastName.localeCompare(b.lastName) || a.firstName.localeCompare(b.firstName)}
+      >
+        <Table.Column
+          dataIndex="lastName"
+          title="Фамилия"
+          render={(value: string) => (
+            <TextField value={value || "—"} style={{ cursor: "pointer" }} />
+          )}
+        />
 
-      <Table.Column
-        dataIndex="firstName"
-        title="Имя"
-        sorter
-        render={(value: string) => (
-          <TextField value={value || "—"} style={{ cursor: "pointer" }} />
-        )}
-      />
+        <Table.Column
+          dataIndex="firstName"
+          title="Имя"
+          render={(value: string) => (
+            <TextField value={value || "—"} style={{ cursor: "pointer" }} />
+          )}
+        />
 
-      <Table.Column
-        dataIndex="middleName"
-        title="Отчество"
-        render={(value: string) => (
-          <TextField value={value || "—"} style={{ cursor: "pointer" }} />
-        )}
-      />
+        <Table.Column
+          dataIndex="middleName"
+          title="Отчество"
+          render={(value: string) => (
+            <TextField value={value || "—"} style={{ cursor: "pointer" }} />
+          )}
+        />
+      </Table.ColumnGroup>
 
-      <Table.Column
-        dataIndex="phone"
-        title="Телефон"
-        render={(value: string) => (
-          <TextField value={value || "—"} style={{ cursor: "pointer" }} />
-        )}
-      />
+      <Table.ColumnGroup title="Контакты">
+        <Table.Column
+          dataIndex="phone"
+          title="Телефон"
+          sorter={(a, b) => a.phone.localeCompare(b.phone)}
+          render={(value: string) => (
+            <TextField value={value || "—"} style={{ cursor: "pointer" }} />
+          )}
+        />
 
-      <Table.Column
-        dataIndex="email"
-        title="Почта"
-        sorter
-        render={(value: string) => (
-          <TextField value={value || "—"} style={{ cursor: "pointer" }} />
-        )}
-      />
+        <Table.Column
+          dataIndex="email"
+          title="Почта"
+          sorter={(a, b) => a.email.localeCompare(b.email)}
+          render={(value: string) => (
+            <TextField value={value || "—"} style={{ cursor: "pointer" }} />
+          )}
+        />
+      </Table.ColumnGroup>
     </Table>
   );
 }

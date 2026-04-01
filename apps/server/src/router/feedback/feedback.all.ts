@@ -64,7 +64,9 @@ const allFeedback = publicProcedure.feedback.all.handler(
 
       if (sort !== undefined) {
         for (const sortExpression of sort) {
-          let [field, order] = sortExpression.split(".");
+          const lastDot = sortExpression.lastIndexOf('.')
+          let field = sortExpression.substring(0, lastDot)
+          let order = sortExpression.slice(lastDot + 1)
 
           if (field === "created_at") {
             field = "feedback.created_at";
