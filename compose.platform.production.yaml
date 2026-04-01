@@ -1,6 +1,5 @@
 include:
   - ./infrastructure/authelia/compose.authelia.yaml
-  - ./infrastructure/crowdsec/compose.crowdsec.yaml
   - ./infrastructure/dozzle/compose.dozzle.yaml
   - ./infrastructure/traefik/compose.traefik.production.yaml
   - ./infrastructure/postgres/compose.postgres.production.yaml
