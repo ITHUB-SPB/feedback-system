@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 
 import { DeclineButton } from "./decline-button";
+import { DropdownButton } from "./dropdown-button";
 import type { ActionButtonProps, ActionButtonsProps } from "./types";
 
 export const actionButtonProps: ActionButtonProps = {
@@ -122,6 +123,20 @@ export function ActionButtons({
         >
           {text}
         </DeclineButton>
+      );
+    }
+
+    if (action === "banned") {
+      return (
+        <DropdownButton
+          color={color}
+          variant={variant}
+          title={commentMessage ?? ""}
+          handleConfirm={handleClick}
+          icon={icon ?? null}
+        >
+          {text}
+        </DropdownButton>
       );
     }
 

@@ -129,8 +129,7 @@ a {
 /*  */
 
 .map-button,
-.submit-apply,
-.map-popup-apply {
+.submit-apply {
   display: inline-block;
   text-decoration: none;
   text-align: center;
@@ -149,22 +148,15 @@ a {
   user-select: none;
 }
 
-.map-popup-apply {
-  border-radius: 10px;
-}
-
 .map-button.disabled,
 .map-button[disabled],
 .submit-apply.disabled,
-.submit-apply[disabled],
-.map-popup-apply.disabled,
-.map-popup-apply[disabled] {
+.submit-apply[disabled] {
   opacity: 0.3;
   pointer-events: none;
 }
 
-.map-button,
-.map-popup-apply {
+.map-button {
   color: #ffffff;
   background-color: #18a763;
 }
@@ -307,7 +299,7 @@ input:not([type="checkbox"]):not([type="radio"])[disabled],
   margin-bottom: 0;
   display: flex;
   gap: 14px;
-  align-items: center;
+  align-items: baseline;
 }
 
 .row .proposals_form__block {

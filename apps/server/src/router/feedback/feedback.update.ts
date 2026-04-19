@@ -42,13 +42,13 @@ const updateFeedback = requireOfficialProcedure.feedback.update.handler(
         ? `${firstName} ${rest.middleName}`
         : firstName;
 
-      if (result.status.title === "declined") {
+      if (result.status.title === "declined" || result.status.title === "banned") {
         await citizenStatusWithCommentEmailQueue.add(
-          "citizen-status-declined",
+          `citizen-status-${result.status.title}`,
           {
             to: email,
             name,
-            status: "declined",
+            status: result.status.title,
             comment: result.feedback_status_comment as string,
           },
         );

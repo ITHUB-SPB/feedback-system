@@ -139,7 +139,7 @@ const CitizenStatusDeclinedEmail = ({
   );
 };
 
-const CitizenStatusBannedEmail = ({ name }: Props) => {
+const CitizenStatusBannedEmail = ({ name, comment }: Props & { comment: string }) => {
   const PreviewComponent = (
     <Preview>Уважаемый житель, Ваше сообщение нуждается в уточнении</Preview>
   );
@@ -152,8 +152,7 @@ const CitizenStatusBannedEmail = ({ name }: Props) => {
 
       <Text className="mb-[20px] text-[#0b0917] text-[16px] leading-[24px]">
         К сожалению, Ваше обращение было отклонено нашими модераторами по
-        причине несоответствия требованиям. Пожалуйста, ознакомьтесь с
-        требованиями, указанными ниже
+        причине несоответствия требованиям. Причина отклонения: { comment } 
       </Text>
 
       <Section className="mb-[24px] rounded-[0px] border-[#e6e6f0] border-[1px] border-solid bg-[#f8f8ff] p-[18px]">
@@ -212,7 +211,7 @@ export const getCitizenStatusHtml = (
     case "approved":
       return <CitizenStatusApprovedEmail name={props.name} />;
     case "banned":
-      return <CitizenStatusBannedEmail name={props.name} />;
+      return <CitizenStatusBannedEmail name={props.name} comment={props.comment} />;
     case "completed":
       return <CitizenStatusCompletedEmail name={props.name} />;
     case "declined":

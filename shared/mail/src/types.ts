@@ -2,14 +2,14 @@ export type MailCitizenStatusWithCommentJobData = {
   to: string;
   name: string;
   attachments?: string[];
-  status: "declined";
+  status: "declined" | "banned";
   comment: string;
 };
 
 export type MailCitizenStatusJobData = {
   to: string;
   name: string;
-  status: "banned" | "approved" | "proceeding" | "completed" | "declined";
+  status: "approved" | "proceeding" | "completed" | "declined";
 };
 
 export type MailOfficialWelcomeJobData = {
