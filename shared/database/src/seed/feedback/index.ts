@@ -111,7 +111,7 @@ async function generateFiles(): Promise<{ files: Blob[] }> {
 }
 
 export default async function seedFeedback() {
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 20; i++) {
     const feedbackRecord = await generateFeedback();
     const form = new FormData();
     for (const field in feedbackRecord) {
