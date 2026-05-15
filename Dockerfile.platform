@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.20
 
-FROM dhi.io/node:24-alpine3.22-sfw-dev AS base
+FROM node:24-alpine3.23 AS base
 
 ENV CI=1
 RUN corepack enable pnpm
@@ -18,7 +18,7 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch
 
 COPY --parents **/package.json package.json pnpm-lock.yaml  ./
-RUN --mount=type=cache,target=/pnpm/store pnpm install --frozen-lockfile --offline
+RUN --mount=type=cache,target=/pnpm/store pnpm install --frozen-lockfile
 
 COPY . .
 

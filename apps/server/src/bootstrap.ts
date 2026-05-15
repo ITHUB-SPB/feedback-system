@@ -86,20 +86,20 @@ export default function createApp(env: Env) {
 
   app.use("*", requestId());
 
-  app.use(
-    "*",
-    bodyLimit({
-      maxSize: 100 * 1024 * 1024,
-      onError: (c) => {
-        return c.json(
-          {
-            error: "Request body too large",
-          },
-          413,
-        );
-      },
-    }),
-  );
+  // app.use(
+  //   "*",
+  //   bodyLimit({
+  //     maxSize: 100 * 1024 * 1024,
+  //     onError: (c) => {
+  //       return c.json(
+  //         {
+  //           error: "Request body too large",
+  //         },
+  //         413,
+  //       );
+  //     },
+  //   }),
+  // );
 
   app.use("*", async (c: any, next) => {
     const pinoMiddleware = createHttpMiddleware({
@@ -126,6 +126,7 @@ export default function createApp(env: Env) {
         "Accept",
         "Authorization",
         "Access-Control-Allow-Headers",
+        "Access-Control-Allow-Origin",
         "content-type",
       ],
       allowMethods: [
@@ -138,7 +139,7 @@ export default function createApp(env: Env) {
         "OPTIONS",
       ],
       exposeHeaders: ["Content-Length"],
-      maxAge: 600,
+      maxAge: 3600,
     }),
   );
 
@@ -157,6 +158,7 @@ export default function createApp(env: Env) {
         "Accept",
         "Authorization",
         "Access-Control-Allow-Headers",
+        "Access-Control-Allow-Origin",
         "content-type",
       ],
       allowMethods: [

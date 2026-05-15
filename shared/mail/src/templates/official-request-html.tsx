@@ -98,10 +98,6 @@ export const OfficialRequestEmail = ({
 
             <Hr className="my-[32px] border-[#e6e6f0]" />
 
-            <Text className="text-[#0b0917] text-[16px] leading-[24px]">
-              С наилучшими пожеланиями, команда Вместе47
-            </Text>
-
             <Text className="m-0 mt-[16px] text-[#666666] text-[12px] leading-[16px]">
               © Вместе47.рф
             </Text>

@@ -188,11 +188,11 @@ export class ImageUploader extends HTMLElement {
   static formAssociated = true;
   private _internals: ElementInternals;
 
-  private userInteracted: boolean = false;
+  // private userInteracted: boolean = false;
   private cachedFileArray: File[] = [];
   private imagePreview: HTMLDivElement;
   private inputHidden: HTMLInputElement;
-  private inputVisible: Element;
+  // private inputVisible: Element;
 
   private options: Options = {
     accept: "image/*",
@@ -211,20 +211,21 @@ export class ImageUploader extends HTMLElement {
     shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.cachedFileArray = [];
+
     this.inputHidden = shadowRoot.querySelector(
       ".input-hidden",
     ) as HTMLInputElement;
-    this.inputVisible = shadowRoot.querySelector(
-      ".input-visible",
-    ) as HTMLInputElement;
+    // this.inputVisible = shadowRoot.querySelector(
+    //   ".input-visible",
+    // ) as HTMLInputElement;
     this.imagePreview = shadowRoot.querySelector(
       ".image-preview",
     ) as HTMLDivElement;
-
-    this.bindEvents();
   }
 
   connectedCallback() {
+    this.bindEvents();
+
     this.options.maxFiles = Number(this.getAttribute("maxfiles")) || 0;
     this.options.accept = this.getAttribute("accept") ?? "image/*";
     this.options.required = this.hasAttribute("required");
@@ -270,7 +271,7 @@ export class ImageUploader extends HTMLElement {
     this.inputHidden.addEventListener(
       "change",
       (e) => {
-        this.userInteracted = true;
+        // this.userInteracted = true;
         const target = e.target as HTMLInputElement;
         if (target.files == null) return;
 
@@ -335,13 +336,13 @@ export class ImageUploader extends HTMLElement {
 
         return !isValidImageType && !isValidExtension
           ? {
-              ...acc,
-              invalidFiles: [...acc.invalidFiles, file],
-            }
+            ...acc,
+            invalidFiles: [...acc.invalidFiles, file],
+          }
           : {
-              ...acc,
-              validFiles: [...acc.validFiles, file],
-            };
+            ...acc,
+            validFiles: [...acc.validFiles, file],
+          };
       },
       {
         validFiles: [],

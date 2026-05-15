@@ -60,9 +60,11 @@ export default function ReactionTime({
   }
 
   const daysForAnswer = status === "proceeding" ? 30 : 1;
+
   const availableHours = dayjs(value)
     .add(daysForAnswer, "day")
     .diff(dayjs(), "hours");
+    
   const availableDays = dayjs(value)
     .add(daysForAnswer, "day")
     .diff(dayjs(), "days");

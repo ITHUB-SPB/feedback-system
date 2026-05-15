@@ -7,4 +7,4 @@ export const trustedOrigins = [
 ]
   .filter((urlString) => urlString !== undefined)
   .map((url) => new URL(url).origin)
-  .concat(["localhost", "https://xn--47-dlcma4bxbi.xn--p1ai"]);
+  .concat(["localhost", "https://xn--47-dlcma4bxbi.xn--p1ai", "https://xn--47-dlckcacbiv4afwllqms4x.xn--p1ai"]);

@@ -11,5 +11,5 @@ export const getOfficialWelcomeText = ({
 
 Пароль: ${password}
 
-С наилучшими пожеланиями, команда Вместе47`;
+© Вместе47.рф`;
 };
