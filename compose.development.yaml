@@ -1,0 +1,27 @@
+include:
+  - ./infrastructure/postgres/compose.postgres.development.yaml
+  - ./infrastructure/minio/compose.minio.development.yaml
+  - ./infrastructure/redis/compose.redis.development.yaml
+  - ./infrastructure/bullboard/compose.bullboard.development.yaml
+
+# services:
+#   bot:
+#     build:
+#       context: .
+#       dockerfile: ./Dockerfile.bot
+#       target: prod-bot
+#     container_name: bot
+#     restart: unless-stopped
+#     ports:
+#       - 8000:8000
+#     develop:
+#       watch:
+#         - action: sync+restart
+#           path: ./apps/bot
+#           target: /app
+#           ignore:
+#             - .venv/
+#         - action: rebuild
+#           path: ./uv.lock
+#     depends_on:
+#       - server

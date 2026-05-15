@@ -3,9 +3,12 @@ import Table from "antd/es/table";
 import { TextField } from "@/components/fields";
 import type { UsersList, User } from "@/types";
 
-export default function CitizensTable({ data, isLoading }: {
-  data: UsersList<User>["data"],
-  isLoading: boolean
+export default function CitizensTable({
+  data,
+  isLoading,
+}: {
+  data: UsersList<User>["data"];
+  isLoading: boolean;
 }) {
   return (
     <Table
@@ -17,7 +20,10 @@ export default function CitizensTable({ data, isLoading }: {
     >
       <Table.ColumnGroup
         title="ФИО"
-        sorter={(a, b) => a.lastName.localeCompare(b.lastName) || a.firstName.localeCompare(b.firstName)}
+        sorter={(a, b) =>
+          a.lastName.localeCompare(b.lastName) ||
+          a.firstName.localeCompare(b.firstName)
+        }
       >
         <Table.Column
           dataIndex="lastName"

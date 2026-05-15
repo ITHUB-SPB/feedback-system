@@ -1,6 +1,6 @@
 services:
   feedback-traefik:
-    image: traefik:v3.6.2
+    image: traefik:v3.7.1
     container_name: feedback-traefik--production
     restart: unless-stopped
     security_opt:
@@ -42,6 +42,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./production/rules:/rules"
@@ -52,7 +53,7 @@ services:
 
       - "traefik.http.routers.dashboard.rule=Host(`traefik.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.entrypoints=web-secure"
+      - "traefik.http.routers.dashboard.entrypoints=web"
       - "traefik.http.routers.dashboard.middlewares=chain-authelia@file"
       - "traefik.http.routers.dashboard.tls.certresolver=tlsresolver"
       - "traefik.http.services.dashboard.loadbalancer.server.port=8080"

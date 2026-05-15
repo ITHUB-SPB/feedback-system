@@ -64,9 +64,9 @@ const allFeedback = publicProcedure.feedback.all.handler(
 
       if (sort !== undefined) {
         for (const sortExpression of sort) {
-          const lastDot = sortExpression.lastIndexOf('.')
-          let field = sortExpression.substring(0, lastDot)
-          let order = sortExpression.slice(lastDot + 1)
+          const lastDot = sortExpression.lastIndexOf(".");
+          let field = sortExpression.substring(0, lastDot);
+          let order = sortExpression.slice(lastDot + 1);
 
           if (field === "created_at") {
             field = "feedback.created_at";
@@ -99,26 +99,26 @@ const allFeedback = publicProcedure.feedback.all.handler(
 
       return publicFieldsOnly
         ? results.map(
-          ({
-            id,
-            project_id,
-            project,
-            created_at,
-            description,
-            feedback_type,
-            status,
-            feedback_status_comment,
-          }) => ({
-            id,
-            project_id,
-            project,
-            created_at,
-            description,
-            feedback_type,
-            status,
-            feedback_status_comment,
-          }),
-        )
+            ({
+              id,
+              project_id,
+              project,
+              created_at,
+              description,
+              feedback_type,
+              status,
+              feedback_status_comment,
+            }) => ({
+              id,
+              project_id,
+              project,
+              created_at,
+              description,
+              feedback_type,
+              status,
+              feedback_status_comment,
+            }),
+          )
         : results;
     } catch (error) {
       console.error(error);

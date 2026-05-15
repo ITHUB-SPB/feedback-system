@@ -1,0 +1,28 @@
+include:
+  - ./infrastructure/traefik/compose.traefik.staging.yaml
+  - ./infrastructure/postgres/compose.postgres.staging.yaml
+  - ./infrastructure/minio/compose.minio.staging.yaml
+  - ./infrastructure/redis/compose.redis.staging.yaml
+  - ./infrastructure/bullboard/compose.bullboard.staging.yaml
+
+# services:
+  # feedback-bot:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.bot
+  #     target: prod-bot
+  #   container_name: feedback-bot-staging
+  #   restart: unless-stopped
+  #   ports:
+  #     - 8000:8000
+  #   develop:
+  #     watch:
+  #       - action: sync+restart
+  #         path: ./apps/bot
+  #         target: /app
+  #         ignore:
+  #           - .venv/
+  #       - action: rebuild
+  #         path: ./uv.lock
+  #   depends_on:
+  #     - feedback-server
