@@ -50,6 +50,6 @@ export const getCitizenStatusText = (
   } else if (props.status === "approved") {
     return citizenStatusApprovalText;
   } else if (props.status === "completed") {
-    return citizenStatusCompletedText
+    return citizenStatusCompletedText;
   }
 };

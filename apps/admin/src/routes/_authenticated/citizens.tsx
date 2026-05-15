@@ -15,7 +15,7 @@ const queryObject = {
     sortBy: "lastName",
     sortDirection: "asc",
   },
-}
+};
 
 export const Route = createFileRoute("/_authenticated/citizens")({
   loader: async ({ context }) => {
@@ -25,10 +25,9 @@ export const Route = createFileRoute("/_authenticated/citizens")({
     });
   },
   component: () => {
-    const { context } = Route.parentRoute.useLoaderData()
+    const { context } = Route.parentRoute.useLoaderData();
     const { data, isLoading, isError } = useQuery({
-      queryFn: () =>
-        context.authClient.admin.listUsers(queryObject),
+      queryFn: () => context.authClient.admin.listUsers(queryObject),
       queryKey: ["users", "citizen"],
     });
 

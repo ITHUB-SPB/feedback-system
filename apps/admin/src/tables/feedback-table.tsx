@@ -22,7 +22,7 @@ import { getStatusColor } from "@/lib/statusColor";
 type FeedbackTableProps = {
   role: string;
   table: ReturnType<typeof useFeedbackTable>;
-}
+};
 
 export default function FeedbackTable({ role, table }: FeedbackTableProps) {
   const feedbackStatus = useFeedbackStatus();
@@ -142,7 +142,9 @@ export default function FeedbackTable({ role, table }: FeedbackTableProps) {
               </Typography.Paragraph>
               <Typography.Paragraph>{record.project}</Typography.Paragraph>
             </>
-          ) : <Typography.Paragraph>{record.project}</Typography.Paragraph>;
+          ) : (
+            <Typography.Paragraph>{record.project}</Typography.Paragraph>
+          );
         }}
       />
       <Table.Column
@@ -234,7 +236,7 @@ export default function FeedbackTable({ role, table }: FeedbackTableProps) {
                 <ShowButton hideText size="small" />
               </Link>
             </Space>
-          )
+          );
         }}
       />
     </Table>

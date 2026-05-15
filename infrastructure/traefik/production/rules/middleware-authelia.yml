@@ -4,6 +4,7 @@ http:
       forwardAuth:
         address: "http://authelia:9091/api/verify?rd=https://authelia.xn--47-dlckcacbiv4afwllqms4x.xn--p1ai"
         trustForwardHeader: true
+        maxResponseBodySize: 8192
         authResponseHeaders:
           - "Remote-User"
           - "Remote-Groups"

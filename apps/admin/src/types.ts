@@ -35,10 +35,10 @@ export type NewOfficialRecord = Pick<
 
 export type UsersList<T> = {
   data: {
-    total: number,
-    users: T[]
-  },
-}
+    total: number;
+    users: T[];
+  };
+};
 
 export type ProjectContract = RouterOutput["project"];
 export type FeedbackContract = {
