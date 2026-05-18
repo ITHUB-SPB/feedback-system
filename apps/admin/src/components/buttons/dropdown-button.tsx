@@ -73,16 +73,6 @@ export const DropdownButton: React.FC<ButtonProps & HandleConfirmProp> = ({
   return (
     <Space>
       <Space.Compact block>
-        <Dropdown menu={menuProps} styles={objectStyles}>
-          <Button
-            variant="outlined"
-            danger
-            icon={<ArrowDownOutlined />}
-            iconPlacement="end"
-          >
-            Отклонить
-          </Button>
-        </Dropdown>
         <Input
           placeholder="Причина отклонения"
           variant="outlined"
@@ -97,13 +87,21 @@ export const DropdownButton: React.FC<ButtonProps & HandleConfirmProp> = ({
           value={items?.find((item) => item?.key === comment)?.label || comment}
           onChange={(e) => setComment(e.target.value)}
         />
+        <Dropdown menu={menuProps} styles={objectStyles}>
+          <Button
+            variant="outlined"
+            danger
+            icon={<ArrowDownOutlined />}
+            iconPlacement="end"
+          />
+        </Dropdown>
         <Button
           disabled={!comment?.length}
           onClick={handleButtonClick}
           icon={<WarningOutlined />}
           iconPlacement="end"
           danger
-        ></Button>
+        >Отклонить</Button>
       </Space.Compact>
     </Space>
   );
