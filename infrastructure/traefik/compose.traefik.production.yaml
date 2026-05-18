@@ -33,6 +33,7 @@ services:
       - "--entrypoints.web.http.redirections.entrypoint.to=web-secure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entryPoints.websecure.http.encodedCharacters=false"
       - "--entryPoints.web.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7"
 
       - "--certificatesresolvers.tlsresolver.acme.email=info@xn--47-dlckcacbiv4afwllqms4x.xn--p1ai"

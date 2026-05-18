@@ -84,7 +84,7 @@ export const DropdownButton: React.FC<ButtonProps & HandleConfirmProp> = ({
           </Button>
         </Dropdown>
         <Input
-          placeholder="Свой вариант"
+          placeholder="Причина отклонения"
           variant="outlined"
           style={{
             width: 300,

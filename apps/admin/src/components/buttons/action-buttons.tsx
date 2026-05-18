@@ -59,7 +59,7 @@ export const actionButtonProps: ActionButtonProps = {
     color: "danger",
     variant: "outlined",
     successMessage: "Обращение отклонено",
-    errorMessage: "Не удалось отклоненить предложения",
+    errorMessage: "Не удалось отклонить предложения",
     commentMessage: "Укажите причину",
     icon: <CloseOutlined />,
   },
