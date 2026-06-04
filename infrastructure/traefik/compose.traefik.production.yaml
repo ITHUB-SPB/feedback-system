@@ -35,8 +35,8 @@ services:
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
       - "--entryPoints.web.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7"
 
-      -  "--experimental.plugins.fail2ban.modulename=github.com/tomMoulard/fail2ban"
-      -  "--experimental.plugins.fail2ban.version=v0.9.0"
+      -  "--experimental.plugins.traefik-plugin-fail2ban.modulename=github.com/juitde/traefik-plugin-fail2ban"
+      -  "--experimental.plugins.traefik-plugin-fail2ban.version=v0.3.0"
 
       - "--certificatesresolvers.tlsresolver.acme.email=info@xn--47-dlckcacbiv4afwllqms4x.xn--p1ai"
       - "--certificatesresolvers.tlsresolver.acme.storage=/letsencrypt/acme.json"

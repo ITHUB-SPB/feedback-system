@@ -3,7 +3,7 @@ http:
     chain-authelia:
       chain:
         middlewares:
-          - custom-fail2ban
+          # - middleware-custom-fail2ban
           - middleware-rate-limit
           - middleware-secure-headers
           - middleware-authelia
