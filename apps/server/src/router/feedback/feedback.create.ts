@@ -12,8 +12,11 @@ const createFeedback = publicProcedure.feedback.create.handler(
       respondentId = (
         await context.db
           .selectFrom("user")
-          .select("user.id")
-          .where("user.email", "=", input.body.email)
+          .selectAll()
+          .where(eb => eb.or([
+            eb("user.email", "=", input.body.email),
+            eb("user.phone", "=", input.body.phone)
+          ]))
           .executeTakeFirst()
       )?.id;
 

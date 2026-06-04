@@ -81,8 +81,8 @@ export const DropdownButton: React.FC<ButtonProps & HandleConfirmProp> = ({
             maxWidth: 300,
             overflow: "hidden",
             textOverflow: "ellipsis",
-            borderColor: "red",
-            borderLeftWidth: 0,
+            // borderColor: "red",
+            // borderLeftWidth: 0,
           }}
           value={items?.find((item) => item?.key === comment)?.label || comment}
           onChange={(e) => setComment(e.target.value)}
@@ -90,7 +90,6 @@ export const DropdownButton: React.FC<ButtonProps & HandleConfirmProp> = ({
         <Dropdown menu={menuProps} styles={objectStyles}>
           <Button
             variant="outlined"
-            danger
             icon={<ArrowDownOutlined />}
             iconPlacement="end"
           />

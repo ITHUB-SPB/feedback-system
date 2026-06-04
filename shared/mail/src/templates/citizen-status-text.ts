@@ -9,6 +9,12 @@ const citizenStatusApprovalText = `Уважаемый житель!
 
 © Вместе47.рф`;
 
+const citizenStatusProceedingText = `Уважаемый житель!
+
+Ваше предложение принято в работу АМО. Благодарим Вас за вклад в благоустройство Ленинградской области!
+
+© Вместе47.рф`;
+
 const citizenStatusCompletedText = `Уважаемый житель!
 
 Работы по Вашему предложению проведены. Благодарим Вас за вклад в благоустройство Ленинградской области!
@@ -49,6 +55,8 @@ export const getCitizenStatusText = (
     return citizenStatusBannedText(props.comment);
   } else if (props.status === "approved") {
     return citizenStatusApprovalText;
+  } else if (props.status === "proceeding") {
+    return citizenStatusProceedingText;
   } else if (props.status === "completed") {
     return citizenStatusCompletedText;
   }

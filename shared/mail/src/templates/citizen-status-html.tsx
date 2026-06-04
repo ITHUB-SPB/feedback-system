@@ -58,7 +58,7 @@ const CitizenStatusEmail = ({
 
 const CitizenStatusApprovedEmail = ({ name }: Props) => {
   const PreviewComponent = (
-    <Preview>Уважаемый житель! Ваше обращение принято в работу!</Preview>
+    <Preview>Уважаемый житель! Ваше обращение передано в работу АМО!</Preview>
   );
 
   const ContentComponent = (
@@ -68,7 +68,7 @@ const CitizenStatusApprovedEmail = ({ name }: Props) => {
       </Heading>
 
       <Text className="mb-[24px] text-[#0b0917] text-[16px]">
-        Ваше предложение принято в работу. Благодарим Вас за вклад в
+        Ваше предложение передано в работу АМО! Благодарим Вас за вклад в
         благоустройство Ленинградской области!
       </Text>
     </Section>
@@ -81,6 +81,33 @@ const CitizenStatusApprovedEmail = ({ name }: Props) => {
     />
   );
 };
+
+const CitizenStatusProceedingEmail = ({ name }: Props) => {
+  const PreviewComponent = (
+    <Preview>Уважаемый житель! Ваше обращение принято в работу АМО!</Preview>
+  );
+
+  const ContentComponent = (
+    <Section>
+      <Heading className="mb-[24px] text-center text-[#0b0917] text-[18px]">
+        {name}!
+      </Heading>
+
+      <Text className="mb-[24px] text-[#0b0917] text-[16px]">
+        Ваше предложение принято в работу АМО! Благодарим Вас за вклад в
+        благоустройство Ленинградской области!
+      </Text>
+    </Section>
+  );
+
+  return (
+    <CitizenStatusEmail
+      PreviewComponent={PreviewComponent}
+      ContentComponent={ContentComponent}
+    />
+  );
+};
+
 
 const CitizenStatusCompletedEmail = ({ name }: Props) => {
   const PreviewComponent = (
@@ -152,7 +179,11 @@ const CitizenStatusBannedEmail = ({
 
       <Text className="mb-[20px] text-[#0b0917] text-[16px] leading-[24px]">
         К сожалению, Ваше обращение было отклонено нашими модераторами по
-        причине несоответствия требованиям. Причина отклонения: {comment}
+        причине несоответствия требованиям.
+      </Text>
+
+      <Text className="mb-[20px] text-[#0b0917] text-[16px] leading-[24px]">
+        Причина отклонения: {comment}
       </Text>
 
       <Section className="mb-[24px] rounded-[0px] border-[#e6e6f0] border-[1px] border-solid bg-[#f8f8ff] p-[18px]">
@@ -210,6 +241,8 @@ export const getCitizenStatusHtml = (
   switch (props.status) {
     case "approved":
       return <CitizenStatusApprovedEmail name={props.name} />;
+    case "proceeding":
+      return <CitizenStatusProceedingEmail name={props.name} />;
     case "banned":
       return (
         <CitizenStatusBannedEmail name={props.name} comment={props.comment} />

@@ -3,4 +3,10 @@ http:
     middleware-rate-limit:
       rateLimit:
         average: 100
+        period: 1s
         burst: 50
+    middleware-auth-rate-limit:
+      rateLimit:
+        average: 10
+        period: 1s
+        burst: 10
