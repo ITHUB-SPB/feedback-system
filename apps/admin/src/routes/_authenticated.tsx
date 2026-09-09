@@ -36,19 +36,18 @@ export const Route = createFileRoute("/_authenticated")({
   },
   component: () => {
     const { context } = Route.useLoaderData();
-    const { user } = context.session;
 
     return (
       <ThemedLayout
         Title={ThemedTitle}
         Header={
-          user.role === "official"
-            ? () => <ThemedHeader user={user} />
+          context.session.user.role === "official"
+            ? () => <ThemedHeader user={context.session.user} />
             : undefined
         }
         Sider={
-          user.role === "moderator"
-            ? (props) => <ThemedSider {...props} user={user} fixed />
+          context.session.user.role === "moderator"
+            ? (props) => <ThemedSider {...props} user={context.session.user} fixed />
             : undefined
         }
       >

@@ -62,31 +62,6 @@ async function buildMail(options: MailJobData) {
       html: await render(InnerWelcomeEmail(options)),
     };
   }
-
-  // if (options.type === "official-request") {
-  //   const { officialName, description, createdAt, categoryTopic, files } =
-  //     options;
-
-  //   return {
-  //     to: options.to,
-  //     subject: "Вместе47. Зарегистрировано новое предложение от жителя",
-  //     text: templates.officialRequestText({
-  //       officialName,
-  //       description,
-  //       createdAt,
-  //       categoryTopic,
-  //     }),
-  //     html: await render(
-  //       templates.OfficialRequestEmail({
-  //         officialName,
-  //         description,
-  //         createdAt,
-  //         categoryTopic,
-  //         files: files ?? [],
-  //       }),
-  //     ),
-  //   };
-  // }
 }
 
 export async function sendMail(options: MailJobData) {

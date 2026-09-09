@@ -15,7 +15,6 @@ import {
   useRouter,
 } from "@tanstack/react-router";
 import { type ComponentProps, useCallback, useContext, useMemo } from "react";
-import { stringifyQuery } from "ufo";
 
 export const routerProvider: RouterProvider = {
   go: () => {
@@ -30,33 +29,12 @@ export const routerProvider: RouterProvider = {
         hash,
         options: { keepQuery, keepHash } = {},
       }: GoConfig) => {
-        /** Construct query params */
-        // const urlQuery: Record<string, string> = {
-        //   ...(keepQuery && existingSearch),
-        //   ...query,
-        // };
-
-        // if (urlQuery.to) {
-        //   urlQuery.to = encodeURIComponent(`${urlQuery.to}`);
-        // }
-
-        // const hasUrlQuery = false && Object.keys(urlQuery).length > 0;
-
-        /** Get hash */
-        // const urlHash = `#${(hash || (keepHash && existingHash) || "").replace(
-        //   /^#/,
-        //   "",
-        // )}`;
-
-        // const hasUrlHash = urlHash.length > 1;
-
         const urlTo = to || "";
 
         if (type === "path") {
           return urlTo;
         }
 
-        /** Navigate to the url */
         navigate({
           to: urlTo,
           replace: type === "replace",

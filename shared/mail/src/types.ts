@@ -9,7 +9,7 @@ export type MailCitizenStatusWithCommentJobData = {
 export type MailCitizenStatusJobData = {
   to: string;
   name: string;
-  status: "approved" | "proceeding" | "completed" | "declined";
+  status: "approved" | "proceeding" | "completed" | "declined" | "welcome";
 };
 
 export type MailOfficialWelcomeJobData = {

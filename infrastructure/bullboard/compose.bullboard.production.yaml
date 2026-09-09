@@ -22,6 +22,6 @@ services:
       REDIS_HOST: feedback-redis
       REDIS_DB: 0
       REDIS_USE_TLS: false
-      REDIS_PASSWORD: HAUOScya784hgiiuadpi09812jiuHQP**&@QEghdaxkjkhj
+      REDIS_PASSWORD: mostsecretpassword
     depends_on:
       - feedback-redis

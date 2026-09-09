@@ -1,4 +1,8 @@
 import { publicProcedure } from "@shared/api";
+import {
+  citizenStatusEmailQueue,
+} from "@shared/mq";
+
 import auth from "../../auth";
 import upload from "../../s3";
 
@@ -6,11 +10,11 @@ const createFeedback = publicProcedure.feedback.create.handler(
   async ({ context, input, errors }) => {
     const transaction = await context.db.startTransaction().execute();
     let respondentId;
+    let respondentEmail;
     let isUserCreated = false;
 
     try {
-      respondentId = (
-        await context.db
+      const respondent = await context.db
           .selectFrom("user")
           .selectAll()
           .where(eb => eb.or([
@@ -18,7 +22,9 @@ const createFeedback = publicProcedure.feedback.create.handler(
             eb("user.phone", "=", input.body.phone)
           ]))
           .executeTakeFirst()
-      )?.id;
+
+      respondentId = respondent?.id;
+      respondentEmail = respondent?.email;
 
       if (!respondentId) {
         try {
@@ -38,6 +44,7 @@ const createFeedback = publicProcedure.feedback.create.handler(
             },
           });
           respondentId = newUser.user.id;
+          respondentEmail = newUser.user.email;
           isUserCreated = true;
         } catch (error) {
           console.error(error);
@@ -94,6 +101,12 @@ const createFeedback = publicProcedure.feedback.create.handler(
           }
         }),
       );
+
+      await citizenStatusEmailQueue.add(`citizen-status-welcome`, {
+        to: respondentEmail,
+        name: 'уважаемый житель',
+        status: 'welcome'
+      })
 
       await transaction.commit().execute();
     } catch (error) {

@@ -3,15 +3,21 @@ import type {
   MailCitizenStatusWithCommentJobData,
 } from "../types";
 
+const citizenStatusWelcomeText = `Уважаемый житель!
+
+Ваше предложение передано на модерацию.  
+
+© Вместе47.рф`;
+
 const citizenStatusApprovalText = `Уважаемый житель!
 
-Ваше предложение передано в работу АМО. Благодарим Вас за вклад в благоустройство Ленинградской области!
+Ваше предложение передано в работу администрации Вашего муниципального образования. Благодарим Вас за вклад в благоустройство Ленинградской области!
 
 © Вместе47.рф`;
 
 const citizenStatusProceedingText = `Уважаемый житель!
 
-Ваше предложение принято в работу АМО. Благодарим Вас за вклад в благоустройство Ленинградской области!
+Ваше предложение принято в работу администрации Вашего муниципального образования. Благодарим Вас за вклад в благоустройство Ленинградской области!
 
 © Вместе47.рф`;
 
@@ -23,7 +29,7 @@ const citizenStatusCompletedText = `Уважаемый житель!
 
 const citizenStatusDeclinedText = (comment: string) => `Уважаемый житель!
 
-Ваше предложение было отклонено АМО. 
+Ваше предложение было отклонено администрацией муниципального образования.
 
 Причина отклонения: ${comment}
 
@@ -59,5 +65,7 @@ export const getCitizenStatusText = (
     return citizenStatusProceedingText;
   } else if (props.status === "completed") {
     return citizenStatusCompletedText;
+  } else if (props.status === "welcome") {
+    return citizenStatusWelcomeText
   }
 };

@@ -56,9 +56,9 @@ const CitizenStatusEmail = ({
   </Html>
 );
 
-const CitizenStatusApprovedEmail = ({ name }: Props) => {
+const CitizenStatusWelcomeEmail = ({ name }: Props) => {
   const PreviewComponent = (
-    <Preview>Уважаемый житель! Ваше обращение передано в работу АМО!</Preview>
+    <Preview>Уважаемый житель! Ваше обращение получено и передано на модерацию</Preview>
   );
 
   const ContentComponent = (
@@ -68,7 +68,33 @@ const CitizenStatusApprovedEmail = ({ name }: Props) => {
       </Heading>
 
       <Text className="mb-[24px] text-[#0b0917] text-[16px]">
-        Ваше предложение передано в работу АМО! Благодарим Вас за вклад в
+        Ваше обращение передано на проверку и модерацию. Благодарим Вас за вклад в
+        благоустройство Ленинградской области!
+      </Text>
+    </Section>
+  );
+
+  return (
+    <CitizenStatusEmail
+      PreviewComponent={PreviewComponent}
+      ContentComponent={ContentComponent}
+    />
+  );
+};
+
+const CitizenStatusApprovedEmail = ({ name }: Props) => {
+  const PreviewComponent = (
+    <Preview>Уважаемый житель! Ваше обращение передано в работу администрации Вашего муниципального образования!</Preview>
+  );
+
+  const ContentComponent = (
+    <Section>
+      <Heading className="mb-[24px] text-center text-[#0b0917] text-[18px]">
+        {name}!
+      </Heading>
+
+      <Text className="mb-[24px] text-[#0b0917] text-[16px]">
+        Ваше предложение передано в работу администрации Вашего муниципального образования! Благодарим Вас за вклад в
         благоустройство Ленинградской области!
       </Text>
     </Section>
@@ -84,7 +110,7 @@ const CitizenStatusApprovedEmail = ({ name }: Props) => {
 
 const CitizenStatusProceedingEmail = ({ name }: Props) => {
   const PreviewComponent = (
-    <Preview>Уважаемый житель! Ваше обращение принято в работу АМО!</Preview>
+    <Preview>Уважаемый житель! Ваше обращение принято в работу администрации Вашего муниципального образования!</Preview>
   );
 
   const ContentComponent = (
@@ -94,7 +120,7 @@ const CitizenStatusProceedingEmail = ({ name }: Props) => {
       </Heading>
 
       <Text className="mb-[24px] text-[#0b0917] text-[16px]">
-        Ваше предложение принято в работу АМО! Благодарим Вас за вклад в
+        Ваше предложение принято в работу администрации Вашего муниципального образования! Благодарим Вас за вклад в
         благоустройство Ленинградской области!
       </Text>
     </Section>
@@ -140,7 +166,7 @@ const CitizenStatusDeclinedEmail = ({
   comment,
 }: Props & { comment: string }) => {
   const PreviewComponent = (
-    <Preview>Уважаемый житель! Ваше предложение было отклонено АМО.</Preview>
+    <Preview>Уважаемый житель!Ваше предложение было отклонено администрацией муниципального образования.</Preview>
   );
 
   const ContentComponent = (
@@ -150,7 +176,7 @@ const CitizenStatusDeclinedEmail = ({
       </Heading>
 
       <Text className="mb-[24px] text-[#0b0917] text-[16px]">
-        Ваше предложение было отклонено АМО. Причина отклонения: {comment}
+        Ваше предложение было отклонено администрацией Вашего муниципального образования. Причина отклонения: {comment}
       </Text>
     </Section>
   );
@@ -253,5 +279,7 @@ export const getCitizenStatusHtml = (
       return (
         <CitizenStatusDeclinedEmail name={props.name} comment={props.comment} />
       );
+    case "welcome":
+      return <CitizenStatusWelcomeEmail name={props.name} />
   }
 };
